@@ -19,12 +19,31 @@ Then open <http://localhost:8000/>. Any static file server works.
 
 ## Deploy to GitHub Pages
 
-1. Push this repo to GitHub with `main` as the default branch.
-2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
-3. Push to `main`. `.github/workflows/pages.yml` publishes `site/` on every push.
+This repo is a GitHub **user site**: it is named `<username>.github.io` and serves from the
+root of that domain.
 
-For a custom domain, rename `site/CNAME.example` to `site/CNAME` and set the DNS records
-GitHub asks for under Settings → Pages.
+1. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
+2. Push to `main`. `.github/workflows/pages.yml` publishes `site/` on every push.
+
+### Custom domain
+
+`site/CNAME` contains `www.intuitionmachine.com`, so Pages will claim that hostname. It only
+takes effect once DNS points at GitHub. At your registrar:
+
+| Type  | Name  | Value                  |
+|-------|-------|------------------------|
+| CNAME | `www` | `<username>.github.io` |
+
+To serve the apex (`intuitionmachine.com`) too, add A records for `@` pointing at
+`185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`, plus AAAA
+records at `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153` and
+`2606:50c0:8003::153`. Verify current values in GitHub's Pages documentation before applying.
+
+Tick **Enforce HTTPS** in Settings → Pages once the certificate is issued (usually minutes,
+occasionally up to 24 hours).
+
+**Changing this DNS moves the live site off Squarespace.** Deploy first, check the
+`github.io` URL, then cut over.
 
 ## The design
 
