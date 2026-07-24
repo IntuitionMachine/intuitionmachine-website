@@ -90,6 +90,7 @@
   var W = 0, H = 0, dpr = 1, geo = null;
   var current = LOOPS[0], run = trace(current.start, current.word);
   var seg = 0, t01 = 0, hold = 0, last = 0, playing = !reduced;
+  var ctrls = [];
   var hoverCell = null;
 
   // ---------------------------------------------------------------- layout
@@ -127,18 +128,66 @@
     canvas.style.height = H + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     geo = layout();
+    ctrls = [];
   }
 
   // ---------------------------------------------------------------- drawing
 
-  // Each leg bows perpendicular to travel, so the walk flows, and a leg that
-  // retraces its outbound path separates from it instead of overlapping.
-  function ctrlPoint(p, q) {
-    var dx = q.x - p.x, dy = q.y - p.y;
-    var len = Math.sqrt(dx * dx + dy * dy) || 1;
-    var bow = Math.min(len * 0.2, 30);
-    return { x: (p.x + q.x) / 2 - (dy / len) * bow,
-             y: (p.y + q.y) / 2 + (dx / len) * bow };
+  // Every leg bows toward the walk's own centre, so all of its sides cup
+  // inward. Bowing relative to travel direction instead — the obvious
+  // approach — flips as the direction changes, and half the legs end up
+  // bulging outward.
+  //
+  // Retraced legs would then coincide, since they share a midpoint and so
+  // get the same offset. Those are separated by a small lateral nudge, taken
+  // symmetrically about the inward bow so both passes stay concave.
+  function computeCtrls(pts, cells) {
+    var n = pts.length;
+    if (n < 2) return [];
+
+    // Reference point every arc cups toward: the middle of the grid. The
+    // walk's own centroid is tempting but fails whenever it is collinear
+    // with a leg -- a walk along one row has its centroid on that row, and
+    // the arcs flatten to straight lines.
+    var refx = geo.padL + geo.gw / 2;
+    var refy = geo.padT + geo.gh / 2;
+
+    function key(a, b) { return a < b ? a + "|" + b : b + "|" + a; }
+
+    var total = {}, k, i;
+    for (i = 0; i < n - 1; i++) {
+      k = key(cells[i], cells[i + 1]);
+      total[k] = (total[k] || 0) + 1;
+    }
+
+    var seen = {}, out = [];
+    for (i = 0; i < n - 1; i++) {
+      var p = pts[i], q = pts[i + 1];
+      var mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2;
+      var dx = q.x - p.x, dy = q.y - p.y;
+      var len = Math.sqrt(dx * dx + dy * dy) || 1;
+      var bow = Math.min(len * 0.2, 26);
+
+      // The bow is always perpendicular to the leg; only its sign is chosen,
+      // so that it points to whichever side the centre is on. That keeps
+      // every arc concave regardless of which way the leg is travelled.
+      var px = -dy / len, py = dx / len;
+      var side = px * (refx - mx) + py * (refy - my);
+      if (Math.abs(side) < 0.5) side = (py !== 0 ? py : 1);   // leg through the centre
+      var sign = side >= 0 ? 1 : -1;
+
+      k = key(cells[i], cells[i + 1]);
+      seen[k] = (seen[k] || 0) + 1;
+      var lateral = 0;
+      if (total[k] > 1) {
+        // Fan repeated passes apart, staying on the concave side of the leg.
+        lateral = (seen[k] - (total[k] + 1) / 2) * 22;
+      }
+
+      var mag = sign * bow + lateral;
+      out.push({ x: mx + px * mag, y: my + py * mag });
+    }
+    return out;
   }
 
   function quadAt(p, c, q, t) {
@@ -183,6 +232,7 @@
   function drawWalk(upto, frac) {
     var pts = run.path.map(cellXY);
     if (!pts.length) return;
+    if (ctrls.length !== pts.length - 1) ctrls = computeCtrls(pts, run.path);
     var colour = run.valid ? SIGNAL : BAD;
 
     ctx.strokeStyle = colour;
@@ -190,7 +240,7 @@
     ctx.globalAlpha = 0.85;
 
     for (var i = 0; i < upto && i + 1 < pts.length; i++) {
-      var cp = ctrlPoint(pts[i], pts[i + 1]);
+      var cp = ctrls[i];
       ctx.beginPath();
       ctx.moveTo(pts[i].x, pts[i].y);
       ctx.quadraticCurveTo(cp.x, cp.y, pts[i + 1].x, pts[i + 1].y);
@@ -199,7 +249,7 @@
 
     var head = pts[Math.min(upto, pts.length - 1)];
     if (upto + 1 < pts.length) {
-      var a = pts[upto], b = pts[upto + 1], c = ctrlPoint(a, b), t = ease(frac);
+      var a = pts[upto], b = pts[upto + 1], c = ctrls[upto], t = ease(frac);
       head = quadAt(a, c, b, t);
       ctx.beginPath();
       ctx.moveTo(a.x, a.y);
@@ -307,6 +357,7 @@
   function select(loop) {
     current = loop;
     run = trace(loop.start, loop.word);
+    ctrls = [];
     seg = 0; t01 = 0; hold = 0;
     if (picker) {
       var btns = picker.querySelectorAll("button");
