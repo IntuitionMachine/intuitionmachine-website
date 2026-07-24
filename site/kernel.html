@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Kernel — Quaternion Process Theory</title>
+<meta name="description" content="The QML kernel: three spine levels, four attentional columns, and one generative operator from which the rest of the theory is built.">
+<link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="mark" viewBox="0 0 64 64">
+    <polygon points="32,6 54.5,19 32,32 9.5,19" fill="currentColor" opacity=".95"/>
+    <polygon points="9.5,19 32,32 32,58 9.5,45" fill="currentColor" opacity=".5"/>
+    <polygon points="54.5,19 54.5,45 32,58 32,32" fill="currentColor" opacity=".72"/>
+  </symbol>
+</svg>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="index.html">
+      <svg style="color:var(--signal)"><use href="#mark"></use></svg>
+      <b>Intuition Machine</b>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="kernel.html">Kernel</a>
+      <a href="loops.html">Loops</a>
+      <a href="software.html">Software</a>
+      <a href="diagnosis.html">Diagnosis</a>
+      <a href="team.html">Team</a>
+      <a href="about.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap page-head">
+    <span class="label">The Kernel</span>
+    <h1>Three levels, four columns, one operator</h1>
+    <p class="lede">QML — the Quaternion Modeling Language — is a short list of ingredients,
+    seven axioms, one derived operator, and one small model in which every formal claim has
+    been machine-checked.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">The three categories</span>
+      <h2>What experience sorts into</h2>
+      <p class="lede prose" style="margin-top:1.2rem">The theory begins with Peirce's claim
+      that all experience sorts into exactly three basic kinds.</p>
+    </div>
+    <div class="terms">
+      <div class="term">
+        <span class="term__glyph">ω</span>
+        <h3>Firstness — quality</h3>
+        <p>Something in itself, without reference to anything else. A felt character, a
+        possibility, a mood. The redness of red before any comparison.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">κ</span>
+        <h3>Secondness — causation</h3>
+        <p>Brute encounter between two things. Resistance, effort, surprise. The door that
+        will not open.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">ν</span>
+        <h3>Thirdness — mediation</h3>
+        <p>A third thing that brings a first and a second into relation. A law, a habit, a
+        convention, a meaning.</p>
+      </div>
+    </div>
+
+
+    <figure class="fig">
+      <svg viewBox="0 0 720 300" role="img" aria-label="Three spine levels: quality, causation and mediation, with unfold and fold moving between them." xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0f6e63"/>
+  </marker>
+  <marker id="ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5a6068"/>
+  </marker>
+  <marker id="ah-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#a33a2a"/>
+  </marker>
+</defs>
+  <text x="24" y="30" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.6" fill="#5a6068">THE SPINE</text>
+
+  
+  <rect x="150" y="56" width="500" height="62" fill="#eceae4" stroke="#c8c4b9"/>
+  <text x="172" y="86" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" font-weight="600" fill="#0f6e63">ν</text>
+  <text x="204" y="83" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#14171a">Thirdness — mediation</text>
+  <text x="204" y="103" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">law, habit, convention, meaning</text>
+  
+  <rect x="150" y="136" width="500" height="62" fill="#eeece6" stroke="#c8c4b9"/>
+  <text x="172" y="166" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" font-weight="600" fill="#0f6e63">κ</text>
+  <text x="204" y="163" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#14171a">Secondness — causation</text>
+  <text x="204" y="183" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">brute encounter, resistance, surprise</text>
+  
+  <rect x="150" y="216" width="500" height="62" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="172" y="246" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20" font-weight="600" fill="#0f6e63">ω</text>
+  <text x="204" y="243" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#14171a">Firstness — quality</text>
+  <text x="204" y="263" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">felt character, before any comparison</text>
+
+  <!-- unfold / fold -->
+  <line x1="96" y1="240" x2="96" y2="78" stroke="#0f6e63" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="88" y="150" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" font-weight="600" fill="#0f6e63" text-anchor="end">U</text>
+  <text x="88" y="166" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="end">unfold</text>
+
+  <line x1="128" y1="78" x2="128" y2="240" stroke="#5a6068" stroke-width="1.6" marker-end="url(#ah-ink)"/>
+  <text x="138" y="150" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" font-weight="600" fill="#5a6068">D</text>
+  <text x="138" y="166" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068">fold</text>
+
+  <text x="150" y="292" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#0f6e63">ω ≺ κ ≺ ν</text>
+  <text x="230" y="292" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">— each level presupposes the one below, not the other way round</text>
+</svg>
+      <figcaption class="label">Fig. 02 — The spine, and the two moves that travel it</figcaption>
+    </figure>
+
+    <div class="split" style="margin-top:clamp(2.5rem,5vw,4rem)">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Prescission</span>
+        <h2>The order is about what you can ignore</h2>
+      </div>
+      <div class="prose">
+        <p>The three come in an order, and it is not about time or importance. Call X
+        prescissively prior to Y when X can be attended to while neglecting Y, but not the
+        other way around.</p>
+        <p>You can contemplate the pure feel of a colour without thinking about any collision
+        or law. You cannot contemplate a collision without it having some felt character.</p>
+        <pre class="code">1st ≺ 2nd:  quality without reaction is conceivable;
+            every reaction has a felt character.
+2nd ≺ 3rd:  brute encounter without interpretation is
+            conceivable; every law applies to something actual.
+
+Therefore:  1st ≺ 2nd ≺ 3rd</pre>
+        <p>This ordering — abstractive dependency — is the single most load-bearing idea in
+        the theory, and it returns at the very end in the tradeoff theory.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">The four quadrants</span>
+        <h2>One sentence, four things you can attend to</h2>
+      </div>
+      <div class="prose">
+        <p>Independently of the three levels there is a second, four-way division, arriving
+        from thinking about signs and media rather than experience. Any sign can be examined
+        along two distinctions: is it this particular sign-event or the whole system? And are
+        we asking what it means, or what it is made of?</p>
+        <pre class="code">ii = Instance·Content     ie = Instance·Vehicle
+ci = System·Content       ce = System·Vehicle</pre>
+        <p>A spoken sentence makes it concrete. The meaning of this one utterance is
+        <b>ii</b>. The sound waves of this one utterance are <b>ie</b>. The shared language's
+        semantics is <b>ci</b>. Its grammar and phonology, considered as a machine, is
+        <b>ce</b>.</p>
+        <p>McLuhan's Laws of Media independently discovered this four-faced structure. Its
+        independence from the three-level division is not an accident of intellectual history
+        — it is a formal fact: the four-way division cannot be derived from the operator that
+        generates the levels.</p>
+      </div>
+    </div>
+
+    <figure class="fig">
+      <svg viewBox="0 0 720 340" role="img" aria-label="The four attentional quadrants as a two-by-two of instance versus system and content versus vehicle." xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0f6e63"/>
+  </marker>
+  <marker id="ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5a6068"/>
+  </marker>
+  <marker id="ah-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#a33a2a"/>
+  </marker>
+</defs>
+  <text x="24" y="26" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.6" fill="#5a6068">ONE SENTENCE, FOUR THINGS TO ATTEND TO</text>
+
+  <text x="205" y="62" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.4" fill="#5a6068" text-anchor="middle">CONTENT</text>
+  <text x="465" y="62" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.4" fill="#5a6068" text-anchor="middle">VEHICLE</text>
+
+  <text x="72" y="134" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" letter-spacing="1.2" fill="#5a6068" text-anchor="end">INSTANCE</text>
+  <text x="72" y="250" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" letter-spacing="1.2" fill="#5a6068" text-anchor="end">SYSTEM</text>
+
+  
+  <rect x="80" y="78" width="250" height="104" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="98" y="110" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="18" font-weight="600" fill="#0f6e63">ii</text>
+  <text x="138" y="109" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a">Instance · Content</text>
+  <text x="98" y="140" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">the meaning of this utterance</text>
+  
+  <rect x="340" y="78" width="250" height="104" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="358" y="110" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="18" font-weight="600" fill="#0f6e63">ie</text>
+  <text x="398" y="109" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a">Instance · Vehicle</text>
+  <text x="358" y="140" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">the sound waves of it</text>
+  
+  <rect x="80" y="194" width="250" height="104" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="98" y="226" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="18" font-weight="600" fill="#0f6e63">ci</text>
+  <text x="138" y="225" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a">System · Content</text>
+  <text x="98" y="256" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">the language&#8217;s semantics</text>
+  
+  <rect x="340" y="194" width="250" height="104" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="358" y="226" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="18" font-weight="600" fill="#0f6e63">ce</text>
+  <text x="398" y="225" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a">System · Vehicle</text>
+  <text x="358" y="256" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">its grammar, as a machine</text>
+
+  <line x1="80" y1="316" x2="640" y2="316" stroke="#c8c4b9"/>
+  <text x="80" y="334" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068">ι swaps instance ↔ system &#160;·&#160; γ swaps content ↔ vehicle</text>
+</svg>
+      <figcaption class="label">Fig. 03 — The four attentional columns</figcaption>
+    </figure>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">The generative operator</span>
+        <h2>Everything is built from this</h2>
+      </div>
+      <div class="split">
+        <div>
+          <pre class="code">𝔏 = ⟨ L, ⊑, π, {Φ_q}, {Φ̄_q}, ⊕, ⊖, ι, γ ⟩
+
+qml_q(x, y)  :=  Φ_q(x) ⊖ Φ̄_q(y)</pre>
+        </div>
+        <div class="prose">
+          <p>Take the first input and unfold it one step toward mediation; take the second and
+          fold it one step toward quality; then ask what the unfolded thing contains beyond
+          the folded thing. That remainder is the output.</p>
+          <p>The subscript <b>q</b> records a basic commitment: no cognitive operation
+          executes without an attentional mode. There is no view from nowhere — every act of
+          abstraction or grounding is somebody's act, performed in some register.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Adjunction, not inversion</span>
+        <h2>The loss is built in from the beginning</h2>
+      </div>
+      <div class="prose">
+        <p>Unfolding and folding are not inverses. Folding what you unfolded does not return
+        you to where you started — abstracting an experience and then trying to recover the
+        experience from the abstraction loses something, and the axiom builds that loss in
+        rather than apologising for it later.</p>
+        <p>Instead of inversion, the two maps are related by an adjunction: a looser but exact
+        relationship defined by a single "fits under" equivalence. One consequence, proved
+        rather than assumed, is that convention can never be fully grounded — rebuild a
+        convention from its grounding and you get less than the convention claimed.</p>
+        <p>That permanent remainder is why no amount of process eliminates spin-room, and why
+        the honest goal is making the <em>groundable portion</em> commonly checkable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section cta">
+      <h2>Bring it a system that is failing quietly.</h2>
+      <p class="lede">Diagnostic engagements start by asking which words your organisation
+      actually runs, and which of its standing rules no longer have an owner.</p>
+      <div class="cta__actions">
+        <a class="btn btn--lit" href="diagnosis.html">How diagnosis works</a>
+        <a class="btn btn--lit" style="background:transparent;border-color:#43c4b0;color:#43c4b0"
+           href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="brand" href="index.html" style="color:var(--signal-lit)">
+          <svg><use href="#mark"></use></svg>
+          <b style="color:var(--paper-hi)">Intuition Machine</b>
+        </a>
+        <p style="margin-top:.9rem;max-width:34ch">Quaternion Process Theory on the QML kernel</p>
+      </div>
+      <div>
+        <h4>Theory</h4>
+        <ul>
+          <li><a href="kernel.html">The Kernel</a></li>
+          <li><a href="loops.html">The Loops</a></li>
+          <li><a href="diagnosis.html">Diagnosis</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Software</h4>
+        <ul>
+          <li><a href="software.html">Connection Machine</a></li>
+          <li><a href="software.html">Intuition Machine</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>Intuition Machine, 1200 South Arlington Ridge Road, 508, Arlington, VA 22202, USA</span>
+      <span>(833) 8INTUIT</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

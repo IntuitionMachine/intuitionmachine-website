@@ -134,12 +134,12 @@ p:last-child { margin-bottom: 0; }
   text-decoration: none;
   margin-right: auto;
 }
-.brand svg { width: 27px; height: 27px; flex: none; }
+.brand svg { width: 30px; height: 30px; flex: none; }
 .brand b {
   font-family: var(--display);
-  font-weight: 700;
-  font-size: 1.02rem;
-  letter-spacing: -.02em;
+  font-weight: 800;
+  font-size: 1.14rem;
+  letter-spacing: -.024em;
 }
 
 .nav { display: flex; gap: 1.6rem; align-items: center; }
@@ -173,9 +173,45 @@ p:last-child { margin-bottom: 0; }
 
 /* ---------- hero ---------- */
 
-.hero { padding-top: clamp(3rem, 7vw, 6rem); }
+.hero { padding-top: clamp(2.4rem, 5vw, 4.2rem); }
 
-.hero__eyebrow { display: block; margin-bottom: 1.6rem; }
+/* Publisher lockup. The company owns the work, so its name sits above the
+   title like a journal masthead rather than hiding in the nav. */
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+.lockup svg {
+  width: clamp(36px, 4.2vw, 48px);
+  height: clamp(36px, 4.2vw, 48px);
+  color: var(--signal);
+  flex: none;
+}
+.lockup b {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.35rem, 3vw, 2.05rem);
+  letter-spacing: -.028em;
+  line-height: 1;
+}
+.lockup i {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: .68rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin-left: auto;
+  text-align: right;
+  line-height: 1.5;
+}
+@media (max-width: 620px) { .lockup i { display: none; } }
+
+.hero__eyebrow { display: block; margin-bottom: 1.4rem; }
 
 .hero h1 {
   font-size: clamp(2.6rem, 7.4vw, 5.6rem);
@@ -518,13 +554,19 @@ p:last-child { margin-bottom: 0; }
 .foot a { color: var(--paper-hi); text-decoration: none; }
 .foot a:hover { color: var(--signal-lit); }
 
+.foot .brand svg { width: 34px; height: 34px; }
+.foot .brand b { font-size: 1.25rem; }
+
 .foot__grid {
   display: grid;
   gap: 2rem clamp(1.5rem, 4vw, 4rem);
   grid-template-columns: minmax(0, 1fr);
 }
 @media (min-width: 760px) {
-  .foot__grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); }
+  .foot .brand svg { width: 34px; height: 34px; }
+.foot .brand b { font-size: 1.25rem; }
+
+.foot__grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); }
 }
 .foot h4 {
   font-family: var(--mono);
@@ -625,6 +667,139 @@ p:last-child { margin-bottom: 0; }
   border-bottom: 1px solid var(--rule);
 }
 .contact-cell a:hover { border-bottom-color: var(--signal); color: var(--signal); }
+
+/* ---------- formal blocks ---------- */
+
+/* The specification's own "technical mode": exact statements, set apart
+   from the prose so a reader can skip them entirely. */
+.code {
+  font-family: var(--mono);
+  font-size: .82rem;
+  line-height: 1.65;
+  background: var(--paper-hi);
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--signal);
+  padding: 1.1rem 1.2rem;
+  overflow-x: auto;
+  white-space: pre;
+  margin: 0;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.band--deep .code {
+  background: var(--deep-2);
+  border-color: var(--deep-rule);
+  border-left-color: var(--signal-lit);
+  color: #c6d0d1;
+}
+
+/* Healthy vs degraded, side by side: the whole pathology argument. */
+.compare {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 820px) {
+  .compare { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.compare__cell { background: var(--paper); padding: clamp(1.3rem, 2.6vw, 1.9rem); }
+.compare__cell .label { display: block; margin-bottom: .9rem; }
+.compare__cell .code { border-left-width: 2px; }
+.compare__cell--bad .code { border-left-color: #a33a2a; }
+.compare__cell--bad .label { color: #a33a2a; }
+.compare__note { margin-top: 1rem; font-size: .95rem; color: var(--ink-2); }
+
+/* Honesty labels: every claim in the spec carries one. */
+.chip {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  padding: .28rem .55rem;
+  border: 1px solid var(--rule);
+  background: var(--paper-hi);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.chip--axiom   { border-color: var(--ink); color: var(--ink); }
+.chip--theorem { border-color: var(--signal); color: var(--signal); background: color-mix(in srgb, var(--signal) 8%, var(--paper-hi)); }
+
+/* The counted facts of the kernel. */
+.figures {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 700px)  { .figures { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .figures { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.figure-cell {
+  background: var(--paper);
+  padding: 1.3rem 1.1rem 1.5rem;
+}
+.figure-cell b {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1;
+  font-variant-numeric: lining-nums;
+  margin-bottom: .5rem;
+}
+.figure-cell span {
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  line-height: 1.5;
+  display: block;
+}
+.band--deep .figure-cell { background: var(--deep); }
+.band--deep .figure-cell b { color: var(--signal-lit); }
+.band--deep .figures { background: var(--deep-rule); border-color: var(--deep-rule); }
+
+/* A named failure, stated once, with its everyday case underneath. */
+.failure { border-top: 1px solid var(--rule); padding-top: 1.4rem; margin-top: 1.4rem; }
+.failure:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+.failure h3 { margin-bottom: .5rem; }
+.failure .label { display: block; margin-bottom: .7rem; }
+.failure p { color: var(--ink-2); max-width: 62ch; }
+
+.terms { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+@media (min-width: 760px) { .terms { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.term { background: var(--paper); padding: clamp(1.3rem, 2.6vw, 1.8rem); }
+.term__glyph {
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--signal);
+  display: block;
+  margin-bottom: .6rem;
+}
+.term h3 { font-size: 1.15rem; margin-bottom: .45rem; }
+.term p { font-size: .93rem; line-height: 1.5; color: var(--ink-2); }
+
+/* ---------- explanatory figures ---------- */
+
+.fig { margin: clamp(2rem, 4vw, 3rem) 0 0; }
+.fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper-hi);
+  border: 1px solid var(--rule);
+}
+.fig figcaption { padding-top: .65rem; }
+
+/* Figures sit on light stock even inside a dark band, so the drawing keeps
+   its contrast without needing a second colourway. */
+.band--deep .fig figcaption { color: #a9b4b6; }
 
 /* ---------- skip link ---------- */
 

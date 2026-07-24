@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Loops — Quaternion Process Theory</title>
+<meta name="description" content="Twelve recurring processes, each written as a word: a string of moves on the matrix that closes back on its start cell.">
+<link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="mark" viewBox="0 0 64 64">
+    <polygon points="32,6 54.5,19 32,32 9.5,19" fill="currentColor" opacity=".95"/>
+    <polygon points="9.5,19 32,32 32,58 9.5,45" fill="currentColor" opacity=".5"/>
+    <polygon points="54.5,19 54.5,45 32,58 32,32" fill="currentColor" opacity=".72"/>
+  </symbol>
+</svg>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="index.html">
+      <svg style="color:var(--signal)"><use href="#mark"></use></svg>
+      <b>Intuition Machine</b>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="kernel.html">Kernel</a>
+      <a href="loops.html">Loops</a>
+      <a href="software.html">Software</a>
+      <a href="diagnosis.html">Diagnosis</a>
+      <a href="team.html">Team</a>
+      <a href="about.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap page-head">
+    <span class="label">The Loops</span>
+    <h1>Every recurring process is literally a word</h1>
+    <p class="lede">A string of moves on the matrix that starts at a cell and walks back to
+    it. Ten of the twelve are intra-matrix words, machine-verified as closed walks.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Notation</span>
+        <h2>Four letters, one for each thing you can do</h2>
+      </div>
+      <div class="prose">
+        <pre class="code">U = Φ   unfold, +1 level
+D = Φ̄   fold,   −1 level
+I = ι   instance ↔ system
+G = γ   content  ↔ vehicle
+
+Words: strings over {U, D, I, G}, read left to
+right from a start cell.</pre>
+        <p>Because processes are strings, structural facts about them are visible in the
+        letters before any interpretation is added — and two processes can be compared by
+        diffing their words.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">The inventory</span>
+      <h2>Twelve loops</h2>
+    </div>
+    <pre class="code">LOOP  FUNCTION              INTENDED CV             START  WORD
+──────────────────────────────────────────────────────────────────────
+⦿O    skilled action        task completion         2.ie   DGUUDG
+⦿C    coordination          coordination state      2.ie   DIGUUDIG
+⦿M    management            operational conformity  3.ce   DIIU
+⦿M*   audit                 truth correspondence    3.ce   DI▼UI
+⦿I    intelligence          model accuracy          1.ie   IUUIIIGIIG
+⦿P    policy / identity     identity coherence      3.ci   DDUUII
+⦿K    knowledge creation    knowledge validity      3.ii   GIGI
+⦿G    grounding             empirical grounding     3.ce   DIDGUGUI
+⦿L    legitimation          normative legitimacy    3.ci   GDGU
+⦿R    reflexive quality     formal quality          3.ce   DDUUIGIG
+⦿H    harness (mediation)   mediation effectiveness  — coupling layer —
+⦿T    transparency          perceptual integrity     — coupling layer —</pre>
+    <p class="prose" style="margin-top:1.4rem">The specification flags one anomaly rather than
+    silently fixing it: the intelligence row does not close under the stated move rules. The
+    likely reading is that intelligence is an <em>entering</em> walk which then settles onto a
+    closed convention-level cycle — but the claim as printed is "ten machine-verified closed
+    walks", so the row is marked for re-checking against the verifier.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">What the words reveal</span>
+      <h2>Structure visible before interpretation</h2>
+    </div>
+
+
+    <figure class="fig">
+      <svg viewBox="0 0 720 300" role="img" aria-label="Grounding walks down to quality and back; knowledge rotates through all four quadrants at the convention level." xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0f6e63"/>
+  </marker>
+  <marker id="ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5a6068"/>
+  </marker>
+  <marker id="ah-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#a33a2a"/>
+  </marker>
+</defs>
+  <text x="24" y="26" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.6" fill="#5a6068">EACH WORD IS MADE OF THE OTHER&#8217;S MISSING LETTERS</text>
+
+  
+  <text x="60" y="60" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="15" font-weight="600" fill="#0f6e63">⦿G</text>
+  <text x="100" y="60" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#14171a">grounding</text>
+  <rect x="60" y="90" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="102" y="90" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="144" y="90" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="186" y="90" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="60" y="124" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="102" y="124" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="144" y="124" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="186" y="124" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="60" y="158" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="102" y="158" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="144" y="158" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="186" y="158" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><text x="50" y="111.0" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068" text-anchor="end">ν</text><text x="50" y="145.0" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068" text-anchor="end">κ</text><text x="50" y="179.0" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068" text-anchor="end">ω</text>
+  <polyline points="201.0,103.0 117.0,141.0 81.0,181.0 129.0,141.0 213.0,103.0" fill="none" stroke="#0f6e63" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="201.0" cy="103.0" r="3.6" fill="#0f6e63"/><circle cx="117.0" cy="141.0" r="3.6" fill="#0f6e63"/><circle cx="81.0" cy="181.0" r="3.6" fill="#0f6e63"/><circle cx="129.0" cy="141.0" r="3.6" fill="#0f6e63"/><circle cx="213.0" cy="103.0" r="3.6" fill="#0f6e63"/>
+  <text x="60" y="218" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" font-weight="600" fill="#14171a">uses D and U</text>
+  <text x="60" y="236" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10.5" fill="#5a6068">climbs and descends; never changes perspective</text>
+  
+  <text x="420" y="60" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="15" font-weight="600" fill="#0f6e63">⦿K</text>
+  <text x="460" y="60" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#14171a">knowledge</text>
+  <rect x="420" y="90" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="462" y="90" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="504" y="90" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="546" y="90" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="420" y="124" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="462" y="124" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="504" y="124" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="546" y="124" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="420" y="158" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="462" y="158" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="504" y="158" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><rect x="546" y="158" width="42" height="34" fill="#f1efe9" stroke="#c8c4b9"/><text x="410" y="111.0" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068" text-anchor="end">ν</text><text x="410" y="145.0" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068" text-anchor="end">κ</text><text x="410" y="179.0" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#5a6068" text-anchor="end">ω</text>
+  <polyline points="441.0,107.0 483.0,107.0 567.0,107.0 525.0,107.0 441.0,107.0" fill="none" stroke="#0f6e63" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="441.0" cy="107.0" r="3.6" fill="#0f6e63"/><circle cx="483.0" cy="107.0" r="3.6" fill="#0f6e63"/><circle cx="567.0" cy="107.0" r="3.6" fill="#0f6e63"/><circle cx="525.0" cy="107.0" r="3.6" fill="#0f6e63"/><circle cx="441.0" cy="107.0" r="3.6" fill="#0f6e63"/>
+  <text x="420" y="218" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" font-weight="600" fill="#14171a">uses G and I</text>
+  <text x="420" y="236" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10.5" fill="#5a6068">rotates perspective; never touches ground</text>
+
+  <line x1="360" y1="86" x2="360" y2="248" stroke="#c8c4b9" stroke-dasharray="3 4"/>
+</svg>
+      <figcaption class="label">Fig. 05 — Grounding descends; knowledge rotates</figcaption>
+    </figure>
+
+    <div class="split">
+      <div>
+        <div class="failure">
+          <span class="label">⦿G — the V-word</span>
+          <h3>Grounding descends, then returns</h3>
+          <p>Descents, a turn at felt quality, then ascents. Its phase trajectory <em>is</em>
+          its syntax. To ground a claim you go down to what the thing is actually like, and
+          you come back up carrying receipts.</p>
+        </div>
+        <div class="failure">
+          <span class="label">⦿K — the Klein word</span>
+          <h3>Knowledge rotates without descending</h3>
+          <p>GIGI: flip, flip, flip, flip. A complete tour of the four quadrants conducted
+          entirely at the convention level, containing zero up or down moves.</p>
+        </div>
+        <div class="failure">
+          <span class="label">The complement</span>
+          <h3>Each is made of the other's missing letters</h3>
+          <p>The knowledge word uses only flips; grounding's core is climbs and descents. So
+          the old claim that knowledge-making and grounding need each other is not consultant's
+          advice — it is forced by letter inventories.</p>
+        </div>
+      </div>
+      <div>
+        <div class="failure">
+          <span class="label">⦿M</span>
+          <h3>Management never touches quality</h3>
+          <p>Its word moves only between the causation and convention levels. The inability to
+          feel is a typing fact, not a character flaw — and it is the structural reason the
+          reflexive quality loop has to exist separately rather than as a management agenda
+          item.</p>
+        </div>
+        <div class="failure">
+          <span class="label">⦿R</span>
+          <h3>The no-outsourcing rule</h3>
+          <p>The reflexive loop opens with a double descent within the formal column, and that
+          level change is reachable only by folding. Sensing the quality of your own formal
+          structures is a descent you must perform yourself.</p>
+        </div>
+        <div class="failure">
+          <span class="label">Recovery</span>
+          <h3>Always two letters away</h3>
+          <p>From any cell in a formal column, a double descent reaches the quality level.
+          Whatever else is true of quality-bypass pathologies, the route back is structurally
+          short.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="split">
+        <div class="section__head" style="margin-bottom:0">
+          <span class="label">The ceiling conjecture &nbsp;·&nbsp; new in 5.3</span>
+          <h2>How far anything can ever be proceduralised</h2>
+        </div>
+        <div class="prose">
+          <p>Which processes can become a standard operating procedure — same steps, every
+          time, by anyone — and which will forever require judgment? Organisations answer this
+          today by proceduralising everything and discovering the hard way what dies.</p>
+          <pre class="code">depth(⦿X) = lowest spine level its word visits
+
+contract ∈ { path ≻ outcome ≻ semantic ≻ statistical }
+
+depth = κ  (⦿M)      → path-approachable
+depth = ω  (⦿G, ⦿R)  → semantic at best</pre>
+          <p>Management's word never descends below causation — and management is precisely
+          what organisations proceduralise most successfully. Grounding descends to quality,
+          and quality-level content cannot be transmitted on demand, so grounding can promise
+          the same meaning but never the same steps.</p>
+        </div>
+      </div>
+
+    <figure class="fig">
+      <svg viewBox="0 0 720 320" role="img" aria-label="Processes that stay at the encounter level can be proceduralised strictly; those descending to quality can promise only the same meaning." xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0f6e63"/>
+  </marker>
+  <marker id="ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5a6068"/>
+  </marker>
+  <marker id="ah-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#a33a2a"/>
+  </marker>
+</defs>
+  <text x="24" y="26" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.6" fill="#5a6068">HOW DEEP A PROCESS GOES CAPS HOW FAR IT CAN BE STANDARDISED</text>
+
+  <!-- grade axis -->
+  <text x="24" y="62" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068">STRICTEST</text>
+  <text x="696" y="62" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="end">LOOSEST</text>
+  <line x1="24" y1="72" x2="696" y2="72" stroke="#c8c4b9"/>
+
+  <text x="90" y="92" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" font-weight="600" fill="#14171a" text-anchor="middle">path</text>
+  <text x="90" y="108" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">same steps</text>
+  <text x="270" y="92" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" font-weight="600" fill="#14171a" text-anchor="middle">outcome</text>
+  <text x="270" y="108" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">same result</text>
+  <text x="450" y="92" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" font-weight="600" fill="#14171a" text-anchor="middle">semantic</text>
+  <text x="450" y="108" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">same meaning</text>
+  <text x="630" y="92" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" font-weight="600" fill="#14171a" text-anchor="middle">statistical</text>
+  <text x="630" y="108" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">stable pattern</text>
+
+  <!-- management: depth kappa, reaches the strictest grade -->
+  <rect x="24" y="140" width="640" height="54" fill="#eceae4" stroke="#c8c4b9"/>
+  <rect x="24" y="140" width="200" height="54" fill="#0f6e63" opacity=".13"/>
+  <text x="40" y="164" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#0f6e63">⦿M</text>
+  <text x="80" y="164" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a">management</text>
+  <text x="40" y="183" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10.5" fill="#5a6068">depth = κ &#160;· stays at encounter</text>
+  <line x1="224" y1="132" x2="224" y2="202" stroke="#0f6e63" stroke-width="2"/>
+  <text x="236" y="152" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10.5" fill="#0f6e63">ceiling: proceduralise nearly to identity</text>
+
+  <!-- grounding / reflexive: depth omega, capped much looser -->
+  <rect x="24" y="216" width="640" height="54" fill="#eceae4" stroke="#c8c4b9"/>
+  <rect x="24" y="216" width="380" height="54" fill="#a33a2a" opacity=".08"/>
+  <text x="40" y="240" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#0f6e63">⦿G ⦿R</text>
+  <text x="104" y="240" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a">grounding, reflexive quality</text>
+  <text x="40" y="259" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10.5" fill="#5a6068">depth = ω &#160;· descends to felt quality</text>
+  <line x1="404" y1="208" x2="404" y2="278" stroke="#a33a2a" stroke-width="2"/>
+  <text x="416" y="228" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10.5" fill="#a33a2a">ceiling: same meaning, never the same steps</text>
+
+  <text x="24" y="304" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10.5" fill="#5a6068">Proceduralising past a process&#8217;s ceiling is how organisations kill the work they meant to scale.</text>
+</svg>
+      <figcaption class="label">Fig. 06 — Depth caps the strictest promise a process can keep</figcaption>
+    </figure>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section cta">
+      <h2>Bring it a system that is failing quietly.</h2>
+      <p class="lede">Diagnostic engagements start by asking which words your organisation
+      actually runs, and which of its standing rules no longer have an owner.</p>
+      <div class="cta__actions">
+        <a class="btn btn--lit" href="diagnosis.html">How diagnosis works</a>
+        <a class="btn btn--lit" style="background:transparent;border-color:#43c4b0;color:#43c4b0"
+           href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="brand" href="index.html" style="color:var(--signal-lit)">
+          <svg><use href="#mark"></use></svg>
+          <b style="color:var(--paper-hi)">Intuition Machine</b>
+        </a>
+        <p style="margin-top:.9rem;max-width:34ch">Quaternion Process Theory on the QML kernel</p>
+      </div>
+      <div>
+        <h4>Theory</h4>
+        <ul>
+          <li><a href="kernel.html">The Kernel</a></li>
+          <li><a href="loops.html">The Loops</a></li>
+          <li><a href="diagnosis.html">Diagnosis</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Software</h4>
+        <ul>
+          <li><a href="software.html">Connection Machine</a></li>
+          <li><a href="software.html">Intuition Machine</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>Intuition Machine, 1200 South Arlington Ridge Road, 508, Arlington, VA 22202, USA</span>
+      <span>(833) 8INTUIT</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

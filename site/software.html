@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Software — Connection Machine and Intuition Machine</title>
+<meta name="description" content="Connection Machine builds the fold-witness graph. Intuition Machine makes the selector explicit: typed dispatch with a live-judgment path held open.">
+<link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="mark" viewBox="0 0 64 64">
+    <polygon points="32,6 54.5,19 32,32 9.5,19" fill="currentColor" opacity=".95"/>
+    <polygon points="9.5,19 32,32 32,58 9.5,45" fill="currentColor" opacity=".5"/>
+    <polygon points="54.5,19 54.5,45 32,58 32,32" fill="currentColor" opacity=".72"/>
+  </symbol>
+</svg>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="index.html">
+      <svg style="color:var(--signal)"><use href="#mark"></use></svg>
+      <b>Intuition Machine</b>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="kernel.html">Kernel</a>
+      <a href="loops.html">Loops</a>
+      <a href="software.html">Software</a>
+      <a href="diagnosis.html">Diagnosis</a>
+      <a href="team.html">Team</a>
+      <a href="about.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap page-head">
+    <span class="label">Software</span>
+    <h1>Two instruments, one kernel</h1>
+    <p class="lede">One reads the words a system already runs and checks how far its claims
+    sit from ground. The other stands at the front desk and decides which word runs next.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="products">
+      <article class="product">
+        <svg class="product__icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M8 8 L22 22 L8 22 M8 36 L22 22 L36 8 M22 22 L36 22 M22 22 L36 36" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="8" cy="8" r="2.8" fill="currentColor" stroke="none"/>
+          <circle cx="8" cy="22" r="2.8" fill="currentColor" stroke="none"/>
+          <circle cx="8" cy="36" r="2.8" fill="currentColor" stroke="none"/>
+          <circle cx="36" cy="8" r="2.8" fill="currentColor" stroke="none"/>
+          <circle cx="36" cy="22" r="2.8" fill="currentColor" stroke="none"/>
+          <circle cx="36" cy="36" r="2.8" fill="currentColor" stroke="none"/>
+          <circle cx="22" cy="22" r="4.4" fill="currentColor" stroke="none"/>
+        </svg>
+        <span class="product__abbr">CM</span>
+        <h3>Connection Machine</h3>
+        <p class="product__role">Witness graph and word tracing</p>
+        <ul class="caps">
+          <li>Builds the fold-witness graph: which claims descend to evidence, and how far</li>
+          <li>Traces which of the twelve loops a system actually runs, and which fail to close</li>
+          <li>Detects letter deletions — the audit that compares reports to other reports</li>
+          <li>Flags orphaned conventions: standing rules with no living editor</li>
+        </ul>
+      </article>
+
+      <article class="product">
+        <svg class="product__icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M22 6 L22 16 M22 28 L22 38 M6 22 L16 22 M28 22 L38 22" stroke-linecap="round"/>
+          <circle cx="22" cy="22" r="6.2"/>
+          <path d="M11 11 L16.5 16.5 M33 11 L27.5 16.5" stroke-linecap="round" opacity=".55"/>
+        </svg>
+        <span class="product__abbr">IM</span>
+        <h3>Intuition Machine</h3>
+        <p class="product__role">Typed dispatch</p>
+        <ul class="caps">
+          <li>The selector made operational: routes arriving content to the handling loop</li>
+          <li>Types every route by level and column — no unindexed selection</li>
+          <li>Holds routing rules to the ceiling: quality-reading routes stay uncompiled</li>
+          <li>Keeps a live-judgment path and an alerting bypass permanently open</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Connection Machine</span>
+        <h2>What a witness graph is for</h2>
+      </div>
+      <div class="prose">
+        <p>A convention-level claim is grounded exactly when a descent chain with provenance
+        connects it to encounter-level records: the claim links to an interpretation, which
+        links to a log, which links to something that actually happened. No such chain means
+        no witness, and no witness means capture-vulnerable.</p>
+        <p>CM instruments that chain. It ingests the trace store, indexes the four strata of
+        witness depth, and reports — per claim — whether a descent path to evidence exists and
+        how many hops long it is. Because the test is mechanical, anyone can run it on any
+        assertion.</p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 720 290" role="img" aria-label="A grounded claim links through an interpretation record and an execution trace to a real event; an ungrounded claim has no such chain." xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0f6e63"/>
+  </marker>
+  <marker id="ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5a6068"/>
+  </marker>
+  <marker id="ah-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#a33a2a"/>
+  </marker>
+</defs>
+  <text x="24" y="26" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.6" fill="#0f6e63">GROUNDED &#8212; A DESCENT CHAIN WITH PROVENANCE</text>
+
+  
+  <rect x="24" y="44" width="146" height="50" fill="#f1efe9" stroke="#0f6e63"/>
+  <text x="97" y="66" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#14171a" text-anchor="middle">the claim</text>
+  <text x="97" y="83" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">ν · convention</text>
+  
+  <rect x="198" y="44" width="146" height="50" fill="#f1efe9" stroke="#0f6e63"/>
+  <text x="271" y="66" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#14171a" text-anchor="middle">interpretation</text>
+  <text x="271" y="83" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">record</text>
+  
+  <rect x="372" y="44" width="146" height="50" fill="#f1efe9" stroke="#0f6e63"/>
+  <text x="445" y="66" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#14171a" text-anchor="middle">trace</text>
+  <text x="445" y="83" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">κ · execution log</text>
+  
+  <rect x="546" y="44" width="146" height="50" fill="#f1efe9" stroke="#0f6e63"/>
+  <text x="619" y="66" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#14171a" text-anchor="middle">event</text>
+  <text x="619" y="83" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">what happened</text>
+
+  <line x1="176" y1="69" x2="192" y2="69" stroke="#0f6e63" stroke-width="1.6" marker-start="url(#ah)"/>
+  <line x1="350" y1="69" x2="366" y2="69" stroke="#0f6e63" stroke-width="1.6" marker-start="url(#ah)"/>
+  <line x1="524" y1="69" x2="540" y2="69" stroke="#0f6e63" stroke-width="1.6" marker-start="url(#ah)"/>
+  <text x="360" y="116" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#0f6e63" text-anchor="middle">anyone can walk the chain and check</text>
+
+  <line x1="24" y1="146" x2="696" y2="146" stroke="#c8c4b9"/>
+
+  <text x="24" y="178" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.6" fill="#a33a2a">UNGROUNDED &#8212; NO WITNESS, THEREFORE CAPTURE-VULNERABLE</text>
+
+  
+  <rect x="24" y="196" width="146" height="50" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="97" y="218" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#14171a" text-anchor="middle">the claim</text>
+  <text x="97" y="235" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">ν · convention</text>
+  
+  <rect x="546" y="196" width="146" height="50" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="619" y="218" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#14171a" text-anchor="middle">event</text>
+  <text x="619" y="235" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">what happened</text>
+
+  <line x1="176" y1="221" x2="330" y2="221" stroke="#a33a2a" stroke-width="1.4" stroke-dasharray="5 5"/>
+  <line x1="392" y1="221" x2="540" y2="221" stroke="#a33a2a" stroke-width="1.4" stroke-dasharray="5 5"/>
+  <line x1="348" y1="208" x2="374" y2="234" stroke="#a33a2a" stroke-width="1.8"/>
+  <line x1="374" y1="208" x2="348" y2="234" stroke="#a33a2a" stroke-width="1.8"/>
+  <text x="360" y="266" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="#a33a2a" text-anchor="middle">nothing to check the story against but the story</text>
+</svg>
+      <figcaption class="label">Fig. 07 — A claim with a descent chain, and one without</figcaption>
+    </figure>
+
+        <p>What it cannot do is eliminate the remainder. Convention is never fully groundable,
+        so a narratable margin is permanent. CM's job is to make the groundable portion
+        commonly computable, and to say plainly which claims fall outside it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Intuition Machine</span>
+        <h2>Why dispatch needs a guard</h2>
+      </div>
+      <div class="prose">
+        <p>A strange complaint arrives on Monday morning. It might be an operations matter, an
+        audit trigger, or early market intelligence. Every loop is healthy; the diagnostic
+        layers examine each one, find nothing, and return nothing — because the failure was
+        that the item reached the wrong loop.</p>
+        <p>IM makes the selector explicit. Every route is typed by level and column. Rules are
+        marked as compiled or live, and the mix is matched to stage — compiled selection is
+        appropriate standardisation at commodity stage and lethal at genesis.</p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 720 330" role="img" aria-label="A selector routes an arriving item; a misroute sends it to a competent but wrong loop, and route starvation leaves a healthy loop never engaged." xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#0f6e63"/>
+  </marker>
+  <marker id="ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5a6068"/>
+  </marker>
+  <marker id="ah-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#a33a2a"/>
+  </marker>
+</defs>
+  <text x="24" y="26" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" letter-spacing="1.6" fill="#5a6068">EVERY LOOP HEALTHY &#8212; AND THE CONTENT REACHED THE WRONG ONE</text>
+
+  <rect x="24" y="130" width="140" height="56" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="94" y="154" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a" text-anchor="middle">arriving item</text>
+  <text x="94" y="172" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">a strange complaint</text>
+
+  <line x1="170" y1="158" x2="212" y2="158" stroke="#5a6068" stroke-width="1.6" marker-end="url(#ah-ink)"/>
+
+  <rect x="218" y="118" width="112" height="80" fill="#eceae4" stroke="#0f6e63" stroke-width="1.6"/>
+  <text x="274" y="150" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="17" font-weight="600" fill="#0f6e63" text-anchor="middle">Sel</text>
+  <text x="274" y="170" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">the front desk</text>
+  <text x="274" y="184" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068" text-anchor="middle">typed · regimed · owned</text>
+
+  <!-- routes -->
+  <line x1="336" y1="136" x2="470" y2="72" stroke="#a33a2a" stroke-width="1.8" marker-end="url(#ah-bad)"/>
+  <line x1="336" y1="158" x2="470" y2="158" stroke="#0f6e63" stroke-width="1.8" marker-end="url(#ah)"/>
+  <line x1="336" y1="180" x2="470" y2="252" stroke="#c8c4b9" stroke-width="1.6" stroke-dasharray="5 5"/>
+
+  <rect x="476" y="46" width="220" height="52" fill="#f1efe9" stroke="#a33a2a"/>
+  <text x="494" y="70" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#a33a2a">⦿O</text>
+  <text x="530" y="70" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a">handled as operations</text>
+  <text x="494" y="88" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#a33a2a">MISROUTE &#8212; competent, and wrong</text>
+
+  <rect x="476" y="132" width="220" height="52" fill="#f1efe9" stroke="#0f6e63"/>
+  <text x="494" y="156" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#0f6e63">⦿I</text>
+  <text x="530" y="156" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#14171a">early intelligence</text>
+  <text x="494" y="174" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068">where it belonged</text>
+
+  <rect x="476" y="226" width="220" height="52" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="494" y="250" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#5a6068">⦿R</text>
+  <text x="530" y="250" font-family="Archivo, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="600" fill="#5a6068">reflexive quality</text>
+  <text x="494" y="268" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#5a6068">ROUTE STARVATION &#8212; never engaged</text>
+
+  <text x="24" y="316" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10.5" fill="#5a6068">The diagnostic layers examine each loop, find all of them healthy, and return nothing.</text>
+</svg>
+      <figcaption class="label">Fig. 08 — Misroute and route starvation at the front desk</figcaption>
+    </figure>
+        <p>Two guards are structural rather than configurable. Routes that must read
+        quality-level content cannot be fully compiled, so no rulebook becomes the sole gate on
+        quality-sensing. And every compiled rule set is itself a standing convention, so it
+        carries a witness and an owner — because orphaned routing rules are the dead hand at
+        the front desk.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">Status</span>
+        <h2>What is claimed, and what is not</h2>
+      </div>
+      <div class="prose" style="max-width:70ch">
+        <p>The kernel these instruments implement is verified: seven axioms, nine load-bearing
+        theorems, and 43 of 43 checks passing in the canonical model. The constructs the
+        dispatch layer rests on are newer and carry weaker labels — the selector is FRAMEWORK
+        with its formalisation deferred to an open problem, and the ceiling conjecture is
+        SEMI-FORMAL pending a model family not yet built.</p>
+        <p>Those labels are printed here for the same reason they are printed in the
+        specification. A tool that reports on grounding should be honest about its own.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section cta">
+      <h2>Bring it a system that is failing quietly.</h2>
+      <p class="lede">Diagnostic engagements start by asking which words your organisation
+      actually runs, and which of its standing rules no longer have an owner.</p>
+      <div class="cta__actions">
+        <a class="btn btn--lit" href="diagnosis.html">How diagnosis works</a>
+        <a class="btn btn--lit" style="background:transparent;border-color:#43c4b0;color:#43c4b0"
+           href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="brand" href="index.html" style="color:var(--signal-lit)">
+          <svg><use href="#mark"></use></svg>
+          <b style="color:var(--paper-hi)">Intuition Machine</b>
+        </a>
+        <p style="margin-top:.9rem;max-width:34ch">Quaternion Process Theory on the QML kernel</p>
+      </div>
+      <div>
+        <h4>Theory</h4>
+        <ul>
+          <li><a href="kernel.html">The Kernel</a></li>
+          <li><a href="loops.html">The Loops</a></li>
+          <li><a href="diagnosis.html">Diagnosis</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Software</h4>
+        <ul>
+          <li><a href="software.html">Connection Machine</a></li>
+          <li><a href="software.html">Intuition Machine</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>Intuition Machine, 1200 South Arlington Ridge Road, 508, Arlington, VA 22202, USA</span>
+      <span>(833) 8INTUIT</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

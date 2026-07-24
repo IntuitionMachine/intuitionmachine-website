@@ -6,3 +6,8 @@ mirror/
 
 .DS_Store
 __pycache__/
+
+# The QPT specification stays out of the published site AND out of the public
+# repo. Committing it here would make it readable at github.com/... even though
+# nothing on the site links to it. Remove this line if you want it public.
+qpt-*.md
