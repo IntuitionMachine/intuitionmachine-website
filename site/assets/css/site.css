@@ -478,6 +478,8 @@ p:last-child { margin-bottom: 0; }
   font-style: italic;
 }
 .person__link {
+  display: inline-block;
+  padding-block: .4rem;
   font-family: var(--mono);
   font-size: .74rem;
   letter-spacing: .1em;
@@ -534,7 +536,10 @@ p:last-child { margin-bottom: 0; }
   margin-bottom: .9rem;
 }
 .foot ul { list-style: none; margin: 0; padding: 0; }
-.foot li { margin-bottom: .5rem; }
+.foot li { margin-bottom: .15rem; }
+/* Inline links are ~20px tall, which is under the 24px touch minimum.
+   Padding rather than font-size keeps the footer's scale intact. */
+.foot li a { display: inline-block; padding-block: .3rem; }
 .foot__base {
   margin-top: clamp(2rem, 4vw, 3rem);
   padding-top: 1.4rem;
@@ -613,7 +618,12 @@ p:last-child { margin-bottom: 0; }
 }
 .contact-cell { background: var(--paper); padding: clamp(1.4rem, 3vw, 2rem); }
 .contact-cell .label { display: block; margin-bottom: .9rem; }
-.contact-cell a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+.contact-cell a {
+  display: inline-block;
+  padding-block: .25rem;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
 .contact-cell a:hover { border-bottom-color: var(--signal); color: var(--signal); }
 
 /* ---------- skip link ---------- */
