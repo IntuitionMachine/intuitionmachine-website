@@ -19,6 +19,10 @@
   --deep:       #0d1214;
   --deep-2:     #182124;
   --deep-rule:  #2b383c;
+  /* Text on the dark bands. --ink-2 is tuned for paper and drops to ~3:1
+     against near-black, so dark grounds get their own secondary tone. */
+  --on-deep:    #d3dadb;
+  --on-deep-2:  #9fabad;
 
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --body:    "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -633,7 +637,7 @@ p:last-child { margin-bottom: 0; }
 }
 .band--deep h2 { color: var(--paper-hi); }
 .band--deep .label { color: var(--signal-lit); }
-.band--deep .lede { color: #a9b4b6; }
+.band--deep .lede { color: var(--on-deep); }
 .band--deep .rule { border-top-color: var(--deep-rule); }
 /* Two dark bands in a row need a seam, or they read as one long void. */
 .band--deep + .band--deep > .section { border-top: 1px solid var(--deep-rule); }
@@ -656,7 +660,7 @@ p:last-child { margin-bottom: 0; }
 .person h3 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
 .person__meta {
   margin: .5rem 0 1.1rem;
-  color: #a9b4b6;
+  color: var(--on-deep);
   font-style: italic;
 }
 .person__link {
@@ -693,7 +697,7 @@ p:last-child { margin-bottom: 0; }
 
 .foot {
   background: var(--deep-2);
-  color: #9aa5a7;
+  color: var(--on-deep);
   padding-block: clamp(2.5rem, 5vw, 4rem);
   font-size: .9rem;
 }
@@ -720,7 +724,7 @@ p:last-child { margin-bottom: 0; }
   font-weight: 500;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: #6d7a7c;
+  color: var(--on-deep-2);
   margin-bottom: .9rem;
 }
 .foot ul { list-style: none; margin: 0; padding: 0; }
@@ -740,7 +744,7 @@ p:last-child { margin-bottom: 0; }
   font-size: .68rem;
   letter-spacing: .09em;
   text-transform: uppercase;
-  color: #6d7a7c;
+  color: var(--on-deep-2);
 }
 
 /* ---------- article pages (Research Machine, About) ---------- */
@@ -871,7 +875,11 @@ p:last-child { margin-bottom: 0; }
   white-space: nowrap;
 }
 .chip--axiom   { border-color: var(--ink); color: var(--ink); }
-.chip--theorem { border-color: var(--signal); color: var(--signal); background: color-mix(in srgb, var(--signal) 8%, var(--paper-hi)); }
+.chip--theorem {
+  border-color: var(--signal);
+  color: #094f46;
+  background: color-mix(in srgb, var(--signal) 8%, var(--paper-hi));
+}
 
 /* The counted facts of the kernel. */
 .figures {
@@ -908,6 +916,7 @@ p:last-child { margin-bottom: 0; }
 }
 .band--deep .figure-cell { background: var(--deep); }
 .band--deep .figure-cell b { color: var(--signal-lit); }
+.band--deep .figure-cell span { color: var(--on-deep-2); }
 .band--deep .figures { background: var(--deep-rule); border-color: var(--deep-rule); }
 
 /* A named failure, stated once, with its everyday case underneath. */
@@ -947,7 +956,7 @@ p:last-child { margin-bottom: 0; }
 
 /* Figures sit on light stock even inside a dark band, so the drawing keeps
    its contrast without needing a second colourway. */
-.band--deep .fig figcaption { color: #a9b4b6; }
+.band--deep .fig figcaption { color: var(--on-deep-2); }
 
 /* ---------- skip link ---------- */
 
