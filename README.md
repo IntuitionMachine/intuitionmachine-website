@@ -19,20 +19,22 @@ Then open <http://localhost:8000/>. Any static file server works.
 
 ## Deploy to GitHub Pages
 
-This repo is a GitHub **user site**: it is named `<username>.github.io` and serves from the
-root of that domain.
+This repo deploys to <https://intuitionmachine.com>.
 
 1. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
 2. Push to `main`. `.github/workflows/pages.yml` publishes `site/` on every push.
 
 ### Custom domain
 
-`site/CNAME` contains `www.intuitionmachine.com`, so Pages will claim that hostname. It only
-takes effect once DNS points at GitHub. At your registrar:
+`site/CNAME` contains `intuitionmachine.com`, the apex. It must match the domain set under
+Settings → Pages, or each deploy will overwrite that setting. DNS at the registrar:
 
-| Type  | Name  | Value                  |
-|-------|-------|------------------------|
-| CNAME | `www` | `<username>.github.io` |
+| Type  | Name  | Value                        |
+|-------|-------|------------------------------|
+| CNAME | `www` | `intuitionmachine.github.io`  |
+| A     | `@`   | GitHub Pages IPs (see below) |
+
+GitHub redirects `www` to the apex automatically.
 
 To serve the apex (`intuitionmachine.com`) too, add A records for `@` pointing at
 `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`, plus AAAA
