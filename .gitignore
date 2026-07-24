@@ -1,0 +1,8 @@
+# Raw wget mirror - intermediate input to build.py, not part of the site.
+mirror/
+
+# Playwright MCP scratch output
+.playwright-mcp/
+
+.DS_Store
+__pycache__/
