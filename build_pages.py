@@ -104,7 +104,10 @@ def render_figures(body):
     return body
 
 
-def shell(title, description, body, body_class=""):
+SITE = "https://intuitionmachine.com"
+
+
+def shell(title, description, body, body_class="", slug="index.html"):
     nav = "\n      ".join(f'<a href="{href}">{text}</a>' for href, text in NAV)
     cls = f' class="{body_class}"' if body_class else ""
     body = render_figures(body)
@@ -115,7 +118,23 @@ def shell(title, description, body, body_class=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{description}">
+<link rel="canonical" href="{SITE}/{slug}">
 <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Intuition Machine">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="{SITE}/{slug}">
+<meta property="og:image" content="{SITE}/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Intuition Machine — Quaternion Process Theory. Seven axioms, twelve loops, 43 of 43 checks verified.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{description}">
+<meta name="twitter:image" content="{SITE}/assets/img/og.png">
+
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body{cls}>
@@ -814,7 +833,7 @@ def redirect_page(target):
 def main():
     for slug, title, desc, body in PAGES:
         with open(os.path.join(OUT, slug), "w", encoding="utf-8") as f:
-            f.write(shell(title, desc, body))
+            f.write(shell(title, desc, body, slug=slug))
         print(f"  wrote {OUT}/{slug}")
 
 

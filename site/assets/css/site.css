@@ -302,6 +302,152 @@ p:last-child { margin-bottom: 0; }
 }
 .plate__caption span:last-child { color: var(--ink); }
 
+/* ---------- the matrix controls ---------- */
+
+.plate__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .8rem 1.2rem;
+  padding: .7rem .9rem;
+  border: 1px solid var(--rule);
+  border-top: 0;
+  background: var(--paper-hi);
+}
+
+/* The word being executed, one letter per box, current letter lit. */
+.plate__word {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-right: auto;
+  font-variant-numeric: lining-nums;
+}
+.plate__word .ltr {
+  font-family: var(--mono);
+  font-size: .82rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: .42rem .5rem;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-2);
+  transition: background .15s, color .15s, border-color .15s;
+}
+.plate__word .ltr.is-on {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--paper-hi);
+}
+/* ▼ marks the audit computation, not a move, so it never lights. */
+.plate__word .ltr.is-mark { border-style: dashed; color: var(--rule); }
+
+.plate__buttons { display: flex; gap: .5rem; }
+.plate__bar button {
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .5rem .85rem;
+  min-height: 30px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.plate__bar button:hover { background: var(--ink); color: var(--paper-hi); }
+
+.loop-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: .7rem;
+}
+.loop-picker button {
+  font-family: var(--mono);
+  font-size: .76rem;
+  font-weight: 600;
+  padding: .45rem .7rem;
+  min-height: 30px;
+  border: 1px solid var(--rule);
+  background: var(--paper-hi);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.loop-picker button:hover { border-color: var(--signal); color: var(--signal); }
+.loop-picker button[aria-pressed="true"] {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--paper-hi);
+}
+
+.plate__status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem 1rem;
+  align-items: baseline;
+  margin: .8rem 0 0;
+  font-family: var(--mono);
+  font-size: .74rem;
+  color: var(--ink-2);
+}
+.verdict { font-weight: 600; }
+.verdict.is-ok { color: var(--signal); }
+.verdict.is-bad { color: #a33a2a; }
+
+/* ---------- run your own word ---------- */
+
+.lab { margin-top: 1rem; border-top: 1px solid var(--rule); }
+.lab summary {
+  cursor: pointer;
+  list-style: none;
+  padding: .8rem 0;
+  font-family: var(--mono);
+  font-size: .74rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+.lab summary::-webkit-details-marker { display: none; }
+.lab summary::before { content: "+ "; }
+.lab[open] summary::before { content: "\2212 "; }
+
+.lab form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem .7rem;
+  padding-bottom: .9rem;
+}
+.lab label {
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.lab select, .lab input {
+  font-family: var(--mono);
+  font-size: .82rem;
+  padding: .55rem .6rem;
+  border: 1px solid var(--rule);
+  background: var(--paper-hi);
+  color: var(--ink);
+  min-height: 34px;
+}
+.lab input { flex: 1 1 12rem; letter-spacing: .12em; text-transform: uppercase; }
+.lab select:focus-visible, .lab input:focus-visible { border-color: var(--signal); }
+.lab .btn { padding: .6rem 1.1rem; }
+.lab p {
+  font-size: .88rem;
+  color: var(--ink-2);
+  max-width: 62ch;
+  padding-bottom: 1rem;
+}
+
 /* ---------- generic section ---------- */
 
 .section { padding-block: var(--step); }
@@ -783,6 +929,8 @@ p:last-child { margin-bottom: 0; }
   margin-bottom: .6rem;
 }
 .term h3 { font-size: 1.15rem; margin-bottom: .45rem; }
+/* When a term heading is a link it still needs a 24px touch target. */
+.term h3 a { display: inline-block; padding-block: .25rem; }
 .term p { font-size: .93rem; line-height: 1.5; color: var(--ink-2); }
 
 /* ---------- explanatory figures ---------- */

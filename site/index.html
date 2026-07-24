@@ -5,7 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Intuition Machine — Quaternion Process Theory</title>
 <meta name="description" content="Quaternion Process Theory models process as movement on a twelve-cell space. Founded on the QML kernel: seven axioms, one generative operator, and a machine-checked model.">
+<link rel="canonical" href="https://intuitionmachine.com/index.html">
 <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Intuition Machine">
+<meta property="og:title" content="Intuition Machine — Quaternion Process Theory">
+<meta property="og:description" content="Quaternion Process Theory models process as movement on a twelve-cell space. Founded on the QML kernel: seven axioms, one generative operator, and a machine-checked model.">
+<meta property="og:url" content="https://intuitionmachine.com/">
+<meta property="og:image" content="https://intuitionmachine.com/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Intuition Machine — Quaternion Process Theory. Seven axioms, twelve loops, 43 of 43 checks verified.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Intuition Machine — Quaternion Process Theory">
+<meta name="twitter:description" content="Quaternion Process Theory models process as movement on a twelve-cell space. Founded on the QML kernel: seven axioms, one generative operator, and a machine-checked model.">
+<meta name="twitter:image" content="https://intuitionmachine.com/assets/img/og.png">
+
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
@@ -62,9 +78,43 @@
         <canvas id="matrix" role="img"
                 aria-label="The twelve-cell matrix: three spine levels (mediation, causation, quality) by four attentional columns (ii, ie, ci, ce). Loop words trace closed walks across the cells."></canvas>
       </div>
+      <div class="plate__bar">
+        <div class="plate__word" id="word-display" aria-live="off"></div>
+        <div class="plate__buttons">
+          <button type="button" id="step-btn">Step</button>
+          <button type="button" id="play-toggle">Pause</button>
+        </div>
+      </div>
+
+      <div class="loop-picker" id="loop-picker" role="group" aria-label="Choose a loop"></div>
+
+      <p class="plate__status">
+        <span id="loop-name"></span>
+        <span class="verdict" id="verdict"></span>
+      </p>
+
+      <details class="lab">
+        <summary>Run your own word</summary>
+        <form id="word-lab">
+          <label for="lab-start">from</label>
+          <select id="lab-start">
+            <option>3.ce</option><option>3.ii</option><option>3.ie</option><option>3.ci</option>
+            <option>2.ce</option><option>2.ii</option><option>2.ie</option><option>2.ci</option>
+            <option>1.ce</option><option>1.ii</option><option>1.ie</option><option>1.ci</option>
+          </select>
+          <label for="lab-word">word</label>
+          <input id="lab-word" type="text" value="DDUUIGIG" spellcheck="false"
+                 inputmode="latin" autocomplete="off" aria-describedby="lab-help">
+          <button class="btn" type="submit">Run</button>
+        </form>
+        <p id="lab-help">Letters over <b>U</b> unfold, <b>D</b> fold, <b>I</b> instance&#8596;system,
+        <b>G</b> content&#8596;vehicle. Anything else is ignored. The interpreter reports whether
+        the walk closes on its start cell.</p>
+      </details>
+
       <figcaption class="plate__caption label">
-        <span>Fig. 01 — The matrix, with loop words tracing closed walks</span>
-        <span>ν mediation &nbsp;·&nbsp; κ causation &nbsp;·&nbsp; ω quality</span>
+        <span>Fig. 01 — Words executed under the kernel&#8217;s move rules</span>
+        <span>ν mediation &#160;·&#160; κ causation &#160;·&#160; ω quality</span>
       </figcaption>
     </figure>
   </section>
