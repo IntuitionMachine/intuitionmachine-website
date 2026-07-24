@@ -13,7 +13,7 @@ import urllib.request
 
 MIRROR = "mirror"
 PAGES_DIR = os.path.join(MIRROR, "www.intuitionmachine.com")
-OUT = "site"
+OUT = "archive"
 
 VENDOR_HOSTS = ["assets.squarespace.com", "static1.squarespace.com"]
 
