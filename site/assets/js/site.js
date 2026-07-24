@@ -141,59 +141,109 @@
   // Retraced legs would then coincide, since they share a midpoint and so
   // get the same offset. Those are separated by a small lateral nudge, taken
   // symmetrically about the inward bow so both passes stay concave.
+  // Control points for the walk's legs.
+  //
+  // Two rules, in order of priority:
+  //  1. every arc bows to the side the grid centre is on, so none reads as
+  //     convex regardless of which way the leg is travelled;
+  //  2. no two arcs may sit on top of each other.
+  //
+  // (2) is not just about retraced legs. A leg from 3.ci to 3.ii runs straight
+  // through 3.ie, laying it over two earlier legs of the same walk. So legs
+  // are grouped by the infinite line they lie on, and within a line any that
+  // overlap are given increasing bow depths - all on the same concave side,
+  // so separating them never turns one convex.
   function computeCtrls(pts, cells) {
     var n = pts.length;
     if (n < 2) return [];
 
-    // Reference point every arc cups toward: the middle of the grid. The
-    // walk's own centroid is tempting but fails whenever it is collinear
-    // with a leg -- a walk along one row has its centroid on that row, and
-    // the arcs flatten to straight lines.
     var refx = geo.padL + geo.gw / 2;
     var refy = geo.padT + geo.gh / 2;
 
-    function key(a, b) { return a < b ? a + "|" + b : b + "|" + a; }
-
-    var total = {}, k, i;
-    for (i = 0; i < n - 1; i++) {
-      k = key(cells[i], cells[i + 1]);
-      total[k] = (total[k] || 0) + 1;
-    }
-
-    var seen = {}, out = [];
+    var legs = [], i;
     for (i = 0; i < n - 1; i++) {
       var p = pts[i], q = pts[i + 1];
-      var mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2;
       var dx = q.x - p.x, dy = q.y - p.y;
       var len = Math.sqrt(dx * dx + dy * dy) || 1;
-      var bow = Math.min(len * 0.2, 26);
+      var ux = dx / len, uy = dy / len;
 
-      // The bow is always perpendicular to the leg; only its sign is chosen,
-      // so that it points to whichever side the centre is on. That keeps
-      // every arc concave regardless of which way the leg is travelled.
-      var px = -dy / len, py = dx / len;
+      // Canonical direction, so a leg and its reverse share one line key.
+      var cux = ux, cuy = uy;
+      if (cux < -1e-6 || (Math.abs(cux) < 1e-6 && cuy < 0)) { cux = -cux; cuy = -cuy; }
+      var nx = -cuy, ny = cux;
+
+      var t0 = cux * p.x + cuy * p.y, t1 = cux * q.x + cuy * q.y;
+      legs.push({
+        p: p, q: q, len: len, ux: ux, uy: uy,
+        line: Math.round(cux * 1e3) + "/" + Math.round(cuy * 1e3) + "/" +
+              Math.round(nx * p.x + ny * p.y),
+        t0: Math.min(t0, t1), t1: Math.max(t0, t1),
+        layer: 0
+      });
+    }
+
+    // Greedy interval colouring per line: give a leg the shallowest depth not
+    // already taken by an earlier leg it overlaps.
+    var byLine = {};
+    for (i = 0; i < legs.length; i++) {
+      (byLine[legs[i].line] = byLine[legs[i].line] || []).push(legs[i]);
+    }
+    var keys = Object.keys(byLine);
+    for (var g = 0; g < keys.length; g++) {
+      var group = byLine[keys[g]];
+      for (var a = 0; a < group.length; a++) {
+        var used = {};
+        for (var b = 0; b < a; b++) {
+          // Overlapping spans, with a small tolerance so legs that merely
+          // touch end-to-end are left alone.
+          if (group[a].t0 < group[b].t1 - 1 && group[b].t0 < group[a].t1 - 1) {
+            used[group[b].layer] = true;
+          }
+        }
+        var d = 0;
+        while (used[d]) d++;
+        group[a].layer = d;
+      }
+    }
+
+    var spread = Math.max(13, Math.min(24, geo.ch * 0.22));
+    var out = [];
+    for (i = 0; i < legs.length; i++) {
+      var L = legs[i];
+      var mx = (L.p.x + L.q.x) / 2, my = (L.p.y + L.q.y) / 2;
+      var px = -L.uy, py = L.ux;
+
       var side = px * (refx - mx) + py * (refy - my);
-      if (Math.abs(side) < 0.5) side = (py !== 0 ? py : 1);   // leg through the centre
+      if (Math.abs(side) < 0.5) side = (py !== 0 ? py : 1);
       var sign = side >= 0 ? 1 : -1;
 
-      k = key(cells[i], cells[i + 1]);
-      seen[k] = (seen[k] || 0) + 1;
-      var lateral = 0;
-      if (total[k] > 1) {
-        // Fan repeated passes apart, staying on the concave side of the leg.
-        lateral = (seen[k] - (total[k] + 1) / 2) * 22;
-      }
+      var base = Math.min(L.len * 0.14, 16);
+      var mag = sign * (base + L.layer * spread);
 
-      var mag = sign * bow + lateral;
-      out.push({ x: mx + px * mag, y: my + py * mag });
+      // A cubic with both controls offset, rather than one mid control point.
+      // A quadratic leaves its endpoints almost tangent to the straight leg,
+      // so two arcs at different depths still run together for a long way
+      // out of a shared cell. The cubic reaches its depth quickly and holds
+      // it, which is what keeps stacked lanes apart.
+      var h = mag * 1.34;                    // both controls at h -> apex ~mag
+      var ax = L.p.x + L.ux * L.len / 3, ay = L.p.y + L.uy * L.len / 3;
+      var bx = L.q.x - L.ux * L.len / 3, by = L.q.y - L.uy * L.len / 3;
+      out.push({ c1: { x: ax + px * h, y: ay + py * h },
+                 c2: { x: bx + px * h, y: by + py * h } });
     }
     return out;
   }
 
-  function quadAt(p, c, q, t) {
-    var m = 1 - t;
-    return { x: m * m * p.x + 2 * m * t * c.x + t * t * q.x,
-             y: m * m * p.y + 2 * m * t * c.y + t * t * q.y };
+  function lerp(a, b, t) {
+    return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
+  }
+
+  // de Casteljau: the cubic from p to q, truncated at t, exactly on the
+  // full curve.
+  function cubicUpTo(p, c1, c2, q, t) {
+    var a = lerp(p, c1, t), b = lerp(c1, c2, t), c = lerp(c2, q, t);
+    var d = lerp(a, b, t), e = lerp(b, c, t);
+    return { c1: a, c2: d, end: lerp(d, e, t) };
   }
 
   function ease(t) { return t * t * (3 - 2 * t); }
@@ -243,17 +293,20 @@
       var cp = ctrls[i];
       ctx.beginPath();
       ctx.moveTo(pts[i].x, pts[i].y);
-      ctx.quadraticCurveTo(cp.x, cp.y, pts[i + 1].x, pts[i + 1].y);
+      ctx.bezierCurveTo(cp.c1.x, cp.c1.y, cp.c2.x, cp.c2.y,
+                        pts[i + 1].x, pts[i + 1].y);
       ctx.stroke();
     }
 
     var head = pts[Math.min(upto, pts.length - 1)];
     if (upto + 1 < pts.length) {
       var a = pts[upto], b = pts[upto + 1], c = ctrls[upto], t = ease(frac);
-      head = quadAt(a, c, b, t);
+      var part = cubicUpTo(a, c.c1, c.c2, b, t);
+      head = part.end;
       ctx.beginPath();
       ctx.moveTo(a.x, a.y);
-      ctx.quadraticCurveTo(a.x + (c.x - a.x) * t, a.y + (c.y - a.y) * t, head.x, head.y);
+      ctx.bezierCurveTo(part.c1.x, part.c1.y, part.c2.x, part.c2.y,
+                        head.x, head.y);
       ctx.stroke();
     }
 
