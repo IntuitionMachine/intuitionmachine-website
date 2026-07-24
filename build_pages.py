@@ -162,7 +162,7 @@ def shell(slug, title, description, body):
       </div>
     </div>
     <div class="foot__base">
-      <span>Intuition Machine, 1200 South Arlington Ridge Road, 508, Arlington, VA 22022, USA</span>
+      <span>Intuition Machine, 1200 South Arlington Ridge Road, 508, Arlington, VA 22202, USA</span>
       <span>(833) 8INTUIT</span>
     </div>
   </div>
@@ -404,7 +404,7 @@ ABOUT = f"""
       </div>
       <div class="contact-cell">
         <span class="label">Post</span>
-        <p>Intuition Machine<br>1200 South Arlington Ridge Road, 508<br>Arlington, VA 22022<br>USA</p>
+        <p>Intuition Machine<br>1200 South Arlington Ridge Road, 508<br>Arlington, VA 22202<br>USA</p>
       </div>
     </div>
   </section>

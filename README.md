@@ -138,6 +138,6 @@ own stock photography. Build with `python3 build.py --all` to include them.
   original — "Two systems, one pipeline", "Two weeks to a roadmap", "Who builds it",
   "Patterns, in public" — were written to hold the new structure together.
 - **The address was corrected** after launch to 1200 South Arlington Ridge Road, 508,
-  Arlington, VA 22022. The original site carried two conflicting addresses (a
+  Arlington, VA 22202. The original site carried two conflicting addresses (a
   Germantown, MD one on About, a Cambridge, MA PO box in the footer); both are gone.
 - Fonts are SIL Open Font License 1.1. See `site/assets/fonts/fonts.css`.
