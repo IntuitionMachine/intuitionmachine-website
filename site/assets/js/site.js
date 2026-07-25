@@ -493,6 +493,32 @@
   else requestAnimationFrame(frame);
 })();
 
+/* Click-to-load video. The poster is a real button, so it works from the
+   keyboard; pressing it swaps in the privacy-mode YouTube player. Nothing
+   is requested from YouTube before that. */
+(function () {
+  "use strict";
+  var box = document.querySelector(".embed");
+  if (!box) return;
+  var btn = box.querySelector(".embed__poster");
+  if (!btn) return;
+
+  btn.addEventListener("click", function () {
+    var list = box.getAttribute("data-playlist");
+    var vid = box.getAttribute("data-video");
+    var src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(vid) +
+              "?list=" + encodeURIComponent(list) + "&autoplay=1&rel=0";
+    var f = document.createElement("iframe");
+    f.setAttribute("src", src);
+    f.setAttribute("title", "Quaternion Process Theory playlist");
+    f.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture");
+    f.setAttribute("allowfullscreen", "");
+    f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+    box.replaceChild(f, btn);
+    f.focus();
+  });
+})();
+
 /* Mark the current page in the nav without hand-editing every file. */
 (function () {
   "use strict";

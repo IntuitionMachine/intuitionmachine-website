@@ -958,6 +958,88 @@ p:last-child { margin-bottom: 0; }
    its contrast without needing a second colourway. */
 .band--deep .fig figcaption { color: var(--on-deep-2); }
 
+/* ---------- video embed ---------- */
+
+/* A click-to-load facade. The page makes no request to YouTube until the
+   visitor presses play, which keeps the site's no-external-requests property
+   intact for anyone who never watches, and keeps the poster fast. */
+.embed { position: relative; }
+.embed__poster {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--deep);
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+}
+.embed__poster img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: saturate(.85) contrast(1.02);
+  transition: transform .4s, filter .3s;
+}
+.embed__poster:hover img { transform: scale(1.014); filter: saturate(1) contrast(1.02); }
+
+.embed__play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.embed__play svg {
+  filter: drop-shadow(0 2px 14px rgba(0,0,0,.45));
+  transition: transform .25s;
+}
+.embed__poster:hover .embed__play svg { transform: scale(1.08); }
+
+.embed__meta {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 2.4rem 1.2rem .95rem;
+  background: linear-gradient(180deg, transparent, rgba(6,10,11,.9));
+  color: var(--paper-hi);
+  pointer-events: none;
+}
+.embed__meta b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  letter-spacing: -.018em;
+}
+.embed__meta i {
+  display: block;
+  margin-top: .3rem;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--on-deep-2);
+}
+
+/* Once loaded, the iframe takes the same box. */
+.embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--rule);
+}
+
+.embed__note {
+  margin-top: .8rem;
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .04em;
+  color: var(--ink-2);
+  max-width: 68ch;
+}
+
 /* ---------- skip link ---------- */
 
 .skip {

@@ -21,6 +21,7 @@ NAV = [
     ("loops.html", "Loops"),
     ("software.html", "Software"),
     ("diagnosis.html", "Diagnosis"),
+    ("video.html", "Video"),
     ("team.html", "Team"),
     ("about.html", "Contact"),
 ]
@@ -720,6 +721,60 @@ Edit at the spine        IMPOSSIBLE — quality cannot be rewritten,
 # Team and Contact — the company is unchanged
 # --------------------------------------------------------------------------
 
+VIDEO = """
+  <section class="wrap page-head">
+    <span class="label">Video</span>
+    <h1>Quaternion Process Theory, on video</h1>
+    <p class="lede">A 36-part series working through the theory — the kernel, the loops,
+    the pathologies, and the dispatch extensions — on the Intuition Machine channel.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="embed" data-playlist="PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-" data-video="-DC5SIdTSMA">
+      <button class="embed__poster" type="button" aria-label="Play the Quaternion Process Theory playlist">
+        <img src="assets/img/qpt-playlist-poster.jpg" width="1280" height="720" alt="">
+        <span class="embed__play" aria-hidden="true">
+          <svg viewBox="0 0 68 48" width="68" height="48">
+            <path d="M66.5 7.5a8.6 8.6 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.4a8.6 8.6 0 0 0-6 6A90 90 0 0 0 0 24a90 90 0 0 0 1.5 16.5 8.6 8.6 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.5a8.6 8.6 0 0 0 6-6A90 90 0 0 0 68 24a90 90 0 0 0-1.5-16.5z" fill="#0f6e63"/>
+            <path d="M27 34V14l18 10z" fill="#f3f1eb"/>
+          </svg>
+        </span>
+        <span class="embed__meta">
+          <b>The Grounded Loop Graph Model</b>
+          <i>36 videos &#160;·&#160; press to load from YouTube</i>
+        </span>
+      </button>
+    </div>
+    <p class="embed__note">Nothing is requested from YouTube until you press play. Loading the
+    player sets YouTube&#8217;s cookies and is subject to their privacy policy.</p>
+
+    <p style="margin-top:1.6rem">
+      <a class="btn btn--ghost" href="https://www.youtube.com/playlist?list=PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-"
+         rel="noopener">Open the playlist on YouTube</a>
+    </p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Where to start</span>
+        <h2>If you want the argument before the machinery</h2>
+      </div>
+      <div class="prose">
+        <p>The written pages here cover the same ground in less time. <a href="kernel.html">The
+        Kernel</a> gives the three levels and four columns the whole theory is built from;
+        <a href="loops.html">The Loops</a> shows why each recurring process is a word; and
+        <a href="diagnosis.html">Diagnosis</a> carries the result most worth arguing with —
+        that the worst failures are one-letter edits which still compile.</p>
+        <p>The series goes further than the site does, and in the author&#8217;s own words.</p>
+      </div>
+    </div>
+  </section>
+
+  
+""" + CTA + """
+"""
+
 TEAM = """
   <section class="wrap page-head">
     <span class="label">Wetware</span>
@@ -799,6 +854,9 @@ PAGES = [
     ("diagnosis.html", "Diagnosis — Quaternion Process Theory",
      "Pathologies as syntactic edits to healthy words, and the seven-layer diagnostic that "
      "locates them.", DIAGNOSIS),
+    ("video.html", "Video — Quaternion Process Theory",
+     "A 36-part video series working through Quaternion Process Theory: the kernel, "
+     "the loops, the pathologies and the dispatch extensions.", VIDEO),
     ("team.html", "Team — Intuition Machine",
      "Carlos Perez, Software Architect and Co-Founder of Intuition Machine.", TEAM),
     ("about.html", "Contact — Intuition Machine",
