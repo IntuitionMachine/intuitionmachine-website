@@ -90,6 +90,7 @@
   var W = 0, H = 0, dpr = 1, geo = null;
   var current = LOOPS[0], run = trace(current.start, current.word);
   var seg = 0, t01 = 0, hold = 0, last = 0, playing = !reduced;
+  var paintedSeg = -1;
   var ctrls = [];
   var hoverCell = null;
 
@@ -133,14 +134,6 @@
 
   // ---------------------------------------------------------------- drawing
 
-  // Every leg bows toward the walk's own centre, so all of its sides cup
-  // inward. Bowing relative to travel direction instead — the obvious
-  // approach — flips as the direction changes, and half the legs end up
-  // bulging outward.
-  //
-  // Retraced legs would then coincide, since they share a midpoint and so
-  // get the same offset. Those are separated by a small lateral nudge, taken
-  // symmetrically about the inward bow so both passes stay concave.
   // Control points for the walk's legs.
   //
   // Two rules, in order of priority:
@@ -364,6 +357,10 @@
         }
       }
     }
+    // The word strip is DOM, not canvas, so it has to be repainted when the
+    // walk moves on. Only on an actual change of leg -- rebuilding it every
+    // frame would thrash the DOM sixty times a second for no visible gain.
+    if (seg !== paintedSeg) { paintWord(); paintedSeg = seg; }
     render();
     requestAnimationFrame(frame);
   }
@@ -411,7 +408,7 @@
     current = loop;
     run = trace(loop.start, loop.word);
     ctrls = [];
-    seg = 0; t01 = 0; hold = 0;
+    seg = 0; t01 = 0; hold = 0; paintedSeg = -1;
     if (picker) {
       var btns = picker.querySelectorAll("button");
       for (var i = 0; i < btns.length; i++) {
@@ -451,7 +448,7 @@
       playing = false; syncPlay();
       if (seg < run.path.length - 1) { seg += 1; t01 = 0; }
       else { seg = 0; t01 = 0; }
-      paintWord(); render();
+      paintWord(); paintedSeg = seg; render();
     });
   }
 
