@@ -29,12 +29,12 @@ def playlist_data():
 
 NAV = [
     ("index.html", "Home"),
+    ("ai-native.html", "AI-Native"),
     ("kernel.html", "Kernel"),
     ("loops.html", "Loops"),
-    ("software.html", "Software"),
     ("diagnosis.html", "Diagnosis"),
+    ("software.html", "Software"),
     ("video.html", "Video"),
-    ("team.html", "Team"),
     ("about.html", "Contact"),
 ]
 
@@ -87,11 +87,12 @@ PRODUCTS = f"""<div class="products">
 
 CTA = """<section class="band--deep">
     <div class="wrap section cta">
-      <h2>Bring it a system that is failing quietly.</h2>
-      <p class="lede">Diagnostic engagements start by asking which words your organisation
-      actually runs, and which of its standing rules no longer have an owner.</p>
+      <h2>Build it, or find out which layer is missing.</h2>
+      <p class="lede">Design engagements build the architecture for a specific organisation.
+      Diagnostic engagements establish which of its loops actually close, which of its claims
+      reach evidence, and which of its standing rules no longer have an owner.</p>
       <div class="cta__actions">
-        <a class="btn btn--lit" href="diagnosis.html">How diagnosis works</a>
+        <a class="btn btn--lit" href="ai-native.html">The architecture</a>
         <a class="btn btn--lit" style="background:transparent;border-color:#43c4b0;color:#43c4b0"
            href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a>
       </div>
@@ -212,6 +213,307 @@ def shell(title, description, body, body_class="", slug="index.html"):
 # --------------------------------------------------------------------------
 # The Kernel
 # --------------------------------------------------------------------------
+
+AINATIVE = """
+  <section class="wrap page-head">
+    <span class="label">The offer</span>
+    <h1>AI-native organisations have a shape, and the shape is specifiable</h1>
+    <p class="lede">The labs that compound are not running a plan-execute pipeline with a
+    model bolted on. They are built as learning loops themselves. That architecture can be
+    written down — and once written down, it can be checked.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">The premise</span>
+        <h2>You cannot host a learning system inside a pipeline</h2>
+      </div>
+      <div class="prose">
+        <p>A pipeline organisation asks what you will discover before you discover it. It
+        funds plans, reviews against plans, and treats a changed plan as a failure of
+        planning. Everything it measures is convention checked against other convention.</p>
+        <p>A learning organisation cannot make that promise and should not be asked to. Its
+        unit of work is a cheap trial with an honest result, and its unit of memory is the
+        machinery that made the trial cheap. The way you organise has to match the way you
+        actually do the work.</p>
+        <p>Both organisations pass their own audits. That is the whole problem, and it is why
+        the difference has to be stated formally rather than felt.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">The architecture</span>
+      <h2>Six layers, each with a formal counterpart</h2>
+      <p class="lede prose" style="margin-top:1.2rem">Read top to bottom: the upper layers
+      constrain the lower ones. Read bottom to top: the lower layers must be able to attack
+      the upper ones. An organisation with only the first reading ossifies.</p>
+    </div>
+
+    <figure class="fig" style="margin-top:0">
+      <!--FIG_LAYERS-->
+      <figcaption class="label">Fig. 01 — The layers, and the constructs that specify them</figcaption>
+    </figure>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div>
+        <div class="failure">
+          <span class="label">01 &nbsp;·&nbsp; ⦿P &nbsp;·&nbsp; identity coherence</span>
+          <h3>An invariant core</h3>
+          <p>One premise that is not relitigated weekly, and which licenses the only genuinely
+          top-down act: deciding what <em>not</em> to do. It is what lets a shared direction
+          hold without constant realignment. In the theory this is the identity loop, and its
+          protection is structural — the standard a system measures against cannot be moved by
+          the measuring.</p>
+        </div>
+        <div class="failure">
+          <span class="label">02 &nbsp;·&nbsp; ⦿K + ⦿M* &nbsp;·&nbsp; knowledge and audit</span>
+          <h3>One System, pointed at arbitrary problems</h3>
+          <p>Not a product: an internal machine that can generate data for a new question, run
+          the trial, read the signal and kill it, in days. Its value is reuse — the same
+          machinery aimed at a different problem next month. Every project owes it a payment
+          back, so the organisation's weights improve with each problem it survives.</p>
+        </div>
+        <div class="failure">
+          <span class="label">03 &nbsp;·&nbsp; ⦿O ⦿C &nbsp;·&nbsp; autonomy distribution</span>
+          <h3>Units under contract, not under plan</h3>
+          <p>Fix the rhythm and the interfaces; leave the content free. Nobody is asked to plan
+          what they will discover, only to run cheap trials and report true results. The
+          theory's condition here is exact: the interface between management and operations
+          must carry current encounter, never an imposed convention standing in for it.</p>
+        </div>
+      </div>
+      <div>
+        <div class="failure">
+          <span class="label">04 &nbsp;·&nbsp; ⦿G &nbsp;·&nbsp; grounding</span>
+          <h3>No wall between research and product</h3>
+          <p>The same System that attacks a capability tests whether a product finds its
+          market; the same people jam and ship. Products are experiments that escaped.
+          A handoff wall is a broken descent chain — the side that ships stops touching what
+          the side that learns touched.</p>
+        </div>
+        <div class="failure">
+          <span class="label">05 &nbsp;·&nbsp; ⊕ ⊳ &nbsp;·&nbsp; composition</span>
+          <h3>Coherence as the unit of ambition</h3>
+          <p>Parallel tracks periodically resolve into one statement rather than shipping as
+          disconnected singles. Leadership's concrete artefact between releases is sequencing.
+          Done means the thing holds together, not that a number moved.</p>
+        </div>
+        <div class="failure">
+          <span class="label">06 &nbsp;·&nbsp; ⦿R + V9a &nbsp;·&nbsp; the licensed saboteur</span>
+          <h3>A standing channel against the design itself</h3>
+          <p>A System that repeats itself successfully is optimising yesterday. So any unit
+          must be able to attack the top-level design cheaply, and the most successful process
+          must be scheduled for demolition. This is the layer almost nobody builds, and the
+          theory says exactly why its absence is invisible: no audit above it can see that it
+          is missing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">The load-bearing part</span>
+        <h2>A System that flatters you is worse than no System</h2>
+        <p class="lede prose" style="margin-top:1.2rem">The whole architecture rests on
+        evaluations nobody can charm their way past. Lose that and every layer above keeps
+        running, on signal that has quietly stopped being connected to anything.</p>
+      </div>
+      <figure class="fig">
+        <!--FIG_SYSTEM-->
+        <figcaption class="label">Fig. 02 — The difference is one fold</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">How it stops</span>
+      <h2>Four failures, each of which passes review</h2>
+    </div>
+    <div class="split">
+      <div>
+        <div class="failure">
+          <h3>The System starts flattering</h3>
+          <p>Evaluation drifts from measuring against what happened to measuring against the
+          last report. Reports keep arriving on schedule. Nothing announces the change.</p>
+        </div>
+        <div class="failure">
+          <h3>The saboteur is never paged</h3>
+          <p>The insubordination channel still exists on the org chart and nothing routes to
+          it. The capacity is intact and unreachable — which no review of the capacity itself
+          will ever detect.</p>
+        </div>
+      </div>
+      <div>
+        <div class="failure">
+          <h3>The constitution outlives its editor</h3>
+          <p>The founding premise has an impeccable paper trail and no living owner empowered
+          to revise it. It keeps executing while the world drifts. Constitutions are the
+          hardest thing to amend and the easiest thing to orphan.</p>
+        </div>
+        <div class="failure">
+          <h3>The work is proceduralised past its ceiling</h3>
+          <p>Under commercial pressure the factory logic creeps back and standardises work
+          that descends to felt quality. The theory caps how far any process can be
+          standardised by how deep it goes; push past that and the work dies while the process
+          reports health.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">Where this is fragile</span>
+      <h2>Three places the architecture strains, and what the theory does about each</h2>
+      <p class="lede prose" style="margin-top:1.2rem">An architecture that cannot say where it
+      is weak is not an architecture, it is a sales deck. These are the three real stress
+      points. None is dissolved. Each is converted from a matter of judgement into something
+      with a name, a test, and a way of being wrong.</p>
+    </div>
+
+    <div class="steps">
+      <article class="step">
+        <span class="label step__label">Stress 01 &nbsp;·&nbsp; the core is a bet</span>
+        <h3>The greatest coordination asset is the hardest thing to amend</h3>
+        <p>The invariant core works <em>because</em> it is not relitigated. That is also what
+        makes it dangerous: if the premise bends, the asset becomes the liability, and by
+        construction nobody is arguing about it.</p>
+        <p><b>What the theory adds.</b> A standing convention is <em>orphaned</em> when it is
+        perfectly grounded in the evidence that once justified it and has no living owner
+        empowered to revise it. Its paper trail is impeccable — that is precisely why no audit
+        catches it. The answer is not a weaker constitution but a named editor with a live
+        path, and the test is blunt: propose a revision and see whether any route exists by
+        which it could be adopted or rejected. If there is none, the core is already an
+        artefact.</p>
+      </article>
+
+      <article class="step">
+        <span class="label step__label">Stress 02 &nbsp;·&nbsp; layers 02 and 06 pull apart</span>
+        <h3>The System wants to standardise; the anti-machine wants to demolish</h3>
+        <p>These are in permanent tension, and organisations usually resolve it by whoever
+        argues hardest or whoever the quarter favours.</p>
+        <p><b>What the theory adds.</b> The disagreement is typed, not political. How far any
+        process can be standardised is capped by how deep into felt experience its work
+        descends. Management never goes below encounter, and proceduralises nearly to
+        identity. Grounding and reflexive quality descend to felt quality, and quality-level
+        content cannot be transmitted on demand — so they can promise the same meaning, never
+        the same steps. The tension resolves by depth rather than seniority. It is also
+        separable in data, which is to say it is a claim that can turn out false.</p>
+      </article>
+
+      <article class="step">
+        <span class="label step__label">Stress 03 &nbsp;·&nbsp; the factory returns</span>
+        <h3>Under commercial pressure the deterministic logic creeps back</h3>
+        <p>It comes back through the product side, and it comes back quietly — as sensible
+        discipline, from people acting in good faith.</p>
+        <p><b>What the theory adds.</b> It has a signature. The interface that used to carry
+        current encounter starts carrying an imposed convention instead: last quarter's plan
+        dressed as this quarter's input. One tag on one input changes; the loop still runs and
+        the reports still arrive. And the ceiling conjecture says which work dies first —
+        whatever descends deepest, which is exactly the work the organisation was built to
+        protect.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">Run it yourself</span>
+        <h2>Four questions, answerable this week, without us</h2>
+        <p class="lede prose" style="margin-top:1.2rem">A diagnostic that only works when we
+        run it is not a diagnostic. Each of these has a definite answer, and each maps to a
+        condition the theory states formally.</p>
+      </div>
+
+      <div class="terms">
+        <div class="term">
+          <span class="term__glyph">01</span>
+          <h3>The editor test</h3>
+          <p>Pick a standing rule everyone follows. Propose a revision. If no path exists by
+          which that proposal could be evaluated and adopted or rejected, the rule has no
+          editor — and it will keep executing after the world it fitted is gone.</p>
+        </div>
+        <div class="term">
+          <span class="term__glyph">02</span>
+          <h3>The witness test</h3>
+          <p>Take a claim from your last board deck and ask for the chain down to something
+          that actually happened: claim, interpretation, log, event. Count the hops. Claims
+          with no chain are not lies — they are simply uncheckable, and therefore capturable.</p>
+        </div>
+        <div class="term">
+          <span class="term__glyph">03</span>
+          <h3>The routing test</h3>
+          <p>When did anything last reach the process that senses the quality of your own
+          formal structures, and who sent it there? A capacity nobody routes to is disabled
+          without ever being touched, and no review of that capacity will show it.</p>
+        </div>
+        <div class="term">
+          <span class="term__glyph">04</span>
+          <h3>The ceiling test</h3>
+          <p>List the processes that descend to felt judgement. Now check which of them are
+          held to a same-steps-every-time standard. Every match is work being standardised
+          past its ceiling, and it will degrade while its metrics improve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">What would make this wrong</span>
+        <h2>The claims carry their own kill conditions</h2>
+      </div>
+      <div class="prose">
+        <p>Editor liveness ships with the condition that would falsify it: if healthy
+        conventions with no living owner turn out to be common in the wild, it is not a
+        viability condition and demotes to a heuristic. The ceiling conjecture is labelled
+        semi-formal because the model family that would verify it has not been built. The
+        selector is labelled framework, with its formalisation deferred to a numbered open
+        problem.</p>
+        <p>One loop in the published inventory does not close as printed. It is flagged in the
+        specification, and it is flagged on <a href="loops.html">this site</a> — our own
+        implementation of the rules reproduces the anomaly rather than papering over it.</p>
+        <p>This is the part that should make the rest credible. An account that never says
+        what would refute it is not offering you a way to check its work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">What we do</span>
+        <h2>Build it, or find out which layer is missing</h2>
+      </div>
+      <div class="prose">
+        <p>Two engagements. <b>Design</b>: build the architecture above for a specific
+        organisation — its constitution, its System, its interface contracts, and the channel
+        that lets the whole thing be attacked from below.</p>
+        <p><b>Diagnosis</b>: take an organisation that already runs and establish which of its
+        loops actually close, which of its claims reach evidence, and which of its standing
+        rules no longer have an owner. The <a href="diagnosis.html">seven-layer
+        diagnostic</a> is the instrument; <a href="software.html">Connection Machine and
+        Intuition Machine</a> are the tools that carry it.</p>
+        <p>Both start the same way: not with a strategy document, but with which words your
+        organisation actually runs.</p>
+      </div>
+    </div>
+  </section>
+
+  
+""" + CTA + """
+"""
 
 KERNEL = """
   <section class="wrap page-head">
@@ -875,6 +1177,9 @@ ABOUT = """
 """
 
 PAGES = [
+    ("ai-native.html", "AI-Native Organisations — Intuition Machine",
+     "AI-native organisations have a specifiable shape: six layers from an invariant core "
+     "to a licensed saboteur, each with a formal counterpart in QPT.", AINATIVE),
     ("kernel.html", "The Kernel — Quaternion Process Theory of Cognition",
      "The QML kernel: three spine levels, four attentional columns, and one generative "
      "operator from which the rest of the theory is built.", KERNEL),

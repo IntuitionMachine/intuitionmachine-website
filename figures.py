@@ -344,3 +344,87 @@ FIG_SELECTOR = _wrap(
   <text x="24" y="316" font-family="{MONO}" font-size="10.5" fill="#5a6068">The diagnostic layers examine each loop, find all of them healthy, and return nothing.</text>
 """,
     "A selector routes an arriving item; a misroute sends it to a competent but wrong loop, and route starvation leaves a healthy loop never engaged.")
+
+
+# --------------------------------------------------------------------------
+# The AI-native organisation: six layers, each with its QPT counterpart
+# --------------------------------------------------------------------------
+
+def _layer(y, n, name, gloss, qpt, tint):
+    return f"""
+  <rect x="96" y="{y}" width="404" height="56" fill="{tint}" stroke="#c8c4b9"/>
+  <text x="112" y="{y + 23}" font-family="{MONO}" font-size="11" font-weight="600" fill="#0f6e63">{n}</text>
+  <text x="140" y="{y + 23}" font-family="{DISP}" font-size="14" font-weight="600" fill="#14171a">{name}</text>
+  <text x="140" y="{y + 42}" font-family="{MONO}" font-size="10" fill="#5a6068">{gloss}</text>
+  <line x1="500" y1="{y + 28}" x2="524" y2="{y + 28}" stroke="#c8c4b9"/>
+  <text x="532" y="{y + 32}" font-family="{MONO}" font-size="11" fill="#0f6e63">{qpt}</text>"""
+
+
+FIG_LAYERS = _wrap(
+    "0 0 720 480",
+    f"""
+  <text x="24" y="26" font-family="{MONO}" font-size="11" letter-spacing="1.6" fill="#5a6068">THE ARCHITECTURE</text>
+  <text x="532" y="26" font-family="{MONO}" font-size="11" letter-spacing="1.6" fill="#5a6068">IN QPT</text>
+
+  {_layer(44,  "01", "Invariant core", "the premise nobody relitigates", "⦿P &#183; V10", "#e4e8e5")}
+  {_layer(112, "02", "The System", "one machine, arbitrary problems", "⦿K &#183; ⦿M*", "#e6e9e6")}
+  {_layer(180, "03", "Units under contract", "fixed rhythm and interfaces, free content", "⦿O &#183; ⦿C &#183; V6", "#e8eae7")}
+  {_layer(248, "04", "No research/product wall", "descend to encounter, return with receipts", "⦿G", "#eaece8")}
+  {_layer(316, "05", "Composition", "coherence, not disconnected singles", "⊕ &#183; ⊳", "#ecede9")}
+  {_layer(384, "06", "The anti-machine", "a licensed channel against the design itself", "⦿R &#183; V9a", "#eeefea")}
+
+  <!-- top-down constraint -->
+  <line x1="72" y1="52" x2="72" y2="424" stroke="#5a6068" stroke-width="1.4" marker-end="url(#ah-ink)"/>
+  <text x="62" y="200" font-family="{MONO}" font-size="10" fill="#5a6068" text-anchor="end" transform="rotate(-90 62 200)">constrains</text>
+
+  <!-- bottom-up challenge: the piece most organisations never build -->
+  <line x1="516" y1="424" x2="516" y2="80" stroke="#a33a2a" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ah-bad)"/>
+  <text x="508" y="250" font-family="{MONO}" font-size="10" fill="#a33a2a" text-anchor="middle" transform="rotate(-90 508 250)">challenges</text>
+
+  <text x="96" y="466" font-family="{MONO}" font-size="10.5" fill="#5a6068">Layer 06 is the one almost nobody builds &#8212; and its absence is invisible to every audit above it.</text>
+""",
+    "Six layers of an AI-native organisation, from an invariant core to an anti-machine, each with its counterpart construct in Quaternion Process Theory.")
+
+
+# --------------------------------------------------------------------------
+# The System that flatters you: honest signal versus charmed signal
+# --------------------------------------------------------------------------
+
+FIG_SYSTEM = _wrap(
+    "0 0 720 300",
+    f"""
+  <text x="24" y="26" font-family="{MONO}" font-size="11" letter-spacing="1.6" fill="#5a6068">WHY THE EVALUATION HAS TO BE UNCHARMABLE</text>
+
+  <rect x="24" y="48" width="150" height="54" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="99" y="72" font-family="{DISP}" font-size="13" font-weight="600" fill="#14171a" text-anchor="middle">the trial</text>
+  <text x="99" y="90" font-family="{MONO}" font-size="10" fill="#5a6068" text-anchor="middle">a real experiment</text>
+
+  <line x1="180" y1="75" x2="230" y2="75" stroke="#0f6e63" stroke-width="1.6" marker-end="url(#ah)"/>
+
+  <rect x="236" y="48" width="170" height="54" fill="#eceae4" stroke="#0f6e63"/>
+  <text x="321" y="72" font-family="{DISP}" font-size="13" font-weight="600" fill="#14171a" text-anchor="middle">measured against</text>
+  <text x="321" y="90" font-family="{MONO}" font-size="10" fill="#0f6e63" text-anchor="middle">κ &#183; what happened</text>
+
+  <text x="428" y="70" font-family="{MONO}" font-size="11" fill="#5a6068">the System learns</text>
+  <text x="428" y="86" font-family="{DISP}" font-size="14" font-weight="600" fill="#0f6e63">something true</text>
+
+  <line x1="24" y1="140" x2="696" y2="140" stroke="#c8c4b9"/>
+
+  <text x="24" y="172" font-family="{MONO}" font-size="11" letter-spacing="1.6" fill="#a33a2a">DELETE ONE FOLD AND IT STILL SHIPS REPORTS</text>
+
+  <rect x="24" y="194" width="150" height="54" fill="#f1efe9" stroke="#c8c4b9"/>
+  <text x="99" y="218" font-family="{DISP}" font-size="13" font-weight="600" fill="#14171a" text-anchor="middle">the trial</text>
+  <text x="99" y="236" font-family="{MONO}" font-size="10" fill="#5a6068" text-anchor="middle">a real experiment</text>
+
+  <line x1="180" y1="221" x2="230" y2="221" stroke="#a33a2a" stroke-width="1.6" marker-end="url(#ah-bad)"/>
+
+  <rect x="236" y="194" width="170" height="54" fill="#f1efe9" stroke="#a33a2a"/>
+  <text x="321" y="218" font-family="{DISP}" font-size="13" font-weight="600" fill="#14171a" text-anchor="middle">measured against</text>
+  <text x="321" y="236" font-family="{MONO}" font-size="10" fill="#a33a2a" text-anchor="middle">ν &#183; the last report</text>
+
+  <text x="428" y="216" font-family="{MONO}" font-size="11" fill="#5a6068">the System learns</text>
+  <text x="428" y="232" font-family="{DISP}" font-size="14" font-weight="600" fill="#a33a2a">to flatter you</text>
+
+  <text x="24" y="284" font-family="{MONO}" font-size="10.5" fill="#5a6068">Both versions type-check, run on schedule, and produce dashboards. One is connected to the world.</text>
+""",
+    "An honest evaluation folds the claim down to what actually happened; a degraded one compares it to the previous report and learns to flatter.")
