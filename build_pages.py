@@ -176,7 +176,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
           <img class="brand__mark" src="assets/img/mark.png" width="193" height="235" alt="">
           <b style="color:var(--paper-hi)">Intuition Machine</b>
         </a>
-        <p style="margin-top:.9rem;max-width:34ch">Quaternion Process Theory on the QML kernel</p>
+        <p style="margin-top:.9rem;max-width:34ch">Quaternion Process Theory of Cognition</p>
       </div>
       <div>
         <h4>Theory</h4>
@@ -740,7 +740,7 @@ _ITEMS = "\n".join(
 VIDEO = f"""
   <section class="wrap page-head">
     <span class="label">Video</span>
-    <h1>Quaternion Process Theory, on video</h1>
+    <h1>Quaternion Process Theory of Cognition, on video</h1>
     <p class="lede">{len(_PL["videos"])} episodes working through the theory — the kernel, the
     loops, the pathologies, and the dispatch extensions. Play them here, in order or not.</p>
   </section>
@@ -875,19 +875,19 @@ ABOUT = """
 """
 
 PAGES = [
-    ("kernel.html", "The Kernel — Quaternion Process Theory",
+    ("kernel.html", "The Kernel — Quaternion Process Theory of Cognition",
      "The QML kernel: three spine levels, four attentional columns, and one generative "
      "operator from which the rest of the theory is built.", KERNEL),
-    ("loops.html", "The Loops — Quaternion Process Theory",
+    ("loops.html", "The Loops — Quaternion Process Theory of Cognition",
      "Twelve recurring processes, each written as a word: a string of moves on the matrix "
      "that closes back on its start cell.", LOOPS),
     ("software.html", "Software — Connection Machine and Intuition Machine",
      "Connection Machine builds the fold-witness graph. Intuition Machine makes the "
      "selector explicit: typed dispatch with a live-judgment path held open.", SOFTWARE),
-    ("diagnosis.html", "Diagnosis — Quaternion Process Theory",
+    ("diagnosis.html", "Diagnosis — Quaternion Process Theory of Cognition",
      "Pathologies as syntactic edits to healthy words, and the seven-layer diagnostic that "
      "locates them.", DIAGNOSIS),
-    ("video.html", "Video — Quaternion Process Theory",
+    ("video.html", "Video — Quaternion Process Theory of Cognition",
      "A 36-part video series working through Quaternion Process Theory: the kernel, "
      "the loops, the pathologies and the dispatch extensions.", VIDEO),
     ("team.html", "Team — Intuition Machine",
