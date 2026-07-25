@@ -38,13 +38,7 @@ NAV = [
     ("about.html", "Contact"),
 ]
 
-MARK = """<svg width="0" height="0" aria-hidden="true" style="position:absolute">
-  <symbol id="mark" viewBox="0 0 64 64">
-    <polygon points="32,6 54.5,19 32,32 9.5,19" fill="currentColor" opacity=".95"/>
-    <polygon points="9.5,19 32,32 32,58 9.5,45" fill="currentColor" opacity=".5"/>
-    <polygon points="54.5,19 54.5,45 32,58 32,32" fill="currentColor" opacity=".72"/>
-  </symbol>
-</svg>"""
+MARK = ""   # the cube is now supplied artwork, not an inline symbol
 
 CM_ICON = """<svg class="product__icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
           <path d="M8 8 L22 22 L8 22 M8 36 L22 22 L36 8 M22 22 L36 22 M22 22 L36 36" stroke-linecap="round" stroke-linejoin="round"/>
@@ -132,7 +126,9 @@ def shell(title, description, body, body_class="", slug="index.html"):
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="canonical" href="{SITE}/{slug}">
-<link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Intuition Machine">
@@ -159,7 +155,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
 <header class="masthead">
   <div class="wrap masthead__inner">
     <a class="brand" href="index.html">
-      <svg style="color:var(--signal)"><use href="#mark"></use></svg>
+      <img class="brand__mark" src="assets/img/mark.png" width="193" height="235" alt="">
       <b>Intuition Machine</b>
     </a>
     <nav class="nav" aria-label="Primary">
@@ -177,7 +173,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
     <div class="foot__grid">
       <div>
         <a class="brand" href="index.html" style="color:var(--signal-lit)">
-          <svg><use href="#mark"></use></svg>
+          <img class="brand__mark" src="assets/img/mark.png" width="193" height="235" alt="">
           <b style="color:var(--paper-hi)">Intuition Machine</b>
         </a>
         <p style="margin-top:.9rem;max-width:34ch">Quaternion Process Theory on the QML kernel</p>
