@@ -9,11 +9,23 @@ the repository root.
 
 Run:  python3 build_pages.py
 """
+import json
 import os
 
 import figures
 
 OUT = "site"
+PLAYLIST_JSON = "site/assets/playlist.json"
+
+
+def playlist_data():
+    """The video list, inlined into the page rather than fetched at runtime."""
+    try:
+        with open(PLAYLIST_JSON, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {"playlist": "PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-",
+                "title": "Quaternion Process Theory", "videos": []}
 
 NAV = [
     ("index.html", "Home"),
@@ -721,37 +733,62 @@ Edit at the spine        IMPOSSIBLE — quality cannot be rewritten,
 # Team and Contact — the company is unchanged
 # --------------------------------------------------------------------------
 
-VIDEO = """
+_PL = playlist_data()
+_ITEMS = "\n".join(
+    '        <li><button type="button" data-i="{i}" data-id="{vid}">'
+    '<span class="pl__n">{n:02d}</span><span class="pl__t">{title}</span></button></li>'.format(
+        i=i, vid=v["id"], n=i + 1,
+        title=(v["title"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")))
+    for i, v in enumerate(_PL["videos"]))
+
+VIDEO = f"""
   <section class="wrap page-head">
     <span class="label">Video</span>
     <h1>Quaternion Process Theory, on video</h1>
-    <p class="lede">A 36-part series working through the theory — the kernel, the loops,
-    the pathologies, and the dispatch extensions — on the Intuition Machine channel.</p>
+    <p class="lede">{len(_PL["videos"])} episodes working through the theory — the kernel, the
+    loops, the pathologies, and the dispatch extensions. Play them here, in order or not.</p>
   </section>
 
   <section class="wrap section section--ruled">
-    <div class="embed" data-playlist="PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-" data-video="-DC5SIdTSMA">
-      <button class="embed__poster" type="button" aria-label="Play the Quaternion Process Theory playlist">
-        <img src="assets/img/qpt-playlist-poster.jpg" width="1280" height="720" alt="">
-        <span class="embed__play" aria-hidden="true">
-          <svg viewBox="0 0 68 48" width="68" height="48">
-            <path d="M66.5 7.5a8.6 8.6 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.4a8.6 8.6 0 0 0-6 6A90 90 0 0 0 0 24a90 90 0 0 0 1.5 16.5 8.6 8.6 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.5a8.6 8.6 0 0 0 6-6A90 90 0 0 0 68 24a90 90 0 0 0-1.5-16.5z" fill="#0f6e63"/>
-            <path d="M27 34V14l18 10z" fill="#f3f1eb"/>
-          </svg>
-        </span>
-        <span class="embed__meta">
-          <b>The Grounded Loop Graph Model</b>
-          <i>36 videos &#160;·&#160; press to load from YouTube</i>
-        </span>
-      </button>
-    </div>
-    <p class="embed__note">Nothing is requested from YouTube until you press play. Loading the
-    player sets YouTube&#8217;s cookies and is subject to their privacy policy.</p>
+    <div class="player"
+         data-playlist="{_PL["playlist"]}"
+         data-videos='{json.dumps(_PL["videos"], ensure_ascii=False).replace("'", "&#39;")}'>
 
-    <p style="margin-top:1.6rem">
-      <a class="btn btn--ghost" href="https://www.youtube.com/playlist?list=PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-"
-         rel="noopener">Open the playlist on YouTube</a>
-    </p>
+      <div class="player__stage">
+        <button class="embed__poster" type="button" id="pl-play"
+                aria-label="Play the series">
+          <img src="assets/img/qpt-playlist-poster.jpg" width="1280" height="720" alt="">
+          <span class="embed__play" aria-hidden="true">
+            <svg viewBox="0 0 68 48" width="68" height="48">
+              <path d="M66.5 7.5a8.6 8.6 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.4a8.6 8.6 0 0 0-6 6A90 90 0 0 0 0 24a90 90 0 0 0 1.5 16.5 8.6 8.6 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.5a8.6 8.6 0 0 0 6-6A90 90 0 0 0 68 24a90 90 0 0 0-1.5-16.5z" fill="#0f6e63"/>
+              <path d="M27 34V14l18 10z" fill="#f3f1eb"/>
+            </svg>
+          </span>
+          <span class="embed__meta">
+            <b id="pl-poster-title">The Grounded Loop Graph Model</b>
+            <i>{len(_PL["videos"])} episodes &#160;·&#160; press to load from YouTube</i>
+          </span>
+        </button>
+
+        <div class="player__bar">
+          <button type="button" id="pl-prev" aria-label="Previous episode">&#8592; Prev</button>
+          <p class="player__now"><span id="pl-count"></span> <b id="pl-title"></b></p>
+          <button type="button" id="pl-next" aria-label="Next episode">Next &#8594;</button>
+        </div>
+      </div>
+
+      <nav class="pl" aria-label="Episodes">
+        <p class="label pl__head">Episodes</p>
+        <ol class="pl__list" id="pl-list">
+{_ITEMS}
+        </ol>
+      </nav>
+    </div>
+
+    <p class="embed__note">Nothing is requested from YouTube until you press play. Loading the
+    player sets YouTube&#8217;s cookies and is subject to their privacy policy.
+    <a href="https://www.youtube.com/playlist?list={_PL["playlist"]}" rel="noopener">Open the
+    playlist on YouTube</a>.</p>
   </section>
 
   <section class="wrap section section--ruled">
@@ -761,18 +798,18 @@ VIDEO = """
         <h2>If you want the argument before the machinery</h2>
       </div>
       <div class="prose">
-        <p>The written pages here cover the same ground in less time. <a href="kernel.html">The
-        Kernel</a> gives the three levels and four columns the whole theory is built from;
-        <a href="loops.html">The Loops</a> shows why each recurring process is a word; and
-        <a href="diagnosis.html">Diagnosis</a> carries the result most worth arguing with —
-        that the worst failures are one-letter edits which still compile.</p>
+        <p>The written pages here cover the same ground in less time.
+        <a href="kernel.html">The Kernel</a> gives the three levels and four columns the whole
+        theory is built from; <a href="loops.html">The Loops</a> shows why each recurring
+        process is a word; and <a href="diagnosis.html">Diagnosis</a> carries the result most
+        worth arguing with — that the worst failures are one-letter edits which still
+        compile.</p>
         <p>The series goes further than the site does, and in the author&#8217;s own words.</p>
       </div>
     </div>
   </section>
 
-  
-""" + CTA + """
+  """ + CTA + """
 """
 
 TEAM = """

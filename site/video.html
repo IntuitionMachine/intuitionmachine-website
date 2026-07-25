@@ -60,33 +60,85 @@
   <section class="wrap page-head">
     <span class="label">Video</span>
     <h1>Quaternion Process Theory, on video</h1>
-    <p class="lede">A 36-part series working through the theory — the kernel, the loops,
-    the pathologies, and the dispatch extensions — on the Intuition Machine channel.</p>
+    <p class="lede">36 episodes working through the theory — the kernel, the
+    loops, the pathologies, and the dispatch extensions. Play them here, in order or not.</p>
   </section>
 
   <section class="wrap section section--ruled">
-    <div class="embed" data-playlist="PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-" data-video="-DC5SIdTSMA">
-      <button class="embed__poster" type="button" aria-label="Play the Quaternion Process Theory playlist">
-        <img src="assets/img/qpt-playlist-poster.jpg" width="1280" height="720" alt="">
-        <span class="embed__play" aria-hidden="true">
-          <svg viewBox="0 0 68 48" width="68" height="48">
-            <path d="M66.5 7.5a8.6 8.6 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.4a8.6 8.6 0 0 0-6 6A90 90 0 0 0 0 24a90 90 0 0 0 1.5 16.5 8.6 8.6 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.5a8.6 8.6 0 0 0 6-6A90 90 0 0 0 68 24a90 90 0 0 0-1.5-16.5z" fill="#0f6e63"/>
-            <path d="M27 34V14l18 10z" fill="#f3f1eb"/>
-          </svg>
-        </span>
-        <span class="embed__meta">
-          <b>The Grounded Loop Graph Model</b>
-          <i>36 videos &#160;·&#160; press to load from YouTube</i>
-        </span>
-      </button>
-    </div>
-    <p class="embed__note">Nothing is requested from YouTube until you press play. Loading the
-    player sets YouTube&#8217;s cookies and is subject to their privacy policy.</p>
+    <div class="player"
+         data-playlist="PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-"
+         data-videos='[{"id": "-DC5SIdTSMA", "title": "The Grounded Loop Graph Model"}, {"id": "HTXEJqBnm_s", "title": "How QPT Explains What Your Eyes Can’t See"}, {"id": "PIhOQgG4h6g", "title": "The Future Jobs That Don’t Have Names Yet"}, {"id": "wFdpflS3-3s", "title": "Forward Deployed Engineer (FDE) AI Arbitrage Strategy"}, {"id": "r_Wwvm_tKsw", "title": "Lessons Learned from OpenAI&#39;s Harness Experiment"}, {"id": "PLcnlcEg3A8", "title": "Artificial Intelligence Arbitrage Playbook"}, {"id": "prXwBTftHso", "title": "How Mathematics and Mind Are The Same"}, {"id": "WtQc5STo3W4", "title": "Quaternion Process Theory and Alexander&#39;s Nature of Order"}, {"id": "qJE2G-Rdq9Y", "title": "42 Agent Architecture Patterns: From Skill Repos to Intent & Harness Engineering"}, {"id": "pG_Sa9liZKM", "title": "The Architecture of Agency"}, {"id": "53Y3SYR5vTU", "title": "What Makes Agency Actually Work?"}, {"id": "CDgCyHKuDUs", "title": "The Varieties of Agency"}, {"id": "kT4r5rArKJQ", "title": "An Exploration of the Space of Agency"}, {"id": "6PinuCddP_E", "title": "The Loop That Calls Itself I"}, {"id": "_m2jxbJOHkw", "title": "Organizing Agentic Skills.md Using QPT"}, {"id": "38utLE2xo6E", "title": "The Cambrian Explosion of Possible Minds"}, {"id": "BivtR0aNZz8", "title": "The Incompleteness of Being: A Theory of Consciousness"}, {"id": "h14DF0ruOLI", "title": "How Manipulation Actually Works"}, {"id": "oLWwobXpubg", "title": "Vibe Philosophy"}, {"id": "1lMn-cVoG7U", "title": "22 Human Cognitive Quirks Explained"}, {"id": "6UmCzFnAhS0", "title": "Introducing Vibe Philosophy with Quaternion Process Theory of Cognition"}, {"id": "Cd3gwORnT98", "title": "Understanding Structural Unawareness"}, {"id": "noIDoH9o6ZY", "title": "Von Neumann&#39;s Insight, Game Theory and Quaternion Process Theory"}, {"id": "-I0WYFjIuSU", "title": "Google DeepMind&#39;s AlphaEvolve and Quaternion Process Theory (QPT)"}, {"id": "LFO1yzlXaRs", "title": "Quaternion Process Theory of Cognition (version 3.5)"}, {"id": "YEnkgfuWdyE", "title": "Principles for Scaling Native AI Organizations"}, {"id": "dk6LO5lfljU", "title": "Quaternion Process Theory of Cognition (v3.3) - Cognition as Movement"}, {"id": "q38jWYF0gGY", "title": "QPT 3 3 Constructing Living Cognitive Systems"}, {"id": "tu_1PFM-uLM", "title": "Quaternion Process Theory (v 3.3) explained using Alexander&#39;s Nature of Order"}, {"id": "LYfh2QYcdsw", "title": "The Harness Engineering Method  OpenAI’s Billion Token Codebase"}, {"id": "5AUTBULn-rY", "title": "Quaternion Process Theory explained through analogy"}, {"id": "Hd6z1WX0Y5g", "title": "The Zero Keystroke Harness"}, {"id": "qwdIp9DX7ys", "title": "Quaternion Process Theory of Cognition"}, {"id": "6heyge4p9KY", "title": "Quaternion Process Theory, Pattern Languages and Paradox"}, {"id": "8Q2S7inEMlU", "title": "Slow Empathic Thinking, Tensengrity & Quaternion Process Theory"}, {"id": "kpQ167rsuVU", "title": "Quaternion Process Theory of Cognition"}]'>
 
-    <p style="margin-top:1.6rem">
-      <a class="btn btn--ghost" href="https://www.youtube.com/playlist?list=PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-"
-         rel="noopener">Open the playlist on YouTube</a>
-    </p>
+      <div class="player__stage">
+        <button class="embed__poster" type="button" id="pl-play"
+                aria-label="Play the series">
+          <img src="assets/img/qpt-playlist-poster.jpg" width="1280" height="720" alt="">
+          <span class="embed__play" aria-hidden="true">
+            <svg viewBox="0 0 68 48" width="68" height="48">
+              <path d="M66.5 7.5a8.6 8.6 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.4a8.6 8.6 0 0 0-6 6A90 90 0 0 0 0 24a90 90 0 0 0 1.5 16.5 8.6 8.6 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.5a8.6 8.6 0 0 0 6-6A90 90 0 0 0 68 24a90 90 0 0 0-1.5-16.5z" fill="#0f6e63"/>
+              <path d="M27 34V14l18 10z" fill="#f3f1eb"/>
+            </svg>
+          </span>
+          <span class="embed__meta">
+            <b id="pl-poster-title">The Grounded Loop Graph Model</b>
+            <i>36 episodes &#160;·&#160; press to load from YouTube</i>
+          </span>
+        </button>
+
+        <div class="player__bar">
+          <button type="button" id="pl-prev" aria-label="Previous episode">&#8592; Prev</button>
+          <p class="player__now"><span id="pl-count"></span> <b id="pl-title"></b></p>
+          <button type="button" id="pl-next" aria-label="Next episode">Next &#8594;</button>
+        </div>
+      </div>
+
+      <nav class="pl" aria-label="Episodes">
+        <p class="label pl__head">Episodes</p>
+        <ol class="pl__list" id="pl-list">
+        <li><button type="button" data-i="0" data-id="-DC5SIdTSMA"><span class="pl__n">01</span><span class="pl__t">The Grounded Loop Graph Model</span></button></li>
+        <li><button type="button" data-i="1" data-id="HTXEJqBnm_s"><span class="pl__n">02</span><span class="pl__t">How QPT Explains What Your Eyes Can’t See</span></button></li>
+        <li><button type="button" data-i="2" data-id="PIhOQgG4h6g"><span class="pl__n">03</span><span class="pl__t">The Future Jobs That Don’t Have Names Yet</span></button></li>
+        <li><button type="button" data-i="3" data-id="wFdpflS3-3s"><span class="pl__n">04</span><span class="pl__t">Forward Deployed Engineer (FDE) AI Arbitrage Strategy</span></button></li>
+        <li><button type="button" data-i="4" data-id="r_Wwvm_tKsw"><span class="pl__n">05</span><span class="pl__t">Lessons Learned from OpenAI's Harness Experiment</span></button></li>
+        <li><button type="button" data-i="5" data-id="PLcnlcEg3A8"><span class="pl__n">06</span><span class="pl__t">Artificial Intelligence Arbitrage Playbook</span></button></li>
+        <li><button type="button" data-i="6" data-id="prXwBTftHso"><span class="pl__n">07</span><span class="pl__t">How Mathematics and Mind Are The Same</span></button></li>
+        <li><button type="button" data-i="7" data-id="WtQc5STo3W4"><span class="pl__n">08</span><span class="pl__t">Quaternion Process Theory and Alexander's Nature of Order</span></button></li>
+        <li><button type="button" data-i="8" data-id="qJE2G-Rdq9Y"><span class="pl__n">09</span><span class="pl__t">42 Agent Architecture Patterns: From Skill Repos to Intent &amp; Harness Engineering</span></button></li>
+        <li><button type="button" data-i="9" data-id="pG_Sa9liZKM"><span class="pl__n">10</span><span class="pl__t">The Architecture of Agency</span></button></li>
+        <li><button type="button" data-i="10" data-id="53Y3SYR5vTU"><span class="pl__n">11</span><span class="pl__t">What Makes Agency Actually Work?</span></button></li>
+        <li><button type="button" data-i="11" data-id="CDgCyHKuDUs"><span class="pl__n">12</span><span class="pl__t">The Varieties of Agency</span></button></li>
+        <li><button type="button" data-i="12" data-id="kT4r5rArKJQ"><span class="pl__n">13</span><span class="pl__t">An Exploration of the Space of Agency</span></button></li>
+        <li><button type="button" data-i="13" data-id="6PinuCddP_E"><span class="pl__n">14</span><span class="pl__t">The Loop That Calls Itself I</span></button></li>
+        <li><button type="button" data-i="14" data-id="_m2jxbJOHkw"><span class="pl__n">15</span><span class="pl__t">Organizing Agentic Skills.md Using QPT</span></button></li>
+        <li><button type="button" data-i="15" data-id="38utLE2xo6E"><span class="pl__n">16</span><span class="pl__t">The Cambrian Explosion of Possible Minds</span></button></li>
+        <li><button type="button" data-i="16" data-id="BivtR0aNZz8"><span class="pl__n">17</span><span class="pl__t">The Incompleteness of Being: A Theory of Consciousness</span></button></li>
+        <li><button type="button" data-i="17" data-id="h14DF0ruOLI"><span class="pl__n">18</span><span class="pl__t">How Manipulation Actually Works</span></button></li>
+        <li><button type="button" data-i="18" data-id="oLWwobXpubg"><span class="pl__n">19</span><span class="pl__t">Vibe Philosophy</span></button></li>
+        <li><button type="button" data-i="19" data-id="1lMn-cVoG7U"><span class="pl__n">20</span><span class="pl__t">22 Human Cognitive Quirks Explained</span></button></li>
+        <li><button type="button" data-i="20" data-id="6UmCzFnAhS0"><span class="pl__n">21</span><span class="pl__t">Introducing Vibe Philosophy with Quaternion Process Theory of Cognition</span></button></li>
+        <li><button type="button" data-i="21" data-id="Cd3gwORnT98"><span class="pl__n">22</span><span class="pl__t">Understanding Structural Unawareness</span></button></li>
+        <li><button type="button" data-i="22" data-id="noIDoH9o6ZY"><span class="pl__n">23</span><span class="pl__t">Von Neumann's Insight, Game Theory and Quaternion Process Theory</span></button></li>
+        <li><button type="button" data-i="23" data-id="-I0WYFjIuSU"><span class="pl__n">24</span><span class="pl__t">Google DeepMind's AlphaEvolve and Quaternion Process Theory (QPT)</span></button></li>
+        <li><button type="button" data-i="24" data-id="LFO1yzlXaRs"><span class="pl__n">25</span><span class="pl__t">Quaternion Process Theory of Cognition (version 3.5)</span></button></li>
+        <li><button type="button" data-i="25" data-id="YEnkgfuWdyE"><span class="pl__n">26</span><span class="pl__t">Principles for Scaling Native AI Organizations</span></button></li>
+        <li><button type="button" data-i="26" data-id="dk6LO5lfljU"><span class="pl__n">27</span><span class="pl__t">Quaternion Process Theory of Cognition (v3.3) - Cognition as Movement</span></button></li>
+        <li><button type="button" data-i="27" data-id="q38jWYF0gGY"><span class="pl__n">28</span><span class="pl__t">QPT 3 3 Constructing Living Cognitive Systems</span></button></li>
+        <li><button type="button" data-i="28" data-id="tu_1PFM-uLM"><span class="pl__n">29</span><span class="pl__t">Quaternion Process Theory (v 3.3) explained using Alexander's Nature of Order</span></button></li>
+        <li><button type="button" data-i="29" data-id="LYfh2QYcdsw"><span class="pl__n">30</span><span class="pl__t">The Harness Engineering Method  OpenAI’s Billion Token Codebase</span></button></li>
+        <li><button type="button" data-i="30" data-id="5AUTBULn-rY"><span class="pl__n">31</span><span class="pl__t">Quaternion Process Theory explained through analogy</span></button></li>
+        <li><button type="button" data-i="31" data-id="Hd6z1WX0Y5g"><span class="pl__n">32</span><span class="pl__t">The Zero Keystroke Harness</span></button></li>
+        <li><button type="button" data-i="32" data-id="qwdIp9DX7ys"><span class="pl__n">33</span><span class="pl__t">Quaternion Process Theory of Cognition</span></button></li>
+        <li><button type="button" data-i="33" data-id="6heyge4p9KY"><span class="pl__n">34</span><span class="pl__t">Quaternion Process Theory, Pattern Languages and Paradox</span></button></li>
+        <li><button type="button" data-i="34" data-id="8Q2S7inEMlU"><span class="pl__n">35</span><span class="pl__t">Slow Empathic Thinking, Tensengrity &amp; Quaternion Process Theory</span></button></li>
+        <li><button type="button" data-i="35" data-id="kpQ167rsuVU"><span class="pl__n">36</span><span class="pl__t">Quaternion Process Theory of Cognition</span></button></li>
+        </ol>
+      </nav>
+    </div>
+
+    <p class="embed__note">Nothing is requested from YouTube until you press play. Loading the
+    player sets YouTube&#8217;s cookies and is subject to their privacy policy.
+    <a href="https://www.youtube.com/playlist?list=PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-" rel="noopener">Open the
+    playlist on YouTube</a>.</p>
   </section>
 
   <section class="wrap section section--ruled">
@@ -96,18 +148,18 @@
         <h2>If you want the argument before the machinery</h2>
       </div>
       <div class="prose">
-        <p>The written pages here cover the same ground in less time. <a href="kernel.html">The
-        Kernel</a> gives the three levels and four columns the whole theory is built from;
-        <a href="loops.html">The Loops</a> shows why each recurring process is a word; and
-        <a href="diagnosis.html">Diagnosis</a> carries the result most worth arguing with —
-        that the worst failures are one-letter edits which still compile.</p>
+        <p>The written pages here cover the same ground in less time.
+        <a href="kernel.html">The Kernel</a> gives the three levels and four columns the whole
+        theory is built from; <a href="loops.html">The Loops</a> shows why each recurring
+        process is a word; and <a href="diagnosis.html">Diagnosis</a> carries the result most
+        worth arguing with — that the worst failures are one-letter edits which still
+        compile.</p>
         <p>The series goes further than the site does, and in the author&#8217;s own words.</p>
       </div>
     </div>
   </section>
 
-  
-<section class="band--deep">
+  <section class="band--deep">
     <div class="wrap section cta">
       <h2>Bring it a system that is failing quietly.</h2>
       <p class="lede">Diagnostic engagements start by asking which words your organisation

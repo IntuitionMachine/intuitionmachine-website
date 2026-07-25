@@ -493,30 +493,103 @@
   else requestAnimationFrame(frame);
 })();
 
-/* Click-to-load video. The poster is a real button, so it works from the
-   keyboard; pressing it swaps in the privacy-mode YouTube player. Nothing
-   is requested from YouTube before that. */
+/* ============================================================
+   Playlist player.
+
+   The whole series is browsable in place: pick an episode, or step with
+   prev/next, and the player swaps without a page load. The first press is
+   still click-to-load, so nothing reaches YouTube until the visitor asks
+   for it.
+   ============================================================ */
 (function () {
   "use strict";
-  var box = document.querySelector(".embed");
-  if (!box) return;
-  var btn = box.querySelector(".embed__poster");
-  if (!btn) return;
 
-  btn.addEventListener("click", function () {
-    var list = box.getAttribute("data-playlist");
-    var vid = box.getAttribute("data-video");
-    var src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(vid) +
-              "?list=" + encodeURIComponent(list) + "&autoplay=1&rel=0";
-    var f = document.createElement("iframe");
-    f.setAttribute("src", src);
-    f.setAttribute("title", "Quaternion Process Theory playlist");
-    f.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture");
-    f.setAttribute("allowfullscreen", "");
-    f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
-    box.replaceChild(f, btn);
-    f.focus();
+  var box = document.querySelector(".player");
+  if (!box) return;
+
+  var videos;
+  try { videos = JSON.parse(box.getAttribute("data-videos") || "[]"); }
+  catch (e) { videos = []; }
+  if (!videos.length) return;
+
+  var list = document.getElementById("pl-list");
+  var stage = box.querySelector(".player__stage");
+  var poster = document.getElementById("pl-play");
+  var titleEl = document.getElementById("pl-title");
+  var countEl = document.getElementById("pl-count");
+  var posterTitle = document.getElementById("pl-poster-title");
+  var prev = document.getElementById("pl-prev");
+  var next = document.getElementById("pl-next");
+
+  var index = 0;
+  var frame = null;          // the iframe, once the visitor has opted in
+
+  function src(i) {
+    return "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(videos[i].id) +
+           "?autoplay=1&rel=0";
+  }
+
+  function paint() {
+    var v = videos[index];
+    if (titleEl) titleEl.textContent = v.title;
+    if (countEl) countEl.textContent = (index + 1) + " / " + videos.length;
+    if (posterTitle) posterTitle.textContent = v.title;
+    if (prev) prev.disabled = index === 0;
+    if (next) next.disabled = index === videos.length - 1;
+
+    if (list) {
+      var btns = list.querySelectorAll("button");
+      for (var i = 0; i < btns.length; i++) {
+        var on = i === index;
+        btns[i].setAttribute("aria-current", on ? "true" : "false");
+        if (on && frame) {
+          // Keep the active episode in view once playback has started.
+          var li = btns[i].parentNode;
+          var top = li.offsetTop, h = li.offsetHeight, sc = list.scrollTop, ch = list.clientHeight;
+          if (top < sc || top + h > sc + ch) list.scrollTop = top - ch / 2 + h / 2;
+        }
+      }
+    }
+  }
+
+  // First press swaps the poster for a real player; later ones just retarget it.
+  function play(i) {
+    index = Math.max(0, Math.min(videos.length - 1, i));
+    if (!frame) {
+      frame = document.createElement("iframe");
+      frame.setAttribute("title", "Quaternion Process Theory episode");
+      frame.setAttribute("allow",
+        "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture");
+      frame.setAttribute("allowfullscreen", "");
+      frame.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+      frame.setAttribute("src", src(index));
+      stage.replaceChild(frame, poster);
+      frame.focus();
+    } else {
+      frame.setAttribute("src", src(index));
+    }
+    paint();
+  }
+
+  if (poster) poster.addEventListener("click", function () { play(index); });
+  if (prev) prev.addEventListener("click", function () { play(index - 1); });
+  if (next) next.addEventListener("click", function () { play(index + 1); });
+
+  if (list) {
+    list.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-i]");
+      if (b) play(parseInt(b.getAttribute("data-i"), 10));
+    });
+  }
+
+  // Arrow keys step the series once it is playing.
+  box.addEventListener("keydown", function (e) {
+    if (e.target.tagName === "IFRAME") return;
+    if (e.key === "ArrowLeft" && index > 0) { play(index - 1); }
+    else if (e.key === "ArrowRight" && index < videos.length - 1) { play(index + 1); }
   });
+
+  paint();
 })();
 
 /* Mark the current page in the nav without hand-editing every file. */
