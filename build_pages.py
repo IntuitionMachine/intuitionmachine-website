@@ -1189,6 +1189,7 @@ STORE = "https://intuitionmachine.gumroad.com"
 
 # (permalink, cover file, title, kind, price label, blurb)
 BOOKS_DATA = [
+    # The "Artificial" trilogy
     ("intuition", "intuition.png",
      "Artificial Intuition",
      "Book", "Name your price",
@@ -1204,26 +1205,64 @@ BOOKS_DATA = [
      "Book", "Name your price",
      "Large language models read through the lens of language as a living process rather "
      "than a fixed code to be executed."),
+    # The pattern-language series
+    ("gpt4", "gpt4.jpg",
+     "A Pattern Language for Generative AI",
+     "Pattern Language", "$17.50",
+     "A self-generating GPT-4 blueprint: a pattern language for designing and building "
+     "with generative models."),
+    ("o1", "o1.jpg",
+     "A Pattern Language for Large Reasoning AI",
+     "Pattern Language", "$17.50",
+     "Long-horizon thinking with ChatGPT o1-pro — patterns for getting sustained reasoning "
+     "out of large reasoning models."),
+    ("agentic", "agentic.jpg",
+     "A Pattern Language for Agentic AI",
+     "Pattern Language", "$19.99",
+     "Patterns for developing autonomous, intentional agents that act with purpose rather "
+     "than react a prompt at a time."),
+    ("aiskills", "aiskills.png",
+     "A Pattern Language for Agentic AI Skill Design",
+     "Pattern Language", "$33",
+     "Patterns for structuring, composing and governing the skills that instruct large "
+     "language models — mined from open-source and industry practice."),
+    ("notation", "notation.jpg",
+     "A Pattern Language for LLM-Optimized Formal Notation",
+     "Pattern Language", "$20",
+     "Align formal notations and domain-specific languages to the way models actually "
+     "reason, instead of fighting their biases."),
+    # Quaternion Process Theory
+    ("processoriented", "processoriented.jpg",
+     "Quaternion Process Theory of Cognition",
+     "Book", "$5",
+     "The core theory in book form: process-oriented thinking on a twelve-cell space — the "
+     "foundation the rest of this site is built on."),
+    ("incompleteness", "incompleteness.jpg",
+     "The Incompleteness of Being",
+     "Book", "$5",
+     "A QPT approach to consciousness: mind as an inherently underspecified process to be "
+     "navigated, not a problem to be finally solved."),
+    # Field guides and playbooks
     ("WRbUs", "WRbUs.png",
      "The Deep Learning AI Playbook",
      "Book", "$9.99+",
      "Strategy, methodology and patterns for putting deep learning to work — the field "
      "guide behind the pattern-language lineage."),
-    ("gpt4", "gpt4.jpg",
-     "A Pattern Language for Generative AI",
-     "Book", "$17.50",
-     "A self-generating GPT-4 blueprint: a pattern language for designing and building "
-     "with generative models."),
-    ("o1", "o1.jpg",
-     "A Pattern Language for Large Reasoning AI",
-     "Book", "$17.50",
-     "Long-horizon thinking with ChatGPT o1-pro — patterns for getting sustained reasoning "
-     "out of large reasoning models."),
-    ("agentic", "agentic.jpg",
-     "A Pattern Language for Agentic AI",
-     "Book", "$19.99",
-     "Patterns for developing autonomous, intentional agents that act with purpose rather "
-     "than react a prompt at a time."),
+    ("arbitrage", "arbitrage.jpg",
+     "The Artificial Intelligence Arbitrage Playbook",
+     "Book", "$100",
+     "A generative pattern language for finding and capturing value where reality shifts "
+     "faster than prices, rules and business models can adjust."),
+    ("friction", "friction.jpg",
+     "The Friction Calculus",
+     "Book", "$9.95",
+     "What enterprise leaders get wrong about AI: generating content is cheap, verifying it "
+     "is not — and that asymmetry is the whole game."),
+    ("survival", "survival.jpg",
+     "The Survival Guide for The AI Singularity",
+     "Book", "$10",
+     "A field guide to the coming phase transition — how to read, and stay ahead of, an "
+     "accelerating AI singularity."),
 ]
 
 
@@ -1254,8 +1293,8 @@ BOOKS = f"""
   <section class="wrap page-head">
     <span class="label">Books</span>
     <h1>Books and field guides on AI</h1>
-    <p class="lede">Books, pattern languages and workshops on deep learning, generative AI and
-    agentic systems — published through Gumroad. Several are pay-what-you-want, so you can
+    <p class="lede">Books, pattern languages and field guides on deep learning, generative AI
+    and agentic systems — published through Gumroad. Several are pay-what-you-want, so you can
     read first and decide what it was worth.</p>
   </section>
 
@@ -1359,7 +1398,7 @@ PAGES = [
      "A 36-part video series working through Quaternion Process Theory: the kernel, "
      "the loops, the pathologies and the dispatch extensions.", VIDEO),
     ("books.html", "Books — Intuition Machine",
-     "Books, pattern languages and workshops on deep learning, generative AI and agentic "
+     "Books, pattern languages and field guides on deep learning, generative AI and agentic "
      "systems, published through Gumroad. Several are pay-what-you-want.", BOOKS),
     ("writing.html", "Writing — Intuition Machine",
      "Recent essays from Intuition Machine on Medium: patterns, methodology and strategy "
