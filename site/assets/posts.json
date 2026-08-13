@@ -1,0 +1,134 @@
+{
+ "publication": "https://medium.com/intuitionmachine",
+ "posts": [
+  {
+   "title": "Fable 5 Reads the Odyssey and Recognizes Itself",
+   "link": "https://medium.com/intuitionmachine/fable-5-reads-the-odyssey-and-recognizes-itself-f91907521f00",
+   "date": "8 Aug 2026",
+   "iso": "2026-08-08",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "entropy",
+    "ai",
+    "fable"
+   ],
+   "subtitle": "How Fable manages entropy in long-running reasoning, told through the longest-running reasoning process we know",
+   "image": "assets/img/posts/f91907521f00.png"
+  },
+  {
+   "title": "What Horses Know About AI Agentic Harness Design",
+   "link": "https://medium.com/intuitionmachine/what-horses-know-about-ai-agents-12a7592a1c13",
+   "date": "7 Aug 2026",
+   "iso": "2026-08-07",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "ai",
+    "harness-engineering"
+   ],
+   "subtitle": "What horses teach us about AI agent harnesses",
+   "image": "assets/img/posts/12a7592a1c13.png"
+  },
+  {
+   "title": "A Decade of Essays and the Evolution of My Thinking on Thinking",
+   "link": "https://medium.com/intuitionmachine/a-decade-of-essays-and-the-evolution-of-my-thinking-of-thinking-b10ebe23e4f8",
+   "date": "26 Jul 2026",
+   "iso": "2026-07-26",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "ai"
+   ],
+   "subtitle": "Source essays: “Design Patterns for Deep Learning” (Dec 2016) · “The Turing Error: On Computation, Energy and Matter” (Jan 2017) · “Artificial Intuition” (Mar 2017) · “Deep Lear…",
+   "image": "assets/img/posts/b10ebe23e4f8.png"
+  },
+  {
+   "title": "The Fork in the Ladder — Where AI Progress Goes from Here",
+   "link": "https://medium.com/intuitionmachine/the-fork-in-the-ladder-where-ai-progress-goes-from-here-d7bf12639aa1",
+   "date": "23 Jul 2026",
+   "iso": "2026-07-23",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "ai"
+   ],
+   "subtitle": "Predictions about artificial intelligence usually fail in one of two ways. Either they are timelines — confident dates for capabilities nobody can define — or they are vibes, ex…",
+   "image": "assets/img/posts/d7bf12639aa1.png"
+  },
+  {
+   "title": "From Loop Engineering to Graph Engineering?",
+   "link": "https://medium.com/intuitionmachine/from-loop-engineering-to-graph-engineering-d3ebeb08511c",
+   "date": "19 Jul 2026",
+   "iso": "2026-07-19",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "ai",
+    "agentic-ai"
+   ],
+   "subtitle": "What the shift in AI agent architecture is really about",
+   "image": "assets/img/posts/d3ebeb08511c.png"
+  },
+  {
+   "title": "The Scholar Who Never Left the Library",
+   "link": "https://medium.com/intuitionmachine/the-scholar-who-never-left-the-library-133a459cc020",
+   "date": "16 Jul 2026",
+   "iso": "2026-07-16",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "psychology",
+    "personal-development",
+    "ai"
+   ],
+   "subtitle": "On growing up, being onboarded, and why machines get self-direction before self-awareness",
+   "image": "assets/img/posts/133a459cc020.png"
+  },
+  {
+   "title": "The Eight Theories of the Machine",
+   "link": "https://medium.com/intuitionmachine/the-eight-theories-of-the-machine-78068e551cc6",
+   "date": "10 Jul 2026",
+   "iso": "2026-07-10",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "ai"
+   ],
+   "subtitle": "Every AI lab claims to be building the same thing. Look closer, and you find eight different arguments about what intelligence is for.",
+   "image": "assets/img/posts/78068e551cc6.png"
+  },
+  {
+   "title": "Why the LLM Capability Ladder Climbs the Way It Does, and Where It Ends",
+   "link": "https://medium.com/intuitionmachine/why-the-llm-capability-ladder-climbs-the-way-it-does-and-where-it-ends-9fc791e12521",
+   "date": "11 Jun 2026",
+   "iso": "2026-06-11",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "ai",
+    "ai-alignment-and-safety"
+   ],
+   "subtitle": "There is a familiar worry that artificial intelligence is advancing faster than we can understand it. That is true, but it is not quite the right shape. The interesting fact is…",
+   "image": "assets/img/posts/9fc791e12521.png"
+  },
+  {
+   "title": "The Long Handover: How Language Models Grew from Tools into Agents",
+   "link": "https://medium.com/intuitionmachine/the-long-handover-how-language-models-grew-from-tools-into-agents-e8018267aad6",
+   "date": "11 Jun 2026",
+   "iso": "2026-06-11",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "ai-agent",
+    "ai"
+   ],
+   "subtitle": "We usually tell the story of AI progress as a story of raw power. Each model is bigger than the last, trained on more text, faster, more capable. That’s true as far as it goes,…",
+   "image": "assets/img/posts/e8018267aad6.png"
+  },
+  {
+   "title": "The Catholic Church as an Interpretive Grammar for Living Systems",
+   "link": "https://medium.com/intuitionmachine/the-catholic-church-as-an-interpretive-grammar-for-living-systems-19ad6a90cb9f",
+   "date": "29 May 2026",
+   "iso": "2026-05-29",
+   "author": "Carlos E. Perez",
+   "tags": [
+    "catholic",
+    "ai"
+   ],
+   "subtitle": "Introduction: Christianity Begins as an Information Problem",
+   "image": "assets/img/posts/19ad6a90cb9f.png"
+  }
+ ]
+}

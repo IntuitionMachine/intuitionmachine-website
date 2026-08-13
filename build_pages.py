@@ -34,6 +34,8 @@ NAV = [
     ("loops.html", "Loops"),
     ("diagnosis.html", "Diagnosis"),
     ("software.html", "Software"),
+    ("books.html", "Books"),
+    ("writing.html", "Writing"),
     ("video.html", "Video"),
     ("about.html", "Contact"),
 ]
@@ -192,6 +194,8 @@ def shell(title, description, body, body_class="", slug="index.html"):
         <ul>
           <li><a href="software.html">Connection Machine</a></li>
           <li><a href="software.html">Intuition Machine</a></li>
+          <li><a href="books.html">Books</a></li>
+          <li><a href="writing.html">Writing</a></li>
           <li><a href="team.html">Team</a></li>
           <li><a href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a></li>
         </ul>
@@ -1140,7 +1144,7 @@ TEAM = """
         <p>Intuition Machine publishes an ongoing series on patterns, methodology and
         strategy, alongside the specification itself.</p>
         <p><a class="btn btn--ghost" style="margin-top:.6rem"
-              href="https://medium.com/intuitionmachine/archive" rel="noopener">Read the archive</a></p>
+              href="writing.html">Read the essays</a></p>
       </div>
     </div>
   </section>
@@ -1176,6 +1180,165 @@ ABOUT = """
   """ + CTA + """
 """
 
+# --------------------------------------------------------------------------
+# Books — the catalogue on Gumroad. Covers live under assets/img/books/.
+# Kept in one list so the page and its ordering stay easy to edit.
+# --------------------------------------------------------------------------
+
+STORE = "https://intuitionmachine.gumroad.com"
+
+# (permalink, cover file, title, kind, price label, blurb)
+BOOKS_DATA = [
+    ("intuition", "intuition.png",
+     "Artificial Intuition",
+     "Book", "Name your price",
+     "The improbable deep learning revolution — how machines arrived at intuition, grasping "
+     "patterns they were never explicitly taught to derive."),
+    ("empathy", "empathy.jpg",
+     "Artificial Empathy",
+     "Book", "Name your price",
+     "A roadmap for human-aligned artificial general intelligence, where empathy — not raw "
+     "optimisation — is the coordinate most designs leave out."),
+    ("fluency", "fluency.jpg",
+     "Artificial Fluency",
+     "Book", "Name your price",
+     "Large language models read through the lens of language as a living process rather "
+     "than a fixed code to be executed."),
+    ("WRbUs", "WRbUs.png",
+     "The Deep Learning AI Playbook",
+     "Book", "$9.99+",
+     "Strategy, methodology and patterns for putting deep learning to work — the field "
+     "guide behind the pattern-language lineage."),
+    ("gpt4", "gpt4.jpg",
+     "A Pattern Language for Generative AI",
+     "Book", "$17.50",
+     "A self-generating GPT-4 blueprint: a pattern language for designing and building "
+     "with generative models."),
+    ("o1", "o1.jpg",
+     "A Pattern Language for Large Reasoning AI",
+     "Book", "$17.50",
+     "Long-horizon thinking with ChatGPT o1-pro — patterns for getting sustained reasoning "
+     "out of large reasoning models."),
+    ("agentic", "agentic.jpg",
+     "A Pattern Language for Agentic AI",
+     "Book", "$19.99",
+     "Patterns for developing autonomous, intentional agents that act with purpose rather "
+     "than react a prompt at a time."),
+]
+
+
+def book_card(permalink, cover, title, kind, price, blurb):
+    href = f"{STORE}/l/{permalink}"
+    t = title.replace("&", "&amp;")
+    b = blurb.replace("&", "&amp;")
+    return f"""      <article class="book">
+        <a class="book__cover" href="{href}" rel="noopener"
+           aria-label="{t} — open on Gumroad">
+          <img src="assets/img/books/{cover}" loading="lazy" alt="Cover of {t}">
+        </a>
+        <div class="book__body">
+          <span class="label book__kind">{kind}</span>
+          <h3><a href="{href}" rel="noopener">{t}</a></h3>
+          <p class="book__desc">{b}</p>
+          <div class="book__foot">
+            <span class="book__price">{price}</span>
+            <a class="btn btn--ghost book__btn" href="{href}" rel="noopener">Get it &#8594;</a>
+          </div>
+        </div>
+      </article>"""
+
+
+_BOOK_CARDS = "\n".join(book_card(*b) for b in BOOKS_DATA)
+
+BOOKS = f"""
+  <section class="wrap page-head">
+    <span class="label">Books</span>
+    <h1>Books and field guides on AI</h1>
+    <p class="lede">Books, pattern languages and workshops on deep learning, generative AI and
+    agentic systems — published through Gumroad. Several are pay-what-you-want, so you can
+    read first and decide what it was worth.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="books">
+{_BOOK_CARDS}
+    </div>
+    <p class="prose" style="margin-top:1.8rem">
+      <a class="btn btn--ghost" href="{STORE}" rel="noopener">Browse the full store on Gumroad &#8594;</a>
+    </p>
+  </section>
+
+  """ + CTA + """
+"""
+
+# --------------------------------------------------------------------------
+# Writing — the latest posts from the Medium publication, baked in at build
+# time by fetch_posts.py. Nothing is requested from Medium when the page loads.
+# --------------------------------------------------------------------------
+
+POSTS_JSON = "site/assets/posts.json"
+MEDIUM = "https://medium.com/intuitionmachine"
+
+
+def posts_data():
+    try:
+        with open(POSTS_JSON, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {"publication": MEDIUM, "posts": []}
+
+
+def _esc(s):
+    return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def post_card(p):
+    title = _esc(p["title"])
+    href = p["link"]
+    date = _esc(p.get("date", ""))
+    iso = p.get("iso", "")
+    sub = _esc(p.get("subtitle", ""))
+    tag = _esc(p["tags"][0]) if p.get("tags") else "Essay"
+    img = p.get("image")
+    media = (
+        f'<a class="post__cover" href="{href}" rel="noopener" tabindex="-1" aria-hidden="true">'
+        f'<img src="{img}" loading="lazy" alt=""></a>'
+        if img else ""
+    )
+    return f"""      <article class="post">
+{media}
+        <div class="post__body">
+          <p class="label post__meta"><span>{tag}</span><time datetime="{iso}">{date}</time></p>
+          <h3><a href="{href}" rel="noopener">{title}</a></h3>
+          <p class="post__desc">{sub}</p>
+        </div>
+      </article>"""
+
+
+_POSTS = posts_data()
+_POST_CARDS = "\n".join(post_card(p) for p in _POSTS["posts"])
+
+WRITING = f"""
+  <section class="wrap page-head">
+    <span class="label">Writing</span>
+    <h1>Essays on intelligence, real and artificial</h1>
+    <p class="lede">An ongoing series on patterns, methodology and strategy in AI — the
+    thinking that the theory and the books are drawn from. The latest {len(_POSTS["posts"])}
+    posts are below; the full archive lives on Medium.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="posts">
+{_POST_CARDS}
+    </div>
+    <p class="prose" style="margin-top:1.8rem">
+      <a class="btn btn--ghost" href="{MEDIUM}" rel="noopener">Read the full archive on Medium &#8594;</a>
+    </p>
+  </section>
+
+  """ + CTA + """
+"""
+
 PAGES = [
     ("ai-native.html", "AI-Native Organisations — Intuition Machine",
      "AI-native organisations have a specifiable shape: six layers from an invariant core "
@@ -1195,6 +1358,12 @@ PAGES = [
     ("video.html", "Video — Quaternion Process Theory of Cognition",
      "A 36-part video series working through Quaternion Process Theory: the kernel, "
      "the loops, the pathologies and the dispatch extensions.", VIDEO),
+    ("books.html", "Books — Intuition Machine",
+     "Books, pattern languages and workshops on deep learning, generative AI and agentic "
+     "systems, published through Gumroad. Several are pay-what-you-want.", BOOKS),
+    ("writing.html", "Writing — Intuition Machine",
+     "Recent essays from Intuition Machine on Medium: patterns, methodology and strategy "
+     "in deep learning, generative AI and agentic systems.", WRITING),
     ("team.html", "Team — Intuition Machine",
      "Carlos Perez, Software Architect and Co-Founder of Intuition Machine.", TEAM),
     ("about.html", "Contact — Intuition Machine",
