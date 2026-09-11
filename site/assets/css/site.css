@@ -743,6 +743,42 @@ p:last-child { margin-bottom: 0; }
   margin: 0;
 }
 
+/* ---------- explorations: interactive companions ---------- */
+
+.explorations {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+@media (min-width: 760px) {
+  .explorations { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.exploration { background: var(--paper); display: flex; }
+.exploration__body {
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.exploration__kind { display: block; margin-bottom: .9rem; }
+.exploration h3 {
+  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
+  line-height: 1.15;
+  margin: 0 0 .7rem;
+}
+.exploration h3 a { color: inherit; text-decoration: none; }
+.exploration h3 a:hover { color: var(--signal); }
+.exploration__desc {
+  color: var(--ink-2);
+  line-height: 1.55;
+  margin: 0 0 1.6rem;
+}
+.exploration__foot { margin-top: auto; margin-bottom: 0; }
+
 /* ---------- evidence: real product screenshots ---------- */
 
 .shots {

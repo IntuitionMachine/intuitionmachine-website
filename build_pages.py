@@ -33,7 +33,7 @@ NAV = [
     ("kernel.html", "Kernel"),
     ("loops.html", "Loops"),
     ("diagnosis.html", "Diagnosis"),
-    ("https://deeplearningplaybook.com/spiral-semiosis/", "Atlas"),
+    ("explorations.html", "Explorations"),
     ("software.html", "Software"),
     ("books.html", "Books"),
     ("writing.html", "Writing"),
@@ -191,7 +191,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
           <li><a href="kernel.html">The Kernel</a></li>
           <li><a href="loops.html">The Loops</a></li>
           <li><a href="diagnosis.html">Diagnosis</a></li>
-          <li><a href="https://deeplearningplaybook.com/spiral-semiosis/" rel="noopener">Semiosis Atlas</a></li>
+          <li><a href="explorations.html">Explorations</a></li>
         </ul>
       </div>
       <div>
@@ -1383,6 +1383,67 @@ WRITING = f"""
   """ + CTA + """
 """
 
+# --------------------------------------------------------------------------
+# Explorations — interactive companions to the theory, hosted elsewhere.
+# --------------------------------------------------------------------------
+
+# (url, kind, title, blurb, cta)
+EXPLORATIONS_DATA = [
+    ("https://deeplearningplaybook.com/spiral-semiosis/",
+     "Interactive atlas",
+     "Semiosis Atlas",
+     "Sign-making, mapped. Two synchronised views — a classification field of 66 sign "
+     "classes and a temporal process spiral — trace how attention, competing "
+     "interpretants, contextual constraint and provisional understanding build into "
+     "meaning and action. Play a scenario, or read it as the transformer analogy for how "
+     "a language model settles on sense.",
+     "Open the atlas"),
+    ("https://codeaudit.github.io/4d-chess/",
+     "Playable game",
+     "4D Chess",
+     "Chess lifted into four dimensions: pieces move across four linked 4×4×2×2 boards "
+     "under movement rules extended along the extra axes. Guided lessons, checkmate "
+     "studies and game replay come with it, against the computer or a second player — a "
+     "hands-on way to feel how structure multiplies once you add dimensions.",
+     "Play it"),
+]
+
+
+def exploration_card(url, kind, title, blurb, cta):
+    t = title.replace("&", "&amp;")
+    b = blurb.replace("&", "&amp;")
+    return f"""      <article class="exploration">
+        <div class="exploration__body">
+          <span class="label exploration__kind">{kind}</span>
+          <h3><a href="{url}" rel="noopener">{t}</a></h3>
+          <p class="exploration__desc">{b}</p>
+          <p class="exploration__foot">
+            <a class="btn btn--ghost" href="{url}" rel="noopener">{cta} &#8594;</a>
+          </p>
+        </div>
+      </article>"""
+
+
+_EXPLORATION_CARDS = "\n".join(exploration_card(*e) for e in EXPLORATIONS_DATA)
+
+EXPLORATIONS = f"""
+  <section class="wrap page-head">
+    <span class="label">Explorations</span>
+    <h1>Interactive explorations of the theory</h1>
+    <p class="lede">The theory is easier to feel than to read. These are hands-on companions —
+    each opens in a full page of its own — for turning the ideas over yourself rather than
+    taking them on the page's word.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="explorations">
+{_EXPLORATION_CARDS}
+    </div>
+  </section>
+
+  """ + CTA + """
+"""
+
 PAGES = [
     ("ai-native.html", "AI-Native Organisations — Intuition Machine",
      "AI-native organisations have a specifiable shape: six layers from an invariant core "
@@ -1399,6 +1460,9 @@ PAGES = [
     ("diagnosis.html", "Diagnosis — Quaternion Process Theory of Cognition",
      "Pathologies as syntactic edits to healthy words, and the seven-layer diagnostic that "
      "locates them.", DIAGNOSIS),
+    ("explorations.html", "Explorations — Intuition Machine",
+     "Interactive companions to the theory: the Semiosis Atlas of sign-making and a "
+     "four-dimensional chess variant.", EXPLORATIONS),
     ("video.html", "Video — Quaternion Process Theory of Cognition",
      "A 36-part video series working through Quaternion Process Theory: the kernel, "
      "the loops, the pathologies and the dispatch extensions.", VIDEO),
