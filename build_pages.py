@@ -33,6 +33,7 @@ NAV = [
     ("kernel.html", "Kernel"),
     ("loops.html", "Loops"),
     ("diagnosis.html", "Diagnosis"),
+    ("https://deeplearningplaybook.com/spiral-semiosis/", "Atlas"),
     ("software.html", "Software"),
     ("books.html", "Books"),
     ("writing.html", "Writing"),
@@ -118,7 +119,10 @@ SITE = "https://intuitionmachine.com"
 
 
 def shell(title, description, body, body_class="", slug="index.html"):
-    nav = "\n      ".join(f'<a href="{href}">{text}</a>' for href, text in NAV)
+    def nav_link(href, text):
+        rel = ' rel="noopener"' if href.startswith("http") else ""
+        return f'<a href="{href}"{rel}>{text}</a>'
+    nav = "\n      ".join(nav_link(href, text) for href, text in NAV)
     cls = f' class="{body_class}"' if body_class else ""
     body = render_figures(body)
     return f"""<!doctype html>
@@ -187,6 +191,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
           <li><a href="kernel.html">The Kernel</a></li>
           <li><a href="loops.html">The Loops</a></li>
           <li><a href="diagnosis.html">Diagnosis</a></li>
+          <li><a href="https://deeplearningplaybook.com/spiral-semiosis/" rel="noopener">Semiosis Atlas</a></li>
         </ul>
       </div>
       <div>
