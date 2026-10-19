@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the inner pages of site/ from one shared shell.
 
-index.html is hand-written (it carries the matrix plate); everything else is
+index.html is hand-written (it carries the film poster); everything else is
 assembled here so the header, footer and metadata cannot drift apart.
 
 spec.html is the full QPT specification rendered from the markdown source in
@@ -29,15 +29,12 @@ def playlist_data():
 
 NAV = [
     ("index.html", "Home"),
-    ("ai-native.html", "AI-Native"),
-    ("kernel.html", "Kernel"),
-    ("loops.html", "Loops"),
-    ("diagnosis.html", "Diagnosis"),
-    ("explorations.html", "Explorations"),
-    ("software.html", "Software"),
+    ("how-we-work.html", "How we work"),
+    ("first-workflow.html", "First workflow"),
+    ("exo.html", "ExO 3.0"),
+    ("research.html", "Research"),
     ("books.html", "Books"),
     ("writing.html", "Writing"),
-    ("video.html", "Video"),
     ("about.html", "Contact"),
 ]
 
@@ -90,12 +87,11 @@ PRODUCTS = f"""<div class="products">
 
 CTA = """<section class="band--deep">
     <div class="wrap section cta">
-      <h2>Build it, or find out which layer is missing.</h2>
-      <p class="lede">Design engagements build the architecture for a specific organisation.
-      Diagnostic engagements establish which of its loops actually close, which of its claims
-      reach evidence, and which of its standing rules no longer have an owner.</p>
+      <h2>Start with one workflow.</h2>
+      <p class="lede">We map your constraints, build a governed AI workflow alongside your
+      existing operations, and prove the results before autonomy expands.</p>
       <div class="cta__actions">
-        <a class="btn btn--lit" href="ai-native.html">The architecture</a>
+        <a class="btn btn--lit" href="first-workflow.html">Your first workflow</a>
         <a class="btn btn--lit" style="background:transparent;border-color:#43c4b0;color:#43c4b0"
            href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a>
       </div>
@@ -145,7 +141,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
 <meta property="og:image" content="{SITE}/assets/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Intuition Machine — Quaternion Process Theory. Seven axioms, twelve loops, 43 of 43 checks verified.">
+<meta property="og:image:alt" content="Intuition Machine — Making the AI-native enterprise real.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{description}">
@@ -183,26 +179,32 @@ def shell(title, description, body, body_class="", slug="index.html"):
           <img class="brand__mark" src="assets/img/mark.png" width="193" height="235" alt="">
           <b style="color:var(--paper-hi)">Intuition Machine</b>
         </a>
-        <p style="margin-top:.9rem;max-width:34ch">Quaternion Process Theory of Cognition</p>
+        <p style="margin-top:.9rem;max-width:34ch">Enterprise AI Engineering &amp; Assurance</p>
       </div>
       <div>
-        <h4>Theory</h4>
+        <h4>Work with us</h4>
         <ul>
-          <li><a href="kernel.html">The Kernel</a></li>
-          <li><a href="loops.html">The Loops</a></li>
-          <li><a href="diagnosis.html">Diagnosis</a></li>
-          <li><a href="explorations.html">Explorations</a></li>
+          <li><a href="how-we-work.html">How we work</a></li>
+          <li><a href="first-workflow.html">Your first workflow</a></li>
+          <li><a href="exo.html">ExO 3.0</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="about.html">Contact</a></li>
+          <li><a href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a></li>
         </ul>
       </div>
       <div>
-        <h4>Software</h4>
+        <h4>Research</h4>
         <ul>
-          <li><a href="software.html">Connection Machine</a></li>
-          <li><a href="software.html">Intuition Machine</a></li>
+          <li><a href="research.html">Overview</a></li>
+          <li><a href="ai-native.html">AI-Native Organisations</a></li>
+          <li><a href="kernel.html">The Kernel</a></li>
+          <li><a href="loops.html">The Loops</a></li>
+          <li><a href="diagnosis.html">Diagnosis</a></li>
+          <li><a href="software.html">Instruments</a></li>
+          <li><a href="explorations.html">Explorations</a></li>
+          <li><a href="video.html">Video</a></li>
           <li><a href="books.html">Books</a></li>
           <li><a href="writing.html">Writing</a></li>
-          <li><a href="team.html">Team</a></li>
-          <li><a href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a></li>
         </ul>
       </div>
     </div>
@@ -225,7 +227,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
 
 AINATIVE = """
   <section class="wrap page-head">
-    <span class="label">The offer</span>
+    <span class="label">Research</span>
     <h1>AI-native organisations have a shape, and the shape is specifiable</h1>
     <p class="lede">The labs that compound are not running a plan-execute pipeline with a
     model bolted on. They are built as learning loops themselves. That architecture can be
@@ -502,20 +504,19 @@ AINATIVE = """
   <section class="wrap section section--ruled">
     <div class="split">
       <div class="section__head" style="margin-bottom:0">
-        <span class="label">What we do</span>
-        <h2>Build it, or find out which layer is missing</h2>
+        <span class="label">In practice</span>
+        <h2>From architecture to working systems</h2>
       </div>
       <div class="prose">
-        <p>Two engagements. <b>Design</b>: build the architecture above for a specific
-        organisation — its constitution, its System, its interface contracts, and the channel
-        that lets the whole thing be attacked from below.</p>
-        <p><b>Diagnosis</b>: take an organisation that already runs and establish which of its
-        loops actually close, which of its claims reach evidence, and which of its standing
-        rules no longer have an owner. The <a href="diagnosis.html">seven-layer
-        diagnostic</a> is the instrument; <a href="software.html">Connection Machine and
-        Intuition Machine</a> are the tools that carry it.</p>
-        <p>Both start the same way: not with a strategy document, but with which words your
-        organisation actually runs.</p>
+        <p>This architecture is the reason we engineer AI workflows the way we do. Every agent
+        we deploy is evaluated against what actually happened, not against the last report;
+        every rule it enforces has an owner; and every workflow keeps a channel through which
+        it can be challenged.</p>
+        <p>In an engagement that becomes <a href="how-we-work.html">Map, Build, Prove</a> —
+        and it usually starts with <a href="first-workflow.html">one governed workflow</a>.
+        Where an organisation already runs, the <a href="diagnosis.html">seven-layer
+        diagnostic</a> establishes which of its loops actually close and which of its standing
+        rules no longer have an owner.</p>
       </div>
     </div>
   </section>
@@ -531,6 +532,60 @@ KERNEL = """
     <p class="lede">QML — the Quaternion Modeling Language — is a short list of ingredients,
     seven axioms, one derived operator, and one small model in which every formal claim has
     been machine-checked.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">The matrix, executed</span>
+      <h2>Run a word and watch where it goes</h2>
+      <p class="lede prose" style="margin-top:1.2rem">Every loop in the theory is a word: a
+      string of moves on the twelve cells. Pick one and step through it, or type your own and
+      see whether the walk closes on its start cell.</p>
+    </div>
+    <figure class="plate" style="margin-top:0">
+      <div class="plate__frame">
+        <canvas id="matrix" role="img"
+                aria-label="The twelve-cell matrix: three spine levels (mediation, causation, quality) by four attentional columns (ii, ie, ci, ce). Loop words trace closed walks across the cells."></canvas>
+      </div>
+      <div class="plate__bar">
+        <div class="plate__word" id="word-display" aria-live="off"></div>
+        <div class="plate__buttons">
+          <button type="button" id="step-btn">Step</button>
+          <button type="button" id="play-toggle">Pause</button>
+        </div>
+      </div>
+
+      <div class="loop-picker" id="loop-picker" role="group" aria-label="Choose a loop"></div>
+
+      <p class="plate__status">
+        <span id="loop-name"></span>
+        <span class="verdict" id="verdict"></span>
+      </p>
+
+      <details class="lab">
+        <summary>Run your own word</summary>
+        <form id="word-lab">
+          <label for="lab-start">from</label>
+          <select id="lab-start">
+            <option>3.ce</option><option>3.ii</option><option>3.ie</option><option>3.ci</option>
+            <option>2.ce</option><option>2.ii</option><option>2.ie</option><option>2.ci</option>
+            <option>1.ce</option><option>1.ii</option><option>1.ie</option><option>1.ci</option>
+          </select>
+          <label for="lab-word">word</label>
+          <input id="lab-word" type="text" value="DDUUIGIG" spellcheck="false"
+                 inputmode="latin" autocomplete="off" aria-describedby="lab-help">
+          <button class="btn" type="submit">Run</button>
+        </form>
+        <p id="lab-help">Letters over <b>U</b> unfold, <b>D</b> fold, <b>I</b> instance&#8596;system,
+        <b>G</b> content&#8596;vehicle. Anything else is ignored. The interpreter reports whether
+        the walk closes on its start cell.</p>
+      </details>
+
+      <figcaption class="plate__caption label">
+        <span>Fig. 01 — Words executed under the kernel&#8217;s move rules</span>
+        <span>ν mediation &#160;·&#160; κ causation &#160;·&#160; ω quality</span>
+      </figcaption>
+    </figure>
   </section>
 
   <section class="wrap section section--ruled">
@@ -831,14 +886,51 @@ depth = ω  (⦿G, ⦿R)  → semantic at best</pre>
 
 SOFTWARE = f"""
   <section class="wrap page-head">
-    <span class="label">Software</span>
+    <span class="label">Instruments</span>
     <h1>Two instruments, one kernel</h1>
     <p class="lede">One reads the words a system already runs and checks how far its claims
-    sit from ground. The other stands at the front desk and decides which word runs next.</p>
+    sit from ground. The other stands at the front desk and decides which word runs next.
+    Together they are the research foundation under our Map, Build and Prove work.</p>
   </section>
 
   <section class="wrap section section--ruled">
     {PRODUCTS}
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">Where they fit</span>
+      <h2>The instruments behind Map, Build and Prove</h2>
+      <p class="lede prose" style="margin-top:1.2rem">The engagements on
+      <a href="how-we-work.html">How we work</a> are described in enterprise terms. These are
+      two of the instruments underneath them — the parts grounded directly in the kernel —
+      with the wider platform built on top.</p>
+    </div>
+    <div class="maptable" role="table" aria-label="Where each instrument supports Map, Build and Prove">
+      <div class="maptable__row maptable__row--head" role="row">
+        <span role="columnheader">Stage</span>
+        <span role="columnheader">What the instruments contribute</span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell"><a href="how-we-work.html">Map</a></b>
+        <span role="cell"><b>Connection Machine</b> traces which of an organisation's claims
+        and standing rules connect to evidence, and which rules no longer have a living
+        owner — the conflicts and orphans an agent would otherwise inherit.</span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell"><a href="how-we-work.html">Build</a></b>
+        <span role="cell"><b>Intuition Machine</b> makes routing explicit: every piece of
+        arriving work is sent to a typed handler, rules are marked compiled or live, and a
+        human judgment path is held permanently open.</span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell"><a href="how-we-work.html">Prove</a></b>
+        <span role="cell">Both. <b>Connection Machine</b> checks that evaluations measure
+        against what actually happened rather than against the last report;
+        <b>Intuition Machine</b> catches the misroute — work handled competently by the wrong
+        handler, which every per-unit review passes.</span>
+      </div>
+    </div>
   </section>
 
   <section class="wrap section section--ruled">
@@ -1161,8 +1253,8 @@ ABOUT = """
   <section class="wrap page-head">
     <span class="label">Contact</span>
     <h1>Get in touch</h1>
-    <p class="lede">Tell us which of your standing conventions no longer has anyone who could
-    change it.</p>
+    <p class="lede">Tell us about one workflow you would like to run AI-native — and the
+    rules it has to follow.</p>
   </section>
 
   <section class="wrap section section--ruled">
@@ -1444,7 +1536,492 @@ EXPLORATIONS = f"""
   """ + CTA + """
 """
 
+YT_PLAY = """<svg viewBox="0 0 68 48" width="68" height="48">
+              <path d="M66.5 7.5a8.6 8.6 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.4a8.6 8.6 0 0 0-6 6A90 90 0 0 0 0 24a90 90 0 0 0 1.5 16.5 8.6 8.6 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.5a8.6 8.6 0 0 0 6-6A90 90 0 0 0 68 24a90 90 0 0 0-1.5-16.5z" fill="#0f6e63"/>
+              <path d="M27 34V14l18 10z" fill="#f3f1eb"/>
+            </svg>"""
+
+
+# --------------------------------------------------------------------------
+# How we work: Map -> Build -> Prove
+# --------------------------------------------------------------------------
+
+HOW = """
+  <section class="wrap page-head">
+    <span class="label">How we work</span>
+    <h1>Understand the enterprise. Deploy AI within it. Prove that it works.</h1>
+    <p class="lede">Most AI pilots succeed in isolation and stall at the boundary of the real
+    organisation. We work from the other end: start with the rules, systems and dependencies
+    the AI has to live inside, and build outward from there.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Map</span>
+        <h2>Understand what it takes to deploy AI</h2>
+      </div>
+      <div class="prose">
+        <p>Before anything is automated, we find out what the work actually depends on: which
+        systems it touches, which policies govern it, who holds which decision, and where the
+        written process and the real one have drifted apart.</p>
+        <ul class="caps" style="margin-top:1.4rem">
+          <li>Enterprise rules, approved technologies and the constraints that apply to them</li>
+          <li>Dependencies between systems, teams and decisions</li>
+          <li>Conflicts between rules, surfaced before an agent trips over them</li>
+          <li>Workflows that are good candidates for automation, and ones that are not</li>
+        </ul>
+        <p class="label" style="margin-top:1.4rem">Underneath: an enterprise context graph,
+        semantic analysis and capability mapping</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Build</span>
+        <h2>Turn AI experiments into enterprise-ready workflows</h2>
+      </div>
+      <div class="prose">
+        <p>We build narrow, purpose-made execution environments for AI agents: each one knows
+        the systems it may use, the identity it acts under, the approvals it needs and the
+        standards it has to deploy against.</p>
+        <ul class="caps" style="margin-top:1.4rem">
+          <li>Integration with the enterprise applications the workflow already runs on</li>
+          <li>Identity, permissions and approvals enforced, not merely documented</li>
+          <li>Work routed to the right handler, with a human path held open</li>
+          <li>Deployment against your existing architecture and standards</li>
+        </ul>
+        <p class="label" style="margin-top:1.4rem">Underneath: generated agent environments,
+        agent orchestration and typed routing</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Prove</span>
+        <h2>Show it delivers value and stays within its boundaries</h2>
+      </div>
+      <div class="prose">
+        <p>An AI workflow earns more autonomy by producing evidence, not by passing a demo. We
+        measure it against what actually happened, enforce its policies continuously, and
+        flag the moment its behaviour starts to drift.</p>
+        <ul class="caps" style="margin-top:1.4rem">
+          <li>Outcome evaluations against the workflow it replaces</li>
+          <li>Policy enforcement, audit trails and escalation</li>
+          <li>Autonomy that expands only as the evidence supports it</li>
+          <li>Drift detection, so degradation is caught rather than reported around</li>
+        </ul>
+        <p class="label" style="margin-top:1.4rem">Underneath: judgment governance, bounded
+        judgments, continuous evaluation and capability promotion criteria</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">What "rules" means</span>
+        <h2>Your enterprise has rules. Your AI should know them.</h2>
+        <p class="lede prose" style="margin-top:1.2rem">Compliance is the smallest part of it.
+        The rules of an organisation are its architecture, its roles, its operating
+        procedures, its economic priorities and the ways its departments coordinate. An agent
+        that ignores any of them is a liability, however capable it is.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">The long game</span>
+      <h2>From experiment, to dependable operation, to reusable capability</h2>
+      <p class="lede prose" style="margin-top:1.2rem">Capabilities evolve. What starts as an
+      experiment becomes a dependable part of operations, and eventually a utility other
+      workflows build on. We manage that whole progression, so each workflow you prove makes
+      the next one cheaper.</p>
+    </div>
+    <div class="terms">
+      <div class="term">
+        <span class="term__glyph">Experiment</span>
+        <h3>Find out what works</h3>
+        <p>Cheap trials with honest results, run in shadow alongside the existing process.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Operation</span>
+        <h3>Make it dependable</h3>
+        <p>Governed, evaluated and integrated, with autonomy matched to the evidence.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Utility</span>
+        <h3>Make it reusable</h3>
+        <p>The proven capability becomes infrastructure the next workflow starts from.</p>
+      </div>
+    </div>
+  </section>
+
+  """ + CTA + """
+"""
+
+# --------------------------------------------------------------------------
+# Entry offer: the first governed workflow
+# --------------------------------------------------------------------------
+
+FIRST = """
+  <section class="wrap page-head">
+    <span class="label">Where to start</span>
+    <h1>Your first governed AI-native workflow</h1>
+    <p class="lede">One business process. Real enterprise systems. Measurable results.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">The engagement</span>
+        <h2>Rebuild one workflow with AI agents, inside your enterprise</h2>
+      </div>
+      <div class="prose">
+        <p>We take a workflow you select and rebuild it with AI agents, working within your
+        existing technology standards, access controls and business constraints.</p>
+        <p>It runs alongside the current process first, in parallel or in shadow mode, so the
+        two can be compared on real work before anything is switched over. You expand its
+        autonomy when the evidence says you should, not before.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">What you receive</span>
+        <h2>A working system, and the evidence to decide what comes next</h2>
+      </div>
+      <div class="prose">
+        <ul class="caps">
+          <li>A working, bounded AI workflow, initially running in parallel or shadow mode</li>
+          <li>Integration with approved enterprise systems and permissions</li>
+          <li>Explicit evaluation and escalation criteria</li>
+          <li>A comparison against the existing workflow on speed, cost, accuracy and
+          exception rate</li>
+          <li>A documented path toward greater autonomy and reuse</li>
+        </ul>
+        <p class="label" style="margin-top:1.4rem">Pilot scope and production authorisation
+        depend on the workflow's risk and its integration requirements.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">How it runs</span>
+      <h2>Map, build and prove, scoped to one workflow</h2>
+    </div>
+    <div class="terms">
+      <div class="term">
+        <span class="term__glyph">Map</span>
+        <h3>Choose and understand the workflow</h3>
+        <p>The systems it touches, the rules that govern it, the decisions people hold, and
+        the baseline it will be measured against.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Build</span>
+        <h3>Rebuild it with agents</h3>
+        <p>A bounded agent workflow, integrated with approved systems and permissions, with
+        escalation paths to people defined up front.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Prove</span>
+        <h3>Run it in shadow and compare</h3>
+        <p>Side-by-side results on real work, and a documented decision on what to expand,
+        what to change, and what to leave with people.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="split">
+        <div class="section__head" style="margin-bottom:0">
+          <span class="label">An illustrative scope</span>
+          <h2>Agentic project coordination</h2>
+        </div>
+        <div class="prose">
+          <p class="lede">A good first workflow is high-volume, rule-bound and easy to measure.
+          Project coordination is all three.</p>
+          <p style="color:var(--on-deep)">Agents collect status, identify dependencies, manage
+          handoffs and run routine follow-ups across the systems a programme already uses.
+          People keep the decisions that are theirs: priorities, trade-offs and escalations.</p>
+          <p style="color:var(--on-deep)">It is not another chatbot. It is the step from
+          individual AI assistance to an AI-native team workflow — and it removes the kind of
+          coordination overhead that AI-native organisations are built to eliminate.</p>
+          <p class="label" style="margin-top:1.4rem">An example of the shape of an engagement,
+          not a packaged product</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section cta">
+      <h2>Tell us about one workflow.</h2>
+      <p class="lede">We help you build your first AI-native workflow, connect it safely to
+      your existing enterprise, and prove the business results before autonomy expands.</p>
+      <div class="cta__actions">
+        <a class="btn btn--lit" href="mailto:info@intuitionmachine.com?subject=First%20governed%20workflow">info@intuitionmachine.com</a>
+        <a class="btn btn--lit" style="background:transparent;border-color:#43c4b0;color:#43c4b0"
+           href="how-we-work.html">How we work</a>
+      </div>
+    </div>
+  </section>
+"""
+
+# --------------------------------------------------------------------------
+# ExO 3.0: the framework, and where the engineering fits
+# --------------------------------------------------------------------------
+
+EXO = """
+  <section class="wrap page-head">
+    <span class="label">ExO 3.0</span>
+    <h1>From ExO 3.0 to production</h1>
+    <p class="lede">ExO 3.0 shows organisations what the AI-native future looks like.
+    Intuition Machine helps them build it.</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">The execution gap</span>
+        <h2>A clear destination, and decades of systems in the way</h2>
+      </div>
+      <div class="prose">
+        <p>ExO 3.0 describes organisations that run through coordinated networks of people,
+        AI agents, shared intelligence and continuous learning. It sets out an Intelligence
+        Stack, a GOVERN/ASSURE control plane from the outset, and the REWRITE method for
+        getting there — starting with a small AI-native Edge Twin that runs real work
+        alongside existing operations.</p>
+        <p>Existing enterprises have to make that journey from where they are: decades of
+        technology investment, regulation, policy and organisational dependency. Translating
+        the architecture into working systems under those conditions is engineering work.
+        That is the work we do.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="terms">
+      <div class="term">
+        <span class="term__glyph">Vision</span>
+        <h3>The vision and transformation method</h3>
+        <p>What the AI-native enterprise should become.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Engineering</span>
+        <h3>Enterprise AI engineering &amp; assurance</h3>
+        <p>How AI-native workflows are integrated, governed, evaluated and deployed in real
+        enterprises.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Outcome</span>
+        <h3>AI-native operations with measurable results</h3>
+        <p>Working workflows, controlled autonomy and reusable infrastructure.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">Where we fit</span>
+      <h2>ExO 3.0 concepts, and the engineering behind each</h2>
+    </div>
+    <div class="maptable" role="table" aria-label="ExO 3.0 concepts and Intuition Machine's role">
+      <div class="maptable__row maptable__row--head" role="row">
+        <span role="columnheader">ExO 3.0 concept</span>
+        <span role="columnheader">What we build</span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell">MTP as protocol</b>
+        <span role="cell">Enterprise objectives and policies, translated into operational
+        constraints an agent can follow</span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell">Intelligence Stack</b>
+        <span role="cell">Constrained agentic workflows, connected to the systems they
+        depend on</span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell">GOVERN / ASSURE</b>
+        <span role="cell">Evaluations, enforcement, auditability and approval mechanisms</span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell">Edge Twin</b>
+        <span role="cell">One governed AI-native workflow, launched alongside existing
+        operations — <a href="first-workflow.html">our entry engagement</a></span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell">REWRITE</b>
+        <span role="cell">Reusable engineering infrastructure for implementation and
+        migration</span>
+      </div>
+      <div class="maptable__row" role="row">
+        <b role="cell">Recursive learning</b>
+        <span role="cell">Degradation detected, and updates driven by evidence</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="split">
+        <div class="section__head" style="margin-bottom:0">
+          <span class="label">For ExO practitioners</span>
+          <h2>You shape the transformation. We engineer it.</h2>
+        </div>
+        <div class="prose">
+          <p class="lede">Strategy engagements create the demand; the hard part comes when a
+          roadmap meets existing applications, regulation and policy. We are glad to work
+          alongside practitioners on that part — through referral, implementation or
+          co-development.</p>
+          <ul class="caps" style="margin-top:1.4rem;color:var(--on-deep)">
+            <li>Technical and architectural readiness analysis, alongside organisational
+            assessment</li>
+            <li>Governed AI-native workflows, built to the roadmap</li>
+            <li>Repeatable software infrastructure, alongside change coaching</li>
+            <li>Technical assurance and workflow economics, alongside transformation
+            metrics</li>
+          </ul>
+          <p style="margin-top:1.8rem"><a class="btn btn--lit"
+             href="mailto:info@intuitionmachine.com?subject=ExO%203.0%20implementation">Talk to us</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <p class="label prose">ExO 3.0 is a framework published by OpenExO. Intuition Machine is
+    independent and is not affiliated with, certified by or endorsed by OpenExO.</p>
+  </section>
+
+  """ + CTA + """
+"""
+
+# --------------------------------------------------------------------------
+# Research hub: the theory underneath the engineering
+# --------------------------------------------------------------------------
+
+RESEARCH_DATA = [
+    ("ai-native.html", "Architecture", "AI-Native Organisations",
+     "Six layers, from an invariant core to a licensed saboteur, each with a formal "
+     "counterpart in the theory."),
+    ("kernel.html", "Formal core", "The Kernel",
+     "Three levels, four columns and one operator — with an interactive matrix you can "
+     "run words on."),
+    ("loops.html", "Processes", "The Loops",
+     "Twelve recurring processes, each written as a word that closes back on its start."),
+    ("diagnosis.html", "Failure modes", "Diagnosis",
+     "Pathologies as minimal edits to healthy processes, and the seven-layer diagnostic "
+     "that locates them."),
+    ("software.html", "Instruments", "Connection Machine &amp; Intuition Machine",
+     "Two instruments built on the kernel — one traces grounding, one makes routing "
+     "explicit — and where each supports Map, Build and Prove."),
+    ("explorations.html", "Interactive", "Explorations",
+     "Hands-on companions to the theory: the Semiosis Atlas and a four-dimensional chess "
+     "variant."),
+    ("video.html", "Video", "The series",
+     "A 36-part video series working through the theory from the kernel to dispatch."),
+    ("film.html", "Film", "Never the same twice",
+     "A 97-second film built from the Chair44 aperiodic monotile."),
+]
+
+
+def research_card(url, kind, title, blurb):
+    return f"""      <article class="exploration">
+        <div class="exploration__body">
+          <span class="label exploration__kind">{kind}</span>
+          <h3><a href="{url}">{title}</a></h3>
+          <p class="exploration__desc">{blurb}</p>
+        </div>
+      </article>"""
+
+
+_RESEARCH_CARDS = "\n".join(research_card(*r) for r in RESEARCH_DATA)
+
+RESEARCH = f"""
+  <section class="wrap page-head">
+    <span class="label">Research</span>
+    <h1>The theory underneath the engineering</h1>
+    <p class="lede">Our engineering rests on Quaternion Process Theory of Cognition: a formal
+    account of how organisations learn, and of the ways they quietly stop. It is small enough
+    to check by machine, and it publishes what it has not yet proved.</p>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">Why this is not consulting</span>
+        <h2>The account is small enough to check by machine</h2>
+      </div>
+      <div class="figures">
+        <div class="figure-cell"><b>7</b><span>Axioms</span></div>
+        <div class="figure-cell"><b>1</b><span>Derived operator</span></div>
+        <div class="figure-cell"><b>9</b><span>Load-bearing theorems</span></div>
+        <div class="figure-cell"><b>12</b><span>Matrix cells</span></div>
+        <div class="figure-cell"><b>12</b><span>Recurring loops</span></div>
+        <div class="figure-cell"><b>43/43</b><span>Checks verified</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="explorations">
+{_RESEARCH_CARDS}
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Explainer</span>
+        <h2>3D aperiodic tiles</h2>
+        <p class="lede prose" style="margin-top:1.2rem">How a single tile can fill space
+        without ever repeating — supertiles of supertiles, each piece inside a unique
+        infinite hierarchy.</p>
+      </div>
+      <div class="embed">
+        <button class="embed__poster" type="button"
+                data-src="https://www.youtube-nocookie.com/embed/cvpExVxrJOY?autoplay=1&amp;rel=0"
+                data-title="3D aperiodic tiles" aria-label="Play 3D aperiodic tiles">
+          <img src="assets/img/aperiodic-tiles-poster.jpg" width="1280" height="720" alt=""
+               loading="lazy">
+          <span class="embed__play" aria-hidden="true">{YT_PLAY}</span>
+          <span class="embed__meta">
+            <b>3D aperiodic tiles</b>
+            <i>1:45 &#160;·&#160; press to load from YouTube</i>
+          </span>
+        </button>
+        <p class="embed__note">Nothing is requested from YouTube until you press play.</p>
+      </div>
+    </div>
+  </section>
+
+  """ + CTA + """
+"""
+
 PAGES = [
+    ("how-we-work.html", "How We Work — Intuition Machine",
+     "Map, Build, Prove: how Intuition Machine turns AI experiments into governed, "
+     "enterprise-ready workflows that follow your organisation's rules.", HOW),
+    ("first-workflow.html", "Your First Governed AI-Native Workflow — Intuition Machine",
+     "One business process, real enterprise systems, measurable results: a bounded AI "
+     "workflow run in shadow alongside the existing one, with evidence for what comes next.",
+     FIRST),
+    ("exo.html", "From ExO 3.0 to Production — Intuition Machine",
+     "ExO 3.0 shows organisations what the AI-native future looks like. Intuition Machine "
+     "provides the engineering and assurance to build it in existing enterprises.", EXO),
+    ("research.html", "Research — Intuition Machine",
+     "Quaternion Process Theory of Cognition: the machine-checked theory underneath "
+     "Intuition Machine's engineering.", RESEARCH),
     ("ai-native.html", "AI-Native Organisations — Intuition Machine",
      "AI-native organisations have a specifiable shape: six layers from an invariant core "
      "to a licensed saboteur, each with a formal counterpart in QPT.", AINATIVE),

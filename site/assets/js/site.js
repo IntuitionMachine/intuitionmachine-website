@@ -592,6 +592,31 @@
   paint();
 })();
 
+/* ============================================================
+   Single click-to-load embeds.
+
+   A poster button carries the player URL in data-src; nothing is fetched
+   until the visitor presses it, and then the iframe takes the poster's box.
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var posters = document.querySelectorAll(".embed__poster[data-src]");
+  for (var i = 0; i < posters.length; i++) {
+    posters[i].addEventListener("click", function () {
+      var frame = document.createElement("iframe");
+      frame.setAttribute("title", this.getAttribute("data-title") || "Video");
+      frame.setAttribute("allow",
+        "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen");
+      frame.setAttribute("allowfullscreen", "");
+      frame.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+      frame.setAttribute("src", this.getAttribute("data-src"));
+      this.parentNode.replaceChild(frame, this);
+      frame.focus();
+    });
+  }
+})();
+
 /* Mark the current page in the nav without hand-editing every file. */
 (function () {
   "use strict";
