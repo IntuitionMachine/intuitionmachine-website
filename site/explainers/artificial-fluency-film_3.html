@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Artificial Fluency — The Film</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04050b; --ink:#eef1ff; --dim:rgba(238,241,255,.62); --faint:rgba(238,241,255,.18);
+  --cyan:#5ee7ff; --amber:#ffb35c; --mag:#ff5ec8; --violet:#8b7bff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);overflow:hidden;font-family:Inter,system-ui,sans-serif}
+canvas#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block}
+.vignette{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.72) 100%)}
+#shade{position:fixed;inset:0;pointer-events:none;z-index:2;background:radial-gradient(ellipse 70% 55% at 0% 88%,rgba(4,5,11,.78),rgba(4,5,11,.35) 55%,transparent 80%);transition:opacity .2s}
+.grain{position:fixed;inset:-50%;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-4%)}60%{transform:translate(-4%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+/* HUD */
+#hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:22px 32px;
+  font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:var(--dim);pointer-events:none;z-index:5}
+#hud .brand{display:flex;gap:10px;align-items:center}
+#hud .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+#chap{text-transform:uppercase}
+
+/* text layer */
+#text{position:fixed;inset:0;pointer-events:none;z-index:4}
+.sc{position:absolute;left:clamp(20px,6vw,96px);bottom:clamp(110px,16vh,170px);max-width:min(760px,88vw);display:none}
+.sc.center{left:50%;bottom:auto;top:50%;transform:translate(-50%,-50%);text-align:center;max-width:min(1000px,92vw)}
+.kicker{font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.sc.center .kicker{justify-content:center}
+.kicker .ln{height:1px;background:linear-gradient(90deg,var(--cyan),transparent);width:0}
+.head{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,6.2vw,86px);line-height:.98;letter-spacing:-.01em;margin-bottom:22px;perspective:600px}
+.sc.center .head{font-size:clamp(54px,11vw,150px)}
+.head .ch{display:inline-block;will-change:transform,opacity,filter;transform-origin:50% 100%}
+.head .ch.sp{width:.26em}
+.head em{font-style:italic}
+.caps{display:grid}
+.cap{grid-area:1/1;align-self:start;font-weight:300;font-size:clamp(16px,1.6vw,22px);line-height:1.45;color:var(--ink);text-wrap:balance;max-width:640px}
+.sc.center .cap{justify-self:center;width:min(760px,90vw);max-width:none;color:var(--dim)}
+.quote{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(20px,2.2vw,30px);line-height:1.28;color:var(--ink);max-width:700px;position:relative;padding-left:.9em;border-left:1px solid rgba(94,231,255,.35)}
+.sc.center .quote{padding-left:0;border-left:0;color:var(--ink)}
+.quote .qm{position:absolute;left:-.12em;top:-.42em;font-size:2.4em;line-height:1;color:var(--cyan);font-style:normal;transform-origin:50% 60%}
+.sc.center .quote .qm{position:static;display:block;margin:-.1em auto -.45em;}
+.quote .attr{display:block!important;margin-top:.7em;font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);font-style:normal}
+.quote .attr i{font-style:normal}
+.head,.cap,.kicker{text-shadow:0 2px 18px rgba(0,0,0,.55),0 0 2px rgba(0,0,0,.4)}
+.cap .w{display:inline-block;will-change:transform,opacity,filter;margin-right:.26em}
+
+/* 3D labels */
+#labels{position:fixed;inset:0;pointer-events:none;z-index:3}
+.lbl{position:absolute;left:0;top:0;white-space:nowrap;text-shadow:0 0 6px #000,0 0 14px rgba(0,0,0,.9);font:500 10.5px/1.25 'JetBrains Mono',monospace;letter-spacing:.2em;color:var(--ink);display:flex;align-items:flex-start;gap:8px}
+.lbl i{display:block;width:7px;height:7px;border:1px solid currentColor;border-radius:50%;margin-top:2px;flex:none}
+.lbl b{font-weight:500;display:block}
+.lbl span{display:block;color:var(--dim);letter-spacing:.14em;font-size:9.5px;margin-top:3px;text-transform:lowercase}
+
+/* controls */
+#controls{position:fixed;left:0;right:0;bottom:0;z-index:6;padding:14px clamp(16px,3vw,32px) 20px;display:flex;align-items:center;gap:16px;
+  background:linear-gradient(0deg,rgba(0,0,0,.6),transparent);transition:opacity .5s}
+#controls.idle{opacity:0}
+.btn{appearance:none;border:1px solid var(--faint);background:rgba(255,255,255,.04);color:var(--ink);width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;flex:none;backdrop-filter:blur(8px);transition:background .2s,border-color .2s}
+.btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4)}
+.btn svg{width:15px;height:15px;fill:currentColor}
+#track{position:relative;flex:1;height:26px;cursor:pointer;display:flex;align-items:center}
+#segs{position:absolute;left:0;right:0;height:3px;display:flex;gap:3px}
+#segs div{height:100%;background:rgba(255,255,255,.14);position:relative;border-radius:2px;overflow:hidden}
+#segs div b{position:absolute;inset:0;background:linear-gradient(90deg,var(--cyan),var(--violet));transform-origin:0 50%;transform:scaleX(0)}
+#tip{position:absolute;bottom:26px;transform:translateX(-50%);font:500 10px 'JetBrains Mono',monospace;letter-spacing:.14em;background:rgba(10,12,24,.9);border:1px solid var(--faint);padding:6px 9px;border-radius:4px;white-space:nowrap;opacity:0;transition:opacity .15s;pointer-events:none;text-transform:uppercase}
+#track:hover #tip{opacity:1}
+#time{font:500 11px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:.08em;min-width:92px;text-align:right}
+
+/* intro */
+#intro{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:radial-gradient(ellipse at center,rgba(4,5,11,.35),rgba(4,5,11,.92));transition:opacity 1.2s ease,visibility 1.2s}
+#intro.gone{opacity:0;visibility:hidden}
+#intro .in{text-align:center;padding:24px}
+#intro .k{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase;margin-bottom:22px}
+#intro h1{font:400 clamp(48px,9vw,120px)/.95 'Instrument Serif',serif;letter-spacing:-.01em}
+#intro h1 em{color:transparent;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--mag));-webkit-background-clip:text;background-clip:text}
+#intro p{color:var(--dim);font-weight:300;margin:20px auto 36px;max-width:520px;line-height:1.5}
+#intro .go{display:inline-flex;align-items:center;gap:12px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--bg);
+  background:var(--ink);border:0;border-radius:999px;padding:16px 28px;cursor:pointer;transition:transform .25s,box-shadow .25s}
+#intro .go:hover{transform:scale(1.04);box-shadow:0 0 40px rgba(94,231,255,.45)}
+#intro .go svg{width:12px;height:12px;fill:currentColor}
+#intro .muted{display:block;margin:16px auto 0;background:none;border:0;color:var(--dim);font:400 11px 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+#intro .hint{margin-top:34px;font:400 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:rgba(238,241,255,.4);text-transform:uppercase}
+#err{position:fixed;inset:0;display:none;place-items:center;z-index:20;background:var(--bg);color:var(--dim);font:14px Inter;text-align:center;padding:24px}
+
+@media (max-width:640px){
+  #hud{padding:16px}
+  #hud .brand span:last-child{display:none}
+  .sc{bottom:96px}
+  .lbl{font-size:9px}
+  .lbl span{display:none}
+  #time{display:none}
+}
+</style>
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="labels"></div>
+<div class="vignette"></div><div id="shade"></div>
+<div class="grain"></div>
+<div id="text"></div>
+<header id="hud"><div class="brand"><i class="dot"></i><span>ARTIFICIAL FLUENCY</span></div><span id="chap"></span></header>
+
+<div id="controls">
+  <button class="btn" id="play" aria-label="Play/pause"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2l10 6-10 6z"/></svg></button>
+  <button class="btn" id="restart" aria-label="Restart"><svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 1 1-5.6 3.8l1.6.7A4.3 4.3 0 1 0 8 3.7V6L4.5 3 8 0z"/></svg></button>
+  <div id="track"><div id="segs"></div><div id="tip"></div></div>
+  <span id="time">0:00 / 0:00</span>
+  <button class="btn" id="snd" aria-label="Sound"><svg viewBox="0 0 16 16" id="sndIcon"></svg></button>
+  <button class="btn" id="fs" aria-label="Fullscreen"><svg viewBox="0 0 16 16"><path d="M1 1h5v2H3v3H1zm9 0h5v5h-2V3h-3zM1 10h2v3h3v2H1zm12 0h2v5h-5v-2h3z"/></svg></button>
+</div>
+
+<div id="intro">
+  <div class="in">
+    <div class="k">A visual précis · Carlos E. Perez</div>
+    <h1>Artificial <em>Fluency</em></h1>
+    <p>A four-minute film through all twelve chapters — with the book’s most insightful line from each — on why meaning isn’t stored but made.</p>
+    <button class="go" id="go"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Play with sound</button>
+    <button class="muted" id="goMuted">or play muted</button>
+    <div class="hint">Space · pause &nbsp;&nbsp; ← → · chapters</div>
+  </div>
+</div>
+<div id="err">This film needs WebGL and an internet connection to load its 3D engine.</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+/* ================================================================
+   SCRIPT
+   ================================================================ */
+const SC = [
+ { chap:'Title', dur:10, center:true, kicker:'Carlos E. Perez', head:'Artificial <em>Fluency</em>',
+   caps:[[3.0,'Artificial General Intelligence & Language as a Living Process'],
+         [6.2,'Twelve chapters, one idea: meaning is not stored — it is made.']],
+   cam:[[0,0,9.5],[0,0,0]], chord:[45,52,57,60,64] },
+ { chap:'Introduction', dur:15, kicker:'Introduction · A new term', head:'Fluent is not <em>thinking</em>',
+   caps:[[1.8,'GPT, Claude, Midjourney: systems that render text and images with human-level consistency.'],
+         [5.2,'More than parrots, they blend concepts — yet competence with language isn’t human judgment.'],
+         [8.6,'Artificial fluent systems render media like humans that dream. They have no deliberate control over their experiences.','Introduction']],
+   cam:[[0.4,1.3,8.6],[0,0,0]], chord:[41,48,53,57,64] },
+ { chap:'1 · Semiotic Processes', dur:16, kicker:'Chapter 1 · Semiotic Processes', head:'Meaning is a <em>triad</em>',
+   caps:[[1.8,'Peirce: a sign stands for an object — to an interpreter. Icons resemble, indexes point, symbols agree.'],
+         [5.2,'Like DNA read by a cell, a model’s weights mean nothing without a process that interprets them.'],
+         [8.6,'It is the process that renders meaning to a representation, not the other way around! This is an expression of semantic closure.','Chapter 1']],
+   cam:[[0,0.6,8.2],[0,0.3,0]], chord:[48,55,60,64,67] },
+ { chap:'2 · Attention & Relevance', dur:16, kicker:'Chapter 2 · Attention, Relevance, Shared Intentionality', head:'Relevance must be <em>realized</em>',
+   caps:[[1.8,'Every mind runs on a finite attention budget; relevance emerges from balancing constraints.'],
+         [5.2,'Shared intentionality — two minds attending together — made human culture cumulative.'],
+         [8.6,'…what we call fluency in a language is a mastery of the affordances of a language. Knowing how to play with language implies knowing how to shape perception.','Chapter 2']],
+   cam:[[0,5.6,8.4],[0,-1,0]], chord:[45,52,57,60,64] },
+ { chap:'3 · Design · Conversation · Computation', dur:16, kicker:'Chapter 3 · Design · Conversation · Computation', head:'Design is a <em>conversation</em>',
+   caps:[[1.8,'Cybernetics sees design, dialogue and creativity as goal-seeking feedback loops.'],
+         [5.2,'Computation translates intention into mechanism. LLMs tell compelling stories — not truthful counsel.'],
+         [8.6,'Intentionality with semiotics is computation, but it is computation that involves meaning-making. Meaning is the difference in form that makes a difference in action.','Chapter 3']],
+   cam:[[0,2.4,9.2],[0,0,0]], chord:[43,50,55,59,62] },
+ { chap:'4 · Social Technology', dur:16, kicker:'Chapter 4 · Social Technology', head:'Language is a <em>social technology</em>',
+   caps:[[1.8,'Language lives between speakers, not inside any one head.'],
+         [5.2,'We invented it together — a technology for instructing each other’s imagination.'],
+         [8.6,'Language is not a static thing, it’s an artifact of evolution. It’s an abstract living thing. Language captures useful recurrent patterns of our interactions.','Chapter 4']],
+   cam:[[3.4,1.8,9.8],[0,0,0]], chord:[38,45,50,53,57] },
+ { chap:'5 · Reasoning & Rationality', dur:16, kicker:'Chapter 5 · Reasoning and Rationality', head:'Reasons are made to be <em>shared</em>',
+   caps:[[1.8,'Reasoning evolved to justify and persuade — a social tool, not a solitary logic engine.'],
+         [5.2,'Exchanging reasons aligns many perspectives into one shared understanding.'],
+         [8.6,'…reasoning is not a solitary endeavor but a collective symphony of perspectives.','Chapter 5']],
+   cam:[[0.5,1.3,9.6],[0,0,0]], chord:[41,48,53,57,60] },
+ { chap:'6 · Tensions', dur:16, kicker:'Chapter 6 · Tensions — Relevance Realization', head:'Cognition is held in <em>tension</em>',
+   caps:[[1.8,'Stability and plasticity. Familiar and novel. Order and randomness.'],
+         [5.2,'Like a tensegrity structure, a mind stays upright by balancing push and pull.'],
+         [8.6,'…cognition inherently involves coordinating dialectical poles rather than seeking optimal solutions.','Chapter 6']],
+   cam:[[4.2,1.6,6.6],[0,0,0]], chord:[38,45,50,53,57] },
+ { chap:'7 · Semantic Closure', dur:16, kicker:'Chapter 7 · Meaning Making — Semantic Closure', head:'Semantic <em>closure</em>',
+   caps:[[1.8,'Symbols steer physical processes; physical processes sustain the symbols.'],
+         [5.2,'Deduction reveals conclusions. Intuition reveals possibilities. Abduction reveals questions.'],
+         [8.6,'Through this circular, mutually reinforcing relationship, the dynamics acquire functional significance. Matter obtains meaning.','Chapter 7']],
+   cam:[[0,3.6,6.8],[0,0,0]], chord:[41,48,53,57,60] },
+ { chap:'8 · Process Metaphysics', dur:16, kicker:'Chapter 8 · Process Metaphysics', head:'Think in verbs, not <em>nouns</em>',
+   caps:[[1.8,'Heraclitus: all is flux. Whitehead: reality is creative becoming.'],
+         [5.2,'Our noun-centric language freezes living processes into things. Bohm’s rheomode sets them moving again.'],
+         [8.6,'We cannot, after all, have new things without the presence of processes. But if our vocabulary of processes is impoverished, then we cannot imagine how these new things come into existence.','Chapter 8']],
+   cam:[[0,0.6,9],[0,0,0]], chord:[48,55,59,64,67] },
+ { chap:'8 · Quaternion Process Theory', dur:16, kicker:'Chapter 8 · Quaternion Process Theory', head:'Four modes of <em>thinking</em>',
+   caps:[[1.8,'Beyond Kahneman’s two systems: fast/slow × empathic/fluent.'],
+         [5.2,'Participatory, procedural, perspectival, propositional — four ways of knowing that must coordinate.'],
+         [8.6,'All general intelligence is a consequence of collections of intelligence. We are who we are because we are in constant collaboration.','Chapter 8']],
+   cam:[[0.5,0.5,9.4],[0,-0.55,0]], chord:[40,47,52,56,59] },
+ { chap:'9 · A Pattern Language', dur:16, kicker:'Chapter 9 · A Pattern Language for Processes', head:'Patterns that <em>generate</em>',
+   caps:[[1.8,'Alexander’s pattern languages: moves that grow a whole while preserving its quality.'],
+         [5.2,'Like evolution, deep learning unfolds structure — and holds latent expertise waiting to be mined.'],
+         [8.6,'Deep Learning is not inspired by biology. Rather, it is the reverse, Deep Learning reveals an underlying implicate order that it shares with biology.','Chapter 9']],
+   cam:[[0.4,0.8,9.4],[0,-0.2,0]], chord:[45,52,57,59,64] },
+ { chap:'10 · Paradox', dur:15, kicker:'Chapter 10 · Paradox — Symmetry Breaking', head:'Paradox breaks <em>symmetry</em>',
+   caps:[[1.8,'A paradox cracks a rigid category — and new order forms through the crack.'],
+         [5.0,'Masters think in fluid analogies, not crisp boxes. Most of that thinking is unconscious.'],
+         [8.2,'An ‘inversion of reasoning’ or a ‘symmetry breaking’ happens when we discover what we previously thought to be true was in fact wrong.','Chapter 10']],
+   cam:[[3.2,1.4,8.6],[0,0,0]], chord:[45,52,57,60,64] },
+ { chap:'11 · Metaphorical Exemplification', dur:15, kicker:'Chapter 11 · Metaphorical Exemplification', head:'Metaphor makes the <em>new</em>',
+   caps:[[1.8,'Bisociation: two unrelated frames collide. Blending: they fuse into a new whole.'],
+         [5.0,'AI image makers blend with ease — but the spark of meaning still comes from us.'],
+         [8.2,'Creating visual art was always limited by a person’s artistic skill. Deep learning breaks this barrier. But when it’s broken, it exposes our lack of creativity to ourselves.','Chapter 11']],
+   cam:[[-2.2,1.8,8.8],[-1.3,0,0]], chord:[41,48,53,57,64] },
+ { chap:'12 · Cognitive Maturity', dur:16, kicker:'Chapter 12 · Cognitive Maturity — Anti-fragility', head:'Widen the light cone of <em>care</em>',
+   caps:[[1.8,'Minds mature: socialized → self-authoring → self-transforming.'],
+         [5.2,'An anti-fragile mind gains from disorder, and boundary objects let worldviews cooperate.'],
+         [8.6,'…it is the curse of the human condition that we are not born with self-transforming minds. We have to construct ourselves from infantile minds into mature minds.','Chapter 12']],
+   cam:[[0,2.4,10.5],[0,1.6,0]], chord:[41,48,55,57,64] },
+ { chap:'Coda', dur:15, center:true, kicker:'Coda', head:'Language is a <em>living process</em>',
+   caps:[[2.4,'Intelligence isn’t a thing we have. It’s something we do — together.'],
+         [5.8,'Artificial fluency is a new partner in that conversation.'],
+         [9.0,'Language, at its core, is instruction for imagination.','Chapter 2']],
+   cam:[[0,6.5,11],[0,0,0]], chord:[45,52,57,59,64] },
+];
+let acc=0; SC.forEach(s=>{ s.start=acc; acc+=s.dur; });
+const TOTAL=acc;
+
+/* ================================================================
+   HELPERS
+   ================================================================ */
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const smooth=x=>{x=clamp(x);return x*x*(3-2*x);};
+const eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;};
+const eout=x=>{x=clamp(x);return 1-Math.pow(1-x,3);};
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const R=mulberry(7);
+const gauss=()=>{let u=0,v=0;while(!u)u=R();while(!v)v=R();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);};
+const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+const C=h=>new THREE.Color(h);
+function randDir(){const u=R()*2-1,a=R()*Math.PI*2,s=Math.sqrt(1-u*u);return V(s*Math.cos(a),u,s*Math.sin(a));}
+
+/* ================================================================
+   RENDERER
+   ================================================================ */
+const canvas=document.getElementById('gl');
+let renderer;
+try{ renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'}); }
+catch(e){ document.getElementById('err').style.display='grid'; throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=0.88;
+const scene=new THREE.Scene();
+scene.background=C('#04050b');
+scene.fog=new THREE.FogExp2(0x04050b,0.035);
+const camera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,0.1,200);
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+scene.add(new THREE.AmbientLight(0x404a70,0.6));
+const key=new THREE.DirectionalLight(0xffffff,1.6); key.position.set(4,6,5); scene.add(key);
+const rim=new THREE.PointLight(0x5ee7ff,30,30); rim.position.set(-5,-2,-4); scene.add(rim);
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.7,0.55,0.28);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+// Text guard: compresses & darkens highlights behind the active text block so copy stays readable
+const guard=new ShaderPass({uniforms:{tDiffuse:{value:null},uRect:{value:new THREE.Vector4()},uStr:{value:0},uRes:{value:new THREE.Vector2(1,1)}},
+ vertexShader:`varying vec2 vUv; void main(){vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
+ fragmentShader:`uniform sampler2D tDiffuse; uniform vec4 uRect; uniform float uStr; uniform vec2 uRes; varying vec2 vUv;
+ void main(){ vec4 c=texture2D(tDiffuse,vUv); vec2 p=vUv*uRes; vec2 ctr=(uRect.xy+uRect.zw)*0.5, hs=(uRect.zw-uRect.xy)*0.5;
+  vec2 q=abs(p-ctr)-hs; float d=length(max(q,0.0))+min(max(q.x,q.y),0.0); float fe=min(uRes.x,uRes.y)*0.09;
+  float m=(1.0-smoothstep(-fe*0.25,fe,d))*uStr; float lum=max(max(c.r,c.g),c.b);
+  vec3 comp=c.rgb/(1.0+lum*1.8)*0.55; c.rgb=mix(c.rgb,comp,m); gl_FragColor=c;}`});
+composer.addPass(guard);
+const _db=new THREE.Vector2(),_rng=document.createRange();
+function updateGuard(i){ let best=-1,bw=0; SC.forEach((s,k)=>{const w=sceneW(k,t); if(w>bw&&s.el.style.display!=='none'){bw=w;best=k;}});
+  renderer.getDrawingBufferSize(_db); guard.uniforms.uRes.value.copy(_db);
+  if(best<0){guard.uniforms.uStr.value=0;return;}
+  const s=SC[best]; const k=_db.x/innerWidth; const pad=14;
+  let L=1e9,T=1e9,Rr=-1e9,Bb=-1e9; const add=el=>{if(!el)return;_rng.selectNodeContents(el);const r=_rng.getBoundingClientRect();if(r.width<1)return;L=Math.min(L,r.left);T=Math.min(T,r.top);Rr=Math.max(Rr,r.right);Bb=Math.max(Bb,r.bottom);};
+  add(s.kt); add(s.headEl); s.capEls.forEach(ce=>{if(ce.el.style.visibility!=='hidden')add(ce.el);});
+  if(Rr<0){guard.uniforms.uStr.value=0;return;}
+  guard.uniforms.uRect.value.set((L-pad)*k,(innerHeight-Bb-pad)*k,(Rr+pad)*k,(innerHeight-T+pad)*k);
+  guard.uniforms.uStr.value=bw*(s.center?0.75:1.0);
+}
+
+/* starfield */
+{
+  const n=2400,p=new Float32Array(n*3);
+  for(let i=0;i<n;i++){const d=randDir().multiplyScalar(40+R()*50);p.set([d.x,d.y,d.z],i*3);}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  scene.add(new THREE.Points(g,new THREE.PointsMaterial({size:0.12,color:0x9fb4ff,transparent:true,opacity:.55,fog:false,depthWrite:false})));
+}
+
+/* ================================================================
+   PARTICLE MORPH SYSTEM
+   ================================================================ */
+const N=9000;
+function mk(){return {p:new Float32Array(N*3),c:new Float32Array(N*3)};}
+function put(T,i,v,col){T.p[i*3]=v.x;T.p[i*3+1]=v.y;T.p[i*3+2]=v.z;T.c[i*3]=col.r;T.c[i*3+1]=col.g;T.c[i*3+2]=col.b;}
+const tmpC=new THREE.Color();
+const mixC=(a,b,t)=>tmpC.copy(a).lerp(b,t);
+
+const TRIAD_V=[0,1,2].map(k=>{const a=Math.PI/2+k*Math.PI*2/3;return V(Math.cos(a)*2.4,Math.sin(a)*2.4+0.3,0);});
+const triadCurve=(a,b)=>{const m=a.clone().add(b).multiplyScalar(.5);const ctrl=m.clone().sub(V(0,0.3,0)).multiplyScalar(.25).add(V(0,0.3,0));ctrl.z=0.9;return new THREE.QuadraticBezierCurve3(a,ctrl,b);};
+const TRIAD_C=[[0,1],[1,2],[2,0]].map(([a,b])=>triadCurve(TRIAD_V[a],TRIAD_V[b]));
+const QPT_V=[V(1,1,1),V(1,-1,-1),V(-1,1,-1),V(-1,-1,1)].map(v=>v.normalize().multiplyScalar(2.2));
+const QPT_COL=['#ffb35c','#5ee7ff','#8b7bff','#ff5ec8'].map(C);
+const SPIRAL_COLS=['#d9c89e','#9a6be0','#e0463d','#3f74e6','#f08a2a','#3ec46d','#f2d33a','#2fd6c8'].map(C);
+function spiralCol(u){const x=u*(SPIRAL_COLS.length-1),i=Math.floor(Math.min(x,SPIRAL_COLS.length-2));return mixC(SPIRAL_COLS[i],SPIRAL_COLS[i+1],x-i).clone();}
+const spiralPt=(u)=>{const a=u*Math.PI*2*3.2;const r=0.35+u*3.1;return V(Math.cos(a)*r,-2.6+u*7.4,Math.sin(a)*r);};
+function flowPosJS(rx,ry,time){const lane=Math.floor(rx*7);const x=((ry*20+time*(0.8+rx*0.6))%20+20)%20-10;
+  return V(x,(lane-3)*0.42+Math.sin(x*0.55+lane*0.9+time*0.6)*0.7,Math.cos(x*0.35+lane*1.7+time*0.4)*0.9);}
+
+const rnd=new Float32Array(N*2); for(let i=0;i<N*2;i++) rnd[i]=R();
+
+// ---- shared geometry for new chapters ----
+const UPV=V(0,1,0);
+const LEM=(u)=>{const s=Math.sin(u),c=Math.cos(u),den=1+s*s;return V(3.3*c/den,3.3*s*c/den*1.15,0.7*Math.sin(u));};
+const NET=[];{const n=150,ga=Math.PI*(3-Math.sqrt(5));for(let i=0;i<n;i++){const y=1-2*(i+.5)/n,r=Math.sqrt(1-y*y),a=i*ga;NET.push(V(Math.cos(a)*r,y,Math.sin(a)*r).multiplyScalar(2.5+(R()-.5)*0.6));}}
+const NET_E=[];{const seen=new Set();NET.forEach((p,i)=>{const d=NET.map((q,j)=>[p.distanceTo(q),j]).sort((a,b)=>a[0]-b[0]).slice(1,4);d.forEach(([,j])=>{const k=i<j?i+'_'+j:j+'_'+i;if(!seen.has(k)){seen.add(k);NET_E.push([i,j]);}});});}
+const CONES=Array.from({length:240},()=>{const d=randDir();d.y*=0.7;return{p:d.multiplyScalar(1.5+R()*2.1),q0:new THREE.Quaternion().setFromUnitVectors(UPV,randDir()),r:R()};});
+const TREE=[],LEAVES=[];
+(function grow(s,d,len,depth,t0,rad){const e=s.clone().add(d.clone().multiplyScalar(len));TREE.push({s,d:d.clone(),len,t0,rad,depth});
+  if(depth===0){LEAVES.push({p:e,t0:t0+0.5});return;}
+  const perp=new THREE.Vector3().crossVectors(d,Math.abs(d.y)<0.9?UPV:V(1,0,0)).normalize();
+  for(let k=0;k<3;k++){const ax=perp.clone().applyAxisAngle(d,k*Math.PI*2/3+depth*0.9);const nd=d.clone().applyAxisAngle(ax,0.58);nd.y+=0.1;nd.normalize();grow(e,nd,len*0.74,depth-1,t0+0.5,rad*0.66);}
+})(V(0,-3.1,0),V(0,1,0),1.25,6,0,0.11);
+const PLANE_A=new THREE.Euler(0.55,0,0),PLANE_B=new THREE.Euler(-0.7,0,0);
+
+const TG=[];
+// chaos (pre-roll)
+const CHAOS=mk(); for(let i=0;i<N;i++){put(CHAOS,i,randDir().multiplyScalar(6+R()*14),mixC(C('#5ee7ff'),C('#8b7bff'),R()));}
+// 0 title: fibonacci shell
+{const T=mk();const ga=Math.PI*(3-Math.sqrt(5));for(let i=0;i<N;i++){const y=1-2*(i+.5)/N,r=Math.sqrt(1-y*y),a=i*ga;const rad=3.3+gauss()*0.08+(R()<.08?R()*1.2:0);
+  put(T,i,V(Math.cos(a)*r*rad,y*rad,Math.sin(a)*r*rad),mixC(C('#5ee7ff'),C('#ff5ec8'),(y+1)/2*0.8));}TG.push(T);}
+// 1 premise: conceptual blend of sphere and cube
+{const T=mk();for(let i=0;i<N;i++){const d=randDir();const s=d.clone();const m=Math.max(Math.abs(d.x),Math.abs(d.y),Math.abs(d.z));const cu=d.clone().divideScalar(m).multiplyScalar(.8);
+  const b=smooth((d.x+0.6)/1.2);const p=s.lerp(cu,b).multiplyScalar(2.7+gauss()*0.05).add(V(1.6,0,0));
+  put(T,i,p,mixC(C('#ffb35c'),C('#8b7bff'),b));}TG.push(T);}
+// 2 triad
+{const T=mk();const cols=[C('#5ee7ff'),C('#ffb35c'),C('#ff5ec8')];for(let i=0;i<N;i++){if(R()<.45){const k=i%3;const d=randDir().multiplyScalar(0.75+Math.abs(gauss())*0.25);put(T,i,TRIAD_V[k].clone().add(d),cols[k]);}
+  else{const k=i%3,u=R();const p=TRIAD_C[k].getPoint(u).add(V(gauss()*.07,gauss()*.07,gauss()*.07));put(T,i,p,mixC(cols[k],cols[(k+1)%3],u));}}TG.push(T);}
+// 3 attention plane
+{const T=mk();const side=95;for(let i=0;i<N;i++){const gx=i%side,gz=Math.floor(i/side);const x=(gx/(side-1)-.5)*15,z=(gz/(side-1)-.5)*12;
+  put(T,i,V(x+gauss()*0.02,-1.2+Math.sin(x*.6)*Math.cos(z*.5)*0.18,z),mixC(C('#7fa2ff'),C('#b9c6ff'),R()));}TG.push(T);}
+// 4 conversation: lemniscate band
+{const T=mk();for(let i=0;i<N;i++){const u=R()*Math.PI*2;const p=LEM(u).add(randDir().multiplyScalar(Math.abs(gauss())*0.32));put(T,i,p,mixC(C('#ffb35c'),C('#5ee7ff'),0.5+0.5*Math.cos(u)));}TG.push(T);}
+// 5 network shell
+{const T=mk();for(let i=0;i<N;i++){const d=randDir();put(T,i,d.clone().multiplyScalar(3.5+Math.abs(gauss())*0.5),mixC(C('#8b7bff'),C('#6dffc1'),(d.y+1)/2));}TG.push(T);}
+// 6 alignment: orbit rings
+{const T=mk();const tilts=[0,1.1,2.2,0.55,1.65];for(let i=0;i<N;i++){const k=i%5,a=R()*Math.PI*2,r=1.0+k*0.55+gauss()*0.04;
+  const p=V(Math.cos(a)*r,0,Math.sin(a)*r).applyEuler(new THREE.Euler(tilts[k],tilts[k]*0.7,0));put(T,i,p,mixC(C('#ffb35c'),C('#ff5ec8'),k/4));}TG.push(T);}
+// 7 tensegrity: shell
+{const T=mk();for(let i=0;i<N;i++){const d=randDir();put(T,i,d.clone().multiplyScalar(3.6+gauss()*0.25),mixC(C('#6dffc1'),C('#ffb35c'),(d.y+1)/2));}TG.push(T);}
+// 8 semantic closure: torus tilted
+{const T=mk();const rot=new THREE.Euler(-1.05,0,0);for(let i=0;i<N;i++){const u=R()*Math.PI*2,v=R()*Math.PI*2;const r=0.45+Math.abs(gauss())*0.2;
+  const p=V((3.2+r*Math.cos(v))*Math.cos(u),(3.2+r*Math.cos(v))*Math.sin(u),r*Math.sin(v)).applyEuler(rot);put(T,i,p,mixC(C('#5ee7ff'),C('#ff5ec8'),0.5+0.5*Math.sin(u)));}TG.push(T);}
+// 9 flux
+const FLUX_IDX=9, S7=SC[FLUX_IDX].start+1.5;
+{const T=mk();for(let i=0;i<N;i++){put(T,i,flowPosJS(rnd[i*2],rnd[i*2+1],S7),mixC(C('#5ee7ff'),C('#8b7bff'),rnd[i*2]));}TG.push(T);}
+// 10 QPT
+{const T=mk();for(let i=0;i<N;i++){const k=i%4;if(R()<.8){put(T,i,QPT_V[k].clone().add(randDir().multiplyScalar(0.95+Math.abs(gauss())*0.3)),QPT_COL[k]);}
+  else{const k2=(k+1+Math.floor(R()*3))%4;const u=R();put(T,i,QPT_V[k].clone().lerp(QPT_V[k2],u).add(V(gauss()*.05,gauss()*.05,gauss()*.05)),mixC(QPT_COL[k],QPT_COL[k2],u).clone());}}TG.push(T);}
+// 11 pattern tree: blossoms around leaves
+{const T=mk();for(let i=0;i<N;i++){const L=LEAVES[i%LEAVES.length];put(T,i,L.p.clone().add(randDir().multiplyScalar(Math.abs(gauss())*0.22)),mixC(C('#6dffc1'),C('#ff9ad8'),R()*0.6+ (L.p.y+1)*0.2).clone().multiplyScalar(0.45));}TG.push(T);}
+// 12 shattered sphere
+{const T=mk();const cells=Array.from({length:70},()=>({d:randDir(),o:0.2+R()*1.6,c:R()}));for(let i=0;i<N;i++){const d=randDir();let best=0,bd=-2;cells.forEach((c,j)=>{const q=c.d.dot(d);if(q>bd){bd=q;best=j;}});
+  const c=cells[best];put(T,i,d.multiplyScalar(3.3).add(c.d.clone().multiplyScalar(c.o)),mixC(C('#5ee7ff'),C('#ff5ec8'),c.c));}TG.push(T);}
+// 13 bisociation: two intersecting planes
+{const T=mk();for(let i=0;i<N;i++){const a=i%2===0;const p=V((R()-.5)*9,gauss()*0.02,(R()-.5)*9).applyEuler(a?PLANE_A:PLANE_B);put(T,i,p,a?C('#5ee7ff'):C('#ff5ec8'));}TG.push(T);}
+// 14 spiral
+{const T=mk();for(let i=0;i<N;i++){const u=R();if(R()<.82){put(T,i,spiralPt(u).add(V(gauss()*.12,gauss()*.12,gauss()*.12)),spiralCol(u));}
+  else{const a=R()*Math.PI*2,r=(0.3+u*3.4)*Math.sqrt(R());put(T,i,V(Math.cos(a)*r,-2.6+u*7.4,Math.sin(a)*r),spiralCol(u).multiplyScalar(.5));}}TG.push(T);}
+// 15 galaxy
+{const T=mk();for(let i=0;i<N;i++){const arm=i%3;const r=Math.pow(R(),0.7)*6.2;const a=arm*Math.PI*2/3+r*0.85+gauss()*0.22;
+  put(T,i,V(Math.cos(a)*r,gauss()*0.12*(1.2-r/6.2),Math.sin(a)*r),mixC(C('#ffd29a'),r>3?C('#8b7bff'):C('#5ee7ff'),clamp(r/5)).clone());}TG.push(T);}
+
+const pg=new THREE.BufferGeometry();
+const aPosA=new THREE.BufferAttribute(new Float32Array(N*3),3),aPosB=new THREE.BufferAttribute(new Float32Array(N*3),3);
+const aColA=new THREE.BufferAttribute(new Float32Array(N*3),3),aColB=new THREE.BufferAttribute(new Float32Array(N*3),3);
+pg.setAttribute('position',new THREE.BufferAttribute(new Float32Array(N*3),3));
+pg.setAttribute('posA',aPosA);pg.setAttribute('posB',aPosB);pg.setAttribute('colA',aColA);pg.setAttribute('colB',aColB);
+pg.setAttribute('rnd',new THREE.BufferAttribute(rnd,2));
+pg.boundingSphere=new THREE.Sphere(V(0,0,0),100);
+const PU={uMix:{value:0},uTime:{value:0},uSize:{value:0.085},uFlow:{value:0},uSpotOn:{value:0},uSpotR:{value:1.5},uSpot:{value:V(0,0,0)},uSpot2:{value:V(0,0,0)},uSpot2On:{value:0},uOpacity:{value:1},uPix:{value:1}};
+const pmat=new THREE.ShaderMaterial({uniforms:PU,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+vertexShader:`
+attribute vec3 posA,posB,colA,colB; attribute vec2 rnd;
+uniform float uMix,uTime,uSize,uFlow,uSpotOn,uSpotR,uSpot2On,uOpacity,uPix; uniform vec3 uSpot,uSpot2;
+varying vec3 vCol; varying float vA;
+vec3 flowPos(){ float lane=floor(rnd.x*7.0); float x=mod(rnd.y*20.0+uTime*(0.8+rnd.x*0.6),20.0)-10.0;
+  float y=(lane-3.0)*0.42+sin(x*0.55+lane*0.9+uTime*0.6)*0.7+(fract(rnd.y*91.0)-0.5)*0.16;
+  float z=cos(x*0.35+lane*1.7+uTime*0.4)*0.9+(fract(rnd.x*37.0)-0.5)*0.3; return vec3(x,y,z);}
+void main(){
+  float d=rnd.x*0.4; float m=smoothstep(d,d+0.6,uMix);
+  vec3 p=mix(posA,posB,m);
+  float burst=sin(m*3.14159);
+  vec3 sw=vec3(sin(rnd.y*50.0+uTime*0.7),cos(rnd.x*40.0+uTime*0.6),sin(rnd.x*70.0+uTime*0.5));
+  p+=sw*(0.025+burst*0.9*rnd.y);
+  p+=cross(normalize(p+vec3(0.001)),vec3(0.0,1.0,0.0))*burst*1.4*(rnd.x-0.3);
+  float fm=smoothstep(rnd.x*0.5,rnd.x*0.5+0.5,uFlow);
+  p=mix(p,flowPos(),fm);
+  vec3 c=mix(colA,colB,m);
+  float s1=1.0-smoothstep(0.0,uSpotR,distance(p.xz,uSpot.xz));
+  float s2=(1.0-smoothstep(0.0,uSpotR,distance(p.xz,uSpot2.xz)))*uSpot2On;
+  float s=max(s1,s2); float lift=s*uSpotOn;
+  p.y+=lift*0.45*(0.6+rnd.y);
+  c=mix(c,c*0.45,uSpotOn*(1.0-s))+vec3(1.0,0.82,0.55)*lift*1.1;
+  vec4 mv=modelViewMatrix*vec4(p,1.0); gl_Position=projectionMatrix*mv;
+  float tw=0.7+0.3*sin(uTime*2.3+rnd.y*40.0);
+  gl_PointSize=uSize*(0.35+rnd.y*1.0)*tw*(1.0+lift*1.6+burst*0.6)*uPix/(-mv.z);
+  vCol=c; vA=uOpacity;
+}`,
+fragmentShader:`varying vec3 vCol; varying float vA;
+void main(){ float d=length(gl_PointCoord-0.5); float a=smoothstep(0.5,0.0,d); a=pow(a,1.7); gl_FragColor=vec4(vCol*0.95,a*vA);}`});
+const points=new THREE.Points(pg,pmat); scene.add(points);
+let curTargetIdx=-2;
+function setTargets(i){
+  if(i===curTargetIdx) return; curTargetIdx=i;
+  const A=i<=0?CHAOS:TG[i-1], B=TG[Math.max(i,0)];
+  aPosA.array.set(A.p);aPosB.array.set(B.p);aColA.array.set(A.c);aColB.array.set(B.c);
+  aPosA.needsUpdate=aPosB.needsUpdate=aColA.needsUpdate=aColB.needsUpdate=true;
+}
+
+/* ================================================================
+   MATERIAL HELPERS
+   ================================================================ */
+const glowLineMat=(col,op=1)=>new THREE.LineBasicMaterial({color:col,transparent:true,opacity:op,depthWrite:false,blending:THREE.AdditiveBlending});
+const basic=(col,op=1)=>new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op});
+const flowMats=[];
+function flowMat(col,freq=6,speed=0.4,base=0.3){const m=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
+  uniforms:{uColor:{value:C(col)},uTime:{value:0},uOpacity:{value:1},uFreq:{value:freq},uSpeed:{value:speed},uBase:{value:base}},
+  vertexShader:`varying vec2 vUv; void main(){vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
+  fragmentShader:`uniform vec3 uColor; uniform float uTime,uOpacity,uFreq,uSpeed,uBase; varying vec2 vUv;
+  void main(){ float b=pow(fract(vUv.x*uFreq-uTime*uSpeed),8.0); gl_FragColor=vec4(uColor*(uBase+b*2.6),uOpacity*(uBase+b));}`});
+  flowMats.push(m); return m;}
+const UP=V(0,1,0);
+function placeCyl(mesh,a,b,r){const d=b.clone().sub(a);const len=d.length();mesh.position.copy(a).add(b).multiplyScalar(.5);mesh.quaternion.setFromUnitVectors(UP,d.normalize());mesh.scale.set(r,len,r);}
+function edges(geo,col,op=1){return new THREE.LineSegments(new THREE.EdgesGeometry(geo),glowLineMat(col,op));}
+function anchor(parent,pos){const o=new THREE.Object3D();o.position.copy(pos);parent.add(o);return o;}
+function gyro(s){
+  const g=new THREE.Group();
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.42*s,3),basic(0xffd9a8));g.add(core);
+  const ico=edges(new THREE.IcosahedronGeometry(1.35*s,1),0x5ee7ff,.9);g.add(ico);
+  const dod=edges(new THREE.DodecahedronGeometry(2.0*s,0),0x8b7bff,.8);g.add(dod);
+  const r1=new THREE.Mesh(new THREE.TorusGeometry(2.45*s,0.012*s,8,160),basic(0xff5ec8));g.add(r1);
+  const r2=new THREE.Mesh(new THREE.TorusGeometry(2.7*s,0.008*s,8,160),basic(0x5ee7ff));g.add(r2);
+  const r3=new THREE.Mesh(new THREE.TorusGeometry(2.95*s,0.006*s,8,160),basic(0xffb35c,.7));g.add(r3);
+  g.userData.tick=(l)=>{ico.rotation.set(l*.21,l*.33,0);dod.rotation.set(-l*.12,l*.17,l*.08);r1.rotation.set(l*.5,l*.2,0);r2.rotation.set(Math.PI/2+l*.3,0,l*.4);r3.rotation.set(l*.18,Math.PI/2+l*.35,0);
+    core.scale.setScalar(1+0.08*Math.sin(l*2.2));};
+  return g;
+}
+
+/* ================================================================
+   SCENE BUILDERS — each returns {group, labels:[{t,sub,o,col}], tick(l,w,t)}
+   ================================================================ */
+const B_TITLE=()=>{const g=new THREE.Group();const gy=gyro(1);g.add(gy);return{group:g,labels:[],tick:l=>gy.userData.tick(l)};};
+const B_PREMISE=()=>{const g=new THREE.Group();
+  const knot=new THREE.Mesh(new THREE.TorusKnotGeometry(1.05,0.3,320,48,2,3),new THREE.MeshPhysicalMaterial({color:0x3d4f8f,metalness:0.7,roughness:0.22,clearcoat:1,iridescence:1,iridescenceIOR:1.7,iridescenceThicknessRange:[200,900],envMapIntensity:0.7,transparent:true}));
+  knot.position.set(1.6,0,0);g.add(knot);
+  const kw=edges(new THREE.TorusKnotGeometry(1.05,0.31,120,12,2,3),0x5ee7ff,.12);kw.position.copy(knot.position);g.add(kw);
+  const echoes=[];for(let k=0;k<6;k++){const e=edges(new THREE.BoxGeometry(.9,.9,.9),0xffb35c,1-k*.15);g.add(e);echoes.push(e);}
+  const aM=anchor(g,V(-3.2,1.2,0)),aB=anchor(g,V(3.2,1.6,0));
+  return{group:g,labels:[{t:'MIMICRY',sub:'echo, repeat',o:aM,col:'#ffb35c',from:5.0},{t:'BLENDING',sub:'fuse, invent',o:aB,col:'#8b7bff',from:5.6}],
+  tick:(l,w)=>{knot.rotation.set(l*.25,l*.4,0);kw.rotation.copy(knot.rotation);
+    echoes.forEach((e,k)=>{const ph=((l*.5+k/6)%1);e.position.set(-3.4+ph*1.2,Math.sin(ph*Math.PI*2)*0.15,-ph*2.5);e.rotation.set(0.5,0.6,0);e.scale.setScalar(1-ph*.35);e.material.userData.skip=true;e.material.opacity=Math.sin(ph*Math.PI)*w;});}};};
+const B_TRIAD=()=>{const g=new THREE.Group();const cols=[0x5ee7ff,0xffb35c,0xff5ec8];
+  const geos=[new THREE.IcosahedronGeometry(0.5,0),new THREE.OctahedronGeometry(0.58,0),new THREE.DodecahedronGeometry(0.52,0)];
+  const polys=geos.map((geo,k)=>{const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x111522,metalness:0.9,roughness:0.25,flatShading:true,emissive:cols[k],emissiveIntensity:0.18,transparent:true}));
+    m.add(edges(geo,cols[k],1));const halo=edges(geo,cols[k],.35);halo.scale.setScalar(1.6);m.add(halo);m.position.copy(TRIAD_V[k]);g.add(m);return m;});
+  TRIAD_C.forEach((c,k)=>{g.add(new THREE.Mesh(new THREE.TubeGeometry(c,80,0.022,8,false),flowMat(cols[k],3,0.35,0.25)));});
+  const pulses=[0,1,2].map(k=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.07,12,8),basic(0xffffff));g.add(m);return m;});
+  const an=TRIAD_V.map((v,k)=>anchor(g,v.clone().add(V(k===0?0.75:k===1?-1.6:0.8,k===0?0.35:0.75,0))));
+  return{group:g,labels:[{t:'SIGN',sub:'representamen',o:an[0],col:'#5ee7ff'},{t:'OBJECT',sub:'what it stands for',o:an[1],col:'#ffb35c'},{t:'INTERPRETANT',sub:'the sense made',o:an[2],col:'#ff5ec8'}],
+  tick:(l)=>{polys.forEach((p,k)=>{p.rotation.set(l*(.3+k*.1),l*(.4-k*.07),0);});pulses.forEach((p,k)=>{p.position.copy(TRIAD_C[k].getPoint((l*.28+k*.33)%1));});}};};
+const B_ATTN=()=>{const g=new THREE.Group();
+  const coneGeo=new THREE.ConeGeometry(0.95,1,64,1,true);coneGeo.translate(0,-0.5,0);
+  const coneMat=()=>new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,uniforms:{uOpacity:{value:1},uColor:{value:C('#ffd29a')}},
+    vertexShader:`varying float vY; varying vec3 vN; varying vec3 vV; void main(){vY=-position.y; vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.0); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform float uOpacity; uniform vec3 uColor; varying float vY; varying vec3 vN; varying vec3 vV; void main(){ float f=1.0-abs(dot(vN,vV)); float a=(0.05+0.35*pow(f,2.0))*smoothstep(0.0,0.25,vY)*(1.0-0.4*vY); gl_FragColor=vec4(uColor,a*uOpacity);} `});
+  const c1=new THREE.Mesh(coneGeo,coneMat()),c2=new THREE.Mesh(coneGeo,coneMat());c2.material.uniforms.uColor.value=C('#9fe9ff');g.add(c1,c2);
+  const eye1=new THREE.Mesh(new THREE.SphereGeometry(0.16,24,16),basic(0xffd29a)),eye2=new THREE.Mesh(new THREE.SphereGeometry(0.16,24,16),basic(0x9fe9ff));g.add(eye1,eye2);
+  const ring=new THREE.Mesh(new THREE.RingGeometry(1.05,1.12,96),basic(0xffe2b8,0.9));ring.rotation.x=-Math.PI/2;g.add(ring);
+  const A1=V(-4.2,4.3,-1.5),A2=V(4.6,4.0,1.2);eye1.position.copy(A1);eye2.position.copy(A2);
+  const aS=anchor(g,V(0,0,0)),aE1=anchor(g,A1.clone().add(V(0.3,0.3,0))),aE2=anchor(g,A2.clone().add(V(0.3,0.3,0)));
+  const orient=(m,a,b)=>{const d=b.clone().sub(a);m.position.copy(a);m.quaternion.setFromUnitVectors(V(0,-1,0),d.clone().normalize());m.scale.set(1,d.length(),1);};
+  const L={t:'AGENT A',sub:'attention',o:aE1,col:'#ffd29a',from:1.8},L2={t:'AGENT B',sub:'joint attention',o:aE2,col:'#9fe9ff',from:8.8};
+  return{group:g,labels:[L,L2,{t:'SALIENT',sub:'what matters now',o:aS,col:'#ffe2b8',from:3.2}],
+  tick:(l,w)=>{const sp=V(Math.sin(l*0.55)*3.6,-1.1,Math.cos(l*0.41)*2.4);const k2=smooth((l-8.6)/1.6);
+    const other=V(-sp.x*0.8+1.5,-1.1,-sp.z*0.6);const sp2=other.lerp(sp,k2);
+    orient(c1,A1,sp);orient(c2,A2,sp2);ring.position.copy(sp).setY(-1.05);aS.position.copy(sp).add(V(1.2,0.3,0));
+    const on2=smooth((l-7.8)/1.2);c2.visible=eye2.visible=on2>0.01;c2.material.uniforms.uOpacity.value*=on2;eye2.scale.setScalar(on2+.001);
+    PU.uSpot.value.copy(sp);PU.uSpot2.value.copy(sp2);PU.uSpot2On.value=on2;PU.uSpotOn.value=w;L2.w=on2;}};};
+const B_TENS=()=>{const g=new THREE.Group();const phi=1.618,sc=1.25;
+  const verts=[];const fam=[];
+  [[0,1,phi],[0,-1,phi],[0,1,-phi],[0,-1,-phi]].forEach(v=>{verts.push(V(...v));fam.push(0);});
+  [[1,phi,0],[-1,phi,0],[1,-phi,0],[-1,-phi,0]].forEach(v=>{verts.push(V(...v));fam.push(1);});
+  [[phi,0,1],[phi,0,-1],[-phi,0,1],[-phi,0,-1]].forEach(v=>{verts.push(V(...v));fam.push(2);});
+  verts.forEach(v=>v.multiplyScalar(sc));
+  const struts=[[0,2],[1,3],[4,6],[5,7],[8,10],[9,11]];const cables=[];
+  for(let i=0;i<12;i++)for(let j=i+1;j<12;j++){if(fam[i]!==fam[j]&&Math.abs(verts[i].distanceTo(verts[j])-2*sc)<0.01)cables.push([i,j]);}
+  const cyl=new THREE.CylinderGeometry(1,1,1,14);
+  const sM=new THREE.MeshStandardMaterial({color:0xd8dde8,metalness:1,roughness:0.22,transparent:true});
+  const cM=basic(0x6dffc1,0.9);
+  const sMesh=struts.map(()=>{const m=new THREE.Mesh(cyl,sM);g.add(m);return m;});
+  const cMesh=cables.map(()=>{const m=new THREE.Mesh(cyl,cM);g.add(m);return m;});
+  const nodes=verts.map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.075,14,10),basic(0xffb35c));g.add(m);return m;});
+  const an=[0,7,8,3].map(i=>anchor(g,V()));const cur=verts.map(v=>v.clone());
+  const names=[['STABILITY','hold'],['PLASTICITY','adapt'],['ORDER','exploit'],['NOVELTY','explore']];
+  return{group:g,labels:names.map((n,k)=>({t:n[0],sub:n[1],o:an[k],col:k%2?'#ffb35c':'#6dffc1',from:1.8+k*0.35})),
+  tick:(l)=>{g.rotation.y=l*0.22;g.rotation.x=0.25;
+    verts.forEach((v,i)=>{const b=1+0.13*Math.sin(l*1.7+v.x*1.1+v.y*0.7);cur[i].copy(v).multiplyScalar(b).applyAxisAngle(UP,0.18*Math.sin(l*1.2)*Math.sign(v.y));nodes[i].position.copy(cur[i]);});
+    struts.forEach(([a,b],k)=>placeCyl(sMesh[k],cur[a],cur[b],0.055));cables.forEach(([a,b],k)=>placeCyl(cMesh[k],cur[a],cur[b],0.011));
+    [0,7,8,3].forEach((vi,k)=>an[k].position.copy(cur[vi]).multiplyScalar(1.12));}};};
+const B_MOB=()=>{const g=new THREE.Group();const inner=new THREE.Group();g.add(inner);g.rotation.x=-1.05;
+  const nu=320,nv=24,Rr=2.1,W=0.7;const pos=[],uv=[],idx=[];
+  for(let i=0;i<=nu;i++){const u=i/nu*Math.PI*2;for(let j=0;j<=nv;j++){const v=(j/nv-.5)*2*W;pos.push((Rr+v*Math.cos(u/2))*Math.cos(u),(Rr+v*Math.cos(u/2))*Math.sin(u),v*Math.sin(u/2));uv.push(i/nu,j/nv);}}
+  for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const a=i*(nv+1)+j,b=a+nv+1;idx.push(a,b,a+1,b,b+1,a+1);}
+  const mg=new THREE.BufferGeometry();mg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));mg.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));mg.setIndex(idx);mg.computeVertexNormals();
+  const mm=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,uniforms:{uTime:{value:0},uOpacity:{value:1}},
+    vertexShader:`varying vec2 vUv; varying vec3 vN; varying vec3 vV; void main(){vUv=uv; vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.0); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform float uTime,uOpacity; varying vec2 vUv; varying vec3 vN; varying vec3 vV;
+    void main(){ float u=vUv.x; float f=fract(u*16.0-uTime*0.45); float band=smoothstep(0.0,0.1,f)*smoothstep(0.4,0.1,f);
+      vec3 a=vec3(0.37,0.9,1.0), b=vec3(1.0,0.37,0.78); vec3 c=mix(a,b,0.5+0.5*sin(u*6.2831-1.57));
+      float edge=smoothstep(0.40,0.5,abs(vUv.y-0.5)); float grid=smoothstep(0.92,1.0,fract(vUv.y*6.0))*0.35;
+      float fres=pow(1.0-abs(dot(vN,vV)),2.0);
+      vec3 col=c*(0.05+band*0.5+edge*0.75+grid*0.5+fres*0.25); gl_FragColor=vec4(col,uOpacity*clamp(0.18+band*0.5+edge*0.6+grid*0.5,0.0,1.0));}`});
+  flowMats.push(mm);inner.add(new THREE.Mesh(mg,mm));
+  const beads=Array.from({length:10},(_,k)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.06,12,8),basic(k%2?0xff5ec8:0x5ee7ff));inner.add(m);return m;});
+  const aP=anchor(inner,V(Rr+1.0,0,0)),aS=anchor(inner,V(-Rr-1.0,0,0));
+  return{group:g,labels:[{t:'PHYSICAL',sub:'dynamics, matter',o:aP,col:'#5ee7ff',from:1.8},{t:'SYMBOLIC',sub:'codes, constraints',o:aS,col:'#ff5ec8',from:2.2}],
+  tick:(l)=>{inner.rotation.z=l*0.12;beads.forEach((b,k)=>{const u=((l*0.06+k/10)%1)*Math.PI*4;const v=Math.sin(l+k)*0.3;b.position.set((Rr+v*Math.cos(u/2))*Math.cos(u),(Rr+v*Math.cos(u/2))*Math.sin(u),v*Math.sin(u/2));});}};};
+const B_FLUX=()=>{const g=new THREE.Group();const cols=[0x5ee7ff,0x8b7bff,0xff5ec8,0x6dffc1,0xffb35c,0x5ee7ff];
+  cols.forEach((c,k)=>{const pts=[];for(let i=0;i<=120;i++){const x=-11+22*i/120;pts.push(V(x,(k-2.5)*0.75+Math.sin(x*0.4+k)*0.9,Math.cos(x*0.3+k*1.3)*1.4-1.2));}
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),300,0.018,6,false),flowMat(c,5,0.18+k*0.03,0.12)));});
+  const words=[['MIND','minding'],['MEANING','meaning-making'],['LANGUAGE','languaging']];
+  const an=words.map((w,k)=>anchor(g,V(-3+k*3.2,(k===1?-1.6:1.5),0.8)));
+  const L=words.map((w,k)=>({t:w[0],sub:'→ '+w[1],o:an[k],col:['#5ee7ff','#ff5ec8','#6dffc1'][k],from:5.6+k*0.5}));
+  return{group:g,labels:L,tick:(l)=>{an.forEach((a,k)=>{a.position.x=-3.6+k*3.2+Math.sin(l*0.4+k)*0.4;});}};};
+const B_QPT=()=>{const g=new THREE.Group();
+  const orbs=QPT_V.map((v,k)=>{const o=new THREE.Group();o.position.copy(v);g.add(o);
+    const core=new THREE.Mesh(new THREE.SphereGeometry(0.28,32,20),basic(QPT_COL[k]));o.add(core);
+    const glass=new THREE.Mesh(new THREE.SphereGeometry(0.55,48,32),new THREE.MeshPhysicalMaterial({color:QPT_COL[k],metalness:0,roughness:0.08,clearcoat:1,transparent:true,opacity:0.22,envMapIntensity:2}));o.add(glass);
+    const cage=edges(new THREE.IcosahedronGeometry(0.8,1),QPT_COL[k],.45);o.add(cage);
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(1.0,0.008,6,120),basic(QPT_COL[k],.8));o.add(ring);
+    const ring2=new THREE.Mesh(new THREE.TorusGeometry(1.12,0.005,6,120),basic(0xffffff,.35));o.add(ring2);
+    o.userData={core,cage,ring,ring2};return o;});
+  for(let i=0;i<4;i++)for(let j=i+1;j<4;j++){g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.LineCurve3(QPT_V[i],QPT_V[j]),20,0.012,6,false),flowMat(0xffffff,2,0.3,0.08)));}
+  const hub=edges(new THREE.TetrahedronGeometry(0.6,0),0xffffff,.7);g.add(hub);
+  const names=[['FAST · EMPATHIC','participatory'],['FAST · FLUENT','procedural'],['SLOW · FLUENT','perspectival'],['SLOW · EMPATHIC','propositional']];
+  const an=QPT_V.map(v=>anchor(g,v.clone().multiplyScalar(1.0).add(V(0.85,0.55,0))));
+  const L=names.map((n,k)=>({t:n[0],sub:n[1],o:an[k],col:'#'+QPT_COL[k].getHexString(),from:1.8+k*0.3}));
+  const aAI=anchor(g,QPT_V[1].clone().add(V(0.9,-1.0,0)));
+  L.push({t:'ARTIFICIAL FLUENCY',sub:'lives mostly here',o:aAI,col:'#5ee7ff',from:9.6});
+  return{group:g,labels:L,tick:(l)=>{g.rotation.y=Math.sin(l*0.25)*0.35;hub.rotation.set(l*.4,l*.6,0);
+    orbs.forEach((o,k)=>{const u=o.userData;u.cage.rotation.set(l*.3*(k%2?1:-1),l*.4,0);u.ring.rotation.set(Math.PI/2+Math.sin(l+k)*0.5,l*.5,0);u.ring2.rotation.set(l*.6,Math.PI/3,l*.2);
+      let s=1;if(k===1)s=1+smooth((l-9.4)/0.8)*(0.3+0.12*Math.sin(l*5));else s=1-smooth((l-9.4)/0.8)*0.25;o.scale.setScalar(s);});}};};
+const B_SPIRAL=()=>{const g=new THREE.Group();
+  const pts=[];for(let i=0;i<=400;i++)pts.push(spiralPt(i/400));
+  const tube=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),800,0.03,8,false),flowMat(0xffffff,12,0.25,0.18));g.add(tube);
+  const rings=Array.from({length:6},(_,k)=>{const m=new THREE.Mesh(new THREE.RingGeometry(0.985,1,160),basic(SPIRAL_COLS[k+2],1));m.material.side=THREE.DoubleSide;m.material.blending=THREE.AdditiveBlending;m.material.depthWrite=false;m.rotation.x=-Math.PI/2;g.add(m);return m;});
+  const cone=new THREE.Mesh(new THREE.ConeGeometry(3.6,7.4,64,1,true),new THREE.MeshBasicMaterial({color:0x2fd6c8,wireframe:true,transparent:true,opacity:0.08}));cone.rotation.x=Math.PI;cone.position.y=1.1;g.add(cone);
+  const names=[['SOCIALIZED MIND',0.18],['SELF-AUTHORING',0.52],['SELF-TRANSFORMING',0.9]];
+  const an=names.map(n=>anchor(g,spiralPt(n[1]).add(V(0.35,0.2,0))));
+  return{group:g,labels:names.map((n,k)=>({t:n[0],sub:['fits in','writes own rules','holds many systems'][k],o:an[k],col:'#'+spiralCol(n[1]).getHexString(),from:1.8+k*0.5})),
+  tick:(l,w)=>{g.rotation.y=l*0.15;cone.rotation.y=-l*0.1;
+    rings.forEach((r,k)=>{const ph=(((l*0.16+k/6)%1)+1)%1;r.scale.setScalar(0.3+ph*6.5);r.position.y=-2.7+ph*1.2;r.material.opacity=Math.sin(ph*Math.PI)*0.8*w;r.material.userData.skip=true;});}};};
+const B_CODA=()=>{const g=new THREE.Group();const gy=gyro(0.85);gy.position.y=0.3;g.add(gy);
+  const halo=new THREE.Mesh(new THREE.TorusGeometry(6.6,0.01,6,256),basic(0x8b7bff,.6));halo.rotation.x=Math.PI/2;g.add(halo);
+  return{group:g,labels:[],tick:(l)=>{gy.userData.tick(l+10);halo.scale.setScalar(1+0.02*Math.sin(l));}};};
+// CONVERSATION (Ch3): lemniscate feedback loop, intention orb, meshing gears
+const B_CONV=()=>{const g=new THREE.Group();
+  const pts=[];for(let i=0;i<=400;i++)pts.push(LEM(i/400*Math.PI*2));const curve=new THREE.CatmullRomCurve3(pts,true);
+  g.add(new THREE.Mesh(new THREE.TubeGeometry(curve,600,0.03,8,true),flowMat(0xffb35c,6,0.25,0.15)));
+  const pts2=pts.map(p=>V(p.x*0.9,p.y*0.9,-p.z*0.9));g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts2,true),600,0.018,6,true),flowMat(0x5ee7ff,6,-0.3,0.12)));
+  const beads=Array.from({length:10},(_,k)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.075,14,10),basic(k%2?0x5ee7ff:0xffb35c));g.add(m);return m;});
+  // intention: glass orb with orbit cage (left lobe)
+  const left=new THREE.Group();left.position.set(-2.05,0,0);g.add(left);
+  left.add(new THREE.Mesh(new THREE.SphereGeometry(0.26,32,20),basic(0xffc98a)));
+  const lcage=edges(new THREE.IcosahedronGeometry(0.62,1),0xffb35c,.55);left.add(lcage);
+  const lr=new THREE.Mesh(new THREE.TorusGeometry(0.85,0.007,6,120),basic(0xffb35c,.7));left.add(lr);
+  // mechanism: two meshing gears (right lobe)
+  const gearGeo=(teeth,ro,ri,hole)=>{const s=new THREE.Shape();const n=teeth*4;
+    for(let i=0;i<n;i++){const a=i/n*Math.PI*2;const r=(i%4===1||i%4===2)?ro:ri;const x=Math.cos(a)*r,y=Math.sin(a)*r;i?s.lineTo(x,y):s.moveTo(x,y);}s.closePath();
+    const h=new THREE.Path();h.absarc(0,0,hole,0,Math.PI*2,true);s.holes.push(h);
+    for(let k=0;k<5;k++){const a=k/5*Math.PI*2,c=(ri+hole)/2;const w=new THREE.Path();w.absarc(Math.cos(a)*c,Math.sin(a)*c,(ri-hole)*0.28,0,Math.PI*2,true);s.holes.push(w);}
+    const geo=new THREE.ExtrudeGeometry(s,{depth:0.14,bevelEnabled:true,bevelThickness:0.025,bevelSize:0.02,bevelSegments:2,curveSegments:10});geo.center();return geo;};
+  const gm=new THREE.MeshStandardMaterial({color:0xc4cde0,metalness:1,roughness:0.28,transparent:true});
+  const g1geo=gearGeo(16,0.78,0.66,0.12),g2geo=gearGeo(10,0.52,0.4,0.09);
+  const g1=new THREE.Mesh(g1geo,gm);g1.add(edges(g1geo,0x5ee7ff,.5));const g2=new THREE.Mesh(g2geo,gm);g2.add(edges(g2geo,0x5ee7ff,.5));
+  const right=new THREE.Group();right.position.set(2.05,0,0);right.rotation.y=-0.35;g.add(right);
+  g1.position.set(-0.15,0.2,0);g2.position.set(-0.15+0.78+0.46,0.2-0.2,0.0);right.add(g1,g2);
+  const aI=anchor(g,V(-2.6,1.25,0)),aM=anchor(g,V(2.4,1.35,0)),aX=anchor(g,V(0.25,0.35,0.7));
+  return{group:g,labels:[{t:'INTENTION',sub:'goal, purpose',o:aI,col:'#ffb35c',from:1.8},{t:'MECHANISM',sub:'computation',o:aM,col:'#5ee7ff',from:2.3},{t:'MEANING',sub:'the loop between',o:aX,col:'#ffffff',from:5.2}],
+  tick:(l)=>{g1.rotation.z=l*0.6;g2.rotation.z=-l*0.6*16/10+0.16;lcage.rotation.set(l*.3,l*.4,0);lr.rotation.set(Math.PI/2+Math.sin(l)*0.4,l*.6,0);
+    beads.forEach((b,k)=>{b.position.copy(curve.getPointAt(((l*0.07+k/10)%1+1)%1));});g.rotation.y=Math.sin(l*0.2)*0.25;}};};
+
+// NETWORK (Ch4): hive of speakers with signals travelling between them
+const B_NET=()=>{const g=new THREE.Group();
+  const lp=new Float32Array(NET_E.length*6),lc=new Float32Array(NET_E.length*6);const ca=C('#8b7bff'),cb=C('#6dffc1');
+  NET_E.forEach(([a,b],k)=>{lp.set([NET[a].x,NET[a].y,NET[a].z,NET[b].x,NET[b].y,NET[b].z],k*6);const c1=mixC(ca,cb,(NET[a].y+3)/6).clone(),c2=mixC(ca,cb,(NET[b].y+3)/6).clone();lc.set([c1.r,c1.g,c1.b,c2.r,c2.g,c2.b],k*6);});
+  const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.BufferAttribute(lp,3));lg.setAttribute('color',new THREE.BufferAttribute(lc,3));
+  g.add(new THREE.LineSegments(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:0.45,blending:THREE.AdditiveBlending,depthWrite:false})));
+  const nodes=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1,1),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true}),NET.length);
+  const M=new THREE.Matrix4(),Q=new THREE.Quaternion();
+  NET.forEach((p,i)=>{const hub=i%25===0;M.compose(p,Q,V(1,1,1).multiplyScalar(hub?0.13:0.045));nodes.setMatrixAt(i,M);nodes.setColorAt(i,hub?C('#ffd29a'):mixC(ca,cb,(p.y+3)/6).clone());});g.add(nodes);
+  const P=80;const pulses=new THREE.InstancedMesh(new THREE.SphereGeometry(0.045,8,6),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true}),P);g.add(pulses);
+  const shell=edges(new THREE.IcosahedronGeometry(3.05,2),0x8b7bff,.08);g.add(shell);
+  const hubs=NET.map((p,i)=>i).filter(i=>i%25===0);
+  const an=[hubs[1],hubs[3],hubs[4]].map(i=>anchor(g,NET[i].clone().multiplyScalar(1.12)));
+  const tmp=V();
+  return{group:g,labels:[{t:'SPEAKER',sub:'one voice',o:an[0],col:'#ffd29a',from:1.8},{t:'LISTENER',sub:'imagines',o:an[1],col:'#6dffc1',from:2.3},{t:'LANGUAGE',sub:'lives between',o:an[2],col:'#8b7bff',from:5.2}],
+  tick:(l)=>{g.rotation.y=l*0.12;shell.rotation.y=-l*0.05;
+    for(let k=0;k<P;k++){const f=l*(0.6+(k%7)*0.08)+k*0.37;const E=NET_E.length;const e=NET_E[(((k*7919+Math.floor(f)*104729)%E)+E)%E];const u=f-Math.floor(f);
+      tmp.copy(NET[e[0]]).lerp(NET[e[1]],u);M.compose(tmp,Q,V(1,1,1).multiplyScalar(0.6+Math.sin(u*Math.PI)*0.8));pulses.setMatrixAt(k,M);}
+    pulses.instanceMatrix.needsUpdate=true;}};};
+
+// ALIGNMENT (Ch5): many perspectives converge on one shared focus
+const B_ALIGN=()=>{const g=new THREE.Group();
+  const cones=new THREE.InstancedMesh(new THREE.ConeGeometry(0.06,0.3,10),new THREE.MeshStandardMaterial({color:0xffffff,metalness:0.6,roughness:0.3,emissive:0x221108,transparent:true}),CONES.length);
+  CONES.forEach((c,i)=>cones.setColorAt(i,mixC(C('#ffb35c'),C('#ff5ec8'),c.r).clone()));g.add(cones);
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.34,3),basic(0xffe0b0));g.add(core);
+  const cage=edges(new THREE.DodecahedronGeometry(0.75,0),0xffb35c,.7);g.add(cage);
+  const rings=[0,1,2].map(k=>{const m=new THREE.Mesh(new THREE.TorusGeometry(1.0+k*0.5,0.006,6,160),basic(k%2?0xff5ec8:0xffb35c,.6));g.add(m);return m;});
+  const M=new THREE.Matrix4(),q1=new THREE.Quaternion(),q=new THREE.Quaternion(),S1=V(1,1,1);
+  const aP=anchor(g,CONES[3].p.clone().multiplyScalar(1.15)),aF=anchor(g,V(0.55,0.55,0));
+  return{group:g,labels:[{t:'PERSPECTIVES',sub:'many, scattered',o:aP,col:'#ff9ad8',from:1.8},{t:'SHARED UNDERSTANDING',sub:'aligned reasons',o:aF,col:'#ffe0b0',from:6.2}],
+  tick:(l)=>{let tot=0;
+    CONES.forEach((c,i)=>{const a=eio((l-2.6-c.r*3.2)/1.6);tot+=a;const toC=c.p.clone().negate().normalize();q1.setFromUnitVectors(UPV,toC);q.copy(c.q0).slerp(q1,a);
+      const wob=(1-a)*0.3*Math.sin(l*1.5+i);const p=c.p.clone().multiplyScalar(1-0.18*a+wob*0.1).applyAxisAngle(UPV,l*0.08*a);M.compose(p,q,S1);cones.setMatrixAt(i,M);});
+    cones.instanceMatrix.needsUpdate=true;const al=tot/CONES.length;
+    core.scale.setScalar(0.4+al*0.9+0.05*Math.sin(l*4));cage.rotation.set(l*.4,l*.5,0);cage.scale.setScalar(0.6+al*0.6);
+    rings.forEach((r,k)=>{r.rotation.set(Math.PI/2+k*0.6+l*0.1*(k+1),l*0.2,k);r.scale.setScalar(0.5+al*0.6);});}};};
+
+// PATTERN TREE (Ch9): the same generative rule unfolds a coherent whole
+const B_TREE=()=>{const g=new THREE.Group();
+  const br=new THREE.InstancedMesh(new THREE.CylinderGeometry(0.7,1,1,7),new THREE.MeshStandardMaterial({color:0xffffff,metalness:0.7,roughness:0.35,transparent:true}),TREE.length);
+  TREE.forEach((b,i)=>br.setColorAt(i,mixC(C('#b98a5a'),C('#6dffc1'),1-b.depth/6).clone()));g.add(br);
+  const lv=new THREE.InstancedMesh(new THREE.OctahedronGeometry(1,0),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true}),LEAVES.length);
+  LEAVES.forEach((L,i)=>lv.setColorAt(i,R()<0.06?C('#ffd29a'):mixC(C('#6dffc1'),C('#ff9ad8'),R()).clone()));g.add(lv);
+  const ground=new THREE.Mesh(new THREE.RingGeometry(0.2,3.2,64,4),new THREE.MeshBasicMaterial({color:0x6dffc1,wireframe:true,transparent:true,opacity:0.12}));ground.rotation.x=-Math.PI/2;ground.position.y=-3.1;g.add(ground);
+  const M=new THREE.Matrix4(),Q=new THREE.Quaternion(),tmp=V(),sc=V();
+  const aR=anchor(g,V(0.3,-2.3,0)),aW=anchor(g,V(2.2,0.6,0));
+  return{group:g,labels:[{t:'ONE RULE',sub:'branch · turn · shrink',o:aR,col:'#ffd29a',from:1.8},{t:'A LIVING WHOLE',sub:'structure preserved',o:aW,col:'#6dffc1',from:5.2}],
+  tick:(l)=>{const G=l-1.0;
+    TREE.forEach((b,i)=>{const p=eout((G-b.t0)/0.55);const len=Math.max(b.len*p,0.0001);Q.setFromUnitVectors(UPV,b.d);tmp.copy(b.s).addScaledVector(b.d,len/2);
+      sc.set(b.rad*(p>0?1:0.0001),len,b.rad*(p>0?1:0.0001));M.compose(tmp,Q,sc);br.setMatrixAt(i,M);});
+    LEAVES.forEach((L,i)=>{const p=eout((G-L.t0)/0.5);const s=p*0.05*(1+0.25*Math.sin(l*3+i));Q.setFromAxisAngle(UPV,l+i);M.compose(L.p,Q,V(s,s,s).addScalar(0.00001));lv.setMatrixAt(i,M);});
+    br.instanceMatrix.needsUpdate=true;lv.instanceMatrix.needsUpdate=true;ground.rotation.z=l*0.1;}};};
+
+// SHATTER (Ch10)
+const B_SHATTER=()=>{const g=new THREE.Group();
+  const geo=new THREE.IcosahedronGeometry(1.7,3);const P=geo.attributes.position;const n=P.count;
+  const cen=new Float32Array(n*3),fn=new Float32Array(n*3),rr=new Float32Array(n);const a=V(),b=V(),c=V();
+  for(let i=0;i<n;i+=3){a.fromBufferAttribute(P,i);b.fromBufferAttribute(P,i+1);c.fromBufferAttribute(P,i+2);const m=a.clone().add(b).add(c).divideScalar(3);
+    const nn=b.clone().sub(a).cross(c.clone().sub(a)).normalize();if(nn.dot(m)<0)nn.negate();const r=R();
+    for(let k=0;k<3;k++){cen.set([m.x,m.y,m.z],(i+k)*3);fn.set([nn.x,nn.y,nn.z],(i+k)*3);rr[i+k]=r;}}
+  geo.setAttribute('aCenter',new THREE.BufferAttribute(cen,3));geo.setAttribute('aFN',new THREE.BufferAttribute(fn,3));geo.setAttribute('aRand',new THREE.BufferAttribute(rr,1));
+  const sm=new THREE.ShaderMaterial({transparent:true,side:THREE.DoubleSide,uniforms:{uBreak:{value:0},uTime:{value:0},uOpacity:{value:1}},
+    vertexShader:`attribute vec3 aCenter,aFN; attribute float aRand; uniform float uBreak,uTime; varying vec3 vN; varying vec3 vV; varying float vR;
+    mat3 rotA(vec3 a,float ang){a=normalize(a);float s=sin(ang),c=cos(ang),oc=1.0-c;
+      return mat3(oc*a.x*a.x+c,oc*a.x*a.y+a.z*s,oc*a.z*a.x-a.y*s, oc*a.x*a.y-a.z*s,oc*a.y*a.y+c,oc*a.y*a.z+a.x*s, oc*a.z*a.x+a.y*s,oc*a.y*a.z-a.x*s,oc*a.z*a.z+c);}
+    void main(){ vec3 n=normalize(aCenter); float b=uBreak*(0.35+aRand*1.3);
+      mat3 R=rotA(vec3(aRand-0.5,0.7,fract(aRand*7.0)-0.5), b*4.0*(aRand-0.5));
+      vec3 local=R*(position-aCenter)*(1.0-0.3*uBreak);
+      vec3 p=aCenter+local+n*b*1.3+vec3(0.0,sin(uTime*0.8+aRand*6.28)*0.12*uBreak,0.0);
+      vN=normalize(normalMatrix*(R*aFN)); vec4 mv=modelViewMatrix*vec4(p,1.0); vV=normalize(-mv.xyz); vR=aRand; gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform float uBreak,uTime,uOpacity; varying vec3 vN; varying vec3 vV; varying float vR;
+    void main(){ vec3 n=normalize(vN); float nd=abs(dot(n,vV)); float fres=pow(1.0-nd,2.5);
+      vec3 ir=0.5+0.5*cos(6.2831*(vec3(0.0,0.33,0.67)+nd*0.7+vR*0.25+uTime*0.04));
+      float diff=0.3+0.7*max(dot(n,normalize(vec3(0.4,0.8,0.5))),0.0);
+      vec3 col=ir*diff*0.5+fres*vec3(0.6,0.9,1.0)*0.55+ir*uBreak*0.12;
+      gl_FragColor=vec4(col,uOpacity);}`});
+  const sphere=new THREE.Mesh(geo,sm);g.add(sphere);
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.3,2),basic(0xffffff));g.add(core);
+  const aC=anchor(g,V(0.5,0.5,0)),aS=anchor(g,V(1.6,1.5,0));
+  return{group:g,labels:[{t:'CATEGORY',sub:'crisp, symmetric',o:aS,col:'#9fe9ff',from:1.2},{t:'NEW ORDER',sub:'born in the rupture',o:aC,col:'#ffffff',from:6.4}],
+  tick:(l,w,t)=>{const brk=eout((l-2.4)/4.0);sm.uniforms.uBreak.value=brk*(1+0.08*Math.sin(l*1.5));sm.uniforms.uTime.value=t;sphere.rotation.y=l*0.18;sphere.rotation.x=0.3;
+    core.scale.setScalar(0.001+brk*(1+0.15*Math.sin(l*5)));core.rotation.set(l,l*1.3,0);}};};
+
+// BLEND (Ch11): two frames collide; a morphing blended form is born at the seam
+const B_BLEND=()=>{const g=new THREE.Group();
+  const mkPlane=(col,eu)=>{const p=new THREE.GridHelper(9,24,col,col);p.material.transparent=true;p.material.opacity=0.3;p.material.blending=THREE.AdditiveBlending;p.material.depthWrite=false;p.rotation.copy(eu);g.add(p);return p;};
+  mkPlane(0x5ee7ff,PLANE_A);mkPlane(0xff5ec8,PLANE_B);
+  const seam=new THREE.Mesh(new THREE.CylinderGeometry(0.015,0.015,9,8),basic(0xffffff,.8));seam.rotation.z=Math.PI/2;g.add(seam);
+  const bm=new THREE.ShaderMaterial({transparent:true,uniforms:{uT:{value:0},uB:{value:0},uOpacity:{value:1}},
+    vertexShader:`uniform float uT,uB; varying vec3 vN; varying vec3 vV; varying vec3 vP;
+    void main(){ vec3 d=normalize(position); vec3 sph=d; vec3 cub=d/max(max(abs(d.x),abs(d.y)),abs(d.z))*0.8;
+      float star=1.0+0.35*sin(d.x*7.0+uT)*sin(d.y*7.0)*sin(d.z*7.0+uT*0.7);
+      float k=0.5+0.5*sin(uT*0.9); vec3 p=mix(sph*star,cub,k*uB)*(0.2+0.8*uB);
+      vN=normalize(normalMatrix*d); vP=p; vec4 mv=modelViewMatrix*vec4(p,1.0); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform float uT,uOpacity; varying vec3 vN; varying vec3 vV; varying vec3 vP;
+    void main(){ float nd=abs(dot(normalize(vN),vV)); float fres=pow(1.0-nd,2.2);
+      vec3 a=vec3(0.37,0.9,1.0), b=vec3(1.0,0.37,0.78); vec3 c=mix(a,b,smoothstep(-0.8,0.8,vP.y+0.4*sin(vP.x*4.0+uT)));
+      float bands=smoothstep(0.85,1.0,sin(vP.x*18.0+vP.y*6.0+uT*2.0));
+      gl_FragColor=vec4(c*(0.6+0.6*nd)+fres*vec3(1.0)*0.7+c*bands*0.5,uOpacity);}`});
+  const blob=new THREE.Mesh(new THREE.SphereGeometry(1,96,64),bm);blob.scale.setScalar(0.85);g.add(blob);
+  const aA=anchor(g,V(-3.8,0,3.2).applyEuler(PLANE_A)),aB=anchor(g,V(-3.8,0,3.2).applyEuler(PLANE_B)),aX=anchor(g,V(0.9,0.75,0));
+  return{group:g,labels:[{t:'FRAME A',sub:'one matrix of thought',o:aA,col:'#5ee7ff',from:1.8},{t:'FRAME B',sub:'an unrelated one',o:aB,col:'#ff5ec8',from:2.2},{t:'BLEND',sub:'a new whole',o:aX,col:'#ffffff',from:4.4}],
+  tick:(l)=>{bm.uniforms.uT.value=l;bm.uniforms.uB.value=eout((l-3.0)/2.0);blob.rotation.set(l*0.2,l*0.3,0);g.rotation.y=-0.35+l*0.03;}};};
+
+const B=[B_TITLE,B_PREMISE,B_TRIAD,B_ATTN,B_CONV,B_NET,B_ALIGN,B_TENS,B_MOB,B_FLUX,B_QPT,B_TREE,B_SHATTER,B_BLEND,B_SPIRAL,B_CODA];
+const S=B.map((f,i)=>{const s=f();s.group.visible=false;scene.add(s.group);
+  s.group.traverse(o=>{const ms=o.material?(Array.isArray(o.material)?o.material:[o.material]):[];ms.forEach(m=>{if(m.userData.base===undefined)m.userData.base=m.uniforms?.uOpacity?1:m.opacity;m.transparent=true;});});
+  return s;});
+function applyFade(s,w){
+  s.group.visible=w>0.002;if(!s.group.visible)return;
+  s.group.traverse(o=>{const ms=o.material?(Array.isArray(o.material)?o.material:[o.material]):[];ms.forEach(m=>{if(m.userData.skip)return;
+    if(m.uniforms&&m.uniforms.uOpacity)m.uniforms.uOpacity.value=w;else m.opacity=m.userData.base*w;});});
+}
+
+/* ================================================================
+   TEXT LAYER
+   ================================================================ */
+const textRoot=document.getElementById('text'),labelRoot=document.getElementById('labels');
+function splitHead(html){ // keep <em> wrapping while splitting characters
+  const tmp=document.createElement('div');tmp.innerHTML=html;const out=[];
+  const walk=(node,em)=>{node.childNodes.forEach(n=>{if(n.nodeType===3){for(const ch of n.textContent){out.push({ch,em});}}else walk(n,em||n.tagName==='EM');});};
+  walk(tmp,false);
+  let h='';let wordOpen=false;
+  out.forEach((o,i)=>{if(o.ch===' '){if(wordOpen){h+='</span>';wordOpen=false;}h+='<span class="ch sp"> </span>';}else{if(!wordOpen){h+='<span style="display:inline-block;white-space:nowrap">';wordOpen=true;}
+    h+=`<span class="ch">${o.em?'<em>':''}${o.ch}${o.em?'</em>':''}</span>`;}});
+  if(wordOpen)h+='</span>';return h;
+}
+SC.forEach((s,i)=>{
+  const el=document.createElement('div');el.className='sc'+(s.center?' center':'');
+  el.innerHTML=`<div class="kicker"><span class="ln"></span><span class="kt">${s.kicker}</span><span class="ln"></span></div><div class="head">${splitHead(s.head)}</div>
+    <div class="caps">${s.caps.map(c=>c[2]?`<div class="cap quote"><span class="qm">“</span><span class="qt">${c[1].split(' ').map(w=>`<span class="w">${w}</span>`).join('')}</span><span class="attr w">— <i>Artificial Fluency</i>, ${c[2]}</span></div>`:`<div class="cap">${c[1].split(' ').map(w=>`<span class="w">${w}</span>`).join('')}</div>`).join('')}</div>`;
+  if(!s.center)el.querySelectorAll('.kicker .ln')[1].remove();
+  textRoot.appendChild(el);
+  s.el=el;s.chars=[...el.querySelectorAll('.head .ch')];s.capEls=[...el.querySelectorAll('.cap')].map(c=>({el:c,words:[...c.querySelectorAll('.w')],qm:c.querySelector('.qm')}));
+  s.kt=el.querySelector('.kt');s.headEl=el.querySelector('.head');s.lns=[...el.querySelectorAll('.ln')];
+  S[i].labels.forEach(L=>{const d=document.createElement('div');d.className='lbl';d.style.color=L.col;d.innerHTML=`<i></i><div><b>${L.t}</b><span>${L.sub}</span></div>`;labelRoot.appendChild(d);L.el=d;L.b=d.querySelector('b');});
+});
+function updateText(i,l,vis){
+  const s=SC[i];if(!vis){s.el.style.display='none';return;}s.el.style.display='block';
+  const end=s.dur;const out=clamp((l-(end-1.3))/0.9);
+  // kicker
+  const kp=eout((l-0.15)/0.9);s.lns.forEach(ln=>ln.style.width=(kp*48)+'px');
+  s.kt.style.opacity=kp*(1-out);s.kt.style.letterSpacing=(0.5-0.22*kp)+'em';s.lns.forEach(ln=>ln.style.opacity=1-out);
+  // headline
+  s.chars.forEach((c,k)=>{const p=eout((l-0.35-k*0.028)/0.8);const q=eio((l-(end-1.3)-k*0.012)/0.6);
+    const y=(1-p)*0.55-q*0.35,bl=(1-p)*14+q*10,rx=(1-p)*-70;
+    c.style.opacity=(p*(1-q)).toFixed(3);c.style.transform=`translateY(${y}em) rotateX(${rx}deg)`;c.style.filter=bl>0.05?`blur(${bl.toFixed(1)}px)`:'none';});
+  // captions
+  s.capEls.forEach((ce,k)=>{const t0=s.caps[k][0],t1=k<s.caps.length-1?s.caps[k+1][0]:end-0.9;
+    if(l<t0-0.1||l>t1+0.6){ce.el.style.visibility='hidden';return;}ce.el.style.visibility='visible';
+    const fo=clamp((l-t1)/0.45);
+    if(ce.qm){const p=eout((l-t0)/0.6);ce.qm.style.opacity=p*(1-fo);ce.qm.style.transform=`scale(${0.6+0.4*p})`;}
+    ce.words.forEach((w,j)=>{const p=eout((l-t0-(ce.qm?0.25:0)-j*(ce.qm?0.06:0.045))/0.55);w.style.opacity=(p*(1-fo)).toFixed(3);
+      w.style.transform=`translateY(${((1-p)*10-fo*8).toFixed(1)}px)`;const bl=(1-p)*8+fo*6;w.style.filter=bl>0.05?`blur(${bl.toFixed(1)}px)`:'none';});});
+}
+const pv=new THREE.Vector3();
+function updateLabels(i,l,w){
+  S[i].labels.forEach(L=>{if(w<=0.002){L.el.style.display='none';return;}
+    const from=L.from??1.2;let a=eout((l-from)/0.8)*w*(L.w??1);
+    L.o.getWorldPosition(pv);pv.project(camera);if(pv.z>1)a=0;
+    if(a<=0.003){L.el.style.display='none';return;}L.el.style.display='flex';
+    const x=(pv.x*.5+.5)*innerWidth,y=(-pv.y*.5+.5)*innerHeight;
+    L.el.style.opacity=a;L.el.style.transform=`translate(${x.toFixed(1)}px,${(y+(1-a)*8).toFixed(1)}px)`;
+    const n=Math.round(L.t.length*clamp((l-from)/0.7));L.b.textContent=L.t.slice(0,n)+(n<L.t.length?'▍':'');});
+}
+
+/* ================================================================
+   CAMERA
+   ================================================================ */
+const DRIFT=0.035;
+function orbit(pos,target,ang){const d=pos.clone().sub(target).applyAxisAngle(UP,ang);return d.add(target);}
+const KF=SC.map(s=>({p:V(...s.cam[0]),t:V(...s.cam[1])}));
+const camEnd=KF.map((k,i)=>orbit(k.p,k.t,DRIFT*SC[i].dur));
+function cameraAt(i,l){
+  const prevP=i===0?V(0,0,22):camEnd[i-1],prevT=i===0?V(0,0,0):KF[i-1].t;
+  const e=eio(l/(i===0?5.5:3.4));
+  const t=prevT.clone().lerp(KF[i].t,e);const p=prevP.clone().lerp(KF[i].p,e);
+  // mid-transition swoop: push outward
+  const sw=Math.sin(e*Math.PI)*(i===0?0:0.9);p.add(p.clone().sub(t).normalize().multiplyScalar(sw)).add(V(0,sw*0.5,0));
+  camera.position.copy(orbit(p,t,DRIFT*l*e));camera.lookAt(t);
+  camera.rotation.z+=Math.sin(l*0.3+i)*0.012;
+}
+
+/* ================================================================
+   AUDIO — generative ambient pad + transition whooshes
+   ================================================================ */
+let AC=null,master,voices=[],soundOn=true,noiseBuf;
+const mtof=m=>440*Math.pow(2,(m-69)/12);
+function initAudio(){
+  if(AC)return;AC=new (window.AudioContext||window.webkitAudioContext)();
+  master=AC.createGain();master.gain.value=0;
+  const comp=AC.createDynamicsCompressor();master.connect(comp);comp.connect(AC.destination);
+  const filt=AC.createBiquadFilter();filt.type='lowpass';filt.frequency.value=950;filt.Q.value=0.8;
+  const delay=AC.createDelay(2);delay.delayTime.value=0.46;const fb=AC.createGain();fb.gain.value=0.38;const wet=AC.createGain();wet.gain.value=0.4;
+  filt.connect(master);filt.connect(delay);delay.connect(fb);fb.connect(delay);delay.connect(wet);wet.connect(master);
+  const lfo=AC.createOscillator();lfo.frequency.value=0.06;const lg=AC.createGain();lg.gain.value=420;lfo.connect(lg);lg.connect(filt.frequency);lfo.start();
+  const ch=SC[0].chord;
+  for(let k=0;k<5;k++){const g=AC.createGain();g.gain.value=k===0?0.28:0.075;
+    for(const det of [-8,8]){const o=AC.createOscillator();o.type=k===0?'sine':(k%2?'sawtooth':'triangle');o.detune.value=det+(k===0?0:0);o.frequency.value=mtof(ch[k]-(k===0?12:0));o.connect(g);o.start();voices.push({o,k});}
+    const pan=AC.createStereoPanner?AC.createStereoPanner():null;if(pan){pan.pan.value=(k-2)*0.3;g.connect(pan);pan.connect(filt);}else g.connect(filt);}
+  const len=AC.sampleRate*2;noiseBuf=AC.createBuffer(1,len,AC.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+}
+function setChord(i){if(!AC)return;const ch=SC[i].chord;voices.forEach(v=>v.o.frequency.setTargetAtTime(mtof(ch[v.k]-(v.k===0?12:0)),AC.currentTime,0.7));}
+function whoosh(){if(!AC||!soundOn||!playing)return;const s=AC.createBufferSource();s.buffer=noiseBuf;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.Q.value=1.2;
+  const g=AC.createGain();const t=AC.currentTime;bp.frequency.setValueAtTime(180,t);bp.frequency.exponentialRampToValueAtTime(2600,t+0.9);bp.frequency.exponentialRampToValueAtTime(300,t+1.8);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.16,t+0.8);g.gain.linearRampToValueAtTime(0,t+1.9);s.connect(bp);bp.connect(g);g.connect(master);s.start(t);s.stop(t+2);}
+function updateGain(){if(!AC)return;master.gain.setTargetAtTime(soundOn&&playing?0.22:0,AC.currentTime,0.4);}
+
+/* ================================================================
+   UI / TIMELINE
+   ================================================================ */
+let t=0,playing=false,lastIdx=-1,lastNow=performance.now();
+const qs=new URLSearchParams(location.search);if(qs.has('t'))t=parseFloat(qs.get('t'))||0;
+const segs=document.getElementById('segs'),tip=document.getElementById('tip'),track=document.getElementById('track');
+SC.forEach(s=>{const d=document.createElement('div');d.style.flex=s.dur;d.innerHTML='<b></b>';segs.appendChild(d);s.seg=d.firstChild;});
+const fmt=x=>`${Math.floor(x/60)}:${String(Math.floor(x%60)).padStart(2,'0')}`;
+const playIcon=document.getElementById('playIcon'),sndIcon=document.getElementById('sndIcon');
+function refreshIcons(){playIcon.innerHTML=playing?'<path d="M3 2h4v12H3zm6 0h4v12H9z"/>':'<path d="M4 2l10 6-10 6z"/>';
+  sndIcon.innerHTML=soundOn?'<path d="M2 6h3l4-3v10L5 10H2z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5M12.5 3.5a6 6 0 0 1 0 9" stroke="currentColor" fill="none" stroke-width="1.3"/>':'<path d="M2 6h3l4-3v10L5 10H2z"/><path d="M11 6l4 4m0-4l-4 4" stroke="currentColor" stroke-width="1.4"/>';}
+function setPlaying(p){playing=p;if(playing&&t>=TOTAL-0.01)seek(0);refreshIcons();updateGain();poke();}
+function seek(x){t=clamp(x,0,TOTAL-0.001);}
+function idxAt(x){let i=0;for(let k=0;k<SC.length;k++)if(x>=SC[k].start)i=k;return i;}
+document.getElementById('play').onclick=()=>setPlaying(!playing);
+document.getElementById('restart').onclick=()=>{seek(0);setPlaying(true);};
+document.getElementById('snd').onclick=()=>{soundOn=!soundOn;if(soundOn)initAudio(),setChord(idxAt(t));refreshIcons();updateGain();};
+document.getElementById('fs').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();};
+const trackX=e=>{const r=track.getBoundingClientRect();return clamp((e.clientX-r.left)/r.width);};
+let dragging=false;
+track.addEventListener('pointerdown',e=>{dragging=true;track.setPointerCapture(e.pointerId);seek(trackX(e)*TOTAL);});
+track.addEventListener('pointermove',e=>{const x=trackX(e);const tt=x*TOTAL;tip.style.left=(x*100)+'%';tip.textContent=`${fmt(tt)} · ${SC[idxAt(tt)].chap}`;if(dragging)seek(tt);});
+track.addEventListener('pointerup',()=>dragging=false);
+addEventListener('keydown',e=>{if(document.getElementById('intro').classList.contains('gone')===false)return;
+  if(e.code==='Space'){e.preventDefault();setPlaying(!playing);}
+  if(e.code==='ArrowRight'){const i=idxAt(t);seek(i<SC.length-1?SC[i+1].start+0.01:TOTAL);}
+  if(e.code==='ArrowLeft'){const i=idxAt(t);seek(t-SC[i].start>1.5?SC[i].start:SC[Math.max(0,i-1)].start);}});
+const controls=document.getElementById('controls');let idleT=0;
+function poke(){controls.classList.remove('idle');document.body.style.cursor='';idleT=performance.now();}
+addEventListener('pointermove',poke);
+function begin(withSound){soundOn=withSound;if(withSound){initAudio();AC.resume();setChord(idxAt(t));}document.getElementById('intro').classList.add('gone');setPlaying(true);}
+document.getElementById('go').onclick=()=>begin(true);
+document.getElementById('goMuted').onclick=()=>begin(false);
+refreshIcons();
+
+function sceneW(i,x){const s=SC[i],a=s.start,b=s.start+s.dur;if(x<a-0.3||x>b+0.3)return 0;
+  const fi=i===0?1:smooth((x-(a-0.3))/1.5);const fo=i===SC.length-1?1:1-smooth((x-(b-1.2))/1.5);return clamp(Math.min(fi,fo));}
+
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);bloom.resolution.set(innerWidth,innerHeight);});
+
+function frame(now){
+  requestAnimationFrame(frame);
+  try{ frameBody(now); }catch(err){ console.error(err); }
+}
+function frameBody(now){
+  const dt=Math.min(0.1,(now-lastNow)/1000);lastNow=now;
+  if(playing&&!dragging){t+=dt;if(t>=TOTAL){t=TOTAL-0.001;setPlaying(false);}}
+  if(playing&&performance.now()-idleT>2600){controls.classList.add('idle');document.body.style.cursor='none';}
+  const i=idxAt(t),l=t-SC[i].start;
+  if(i!==lastIdx){if(lastIdx!==-1&&Math.abs(i-lastIdx)===1)whoosh();lastIdx=i;setChord(i);{const m=SC[i].chap.match(/^(\d+) · (.*)$/);document.getElementById('chap').textContent=m?`Ch. ${m[1]} of 12 · ${m[2]}`:SC[i].chap;}}
+  // particles
+  setTargets(i);PU.uMix.value=clamp(l/2.9);PU.uTime.value=t;PU.uPix.value=renderer.getPixelRatio()*innerHeight*0.5;
+  PU.uFlow.value=sceneW(FLUX_IDX,t);PU.uSpotOn.value=0;PU.uSize.value=(i===3?0.1:0.085)*(innerHeight<600?1.2:1);
+  PU.uOpacity.value=i===0?smooth(l/2):1;
+  cameraAt(i,l);
+  {let sw=0,sf=0;SC.forEach((s,k)=>{const w=sceneW(k,t);sw+=w;sf+=w*(s.center?0:1);});const f=sw>0?sf/sw:0;const W=innerWidth,H=innerHeight;
+   const kx=W>H?0.17:0.0,ky=W>H?0.05:0.12;camera.setViewOffset(W,H,-f*kx*W,f*ky*H,W,H);document.getElementById('shade').style.opacity=f;}
+  // scenes
+  flowMats.forEach(m=>m.uniforms.uTime.value=t);
+  S.forEach((s,k)=>{const w=sceneW(k,t);applyFade(s,w);const lk=t-SC[k].start;
+    if(w>0.002){s.group.scale.setScalar(0.88+0.12*eout(w));try{s.tick(lk,w,t);}catch(err){console.error(err);}}
+    updateText(k,lk,Math.abs(k-i)<=1&&lk>-0.5&&lk<SC[k].dur+0.5);updateLabels(k,lk,w);});
+  bloom.strength=0.7+(SC[i].center?0.15:0)+0.08*Math.sin(t*0.5);
+  // progress
+  SC.forEach(s=>{s.seg.style.transform=`scaleX(${clamp((t-s.start)/s.dur)})`;});
+  document.getElementById('time').textContent=`${fmt(t)} / ${fmt(TOTAL)}`;
+  updateGuard(i);
+  composer.render();
+}
+window.__seek=(x)=>{seek(x);};
+window.__ready=true;
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

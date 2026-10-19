@@ -1,0 +1,988 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Artificial Empathy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Figtree:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --ink:#0A0C18; --ink2:#11142A; --ink3:#1B1F3A; --line:#2A2E4A;
+  --text:#ECE8F4; --muted:#8E8AAE; --cyan:#72D6E3; --coral:#FF8F7E; --violet:#A98BFF; --gold:#F3C77A;
+  --display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body:"Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+[hidden]{display:none!important}
+html,body{background:var(--ink);color:var(--text);}
+body{font-family:var(--body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:20px 40px;}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
+.stage{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;margin:0 auto;background:#05060d;overflow:hidden;border-radius:4px;box-shadow:0 30px 80px -30px #000, 0 0 0 1px #1a1d33;}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.layer{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;pointer-events:none;}
+.stage:fullscreen{border-radius:0;max-width:none;width:100vw;height:100vh;aspect-ratio:auto;display:flex;align-items:center;justify-content:center;background:#000}
+/* ---------- overlays (1920x1080 space) */
+.ov{position:absolute;will-change:transform,opacity;opacity:0;}
+.w{display:inline-block;will-change:transform,opacity,filter;}
+.card{left:150px;top:360px;width:1500px;transform-origin:0 0;}
+.card .eb{font:500 30px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;gap:26px;align-items:center;}
+.card .eb b{color:var(--gold);font-weight:500;}
+.card .eb i{display:block;height:1px;width:120px;background:var(--line);}
+.card h2{font:italic 500 138px/1.02 var(--display);margin:34px 0 0;letter-spacing:-.01em;text-wrap:balance;}
+.card h2 .w{margin-right:.22em}
+.hdr{left:84px;top:62px;display:flex;align-items:baseline;gap:22px;}
+.hdr .n{font:500 24px/1 var(--mono);letter-spacing:.18em;color:var(--gold);}
+.hdr .t{font:italic 500 40px/1 var(--display);color:var(--text);}
+.hdr .lv{font:500 20px/1 var(--mono);letter-spacing:.18em;color:var(--muted);text-transform:uppercase;}
+.kin{left:160px;width:1600px;text-align:center;}
+.kin .w{margin:0 .12em;}
+.k-body{font:300 60px/1.25 var(--body);color:var(--text);}
+.k-disp{font:italic 500 104px/1.08 var(--display);}
+.k-small{font:400 44px/1.3 var(--body);color:var(--muted);}
+.k-quote{font:italic 400 86px/1.18 var(--display);text-wrap:balance;}
+.attr{font:500 26px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:40px;}
+.hl{color:var(--coral);}
+.hc{color:var(--cyan);}
+.lock{left:0;width:1920px;top:0;height:1080px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.lock .a{font:400 64px/1 var(--display);letter-spacing:.34em;text-transform:uppercase;color:var(--text);margin-right:-.34em;}
+.lock .e{font:italic 500 250px/.95 var(--display);color:var(--coral);letter-spacing:-.02em;margin-top:10px;}
+.lock .rule{height:1px;width:760px;background:linear-gradient(90deg,transparent,var(--muted),transparent);margin:46px 0 34px;transform-origin:50% 50%;}
+.lock .sub{font:500 25px/1.5 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--muted);}
+.lock .by{font:400 40px/1 var(--body);margin-top:34px;color:var(--text);letter-spacing:.04em;}
+.clarke{left:160px;width:1600px;top:400px;text-align:center;font:italic 400 76px/1.25 var(--display);text-wrap:balance;}
+.clarke .strike{position:relative;color:var(--muted);}
+.clarke .strike::after{content:"";position:absolute;left:-4%;right:-4%;top:55%;height:5px;background:var(--coral);transform-origin:0 50%;transform:scaleX(var(--s,0));}
+.clarke .bio{color:var(--coral);display:inline-block;}
+.cap{position:absolute;left:210px;width:1500px;bottom:56px;text-align:center;font:400 40px/1.32 var(--body);color:#F4F1FA;text-shadow:0 2px 12px #000c,0 0 2px #000;transition:opacity .18s;}
+.cap.q{font:italic 400 42px/1.3 var(--display);}
+.nocap .cap{display:none}
+/* cover */
+.cover{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6%;pointer-events:auto;background:linear-gradient(180deg,transparent 55%,#05060dcc);}
+.play-big{display:flex;align-items:center;gap:14px;border:1px solid #ffffff40;background:#0A0C18b3;backdrop-filter:blur(8px);color:var(--text);font:500 15px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;padding:14px 22px 14px 16px;border-radius:999px;cursor:pointer;}
+.play-big:hover{border-color:var(--coral);}
+.play-big:focus-visible,.ctl button:focus-visible,.idx button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.play-big .ic{width:34px;height:34px;border-radius:50%;background:var(--coral);display:grid;place-items:center;}
+.play-big .ic svg{fill:#1a0d0b;margin-left:3px}
+.loading{font:400 12px/1 var(--mono);color:var(--muted);letter-spacing:.1em;}
+/* controls */
+.ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ctl button{background:var(--ink2);border:1px solid var(--line);color:var(--text);height:36px;min-width:36px;padding:0 10px;border-radius:8px;cursor:pointer;font:500 12px/1 var(--mono);letter-spacing:.08em;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
+.ctl button[aria-pressed="false"]{color:var(--muted);}
+.ctl button svg{fill:currentColor}
+.time{font:400 13px/1 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;min-width:96px;}
+.scrub{position:relative;flex:1 1 260px;height:36px;cursor:pointer;touch-action:none;}
+.scrub .tr{position:absolute;left:0;right:0;top:16px;height:4px;background:var(--ink3);border-radius:2px;}
+.scrub .fill{position:absolute;left:0;top:16px;height:4px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--coral));border-radius:2px;}
+.scrub .tick{position:absolute;top:12px;width:2px;height:12px;background:var(--line);}
+.scrub .knob{position:absolute;top:10px;width:16px;height:16px;border-radius:50%;background:var(--text);margin-left:-8px;box-shadow:0 0 0 4px #ffffff18;}
+.scrub .tip{position:absolute;bottom:34px;transform:translateX(-50%);background:var(--ink2);border:1px solid var(--line);padding:5px 8px;border-radius:6px;font:400 12px/1.2 var(--mono);white-space:nowrap;pointer-events:none;}
+/* index */
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline;border-top:1px solid var(--line);padding-top:18px;margin-top:8px;}
+.meta h1{font:italic 500 34px/1.1 var(--display);margin:0;}
+.meta h1 span{font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-style:normal;margin-left:12px;}
+.meta p{margin:0;color:var(--muted);max-width:60ch;font-size:14px;}
+.idx{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;}
+.idx button{all:unset;cursor:pointer;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:baseline;padding:11px 12px;border-radius:8px;background:var(--ink2);border:1px solid transparent;}
+.idx button:hover{border-color:var(--line);}
+.idx button.on{border-color:var(--coral);}
+.idx .n{font:500 12px/1 var(--mono);color:var(--gold);letter-spacing:.08em;}
+.idx .t{font:400 15px/1.25 var(--body);}
+.idx .tm{font:400 12px/1 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;}
+.credits{font:400 12px/1.6 var(--mono);color:var(--muted);letter-spacing:.02em;}
+.credits b{color:var(--text);font-weight:500;}
+@media (max-width:520px){ .time{min-width:0} .ctl{gap:6px} .meta h1 span{display:block;margin:8px 0 0} }
+</style>
+
+<div class="wrap">
+  <div class="stage" id="stage">
+    <canvas id="cv" aria-label="Animated visuals for the Artificial Empathy book introduction"></canvas>
+    <div class="layer" id="layer"></div>
+    <div class="cover" id="cover">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <button class="play-big" id="bigPlay" type="button"><span class="ic"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M0 0l14 8-14 8z"/></svg></span><span id="bigPlayLbl">Watch the introduction · 8:23</span></button>
+        <div class="loading" id="loading" hidden>Loading sound…</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ctl" role="toolbar" aria-label="Playback controls">
+    <button id="bPlay" type="button" aria-label="Play"><svg id="icPlay" width="12" height="14" viewBox="0 0 14 16"><path d="M0 0l14 8-14 8z"/></svg></button>
+    <button id="bBack" type="button" aria-label="Back 10 seconds">−10</button>
+    <span class="time" id="time">0:00 / 8:23</span>
+    <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="503" aria-valuenow="0">
+      <div class="tr"></div><div class="fill" id="fill"></div><div id="ticks"></div><div class="knob" id="knob"></div><div class="tip" id="tip" hidden></div>
+    </div>
+    <button id="bCC" type="button" aria-pressed="true" title="Captions">CC</button>
+    <button id="bMus" type="button" aria-pressed="true" title="Music">♪ Music</button>
+    <button id="bMute" type="button" aria-pressed="true" title="Sound">Sound</button>
+    <button id="bFS" type="button" aria-label="Full screen" title="Full screen"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M0 0h5v2H2v3H0zM9 0h5v5h-2V2H9zM0 9h2v3h3v2H0zM12 9h2v5H9v-2h3z"/></svg></button>
+  </div>
+
+  <div class="meta">
+    <h1>Artificial Empathy <span>Carlos E. Perez · a roadmap for human-aligned AGI</span></h1>
+    <p>A narrated, eight-minute tour of the book: the premise, the cycle of creation in Part I, and the six-level roadmap from intuition to conversational empathy. Jump to any chapter below.</p>
+  </div>
+  <div class="idx" id="idx"></div>
+  <div class="credits"><b>Voice</b> Kokoro-82M (af_heart, bm_george) · <b>Music</b> scored in JavaScript, played with FluidR3 GM samples · <b>Sound effects</b> synthesized with Web Audio, plus CC0 cues from uisfx · Keys: space play/pause, ← → seek, C captions</div>
+</div>
+
+<script>
+const TL={"duration":502.88,"scenes":[{"id":"open","kind":"open","title":"","num":null,"level":null,"start":0.0,"end":13.076},{"id":"title","kind":"title","title":"Artificial Empathy","num":null,"level":null,"start":13.076,"end":24.923},{"id":"premise","kind":"premise","title":"From intuition to empathy","num":null,"level":null,"start":24.923,"end":56.818},{"id":"map","kind":"map","title":"Two movements","num":null,"level":null,"start":56.818,"end":84.91},{"id":"c1","kind":"chapter","title":"Emergence from Curiosity","num":1,"level":null,"start":84.91,"end":117.595},{"id":"c2","kind":"chapter","title":"Diversity to Awe","num":2,"level":null,"start":117.595,"end":148.963},{"id":"c3","kind":"chapter","title":"Knowledge from Play","num":3,"level":null,"start":148.963,"end":178.191},{"id":"c4","kind":"chapter","title":"Unknowing to Surprise","num":4,"level":null,"start":178.191,"end":207.289},{"id":"c5","kind":"chapter","title":"Intelligence from Competence","num":5,"level":null,"start":207.289,"end":243.137},{"id":"c6","kind":"chapter","title":"Intuitive Learning","num":6,"level":1,"start":243.137,"end":272.287},{"id":"c7","kind":"chapter","title":"Generative Selves","num":7,"level":2,"start":272.287,"end":306.02},{"id":"c8","kind":"chapter","title":"Dual Processes","num":8,"level":3,"start":306.02,"end":337.414},{"id":"c9","kind":"chapter","title":"Interventional Causal Reasoning","num":9,"level":4,"start":337.414,"end":370.208},{"id":"c10","kind":"chapter","title":"Counterfactual Ingenuity","num":10,"level":5,"start":370.208,"end":398.699},{"id":"c11","kind":"chapter","title":"Conversational Empathy","num":11,"level":6,"start":398.699,"end":433.003},{"id":"c12","kind":"chapter","title":"Regenerating Civilization","num":12,"level":null,"start":433.003,"end":464.295},{"id":"coda","kind":"coda","title":"The roadmap","num":null,"level":null,"start":464.295,"end":491.777},{"id":"end","kind":"end","title":"Artificial Empathy","num":null,"level":null,"start":491.777,"end":502.88}],"lines":[{"scene":0,"voice":"N","text":"We have built machines that can calculate, recognize, and even converse.","start":2.2,"end":6.574},{"scene":0,"voice":"N","text":"But can a machine understand how you feel?","start":7.074,"end":9.157},{"scene":0,"voice":"N","text":"And if it can, will it be on our side?","start":9.657,"end":11.676},{"scene":1,"voice":"N","text":"Artificial Empathy. A roadmap for human-aligned artificial general intelligence, by Carlos E. Perez.","start":16.276,"end":23.323},{"scene":2,"voice":"N","text":"In an earlier book, Artificial Intuition, Perez argued that deep learning is our first machine version of intuition: the fast, automatic System 1 that Daniel Kahneman described.","start":26.123,"end":38.224},{"scene":2,"voice":"N","text":"That idea is now mainstream. This book asks what comes next.","start":38.724,"end":42.634},{"scene":2,"voice":"N","text":"Its answer: general intelligence is not raw problem-solving power. It grows, step by step, from intuition toward empathy, the capacity to model other minds and to cooperate with them.","start":43.134,"end":55.818},{"scene":3,"voice":"N","text":"The book unfolds in two movements.","start":58.018,"end":59.926},{"scene":3,"voice":"N","text":"The first five chapters trace a cycle of creation, inspired by the logician Charles Sanders Peirce: awe, curiosity, surprise, play, competence, and ingenuity, then back to awe again.","start":60.426,"end":73.265},{"scene":3,"voice":"N","text":"The next six climb a ladder, a roadmap from intuitive learning to conversational empathy. And a final chapter asks what it all means for civilization.","start":73.765,"end":83.71},{"scene":4,"voice":"N","text":"Chapter one. Emergence from Curiosity.","start":86.91,"end":89.607},{"scene":4,"voice":"N","text":"How does the universe invent minds? Perez follows Harold Morowitz's twenty-eight levels of emergence, from the Big Bang to consciousness.","start":90.107,"end":98.492},{"scene":4,"voice":"N","text":"Emergence is what happens when simple parts, interacting, produce something none of them could do alone. Wetness from water molecules. Thought from neurons.","start":98.992,"end":108.575},{"scene":4,"voice":"N","text":"And at every level, a pattern repeats. Not turtles all the way down, but selves and conversations, all the way up.","start":109.075,"end":116.295},{"scene":5,"voice":"N","text":"Chapter two. Diversity to Awe.","start":119.595,"end":121.72},{"scene":5,"voice":"N","text":"Evolution has invented neurons more than once, and built sophisticated brains in creatures as different as vertebrates and the octopus.","start":122.22,"end":130.926},{"scene":5,"voice":"N","text":"If nature keeps reinventing minds from different building blocks, intelligence may not depend on its substrate, but on a deeper pattern.","start":131.426,"end":139.345},{"scene":5,"voice":"N","text":"Perez updates Arthur C. Clarke: any technology that is sufficiently advanced is indistinguishable from biology.","start":139.845,"end":147.663},{"scene":6,"voice":"N","text":"Chapter three. Knowledge from Play.","start":150.963,"end":152.966},{"scene":6,"voice":"N","text":"Why do humans spend so long avoiding adulthood? Because play generates its own data.","start":153.466,"end":158.689},{"scene":6,"voice":"N","text":"The same trick let AlphaZero master chess and Go without studying a single human game.","start":159.189,"end":164.85},{"scene":6,"voice":"N","text":"Perez surveys the innate gifts that speed human learning, like shared attention, tool use, and storytelling, and proposes a lazy brain that fills in details just in time.","start":165.35,"end":176.891},{"scene":7,"voice":"N","text":"Chapter four. Unknowing to Surprise.","start":180.191,"end":182.506},{"scene":7,"voice":"N","text":"Early AI assumed the world could be captured in logic. It underestimated reality.","start":183.006,"end":188.657},{"scene":7,"voice":"N","text":"Stephen Wolfram showed that even a very simple rule can produce behavior no formula can shortcut. Some things can only be known by running them.","start":189.157,"end":198.534},{"scene":7,"voice":"N","text":"Perez maps the limits of learning machines, from knowable knowns to the unknowable unknowns, where surprise lives.","start":199.034,"end":205.989},{"scene":8,"voice":"N","text":"Chapter five. Intelligence from Competence.","start":209.289,"end":211.995},{"scene":8,"voice":"N","text":"A brief history of minds trying to understand minds: from Aristotle's logic, to Boole and Babbage, to the first artificial neuron in 1943.","start":212.495,"end":222.888},{"scene":8,"voice":"N","text":"Daniel Dennett calls it competence without comprehension. Artificial neurons are crude copies of real ones, and yet, they work.","start":223.388,"end":231.935},{"scene":8,"voice":"N","text":"Here Perez unveils his roadmap: a capability maturity model that climbs from hand-coded programs through six levels of learned intelligence.","start":232.435,"end":241.837},{"scene":9,"voice":"N","text":"Chapter six. Level one: Intuitive Learning.","start":245.137,"end":248.069},{"scene":9,"voice":"N","text":"In 2012, deep learning began to do what Richard Feynman said machines could not: recognize things in a snap.","start":248.569,"end":255.813},{"scene":9,"voice":"N","text":"Perez argues these networks are intuition machines. They don't start from rules. They build their own representations from experience, just as human intuition does.","start":256.313,"end":266.356},{"scene":9,"voice":"N","text":"Intuition is the first, crucial step toward general intelligence.","start":266.856,"end":270.987},{"scene":10,"voice":"N","text":"Chapter seven. Level two: Generative Selves.","start":274.287,"end":277.329},{"scene":10,"voice":"N","text":"All living things build themselves from the inside out, behind a boundary that separates self from non-self.","start":277.829,"end":284.261},{"scene":10,"voice":"N","text":"Douglas Hofstadter called the self a strange loop. In machine learning, loops appear in generative adversarial networks, where a generator and a critic sharpen each other.","start":284.761,"end":295.164},{"scene":10,"voice":"N","text":"Perez warns that chasing a single reward invites Goodhart's law, and traces how the self grows through ever-wider stages of perspective.","start":295.664,"end":304.72},{"scene":11,"voice":"N","text":"Chapter eight. Level three: Dual Processes.","start":308.02,"end":311.071},{"scene":11,"voice":"N","text":"Kahneman's fast intuition and slow deliberation are usually treated as two separate machines.","start":311.571,"end":317.597},{"scene":11,"voice":"N","text":"Perez proposes something bolder: reason itself emerges from intuition, a virtual machine running on hardware built for pattern, rhythm, and space.","start":318.097,"end":327.84},{"scene":11,"voice":"N","text":"In systems like AlphaGo Zero, the two modes cooperate. Intuition guides the search, and the search teaches intuition.","start":328.34,"end":336.114},{"scene":12,"voice":"N","text":"Chapter nine. Level four: Interventional Causal Reasoning.","start":339.414,"end":343.225},{"scene":12,"voice":"Q","text":"All doing is knowing, and all knowing is doing.","start":344.025,"end":347.374},{"scene":12,"voice":"N","text":"Judea Pearl describes a ladder of causation: seeing, doing, and imagining. Correlation lives on the first rung. Intervention, asking what happens if I act, lives on the second.","start":348.174,"end":360.604},{"scene":12,"voice":"N","text":"At this level, an agent learns its own model of the world by acting in it, and can predict the effect of an action before it takes it.","start":361.104,"end":368.908},{"scene":13,"voice":"N","text":"Chapter ten. Level five: Counterfactual Ingenuity.","start":372.208,"end":375.815},{"scene":13,"voice":"N","text":"The top rung of Pearl's ladder is imagination. What if things had been different?","start":376.315,"end":380.914},{"scene":13,"voice":"N","text":"Picture a child whose tower topples. She doesn't just correct the error. She compensates, and builds a wider base.","start":381.414,"end":388.181},{"scene":13,"voice":"N","text":"Perez explores abductive reasoning, hybrids of logic and neural networks, and why explanation is ultimately about earning human trust.","start":388.681,"end":397.399},{"scene":14,"voice":"N","text":"Chapter eleven. Level six: Conversational Empathy.","start":400.699,"end":404.226},{"scene":14,"voice":"Q","text":"Empathy is a kind of inference that cannot be captured by classical logic.","start":405.026,"end":410.568},{"scene":14,"voice":"N","text":"What sets humans apart is shared intentionality. We are born inclined to cooperate. To understand an idea is to see it through many frames of reference, and empathy lets us step into them.","start":411.368,"end":423.463},{"scene":14,"voice":"N","text":"In this view, general intelligence is not the property of a lone brain. It emerges from diverse minds in conversation.","start":423.963,"end":431.703},{"scene":15,"voice":"N","text":"Chapter twelve. Regenerating Civilization.","start":435.003,"end":437.745},{"scene":15,"voice":"N","text":"Our paleolithic brains and medieval institutions are colliding with exponential technology.","start":438.245,"end":444.406},{"scene":15,"voice":"N","text":"Perez calls for a shift from nouns to verbs, from things to processes, from either-or thinking to Peirce's triads, and from economies of scarcity to economies of abundance.","start":444.906,"end":456.164},{"scene":15,"voice":"N","text":"AI can help build that future, but only if it is shaped by moral actors, with empathy at its core.","start":456.664,"end":462.995},{"scene":16,"voice":"N","text":"Intuition. Generative selves. Dual processes. Causal reasoning. Counterfactual ingenuity. Conversational empathy.","start":465.695,"end":474.267},{"scene":16,"voice":"N","text":"A roadmap not just for smarter machines, but for machines that can be our partners.","start":474.767,"end":479.603},{"scene":16,"voice":"Q","text":"If we think dynamically, understand complexity with empathy, and act morally, we will traverse this abyss. Our work has just begun.","start":480.403,"end":489.877},{"scene":17,"voice":"N","text":"Artificial Empathy. By Carlos E. Perez.","start":492.977,"end":495.88}],"caps":[{"scene":0,"voice":"N","text":"We have built machines that can calculate, recognize, and even converse.","start":2.2,"end":6.57},{"scene":0,"voice":"N","text":"But can a machine understand how you feel?","start":7.07,"end":9.16},{"scene":0,"voice":"N","text":"And if it can, will it be on our side?","start":9.66,"end":11.68},{"scene":1,"voice":"N","text":"Artificial Empathy.","start":16.28,"end":17.72},{"scene":1,"voice":"N","text":"A roadmap for human-aligned artificial general intelligence, by Carlos E. Perez.","start":17.72,"end":23.32},{"scene":2,"voice":"N","text":"In an earlier book, Artificial Intuition, Perez argued that deep learning is our first machine version of intuition: the fast, automatic System 1 that Daniel Kahneman described.","start":26.12,"end":38.22},{"scene":2,"voice":"N","text":"That idea is now mainstream.","start":38.72,"end":40.63},{"scene":2,"voice":"N","text":"This book asks what comes next.","start":40.63,"end":42.63},{"scene":2,"voice":"N","text":"Its answer: general intelligence is not raw problem-solving power.","start":43.13,"end":47.77},{"scene":2,"voice":"N","text":"It grows, step by step, from intuition toward empathy, the capacity to model other minds and to cooperate with them.","start":47.77,"end":55.82},{"scene":3,"voice":"N","text":"The book unfolds in two movements.","start":58.02,"end":59.93},{"scene":3,"voice":"N","text":"The first five chapters trace a cycle of creation, inspired by the logician Charles Sanders Peirce: awe, curiosity, surprise, play, competence, and ingenuity, then back to awe again.","start":60.43,"end":73.27},{"scene":3,"voice":"N","text":"The next six climb a ladder, a roadmap from intuitive learning to conversational empathy.","start":73.77,"end":79.86},{"scene":3,"voice":"N","text":"And a final chapter asks what it all means for civilization.","start":79.86,"end":83.71},{"scene":4,"voice":"N","text":"Chapter one.","start":86.91,"end":87.8},{"scene":4,"voice":"N","text":"Emergence from Curiosity.","start":87.8,"end":89.61},{"scene":4,"voice":"N","text":"How does the universe invent minds?","start":90.11,"end":92.18},{"scene":4,"voice":"N","text":"Perez follows Harold Morowitz's twenty-eight levels of emergence, from the Big Bang to consciousness.","start":92.18,"end":98.49},{"scene":4,"voice":"N","text":"Emergence is what happens when simple parts, interacting, produce something none of them could do alone.","start":98.99,"end":105.09},{"scene":4,"voice":"N","text":"Wetness from water molecules.","start":105.09,"end":107.19},{"scene":4,"voice":"N","text":"Thought from neurons.","start":107.19,"end":108.58},{"scene":4,"voice":"N","text":"And at every level, a pattern repeats.","start":109.08,"end":111.52},{"scene":4,"voice":"N","text":"Not turtles all the way down, but selves and conversations, all the way up.","start":111.52,"end":116.3},{"scene":5,"voice":"N","text":"Chapter two.","start":119.59,"end":120.43},{"scene":5,"voice":"N","text":"Diversity to Awe.","start":120.43,"end":121.72},{"scene":5,"voice":"N","text":"Evolution has invented neurons more than once, and built sophisticated brains in creatures as different as vertebrates and the octopus.","start":122.22,"end":130.93},{"scene":5,"voice":"N","text":"If nature keeps reinventing minds from different building blocks, intelligence may not depend on its substrate, but on a deeper pattern.","start":131.43,"end":139.34},{"scene":5,"voice":"N","text":"Perez updates Arthur C. Clarke: any technology that is sufficiently advanced is indistinguishable from biology.","start":139.84,"end":147.66},{"scene":6,"voice":"N","text":"Chapter three.","start":150.96,"end":151.79},{"scene":6,"voice":"N","text":"Knowledge from Play.","start":151.79,"end":152.97},{"scene":6,"voice":"N","text":"Why do humans spend so long avoiding adulthood?","start":153.47,"end":156.44},{"scene":6,"voice":"N","text":"Because play generates its own data.","start":156.44,"end":158.69},{"scene":6,"voice":"N","text":"The same trick let AlphaZero master chess and Go without studying a single human game.","start":159.19,"end":164.85},{"scene":6,"voice":"N","text":"Perez surveys the innate gifts that speed human learning, like shared attention, tool use, and storytelling, and proposes a lazy brain that fills in details just in time.","start":165.35,"end":176.89},{"scene":7,"voice":"N","text":"Chapter four.","start":180.19,"end":181.05},{"scene":7,"voice":"N","text":"Unknowing to Surprise.","start":181.05,"end":182.51},{"scene":7,"voice":"N","text":"Early AI assumed the world could be captured in logic.","start":183.01,"end":186.59},{"scene":7,"voice":"N","text":"It underestimated reality.","start":186.59,"end":188.66},{"scene":7,"voice":"N","text":"Stephen Wolfram showed that even a very simple rule can produce behavior no formula can shortcut.","start":189.16,"end":195.99},{"scene":7,"voice":"N","text":"Some things can only be known by running them.","start":195.99,"end":198.53},{"scene":7,"voice":"N","text":"Perez maps the limits of learning machines, from knowable knowns to the unknowable unknowns, where surprise lives.","start":199.03,"end":205.99},{"scene":8,"voice":"N","text":"Chapter five.","start":209.29,"end":210.25},{"scene":8,"voice":"N","text":"Intelligence from Competence.","start":210.25,"end":212.0},{"scene":8,"voice":"N","text":"A brief history of minds trying to understand minds: from Aristotle's logic, to Boole and Babbage, to the first artificial neuron in 1943.","start":212.5,"end":222.89},{"scene":8,"voice":"N","text":"Daniel Dennett calls it competence without comprehension.","start":223.39,"end":226.81},{"scene":8,"voice":"N","text":"Artificial neurons are crude copies of real ones, and yet, they work.","start":226.81,"end":231.94},{"scene":8,"voice":"N","text":"Here Perez unveils his roadmap: a capability maturity model that climbs from hand-coded programs through six levels of learned intelligence.","start":232.44,"end":241.84},{"scene":9,"voice":"N","text":"Chapter six.","start":245.14,"end":246.08},{"scene":9,"voice":"N","text":"Level one: Intuitive Learning.","start":246.08,"end":248.07},{"scene":9,"voice":"N","text":"In 2012, deep learning began to do what Richard Feynman said machines could not: recognize things in a snap.","start":248.57,"end":255.81},{"scene":9,"voice":"N","text":"Perez argues these networks are intuition machines.","start":256.31,"end":259.47},{"scene":9,"voice":"N","text":"They don't start from rules.","start":259.47,"end":261.18},{"scene":9,"voice":"N","text":"They build their own representations from experience, just as human intuition does.","start":261.18,"end":266.36},{"scene":9,"voice":"N","text":"Intuition is the first, crucial step toward general intelligence.","start":266.86,"end":270.99},{"scene":10,"voice":"N","text":"Chapter seven.","start":274.29,"end":275.26},{"scene":10,"voice":"N","text":"Level two: Generative Selves.","start":275.26,"end":277.33},{"scene":10,"voice":"N","text":"All living things build themselves from the inside out, behind a boundary that separates self from non-self.","start":277.83,"end":284.26},{"scene":10,"voice":"N","text":"Douglas Hofstadter called the self a strange loop.","start":284.76,"end":287.91},{"scene":10,"voice":"N","text":"In machine learning, loops appear in generative adversarial networks, where a generator and a critic sharpen each other.","start":287.91,"end":295.16},{"scene":10,"voice":"N","text":"Perez warns that chasing a single reward invites Goodhart's law, and traces how the self grows through ever-wider stages of perspective.","start":295.66,"end":304.72},{"scene":11,"voice":"N","text":"Chapter eight.","start":308.02,"end":308.97},{"scene":11,"voice":"N","text":"Level three: Dual Processes.","start":308.97,"end":311.07},{"scene":11,"voice":"N","text":"Kahneman's fast intuition and slow deliberation are usually treated as two separate machines.","start":311.57,"end":317.6},{"scene":11,"voice":"N","text":"Perez proposes something bolder: reason itself emerges from intuition, a virtual machine running on hardware built for pattern, rhythm, and space.","start":318.1,"end":327.84},{"scene":11,"voice":"N","text":"In systems like AlphaGo Zero, the two modes cooperate.","start":328.34,"end":332.31},{"scene":11,"voice":"N","text":"Intuition guides the search, and the search teaches intuition.","start":332.31,"end":336.11},{"scene":12,"voice":"N","text":"Chapter nine.","start":339.41,"end":340.37},{"scene":12,"voice":"N","text":"Level four: Interventional Causal Reasoning.","start":340.37,"end":343.23},{"scene":12,"voice":"Q","text":"All doing is knowing, and all knowing is doing.","start":344.02,"end":347.37},{"scene":12,"voice":"N","text":"Judea Pearl describes a ladder of causation: seeing, doing, and imagining.","start":348.17,"end":353.48},{"scene":12,"voice":"N","text":"Correlation lives on the first rung.","start":353.48,"end":356.18},{"scene":12,"voice":"N","text":"Intervention, asking what happens if I act, lives on the second.","start":356.18,"end":360.6},{"scene":12,"voice":"N","text":"At this level, an agent learns its own model of the world by acting in it, and can predict the effect of an action before it takes it.","start":361.1,"end":368.91},{"scene":13,"voice":"N","text":"Chapter ten.","start":372.21,"end":373.08},{"scene":13,"voice":"N","text":"Level five: Counterfactual Ingenuity.","start":373.08,"end":375.81},{"scene":13,"voice":"N","text":"The top rung of Pearl's ladder is imagination.","start":376.31,"end":379.23},{"scene":13,"voice":"N","text":"What if things had been different?","start":379.23,"end":380.91},{"scene":13,"voice":"N","text":"Picture a child whose tower topples.","start":381.41,"end":383.82},{"scene":13,"voice":"N","text":"She doesn't just correct the error.","start":383.82,"end":385.64},{"scene":13,"voice":"N","text":"She compensates, and builds a wider base.","start":385.64,"end":388.18},{"scene":13,"voice":"N","text":"Perez explores abductive reasoning, hybrids of logic and neural networks, and why explanation is ultimately about earning human trust.","start":388.68,"end":397.4},{"scene":14,"voice":"N","text":"Chapter eleven.","start":400.7,"end":401.76},{"scene":14,"voice":"N","text":"Level six: Conversational Empathy.","start":401.76,"end":404.23},{"scene":14,"voice":"Q","text":"Empathy is a kind of inference that cannot be captured by classical logic.","start":405.03,"end":410.57},{"scene":14,"voice":"N","text":"What sets humans apart is shared intentionality.","start":411.37,"end":414.63},{"scene":14,"voice":"N","text":"We are born inclined to cooperate.","start":414.63,"end":417.22},{"scene":14,"voice":"N","text":"To understand an idea is to see it through many frames of reference, and empathy lets us step into them.","start":417.22,"end":423.46},{"scene":14,"voice":"N","text":"In this view, general intelligence is not the property of a lone brain.","start":423.96,"end":428.43},{"scene":14,"voice":"N","text":"It emerges from diverse minds in conversation.","start":428.43,"end":431.7},{"scene":15,"voice":"N","text":"Chapter twelve.","start":435.0,"end":435.96},{"scene":15,"voice":"N","text":"Regenerating Civilization.","start":435.96,"end":437.75},{"scene":15,"voice":"N","text":"Our paleolithic brains and medieval institutions are colliding with exponential technology.","start":438.25,"end":444.41},{"scene":15,"voice":"N","text":"Perez calls for a shift from nouns to verbs, from things to processes, from either-or thinking to Peirce's triads, and from economies of scarcity to economies of abundance.","start":444.91,"end":456.16},{"scene":15,"voice":"N","text":"AI can help build that future, but only if it is shaped by moral actors, with empathy at its core.","start":456.66,"end":463.0},{"scene":16,"voice":"N","text":"Intuition.","start":465.69,"end":466.58},{"scene":16,"voice":"N","text":"Generative selves.","start":466.58,"end":467.96},{"scene":16,"voice":"N","text":"Dual processes.","start":467.96,"end":469.39},{"scene":16,"voice":"N","text":"Causal reasoning.","start":469.39,"end":470.68},{"scene":16,"voice":"N","text":"Counterfactual ingenuity.","start":470.68,"end":472.65},{"scene":16,"voice":"N","text":"Conversational empathy.","start":472.65,"end":474.27},{"scene":16,"voice":"N","text":"A roadmap not just for smarter machines, but for machines that can be our partners.","start":474.77,"end":479.6},{"scene":16,"voice":"Q","text":"If we think dynamically, understand complexity with empathy, and act morally, we will traverse this abyss.","start":480.4,"end":488.06},{"scene":16,"voice":"Q","text":"Our work has just begun.","start":488.06,"end":489.88},{"scene":17,"voice":"N","text":"Artificial Empathy.","start":492.98,"end":494.25},{"scene":17,"voice":"N","text":"By Carlos E. Perez.","start":494.25,"end":495.88}]};
+// ================= core =================
+const W = 1920, H = 1080;
+const C = { bg:'#0A0C18', text:'#ECE8F4', muted:'#8E8AAE', cyan:'#72D6E3', coral:'#FF8F7E', violet:'#A98BFF', gold:'#F3C77A', line:'#2A2E4A', dim:'#1B1F3A' };
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const E = {
+  out: t => 1 - Math.pow(1 - t, 3),
+  in: t => t * t * t,
+  io: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  expo: t => t >= 1 ? 1 : 1 - Math.pow(2, -10 * t),
+  back: t => { if (t <= 0) return 0; const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); },
+};
+const P = (t, a, b) => clamp((t - a) / (b - a));
+const win = (t, a, b, fi = .6, fo = .6) => Math.min(E.out(P(t, a, a + fi)), 1 - E.io(P(t, b - fo, b)));
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const fmt = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const DUR = TL.duration;
+const SC = TL.scenes.map((s, i) => ({ ...s, i, dur: s.end - s.start, lines: TL.lines.filter(l => l.scene === i) }));
+SC.forEach(s => {
+  s.L = s.lines.map(l => l.start - s.start);
+  s.E = s.lines.map(l => l.end - s.start);
+  s.at = (i, sub, frac = 0) => { const l = s.lines[i]; const k = sub ? l.text.indexOf(sub) : 0; const p = ((k < 0 ? 0 : k) + frac * (sub ? sub.length : 0)) / l.text.length; return l.start - s.start + p * (l.end - l.start); };
+});
+const S = id => SC.find(s => s.id === id);
+const sceneAt = t => { for (let i = SC.length - 1; i >= 0; i--) if (t >= SC[i].start) return SC[i]; return SC[0]; };
+const LEVELS = ['Handcrafted programs', 'Intuitive Learning', 'Generative Selves', 'Dual Processes', 'Interventional Causal', 'Counterfactual Ingenuity', 'Conversational Empathy'];
+const LVCOL = ['#3A3F63', '#72D6E3', '#86C4F0', '#9AA8FF', '#B592F4', '#E08FC0', '#FF8F7E'];
+
+// ================= audio =================
+let AC = null, master, musicBus, duck, sfxBus, voiceBus, verb, verbIn, NARR = null, SAMPLES = {}, CC0 = {}, NOISE = null, ready = false, loadingP = null;
+const active = new Set();
+function track(src) { active.add(src); src.onended = () => active.delete(src); return src; }
+function b64buf(b) { const s = atob(b); const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u.buffer; }
+const pre = { narr: fetch('narration.mp3').then(r => r.arrayBuffer()), sf: fetch('fluidr3.json').then(r => r.json()), cc0: fetch('cc0sfx.json').then(r => r.json()) };
+Object.values(pre).forEach(p => p.catch(() => {}));
+const NOTE = { C: 0, Db: 1, D: 2, Eb: 3, E: 4, F: 5, Gb: 6, G: 7, Ab: 8, A: 9, Bb: 10, B: 11 };
+const n2m = n => { const m = n.match(/^([A-G]b?)(\d)$/); return 12 * (+m[2] + 1) + NOTE[m[1]]; };
+
+function makeIR(sec = 3.6) {
+  const len = AC.sampleRate * sec, b = AC.createBuffer(2, len, AC.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6) * (i < 400 ? i / 400 : 1); }
+  return b;
+}
+async function loadAudio() {
+  if (loadingP) return loadingP;
+  loadingP = (async () => {
+    AC = new (window.AudioContext || window.webkitAudioContext)();
+    const comp = AC.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 3; comp.attack.value = .01; comp.release.value = .25;
+    master = AC.createGain(); master.gain.value = 1; master.connect(comp); comp.connect(AC.destination);
+    musicBus = AC.createGain(); musicBus.gain.value = musicOn ? 1 : 0;
+    duck = AC.createGain(); duck.gain.value = .5; musicBus.connect(duck); duck.connect(master);
+    sfxBus = AC.createGain(); sfxBus.gain.value = .9; sfxBus.connect(master);
+    voiceBus = AC.createGain(); voiceBus.gain.value = 1.0; voiceBus.connect(master);
+    verb = AC.createConvolver(); verb.buffer = makeIR(); verbIn = AC.createGain(); verbIn.gain.value = 1; verbIn.connect(verb);
+    const ms = AC.createGain(); ms.gain.value = .5; musicBus.connect(ms); ms.connect(verbIn);
+    const vOut = AC.createGain(); vOut.gain.value = .55; verb.connect(vOut); vOut.connect(master);
+    NOISE = AC.createBuffer(1, AC.sampleRate * 2, AC.sampleRate); { const d = NOISE.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+    const [nb, sf, cc] = await Promise.all([pre.narr, pre.sf, pre.cc0]);
+    let done = 0; const tot = Object.values(sf).reduce((a, o) => a + Object.keys(o).length, 0) + Object.keys(cc).length + 1;
+    const tick = () => { done++; $('#loading').textContent = 'Loading sound… ' + Math.round(done / tot * 100) + '%'; };
+    const jobs = [];
+    jobs.push(AC.decodeAudioData(nb.slice(0)).then(b => { NARR = b; tick(); }));
+    for (const [inst, notes] of Object.entries(sf)) { SAMPLES[inst] = []; for (const [n, b] of Object.entries(notes)) jobs.push(AC.decodeAudioData(b64buf(b)).then(buf => { SAMPLES[inst].push({ m: n2m(n), buf }); tick(); })); }
+    for (const [k, b] of Object.entries(cc)) jobs.push(AC.decodeAudioData(b64buf(b)).then(buf => { CC0[k] = buf; tick(); }));
+    await Promise.all(jobs);
+    ready = true;
+  })();
+  return loadingP;
+}
+
+// ---- instruments (FluidR3 GM samples)
+const INST = {
+  strings: { key: 'string_ensemble_1', att: .9, rel: 1.3, gain: .30, send: .5 },
+  halo: { key: 'pad_7_halo', att: 1.2, rel: 1.5, gain: .26, send: .6 },
+  choir: { key: 'pad_4_choir', att: 1.0, rel: 1.4, gain: .24, send: .6 },
+  piano: { key: 'acoustic_grand_piano', att: .005, rel: .8, gain: .42, send: .45 },
+  harp: { key: 'orchestral_harp', att: .005, rel: .9, gain: .36, send: .5 },
+  bass: { key: 'contrabass', att: .25, rel: .9, gain: .42, send: .25 },
+  crystal: { key: 'fx_3_crystal', att: .01, rel: 1.2, gain: .16, send: .8 },
+  timp: { key: 'timpani', att: .005, rel: 1.5, gain: .75, send: .5 },
+};
+function playNote(e, when, off = 0) {
+  const I = INST[e.inst], set = SAMPLES[I.key]; if (!set || !set.length) return;
+  let best = set[0]; for (const s of set) if (Math.abs(s.m - e.midi) < Math.abs(best.m - e.midi)) best = s;
+  const rate = Math.pow(2, (e.midi - best.m) / 12);
+  const src = track(AC.createBufferSource()); src.buffer = best.buf; src.playbackRate.value = rate;
+  const g = AC.createGain(), v = I.gain * (e.vel ?? .7), dur = e.dur;
+  const st = when; const att = Math.max(.005, I.att - off);
+  g.gain.setValueAtTime(off > I.att ? v : 0, st);
+  if (off <= I.att) g.gain.linearRampToValueAtTime(v, st + att);
+  const relStart = Math.max(st + att, st + dur - off - I.rel);
+  g.gain.setValueAtTime(v, relStart); g.gain.linearRampToValueAtTime(0, relStart + I.rel);
+  let node = g;
+  if (AC.createStereoPanner) { const p = AC.createStereoPanner(); p.pan.value = e.pan ?? 0; g.connect(p); node = p; }
+  src.connect(g); node.connect(musicBus);
+ 
+  src.start(st, Math.min(off * rate, best.buf.duration - .05)); src.stop(relStart + I.rel + .05);
+}
+
+// ---- synthesized sound effects
+function nsrc(when, dur) { const s = track(AC.createBufferSource()); s.buffer = NOISE; s.loop = true; s.start(when, Math.random()); s.stop(when + dur + .05); return s; }
+function env(g, when, a, peak, d) { g.gain.setValueAtTime(0.0001, when); g.gain.exponentialRampToValueAtTime(peak, when + a); g.gain.exponentialRampToValueAtTime(0.0001, when + a + d); }
+const FX = {
+  whoosh(when, o = {}) { const dur = o.dur || 1.2, gain = o.gain || .32; const s = nsrc(when, dur); const f = AC.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.4; f.frequency.setValueAtTime(260, when); f.frequency.exponentialRampToValueAtTime(3200, when + dur * .6); f.frequency.exponentialRampToValueAtTime(700, when + dur); const g = AC.createGain(); g.gain.setValueAtTime(0.0001, when); g.gain.exponentialRampToValueAtTime(gain, when + dur * .55); g.gain.exponentialRampToValueAtTime(0.0001, when + dur); let n = g; if (AC.createStereoPanner) { const p = AC.createStereoPanner(); p.pan.setValueAtTime(-.7, when); p.pan.linearRampToValueAtTime(.7, when + dur); g.connect(p); n = p; } s.connect(f); f.connect(g); n.connect(sfxBus); const sg = AC.createGain(); sg.gain.value = .4; n.connect(sg); sg.connect(verbIn); },
+  boom(when, o = {}) { const gain = o.gain || .9; const osc = track(AC.createOscillator()); osc.type = 'sine'; osc.frequency.setValueAtTime(95, when); osc.frequency.exponentialRampToValueAtTime(30, when + 1.2); const g = AC.createGain(); env(g, when, .012, gain, 2.2); osc.connect(g); g.connect(sfxBus); osc.start(when); osc.stop(when + 2.4); const s = nsrc(when, .5); const f = AC.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 500; const g2 = AC.createGain(); env(g2, when, .005, gain * .5, .45); s.connect(f); f.connect(g2); g2.connect(sfxBus); g2.connect(verbIn); },
+  riser(when, o = {}) { const dur = o.dur || 2.5, gain = o.gain || .18; const s = nsrc(when, dur); const f = AC.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 2; f.frequency.setValueAtTime(300, when); f.frequency.exponentialRampToValueAtTime(6000, when + dur); const g = AC.createGain(); g.gain.setValueAtTime(0.0001, when); g.gain.exponentialRampToValueAtTime(gain, when + dur); g.gain.setValueAtTime(gain, when + dur); g.gain.exponentialRampToValueAtTime(0.0001, when + dur + .08); s.connect(f); f.connect(g); g.connect(sfxBus); g.connect(verbIn); },
+  heart(when, o = {}) { const gain = o.gain || .55; [[0, 1], [.24, .62]].forEach(([dt, k]) => { const osc = track(AC.createOscillator()); osc.frequency.setValueAtTime(62, when + dt); osc.frequency.exponentialRampToValueAtTime(38, when + dt + .16); const g = AC.createGain(); env(g, when + dt, .008, gain * k, .22); osc.connect(g); g.connect(sfxBus); osc.start(when + dt); osc.stop(when + dt + .3); }); },
+  tick(when, o = {}) { const gain = o.gain || .16; const osc = track(AC.createOscillator()); osc.type = 'triangle'; osc.frequency.setValueAtTime(o.f || 1500, when); osc.frequency.exponentialRampToValueAtTime((o.f || 1500) * .55, when + .05); const g = AC.createGain(); env(g, when, .002, gain, .07); let n = g; if (AC.createStereoPanner) { const p = AC.createStereoPanner(); p.pan.value = o.pan || 0; g.connect(p); n = p; } osc.connect(g); n.connect(sfxBus); osc.start(when); osc.stop(when + .1); const s = nsrc(when, .03); const f = AC.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = 3500; const g2 = AC.createGain(); env(g2, when, .001, gain * .6, .025); s.connect(f); f.connect(g2); g2.connect(n); },
+  shimmer(when, o = {}) { const gain = o.gain || .05; const r = rng(Math.floor(when * 100)); [1760, 2093, 2637, 3136, 3520, 4186].forEach((fr, i) => { const osc = track(AC.createOscillator()); osc.frequency.value = fr * (1 + (r() - .5) * .01); const g = AC.createGain(); const t = when + i * .045 + r() * .03; env(g, t, .01, gain, 1.6); osc.connect(g); g.connect(sfxBus); g.connect(verbIn); osc.start(t); osc.stop(t + 1.8); }); },
+  shatter(when, o = {}) { const gain = o.gain || .08; const r = rng(7); for (let i = 0; i < 22; i++) { const osc = track(AC.createOscillator()); osc.frequency.value = 2400 + r() * 4200; const g = AC.createGain(); const t = when + r() * .5; env(g, t, .002, gain, .12 + r() * .2); osc.connect(g); g.connect(sfxBus); g.connect(verbIn); osc.start(t); osc.stop(t + .4); } const s = nsrc(when, .35); const f = AC.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 4200; f.Q.value = .7; const g = AC.createGain(); env(g, when, .003, gain * 2.2, .32); s.connect(f); f.connect(g); g.connect(sfxBus); },
+  thud(when, o = {}) { const gain = o.gain || .5; const osc = track(AC.createOscillator()); osc.frequency.setValueAtTime(110, when); osc.frequency.exponentialRampToValueAtTime(42, when + .25); const g = AC.createGain(); env(g, when, .004, gain, .35); osc.connect(g); g.connect(sfxBus); osc.start(when); osc.stop(when + .45); const s = nsrc(when, .12); const f = AC.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 900; const g2 = AC.createGain(); env(g2, when, .002, gain * .4, .1); s.connect(f); f.connect(g2); g2.connect(sfxBus); },
+  snip(when) { FX.tick(when, { f: 4200, gain: .12 }); FX.tick(when + .07, { f: 3600, gain: .1 }); },
+};
+function playCC0(name, when, gain = .35) { const b = CC0[name]; if (!b) return; const s = track(AC.createBufferSource()); s.buffer = b; const g = AC.createGain(); g.gain.value = gain; s.connect(g); g.connect(sfxBus); const sg = AC.createGain(); sg.gain.value = .25; g.connect(sg); sg.connect(verbIn); s.start(when); }
+
+// ================= score (JavaScript composition) =================
+const CH = {
+  Dm: { b: 38, p: [57, 62, 65, 69] }, Bb: { b: 34, p: [58, 62, 65, 70] }, F: { b: 41, p: [57, 60, 65, 69] }, C: { b: 36, p: [55, 60, 64, 67] },
+  Gm: { b: 43, p: [55, 58, 62, 67] }, A: { b: 45, p: [57, 61, 64, 69] }, Am: { b: 45, p: [57, 60, 64, 69] }, Eb: { b: 39, p: [55, 58, 63, 67] },
+  Fadd9: { b: 41, p: [57, 60, 65, 67, 72] }, Bbmaj7: { b: 34, p: [57, 62, 65, 70] }, Dm9: { b: 38, p: [57, 60, 64, 65] },
+};
+const MUS = {
+  open: { prog: ['Dm9'], pad: ['halo'], padV: .5, arp: null, bass: false },
+  title: { prog: ['Bb', 'F', 'C', 'Dm'], pad: ['strings', 'choir'], padV: .7, arp: 'harp', dens: .25, bass: true },
+  premise: { prog: ['Dm', 'Bb', 'F', 'C'], pad: ['strings'], padV: .5, arp: 'harp', dens: .45, bass: true },
+  map: { prog: ['Dm', 'Bb', 'Gm', 'A'], pad: ['halo'], padV: .55, arp: 'piano', dens: .45, bass: true },
+  c1: { prog: ['Dm', 'Bb', 'F', 'C'], pad: ['halo'], padV: .5, arp: 'harp', dens: .6, bass: false, crys: true },
+  c2: { prog: ['Gm', 'Dm', 'Bb', 'A'], pad: ['halo', 'strings'], padV: .45, arp: 'harp', dens: .45, bass: true },
+  c3: { prog: ['F', 'C', 'Dm', 'Bb'], pad: ['strings'], padV: .4, arp: 'piano', dens: .65, bass: true },
+  c4: { prog: ['Dm', 'Eb', 'Dm', 'A'], pad: ['halo'], padV: .5, arp: 'piano', dens: .25, bass: true, low: true },
+  c5: { prog: ['F', 'C', 'Dm', 'Bb'], pad: ['strings'], padV: .5, arp: 'harp', dens: .6, bass: true },
+  c6: { prog: ['Dm', 'Bb', 'F', 'C'], pad: ['halo'], padV: .45, arp: 'piano', dens: .6, bass: false },
+  c7: { prog: ['Gm', 'Bb', 'F', 'A'], pad: ['strings'], padV: .5, arp: 'piano', dens: .6, bass: true },
+  c8: { prog: ['Dm', 'F', 'Bb', 'C'], pad: ['strings', 'halo'], padV: .45, arp: 'harp', dens: .65, bass: true },
+  c9: { prog: ['Bb', 'C', 'Dm', 'Dm'], pad: ['strings'], padV: .5, arp: 'piano', dens: .65, bass: true, crys: true },
+  c10: { prog: ['F', 'C', 'Gm', 'A'], pad: ['strings', 'halo'], padV: .5, arp: 'harp', dens: .7, bass: true, crys: true },
+  c11: { prog: ['Bb', 'F', 'C', 'Dm'], pad: ['strings', 'choir'], padV: .5, arp: 'harp', dens: .7, bass: true },
+  c12: { prog: ['Gm', 'Bb', 'F', 'C'], pad: ['strings', 'choir'], padV: .55, arp: 'piano', dens: .7, bass: true },
+  coda: { prog: ['Bb', 'C', 'Dm', 'F'], pad: ['strings', 'choir'], padV: .7, arp: 'harp', dens: .75, bass: true, crys: true },
+  end: { prog: ['Fadd9'], pad: ['strings', 'choir', 'halo'], padV: .6, arp: null, bass: true },
+};
+const EV = [];
+(function buildScore() {
+  const BEAT = 60 / 72, BAR = BEAT * 4, r = rng(42);
+  const nBars = Math.ceil((DUR - 3) / BAR);
+  const first = {};
+  for (let b = 0; b < nBars; b++) {
+    const t = b * BAR + .15, sc = sceneAt(t), M = MUS[sc.id];
+    if (first[sc.id] === undefined) first[sc.id] = b;
+    const rel = b - first[sc.id], ch = CH[M.prog[rel % M.prog.length]];
+    const fade = sc.id === 'end' ? clamp(1 - (t - sc.start) / (sc.dur - 1)) : 1;
+    // pads: overlapping retriggers make a sustained bed
+    for (const inst of M.pad) for (let k = 0; k < 2; k++) ch.p.forEach((m, i) => EV.push({ t: t + k * BEAT * 2 + i * .03, kind: 'note', inst, midi: m, dur: 3.3, vel: M.padV * fade * (inst === 'strings' ? .9 : 1), pan: (i - 1.5) * .25 }));
+    if (M.bass) for (let k = 0; k < 2; k++) EV.push({ t: t + k * BEAT * 2, kind: 'note', inst: 'bass', midi: ch.b, dur: 3.0, vel: .6 * fade, pan: 0 });
+    if (M.arp) {
+      const steps = M.dens >= .6 ? 8 : M.dens >= .4 ? 4 : 2;
+      const tones = [...ch.p.slice(0, 4).map(m => m + 12), ch.p[1] + 24];
+      const pat = [0, 2, 1, 3, 2, 4, 3, 1];
+      for (let s = 0; s < steps; s++) {
+        if (steps === 8 && r() < .12) continue;
+        const m = tones[pat[s % pat.length] % tones.length] - (M.low ? 12 : 0);
+        EV.push({ t: t + s * (BAR / steps) + (r() - .5) * .015, kind: 'note', inst: M.arp, midi: m, dur: 2.2, vel: (.42 + (s % 2 ? 0 : .14) + r() * .08) * fade, pan: (r() - .5) * .6 });
+      }
+    }
+    if (M.crys && r() < .7) EV.push({ t: t + BEAT * Math.floor(r() * 4), kind: 'note', inst: 'crystal', midi: ch.p[Math.floor(r() * 4)] + 24, dur: 2.5, vel: .5, pan: (r() - .5) });
+  }
+  // piano motif (the "empathy" figure: A G F E F)
+  const motif = (t0, oct = 0, v = .55) => [69, 67, 65, 64, 65].forEach((m, i) => EV.push({ t: t0 + i * .62 + (i === 4 ? .5 : 0), kind: 'note', inst: 'piano', midi: m + oct, dur: i === 4 ? 3 : 1.4, vel: v, pan: .1 }));
+  motif(S('open').start + S('open').L[1] - .4, 0, .45);
+  motif(S('title').start + 5.2, 12, .4);
+  motif(S('coda').start + S('coda').L[2] - .3, 0, .5);
+  motif(S('end').start + 1.2, 0, .55);
+  // timpani accents
+  [[S('title').start + .35, 38], [S('coda').start + .1, 34], [S('end').start + .2, 41]].forEach(([t, m]) => EV.push({ t, kind: 'note', inst: 'timp', midi: m, dur: 3, vel: .9 }));
+})();
+// sound design cues, placed on visual beats
+const FXQ = (t, name, o) => EV.push({ t, kind: 'fx', name, o });
+const CCQ = (t, name, g) => EV.push({ t, kind: 'cc0', name, g });
+(function buildSfx() {
+  SC.forEach(s => {
+    const T = s.start;
+    if (s.kind === 'chapter' || ['premise', 'map', 'coda'].includes(s.id)) { FXQ(T - .35, 'whoosh', { dur: 1.1, gain: .26 }); CCQ(T + .05, 'swipe', .22); }
+    if (s.kind === 'chapter') FXQ(T + .4, 'shimmer', { gain: .035 });
+    if (s.level) CCQ(T + 2.2, 'levelup', .16);
+  });
+  const o = S('open'); for (let t = o.L[1] - .3; t < o.dur - .5; t += 1.15) FXQ(o.start + t, 'heart', { gain: .5 });
+  FXQ(o.end - 2.4, 'riser', { dur: 2.4, gain: .14 });
+  const ti = S('title'); FXQ(ti.start + .35, 'boom', { gain: .9 }); CCQ(ti.start + 1.0, 'open', .25);
+  const c1 = S('c1'); FXQ(c1.start + c1.at(1, 'Big Bang') - .1, 'boom', { gain: .6 });[c1.at(2, 'simple'), c1.at(2, 'Wetness'), c1.at(2, 'Thought')].forEach(t => FXQ(c1.start + t, 'shimmer', { gain: .04 }));
+  const c3 = S('c3'); { const t0 = c3.L[1]; for (let k = 0; k * .42 + t0 < c3.dur - 1; k++) if (k % 64 < 56) FXQ(c3.start + t0 + k * .42, 'tick', { gain: .09, pan: (((k * 37) % 13) / 6 - 1) * .5 }); }
+  const c4 = S('c4'); FXQ(c4.start + c4.at(1, 'underestimated'), 'shatter', { gain: .07 });
+  const c5 = S('c5'); ['Aristotle', 'Boole', 'Babbage', '1943'].forEach(w => CCQ(c5.start + c5.at(1, w), 'step', .18)); for (let i = 0; i < 7; i++) CCQ(c5.start + c5.at(3, 'roadmap') + i * .5, 'step', .14);
+  const c6 = S('c6'); CCQ(c6.start + c6.at(1, 'snap'), 'sparkle', .3);
+  const c7 = S('c7'); FXQ(c7.start + c7.at(2, 'strange') - .4, 'whoosh', { dur: 1.4, gain: .2 });
+  const c9 = S('c9'); FXQ(c9.start + c9.at(2, 'Intervention'), 'snip'); FXQ(c9.start + c9.at(2, 'Intervention') + .1, 'thud', { gain: .35 });
+  const c10 = S('c10'); FXQ(c10.start + c10.at(2, 'topples'), 'thud', { gain: .55 }); FXQ(c10.start + c10.at(2, 'topples') + .5, 'thud', { gain: .3 });
+  const c11 = S('c11'); for (let i = 0; i < 5; i++) CCQ(c11.start + c11.L[2] + 1 + i * 2.6, 'connect', .1);
+  const c12 = S('c12'); ['nouns', 'things', 'either-or', 'scarcity'].forEach(w => FXQ(c12.start + c12.at(2, w), 'shimmer', { gain: .035 }));
+  const cd = S('coda'); ['Intuition', 'Generative', 'Dual', 'Causal', 'Counterfactual', 'Conversational'].forEach(w => CCQ(cd.start + cd.at(0, w), 'step', .16)); CCQ(cd.start + cd.at(1, 'partners'), 'achieve', .2);
+  const en = S('end'); for (let t = 1.2; t < en.dur - 2.5; t += 1.3) FXQ(en.start + t, 'heart', { gain: .35 });
+})();
+EV.sort((a, b) => a.t - b.t);
+
+// ================= transport =================
+let playing = false, pos = 18.6, t0ctx = 0, t0pos = 0, cursor = 0, musicOn = true, muted = false, capsOn = true, started = false;
+const now = () => playing ? Math.min(DUR, AC.currentTime - t0ctx + t0pos) : pos;
+function stopAll() { for (const s of active) { try { s.onended = null; s.stop(); } catch (e) {} } active.clear(); }
+function fire(e, when, off = 0) {
+  if (e.kind === 'note') playNote(e, when, off);
+  else if (off > 0) return;
+  else if (e.kind === 'fx') FX[e.name](when, e.o || {});
+  else if (e.kind === 'cc0') playCC0(e.name, when, e.g);
+}
+function pump() {
+  if (!playing) return;
+  const horizon = now() + .8;
+  while (cursor < EV.length && EV[cursor].t < horizon) {
+    const e = EV[cursor++];
+    if (e.t < t0pos) { const off = t0pos - e.t; if (e.kind === 'note' && off < e.dur - .2) playNote(e, t0ctx, off); continue; }
+    fire(e, t0ctx + (e.t - t0pos));
+  }
+}
+setInterval(pump, 110);
+async function play() {
+  if (playing) return;
+  if (!ready) { $('#loading').hidden = false; $('#bigPlayLbl').textContent = 'Loading…'; try { await loadAudio(); } catch (err) { $('#loading').textContent = 'Sound could not load. Visuals will play silently.'; } }
+  if (AC && AC.state === 'suspended') await AC.resume();
+  if (!started) { started = true; if (pos === 18.6) pos = 0; }
+  if (pos >= DUR - .05) pos = 0;
+  $('#cover').hidden = true;
+  if (!AC) return;
+  t0ctx = AC.currentTime + .06; t0pos = pos; playing = true;
+  cursor = 0; while (cursor < EV.length && EV[cursor].t < pos - 3.4) cursor++;
+  if (NARR) { const s = track(AC.createBufferSource()); s.buffer = NARR; s.connect(voiceBus); s.start(t0ctx, pos); }
+  pump(); ui();
+}
+function pause() { if (!playing) return; pos = now(); playing = false; stopAll(); ui(); }
+function seek(t) { const was = playing; if (was) pause(); pos = clamp(t, 0, DUR); if (!started) { started = true; $('#cover').hidden = true; } render(pos); ui(); if (was) play(); }
+function toggle() { playing ? pause() : play(); }
+function duckTarget(t) {
+  for (const l of TL.lines) { if (t >= l.start - .35 && t <= l.end + .5) return .30; }
+  return .52;
+}
+
+// ================= DOM overlays =================
+const layer = $('#layer');
+const OV = {}; // scene id -> [{el, up(lt)}]
+function addOv(sid, el, up) { (OV[sid] = OV[sid] || []).push({ el, up }); layer.appendChild(el); return el; }
+function mk(cls, html, style) { const d = document.createElement('div'); d.className = 'ov ' + cls; d.innerHTML = html; if (style) Object.assign(d.style, style); return d; }
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function wordSpans(text, hl = [], hc = []) { return text.split(' ').map(w => { const k = w.replace(/[^A-Za-z-]/g, ''); return `<span class="w${hl.includes(k) ? ' hl' : ''}${hc.includes(k) ? ' hc' : ''}">${esc(w)}</span>`; }).join(' '); }
+function revealWords(spans, times, lt, dur = .55, rise = 26, blur = 10) {
+  spans.forEach((sp, i) => { const p = E.out(P(lt, times[i], times[i] + dur)); sp.style.opacity = p; sp.style.transform = `translateY(${(1 - p) * rise}px)`; sp.style.filter = p < 1 ? `blur(${(1 - p) * blur}px)` : 'none'; });
+}
+function lineWordTimes(s, li, lead = .08) { const l = s.lines[li]; const ws = l.text.split(' '); let acc = 0; return ws.map(w => { const t = l.start - s.start + (acc / l.text.length) * (l.end - l.start) - lead; acc += w.length + 1; return t; }); }
+// kinetic line bound to a narrated line
+function kin(sid, li, o) {
+  const s = S(sid), l = s.lines[li];
+  const el = mk('kin ' + o.cls, wordSpans(l.text, o.hl || [], o.hc || []) + (o.attr ? `<div class="attr">${o.attr}</div>` : ''), { top: o.top + 'px' });
+  const spans = [...el.querySelectorAll('.w')], times = lineWordTimes(s, li, o.lead ?? .1), attr = el.querySelector('.attr');
+  const to = o.to ?? (s.dur - .5);
+  addOv(sid, el, lt => {
+    const a = win(lt, times[0] - .2, to, .2, .5) * (o.dimAt !== undefined ? lerp(1, .32, E.io(P(lt, o.dimAt, o.dimAt + .6))) : 1);
+    el.style.opacity = a; if (a <= 0) return;
+    revealWords(spans, times, lt, o.wd ?? .55, o.rise ?? 26);
+    if (attr) attr.style.opacity = E.out(P(lt, s.E[li] - .4, s.E[li] + .4));
+  });
+}
+// chapter cards
+SC.filter(s => s.kind === 'chapter').forEach(s => {
+  const nn = String(s.num).padStart(2, '0');
+  const grp = s.num <= 5 ? 'The cycle of creation' : s.level ? `Level ${s.level} · the roadmap` : 'The horizon';
+  const card = mk('card', `<div class="eb"><b>Chapter ${nn}</b><i></i><span>${grp}</span></div><h2>${wordSpans(s.title)}</h2>`);
+  const hdr = mk('hdr', `<span class="n">${nn}</span><span class="t">${esc(s.title)}</span>${s.level ? `<span class="lv">Level ${s.level}</span>` : ''}`);
+  const spans = [...card.querySelectorAll('h2 .w')], eb = card.querySelector('.eb');
+  const tOut = s.E[0] + .35;
+  addOv(s.id, card, lt => {
+    const out = E.io(P(lt, tOut, tOut + .85));
+    card.style.opacity = Math.min(E.out(P(lt, .1, .5)), 1 - out);
+    if (card.style.opacity <= 0) return;
+    card.style.transform = `translate(${-66 * out}px,${-298 * out}px) scale(${1 - .68 * out})`;
+    eb.style.opacity = E.out(P(lt, .15, .7)); eb.style.transform = `translateX(${(1 - E.out(P(lt, .15, .9))) * -40}px)`;
+    revealWords(spans, spans.map((_, i) => .35 + i * .12), lt, .7, 40, 14);
+  });
+  addOv(s.id, hdr, lt => { const a = win(lt, tOut + .45, s.dur, .6, .45); hdr.style.opacity = a; hdr.style.transform = `translateY(${(1 - E.out(P(lt, tOut + .45, tOut + 1.1))) * 14}px)`; });
+});
+// title + end lockups
+function lockup(sid, t0, tEnd) {
+  const s = S(sid);
+  const letters = w => [...w].map(ch => `<span class="w">${ch}</span>`).join('');
+  const el = mk('lock', `<div class="a">${letters('Artificial')}</div><div class="e">${letters('Empathy')}</div><div class="rule"></div><div class="sub">A roadmap for human-aligned<br>artificial general intelligence</div><div class="by">Carlos E. Perez</div>`);
+  const A = [...el.querySelectorAll('.a .w')], Em = [...el.querySelectorAll('.e .w')], rule = el.querySelector('.rule'), sub = el.querySelector('.sub'), by = el.querySelector('.by');
+  addOv(sid, el, lt => {
+    const a = win(lt, t0, tEnd ?? s.dur, .3, .7); el.style.opacity = a; if (a <= 0) return;
+    revealWords(A, A.map((_, i) => t0 + .15 + i * .06), lt, .6, 20, 12);
+    Em.forEach((sp, i) => { const p = E.out(P(lt, t0 + .55 + i * .09, t0 + 1.45 + i * .09)); sp.style.opacity = p; sp.style.transform = `translateY(${(1 - p) * 60}px) scale(${1.25 - .25 * p})`; sp.style.filter = p < 1 ? `blur(${(1 - p) * 18}px)` : 'none'; });
+    rule.style.transform = `scaleX(${E.io(P(lt, t0 + 1.4, t0 + 2.4))})`;
+    const ps = E.out(P(lt, t0 + 2.0, t0 + 2.8)); sub.style.opacity = ps; sub.style.transform = `translateY(${(1 - ps) * 16}px)`;
+    const pb = E.out(P(lt, t0 + 2.5, t0 + 3.3)); by.style.opacity = pb; by.style.transform = `translateY(${(1 - pb) * 16}px)`;
+    const breathe = 1 + Math.sin((lt) * 1.2) * .004; el.style.transform = `scale(${breathe})`;
+  });
+}
+lockup('title', .8);
+lockup('end', .3, S('end').dur - 1.8);
+// opening questions
+kin('open', 0, { cls: 'k-body', top: 200, dimAt: S('open').L[1] - .2 });
+kin('open', 1, { cls: 'k-disp', top: 400, hl: ['feel'] });
+kin('open', 2, { cls: 'k-small', top: 700 });
+// quotations
+kin('c9', 1, { cls: 'k-quote', top: 380, to: S('c9').L[2] - .1, attr: 'Francisco Varela &amp; Humberto Maturana', wd: .8 });
+kin('c11', 1, { cls: 'k-quote', top: 360, to: S('c11').L[2] - .1, attr: 'Artificial Empathy · Chapter 11', hl: ['Empathy'], wd: .8 });
+kin('coda', 2, { cls: 'k-quote', top: 300, attr: 'Carlos E. Perez · closing lines of the book', hl: ['empathy'], wd: .8 });
+// Clarke, updated
+(() => {
+  const s = S('c2');
+  const el = mk('clarke', `Any technology that is sufficiently advanced is indistinguishable from <span class="strike">magic</span> <span class="bio">biology.</span><div class="attr">Arthur C. Clarke, as revised by Perez</div>`);
+  const st = el.querySelector('.strike'), bio = el.querySelector('.bio');
+  const t0 = s.at(3, 'any') - .2, tb = s.at(3, 'biology');
+  addOv('c2', el, lt => {
+    const a = win(lt, t0, s.dur - .2, .6, .5); el.style.opacity = a; if (a <= 0) return;
+    el.style.transform = `translateY(${(1 - E.out(P(lt, t0, t0 + .8))) * 20}px)`;
+    st.style.setProperty('--s', E.io(P(lt, tb - .5, tb)));
+    const p = E.back(P(lt, tb, tb + .6)); bio.style.opacity = clamp(p); bio.style.transform = `translateY(${(1 - p) * 30}px)`;
+  });
+})();
+// captions
+const capEl = document.createElement('div'); capEl.className = 'cap'; layer.appendChild(capEl);
+const CAPS = [];
+TL.caps.forEach(c => {
+  const sc = SC[c.scene], li = sc.lines.findIndex(l => c.start >= l.start - .01 && c.start <= l.end);
+  const hide = ['open', 'title', 'end'].includes(sc.kind) || (sc.kind === 'chapter' && li === 0) || c.voice === 'Q' || (sc.id === 'coda' && li === 0) || (sc.id === 'c2' && li === 3);
+  if (hide) return;
+  if (c.text.length > 96) {
+    const mid = c.text.length / 2; let best = -1;
+    for (const m of c.text.matchAll(/[,:;] /g)) if (best < 0 || Math.abs(m.index - mid) < Math.abs(best - mid)) best = m.index;
+    if (best < 0 || Math.abs(best - mid) > c.text.length * .3) { best = c.text.indexOf(' ', mid); }
+    const a = c.text.slice(0, best + 1).trim(), b = c.text.slice(best + 1).trim(), f = a.length / c.text.length, tm = c.start + (c.end - c.start) * f;
+    CAPS.push({ ...c, text: a, end: tm }, { ...c, text: b, start: tm });
+  } else CAPS.push(c);
+});
+let capCur = null;
+function updCaption(t) {
+  const c = CAPS.find(c => t >= c.start - .05 && t < c.end + .25) || null;
+  if (c !== capCur) { capCur = c; capEl.textContent = c ? c.text : ''; capEl.classList.toggle('q', !!c && c.voice === 'Q'); }
+  capEl.style.opacity = c ? 1 : 0;
+}
+
+// ================= canvas helpers =================
+const cv = $('#cv'), cx = cv.getContext('2d');
+const SPR = {};
+function sprite(col) { if (SPR[col]) return SPR[col]; const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'); const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, col); gr.addColorStop(.22, col + 'aa'); gr.addColorStop(.5, col + '33'); gr.addColorStop(1, col + '00'); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return SPR[col] = c; }
+function glow(c, x, y, r, col, a = 1) { if (a <= 0 || r <= 0) return; c.save(); c.globalCompositeOperation = 'lighter'; c.globalAlpha *= clamp(a); c.drawImage(sprite(col), x - r, y - r, r * 2, r * 2); c.restore(); }
+function dot(c, x, y, r, col, a = 1) { if (a <= 0) return; c.save(); c.globalAlpha *= clamp(a); c.fillStyle = col; c.beginPath(); c.arc(x, y, Math.max(.1, r), 0, 7); c.fill(); c.restore(); }
+function ring(c, x, y, r, col, a = 1, lw = 2) { if (a <= 0) return; c.save(); c.globalAlpha *= clamp(a); c.strokeStyle = col; c.lineWidth = lw; c.beginPath(); c.arc(x, y, Math.max(.1, r), 0, 7); c.stroke(); c.restore(); }
+function line(c, x1, y1, x2, y2, col, a = 1, lw = 2, dash) { if (a <= 0) return; c.save(); c.globalAlpha *= clamp(a); c.strokeStyle = col; c.lineWidth = lw; if (dash) c.setLineDash(dash); c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); c.restore(); }
+const FAM = { mono: '"IBM Plex Mono", ui-monospace, monospace', disp: '"Bodoni Moda", Didot, Georgia, serif', body: 'Figtree, system-ui, sans-serif' };
+function txt(c, s, x, y, o = {}) {
+  const a = o.a ?? 1; if (a <= 0) return; const f = o.f || 'mono', sz = o.sz || 22;
+  c.save(); c.globalAlpha *= clamp(a); c.fillStyle = o.col || C.muted; c.textAlign = o.al || 'left'; c.textBaseline = 'middle';
+  c.font = `${o.it ? 'italic ' : ''}${o.w || (f === 'mono' ? 500 : 400)} ${sz}px ${FAM[f]}`;
+  if ('letterSpacing' in c) c.letterSpacing = (f === 'mono' ? (o.ls ?? .14) * sz : 0) + 'px';
+  c.fillText(s, x, y); c.restore();
+}
+function typed(s, p) { return s.slice(0, Math.round(s.length * clamp(p))); }
+function rrect(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+function chip(c, s, x, y, a, col = C.text) { if (a <= 0) return; c.save(); c.globalAlpha *= a; c.font = `400 30px ${FAM.body}`; const w = c.measureText(s).width + 48; c.translate((1 - E.out(a)) * 40, 0); rrect(c, x, y - 30, w, 60, 30); c.fillStyle = '#11142Acc'; c.fill(); c.strokeStyle = C.line; c.lineWidth = 2; c.stroke(); dot(c, x + 24, y, 5, C.coral); c.fillStyle = col; c.textBaseline = 'middle'; c.fillText(s, x + 38, y + 1); c.restore(); }
+function arrowHead(c, x, y, ang, col, a = 1, s = 12) { c.save(); c.globalAlpha *= a; c.fillStyle = col; c.translate(x, y); c.rotate(ang); c.beginPath(); c.moveTo(0, 0); c.lineTo(-s, -s * .55); c.lineTo(-s, s * .55); c.closePath(); c.fill(); c.restore(); }
+function branchTree(seed, x, y, ang, len, depth, spread = [.28, .55], shrink = .74) {
+  const r = rng(seed), segs = [];
+  (function g(x, y, a, l, d) { const x2 = x + Math.cos(a) * l, y2 = y + Math.sin(a) * l; segs.push({ x1: x, y1: y, x2, y2, d }); if (d >= depth) return; const n = r() < .25 ? 3 : 2; for (let i = 0; i < n; i++) { const da = (i - (n - 1) / 2) * (spread[0] + r() * (spread[1] - spread[0])) * 1.3; g(x2, y2, a + da + (r() - .5) * .2, l * (shrink + (r() - .5) * .12), d + 1); } })(x, y, ang, len, 0);
+  return segs;
+}
+function drawTree(c, segs, depth, g, col, a, lw0 = 7) {
+  c.save(); c.globalAlpha *= a; c.strokeStyle = col; c.lineCap = 'round';
+  const gd = g * (depth + 1);
+  for (const s of segs) { const f = clamp(gd - s.d); if (f <= 0) continue; c.lineWidth = Math.max(.8, lw0 * Math.pow(.72, s.d)); c.beginPath(); c.moveTo(s.x1, s.y1); c.lineTo(lerp(s.x1, s.x2, f), lerp(s.y1, s.y2, f)); c.stroke(); }
+  c.restore();
+}
+// ambient
+const STARS = (() => { const r = rng(3); return Array.from({ length: 650 }, () => ({ x: (r() - .5) * 2.4, y: (r() - .5) * 1.6, z: r(), c: r() < .15 ? C.cyan : r() < .1 ? C.coral : '#DCD8EE' })); })();
+function stars(c, t, a = 1, speed = .025) { c.save(); for (const s of STARS) { const z = ((s.z - t * speed) % 1 + 1) % 1 + .04; const x = W / 2 + s.x / z * 300, y = H / 2 + s.y / z * 300; if (x < -10 || x > W + 10 || y < -10 || y > H + 10) continue; const k = 1 - z; c.globalAlpha = a * k * .85; c.fillStyle = s.c; c.fillRect(x, y, 1 + k * 2.4, 1 + k * 2.4); } c.restore(); }
+const MOTES = (() => { const r = rng(9); return Array.from({ length: 110 }, () => ({ x: r() * W, y: r() * H, s: .2 + r() * .8, p: r() * 6.28, r: .6 + r() * 1.8 })); })();
+function motes(c, t, a = 1) { c.save(); c.fillStyle = '#C9C4E6'; for (const m of MOTES) { const x = (m.x + t * 8 * m.s) % W, y = (m.y + Math.sin(t * .3 * m.s + m.p) * 30 + H) % H; c.globalAlpha = a * (.15 + .2 * Math.sin(t * m.s + m.p) ** 2); c.beginPath(); c.arc(x, y, m.r, 0, 7); c.fill(); } c.restore(); }
+function miniLadder(c, lt, level) {
+  const x = 1672, w = 176, h = 40, gap = 12, bottom = 812;
+  const a = E.out(P(lt, 1.2, 2.0));
+  txt(c, 'ROADMAP', x, bottom - 7 * (h + gap) - 10, { sz: 17, a: a * .8 });
+  for (let i = 0; i < 7; i++) {
+    const y = bottom - (i + 1) * (h + gap) + gap, on = i === level, past = i < level;
+    const pa = a * E.out(P(lt, 1.2 + i * .06, 1.8 + i * .06));
+    c.save(); c.globalAlpha *= pa; rrect(c, x, y, w, h, 6);
+    if (on) { const k = E.out(P(lt, 2.2, 2.8)); c.fillStyle = LVCOL[i]; c.globalAlpha *= .25 + .75 * k; c.fill(); }
+    else { c.fillStyle = past ? '#1E2240' : '#12152A'; c.fill(); c.strokeStyle = past ? LVCOL[i] + '88' : C.line; c.lineWidth = 1.5; c.stroke(); }
+    c.restore();
+    txt(c, 'L' + i, x + 14, y + h / 2 + 1, { sz: 16, col: on ? '#0A0C18' : past ? LVCOL[i] : '#4A4E70', a: pa, ls: .08 });
+    if (on) { glow(c, x + w / 2, y + h / 2, 150, LVCOL[i], .35 * E.out(P(lt, 2.2, 3)) * (.8 + .2 * Math.sin(lt * 3))); txt(c, LEVELS[i], x - 18, y + h / 2, { f: 'disp', it: true, sz: 30, col: C.text, al: 'right', a: pa * E.out(P(lt, 2.3, 3)) }); }
+  }
+}
+
+// ================= scenes =================
+const DRAW = {};
+DRAW.open = (c, lt, s) => {
+  stars(c, s.start + lt, E.out(P(lt, 0, 3)));
+  const hb = s.L[1] - .3, k = lt - hb;
+  if (k > -1.2) { const ph = ((k % 1.15) + 1.15) % 1.15, pulse = k < 0 ? 0 : Math.exp(-ph * 7) + (ph > .24 ? .7 * Math.exp(-(ph - .24) * 7) : 0), a = E.out(P(lt, hb - 1.2, hb + .6)); glow(c, W / 2, 545, 300 + 160 * pulse, C.coral, a * (.28 + .3 * pulse)); glow(c, W / 2, 545, 90 + 40 * pulse, '#FFD9CF', a * .5); }
+};
+const BANG = (() => { const r = rng(11); return Array.from({ length: 900 }, () => ({ a: r() * 6.283, sp: Math.pow(r(), .6), b: .4 + r() * .6, col: [C.cyan, C.coral, C.gold, '#E6E0FF', C.violet][Math.floor(r() * 5)] })); })();
+DRAW.title = (c, lt, s) => {
+  stars(c, s.start + lt, .6, .05);
+  const k = lt - .35; if (k < 0) return;
+  c.save(); c.globalCompositeOperation = 'lighter';
+  for (const p of BANG) { const d = p.sp * (1 - Math.exp(-k * 1.4)) * 1100 + k * p.sp * 14, d2 = d * .93; const ca = Math.cos(p.a), sa = Math.sin(p.a); const x = W / 2 + ca * d, y = H / 2 + sa * d * .6; const a = (Math.exp(-k * .45) * p.b + .08) * .9; c.globalAlpha = a; c.strokeStyle = p.col; c.lineWidth = 1.6; c.beginPath(); c.moveTo(W / 2 + ca * d2, H / 2 + sa * d2 * .6); c.lineTo(x, y); c.stroke(); }
+  c.restore();
+  ring(c, W / 2, H / 2, k * 1500, '#FFE7DA', Math.exp(-k * 1.6) * .6, 3);
+  glow(c, W / 2, H / 2, 500 + k * 200, C.violet, .25 * Math.exp(-k * .3) + .08);
+  if (k < .7) { c.save(); c.globalAlpha = (1 - k / .7) * .55; c.fillStyle = '#FFF4EE'; c.fillRect(0, 0, W, H); c.restore(); }
+};
+DRAW.premise = (c, lt, s) => {
+  motes(c, s.start + lt, .6);
+  const tA = s.L[0] + .2, tL = s.at(0, 'the fast') - .6, tB = s.L[2] - .2;
+  const aTop = win(lt, tA, tB, .5, .6);
+  txt(c, typed('DEEP LEARNING  =  ARTIFICIAL INTUITION', P(lt, tA, tA + 2.2)), W / 2, lerp(520, 210, E.io(P(lt, tL, tL + 1))), { sz: 38, col: C.gold, al: 'center', a: aTop });
+  const aL = win(lt, tL, tB, .8, .6);
+  if (aL > 0) {
+    txt(c, 'SYSTEM 1 · FAST · AUTOMATIC · INTUITIVE', 160, 420, { sz: 22, col: C.cyan, a: aL * E.out(P(lt, tL, tL + .8)) });
+    c.save(); c.globalCompositeOperation = 'lighter'; const r = rng(5);
+    for (let i = 0; i < 46; i++) { const v = .8 + r() * 1.6, x0 = r() * 2400, y = 480 + (r() - .5) * 70; const x = ((x0 + lt * v * 700) % 2300) - 200; c.globalAlpha = aL * (.25 + r() * .6); c.strokeStyle = C.cyan; c.lineWidth = 2; c.beginPath(); c.moveTo(x - v * 90, y); c.lineTo(x, y); c.stroke(); }
+    c.restore();
+    const t2 = s.at(0, 'Daniel') - 1.2;
+    const a2 = aL * E.out(P(lt, t2, t2 + .8));
+    txt(c, 'SYSTEM 2 · SLOW · EFFORTFUL · DELIBERATE', 160, 650, { sz: 22, col: C.violet, a: a2 });
+    const step = 1.0, n = Math.max(0, (lt - t2) / step), ni = Math.floor(n), f = E.io(clamp((n - ni) * 2.2));
+    for (let i = 0; i <= Math.min(ni, 14); i++) { const x = 190 + i * 110, y = 730 + ((i * 53) % 3 - 1) * 30; dot(c, x, y, 5, C.violet, a2 * .7); if (i > 0) { const px = 190 + (i - 1) * 110, py = 730 + (((i - 1) * 53) % 3 - 1) * 30; line(c, px, py, x, y, C.violet, a2 * .35, 1.5, [4, 6]); } }
+    const i = Math.min(ni, 14), x = 190 + i * 110 + f * 110 * (ni < 14 ? 1 : 0), y0 = 730 + ((i * 53) % 3 - 1) * 30, y1 = 730 + (((i + 1) * 53) % 3 - 1) * 30;
+    glow(c, x, lerp(y0, y1, f), 50, C.violet, a2 * .7); dot(c, x, lerp(y0, y1, f), 8, '#E4DAFF', a2);
+  }
+  const aB = win(lt, tB, s.dur, .8, .6);
+  if (aB > 0) {
+    const x0 = 260, x1 = 1660, y = 560, t1 = s.at(2, 'step by step'), t2 = s.at(2, 'empathy') + .2;
+    const draw = E.io(P(lt, tB, tB + 1.2));
+    const gr = c.createLinearGradient(x0, 0, x1, 0); gr.addColorStop(0, C.cyan); gr.addColorStop(.5, C.violet); gr.addColorStop(1, C.coral);
+    c.save(); c.globalAlpha = aB; c.fillStyle = gr; c.fillRect(x0, y - 3, (x1 - x0) * draw, 6); c.restore();
+    txt(c, 'INTUITION', x0, y - 70, { sz: 26, col: C.cyan, a: aB });
+    txt(c, 'EMPATHY', x1, y - 70, { sz: 26, col: C.coral, al: 'right', a: aB * E.out(P(lt, t2 - .6, t2)) });
+    const tg = s.at(2, 'general');
+    txt(c, 'not raw problem-solving power', W / 2, 330, { f: 'disp', it: true, sz: 48, col: C.muted, al: 'center', a: aB * win(lt, tg, s.at(2, 'It grows'), .5, .5) });
+    const sp = E.io(P(lt, s.at(2, 'raw') + .3, s.at(2, 'power'))); if (sp > 0) line(c, W / 2 - 330, 334, W / 2 - 330 + 660 * sp, 334, C.coral, aB * win(lt, tg, s.at(2, 'It grows'), .5, .5), 4);
+    for (let i = 0; i < 6; i++) { const x = x0 + (i + .5) / 6 * (x1 - x0), ti = lerp(t1, t2, i / 6), k = E.back(P(lt, ti, ti + .5)); dot(c, x, y, 7, '#2A2E4A', aB); if (k > 0) { dot(c, x, y, 13 * k, LVCOL[i + 1], aB); glow(c, x, y, 70, LVCOL[i + 1], aB * .5 * clamp(k)); { const ws = LEVELS[i + 1].split(' '); txt(c, ws[0], x, y + 44, { f: 'body', sz: 22, col: C.text, al: 'center', a: aB * clamp(k) * .9 }); txt(c, ws.slice(1).join(' '), x, y + 72, { f: 'body', sz: 22, col: C.text, al: 'center', a: aB * clamp(k) * .9 }); } txt(c, 'L' + (i + 1), x, y - 34, { sz: 17, col: LVCOL[i + 1], al: 'center', a: aB * clamp(k) }); } }
+    const px = lerp(x0, x1, E.io(P(lt, s.at(2, 'It grows'), t2 + .3))); glow(c, px, y, 90, '#FFFFFF', aB * .35); dot(c, px, y, 5, '#fff', aB);
+    const tc = s.at(2, 'the capacity');
+    txt(c, 'modeling other minds · cooperating with them', W / 2, 760, { f: 'disp', it: true, sz: 46, col: C.text, al: 'center', a: aB * E.out(P(lt, tc, tc + .8)) });
+  }
+};
+const CYC = ['awe', 'curiosity', 'surprise', 'play', 'competence', 'ingenuity'], CYCH = ['Ch. 2', 'Ch. 1', 'Ch. 4', 'Ch. 3', 'Ch. 5', ''];
+DRAW.map = (c, lt, s) => {
+  motes(c, s.start + lt, .5);
+  const a0 = E.out(P(lt, s.L[0], s.L[0] + .8));
+  txt(c, 'I · THE CYCLE OF CREATION', 560, 190, { sz: 24, col: C.gold, al: 'center', a: a0 }); txt(c, 'chapters 1–5', 560, 228, { f: 'body', sz: 22, al: 'center', a: a0 * .8 });
+  const a1 = E.out(P(lt, s.at(0, 'two') , s.at(0, 'two') + .8));
+  txt(c, 'II · THE ROADMAP', 1380, 190, { sz: 24, col: C.gold, al: 'center', a: a1 }); txt(c, 'chapters 6–11', 1380, 228, { f: 'body', sz: 22, al: 'center', a: a1 * .8 });
+  const cx0 = 560, cy0 = 575, R = 225;
+  const T = CYC.map(w => s.at(1, w)); const tBack = s.at(1, 'back to awe');
+  const pos = i => { const an = -Math.PI / 2 + i / 6 * Math.PI * 2; return [cx0 + Math.cos(an) * R, cy0 + Math.sin(an) * R, an]; };
+  txt(c, 'after C. S. Peirce', cx0, cy0, { sz: 17, al: 'center', a: E.out(P(lt, s.at(1, 'Peirce'), s.at(1, 'Peirce') + .8)) * .8 });
+  for (let i = 0; i < 6; i++) {
+    const tStart = T[i], tEnd = i < 5 ? T[i + 1] : tBack, p = E.io(P(lt, tStart, tEnd + .2));
+    if (p > 0) { const a1 = -Math.PI / 2 + i / 6 * 6.283, a2 = a1 + 6.283 / 6 * p; c.save(); c.strokeStyle = C.gold; c.globalAlpha = .55; c.lineWidth = 2; c.beginPath(); c.arc(cx0, cy0, R, a1, a2); c.stroke(); c.restore(); }
+  }
+  CYC.forEach((w, i) => { const [x, y, an] = pos(i), k = E.back(P(lt, T[i] - .1, T[i] + .45)); if (k <= 0) return; dot(c, x, y, 10 * k, C.gold); glow(c, x, y, 60, C.gold, .4 * clamp(k)); const lx = cx0 + Math.cos(an) * (R + 70), ly = cy0 + Math.sin(an) * (R + 52); txt(c, w, lx, ly, { f: 'disp', it: true, sz: 42, col: C.text, al: Math.abs(Math.cos(an)) < .2 ? 'center' : Math.cos(an) > 0 ? 'left' : 'right', a: clamp(k) }); if (CYCH[i]) txt(c, CYCH[i], lx, ly + 36, { sz: 16, al: Math.abs(Math.cos(an)) < .2 ? 'center' : Math.cos(an) > 0 ? 'left' : 'right', a: clamp(k) * .7 }); });
+  if (lt > tBack) { const an = -Math.PI / 2 + (lt - tBack) * 1.1; glow(c, cx0 + Math.cos(an) * R, cy0 + Math.sin(an) * R, 55, '#FFFFFF', .5); }
+  const tl = s.at(2, 'ladder'), tr0 = s.at(2, 'roadmap'), tr1 = s.at(2, 'conversational'), tf = s.at(2, 'final chapter');
+  const xl = 1180, xr = 1580, rail = E.io(P(lt, tl - .3, tl + 1));
+  line(c, xl, 880, xl, 880 - 560 * rail, C.muted, .6, 2); line(c, xr, 880, xr, 880 - 560 * rail, C.muted, .6, 2);
+  for (let i = 0; i < 6; i++) { const y = 830 - i * 90, ti = lerp(tr0, tr1, i / 5), k = E.out(P(lt, ti, ti + .5)); if (k <= 0) continue; line(c, xl, y, xl + (xr - xl) * k, y, LVCOL[i + 1], .9, 3); txt(c, 'L' + (i + 1) + '  ' + LEVELS[i + 1], xl + 16, y - 24, { sz: 19, col: LVCOL[i + 1], a: k }); }
+  const kf = E.out(P(lt, tf, tf + .8));
+  if (kf > 0) { c.save(); c.globalAlpha = kf; rrect(c, xl - 30, 270, xr - xl + 60, 54, 8); c.strokeStyle = C.gold; c.lineWidth = 2; c.stroke(); c.restore(); txt(c, 'CH. 12 · REGENERATING CIVILIZATION', (xl + xr) / 2, 298, { sz: 19, col: C.gold, al: 'center', a: kf }); }
+};
+// ---- ch1 emergence
+const EM = (() => {
+  const r = rng(21), N = 900, NC = 72, NS = 8, cx0 = 860, cy0 = 560;
+  const sc = Array.from({ length: NS }, (_, m) => { const an = m / NS * 6.283 + .3; return [cx0 + Math.cos(an) * 400, cy0 + Math.sin(an) * 255]; });
+  const cb = Array.from({ length: NC }, () => { const an = r() * 6.283, rr = Math.sqrt(r()); return [cx0 + Math.cos(an) * rr * 700, cy0 + Math.sin(an) * rr * 380]; });
+  const cc = Array.from({ length: NC }, (_, j) => { const m = j % NS, an = r() * 6.283, rr = Math.sqrt(r()) * 72; return [sc[m][0] + Math.cos(an) * rr, sc[m][1] + Math.sin(an) * rr]; });
+  const ps = Array.from({ length: N }, (_, i) => { const j = i % NC, an = r() * 6.283, an2 = r() * 6.283, rr = Math.sqrt(r()); return { j, m: j % NS, a: [cx0 + Math.cos(an) * rr * 900, cy0 + Math.sin(an) * rr * 470], o: [Math.cos(an2) * r() * 11, Math.sin(an2) * r() * 11], ph: r() * 6.28, col: [C.cyan, C.coral, C.gold, '#E6E0FF'][Math.floor(r() * 4)] }; });
+  const links = []; for (let a = 0; a < NS; a++) for (let b = a + 1; b < NS; b++) if (r() < .45 || b === a + 1) links.push([a, b]);
+  return { ps, cb, cc, sc, links, cx0, cy0 };
+})();
+DRAW.c1 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .4);
+  const tA = s.at(1, 'Big Bang') - .1, tB = s.at(2, 'simple'), tC = s.at(2, 'Wetness'), tD = s.at(2, 'Thought'), t3 = s.L[3];
+  const tv = s.E[0] + .5;
+  if (lt > tv && lt < tA + .3) { const k = E.out(P(lt, tv, tA)); glow(c, EM.cx0, EM.cy0, 40 + 60 * k, '#FFF3E8', k * (.6 + .3 * Math.sin(lt * 9))); }
+  const t28 = s.at(1, 'twenty'), k28 = win(lt, t28 - .2, s.L[2] + .5, .5, .6);
+  if (k28 > 0) { const n = Math.max(1, Math.round(28 * E.out(P(lt, t28, t28 + 2.6)))); txt(c, String(n), 1560, 830, { f: 'disp', sz: 190, col: C.gold, al: 'right', a: k28, w: 500 }); txt(c, 'LEVELS OF EMERGENCE', 1560, 950, { sz: 20, al: 'right', a: k28 }); txt(c, 'after Harold Morowitz', 1560, 985, { sz: 16, al: 'right', a: k28 * .7 }); }
+  if (lt < tA) return;
+  const kA = E.expo(P(lt, tA, tA + 2.6)), kB = E.io(P(lt, tB, tB + 2)), kC = E.io(P(lt, tC, tC + 1.8)), kD = E.io(P(lt, tD, tD + 1.5));
+  if (lt < tA + .5) { c.save(); c.globalAlpha = (1 - P(lt, tA, tA + .5)) * .5; c.fillStyle = '#FFF2EA'; c.fillRect(0, 0, W, H); c.restore(); }
+  const stage = lt < tB ? 0 : lt < tC ? 1 : lt < tD ? 2 : 3;
+  ['PARTICLES', 'ATOMS & MOLECULES', 'CELLS', 'SELVES IN CONVERSATION'].forEach((l, i, arr) => { const x = 1840 - (arr.length - 1 - i) * 0; const y = 150 + i * 34; txt(c, (i === stage ? '▸ ' : '') + l, 1840, y, { sz: 18, al: 'right', col: i === stage ? C.gold : '#4A4E70', a: E.out(P(lt, tA + .5, tA + 1.3)) }); });
+  // selves membranes + links
+  const drift = m => [Math.sin(t * .25 + m) * 14, Math.cos(t * .21 + m * 2) * 10];
+  if (kC > 0) EM.sc.forEach((p, m) => { const [dx, dy] = drift(m); ring(c, p[0] + dx, p[1] + dy, 105 + Math.sin(t * 1.3 + m) * 4, m % 2 ? C.cyan : C.coral, kC * .45, 2); });
+  if (kD > 0) {
+    EM.links.forEach(([a, b], i) => { const [ax, ay] = EM.sc[a], [bx, by] = EM.sc[b], da = drift(a), db = drift(b); line(c, ax + da[0], ay + da[1], bx + db[0], by + db[1], C.violet, kD * .25, 1.5);
+      const tp = lt - t3 + i * .37; if (lt > t3 - 1 && tp > 0) { const f = (tp * .45) % 1; glow(c, lerp(ax + da[0], bx + db[0], f), lerp(ay + da[1], by + db[1], f), 34, '#FFFFFF', kD * .7 * Math.sin(f * Math.PI)); } });
+  }
+  c.save(); c.globalCompositeOperation = 'lighter';
+  for (const p of EM.ps) {
+    let x = lerp(EM.cx0, p.a[0], kA), y = lerp(EM.cy0, p.a[1], kA);
+    x = lerp(x, EM.cb[p.j][0] + p.o[0], kB); y = lerp(y, EM.cb[p.j][1] + p.o[1], kB);
+    const [dx, dy] = drift(p.m);
+    x = lerp(x, EM.cc[p.j][0] + p.o[0] * .55 + dx, kC); y = lerp(y, EM.cc[p.j][1] + p.o[1] * .55 + dy, kC);
+    x += Math.sin(t * 1.7 + p.ph) * 2.5; y += Math.cos(t * 1.3 + p.ph) * 2.5;
+    c.globalAlpha = .75; c.fillStyle = p.col; c.fillRect(x - 1.5, y - 1.5, 3, 3);
+  }
+  c.restore();
+  if (kB > 0) EM.cb.forEach((q, j) => { if (j % 3) return; const [dx, dy] = drift(j % 8); const x = lerp(q[0], EM.cc[j][0] + dx, kC), y = lerp(q[1], EM.cc[j][1] + dy, kC); glow(c, x, y, 26, C.cyan, kB * .25); });
+  const ks = E.out(P(lt, s.at(3, 'selves') - .2, s.at(3, 'selves') + .8));
+  if (ks > 0) { txt(c, 'selves & conversations', EM.cx0, EM.cy0 - 26, { f: 'disp', it: true, sz: 60, col: C.text, al: 'center', a: ks }); txt(c, 'ALL THE WAY UP', EM.cx0, EM.cy0 + 38, { sz: 22, col: C.gold, al: 'center', a: E.out(P(lt, s.at(3, 'all the way up'), s.at(3, 'all the way up') + .6)) }); }
+};
+// ---- ch2 diversity
+const VT = branchTree(33, 540, 900, -Math.PI / 2, 150, 7, [.25, .5]);
+const OCT = Array.from({ length: 8 }, (_, k) => { const pts = []; for (let i = 0; i <= 60; i++) { const s = i / 60; pts.push([s, k]); } return pts; });
+function octPt(k, s, t) { const base = k / 8 * 6.283 + .2, curl = (k % 2 ? 1 : -1) * (.45 + (k % 3) * .2); const an = base + curl * s * s + .12 * Math.sin(t * 1.1 + s * 5 + k); const r = 40 + s * 300; return [1260 + Math.cos(an) * r, 540 + Math.sin(an) * r * .8]; }
+DRAW.c2 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .4);
+  const tv = s.E[0] + .5, t1 = s.L[1], t2 = s.L[2], t3 = s.L[3];
+  const dim = lerp(1, .22, E.io(P(lt, t3 - .3, t3 + .6)));
+  const g1 = E.io(P(lt, tv, s.at(1, 'vertebrates') + 1.2)), g2 = E.io(P(lt, s.at(1, 'vertebrates') - .6, s.at(1, 'octopus') + 1.4));
+  drawTree(c, VT, 7, g1, C.cyan, .8 * dim, 8);
+  VT.forEach((sg, i) => { if (sg.d === 7 && g1 > .98 && i % 4 === 0) glow(c, sg.x2, sg.y2, 10, C.cyan, .25 * dim); });
+  glow(c, 540, 900, 70, C.cyan, .5 * dim * g1);
+  for (let k = 0; k < 8; k++) { c.save(); c.globalAlpha = .85 * dim; c.strokeStyle = C.coral; c.lineCap = 'round'; for (let i = 0; i < 60 * g2; i++) { const s0 = i / 60, s1 = Math.min(g2, (i + 1) / 60); const [x1, y1] = octPt(k, s0, t), [x2, y2] = octPt(k, s1, t); c.lineWidth = 14 * (1 - s0) + 1; c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); } c.restore(); for (let i = 3; i < 60 * g2; i += 5) { const [x, y] = octPt(k, i / 60, t); dot(c, x, y, 3.5 * (1 - i / 60) + 1, '#FFD2C8', .6 * dim); } }
+  glow(c, 1260, 530, 110, C.coral, .5 * dim * g2); dot(c, 1260, 530, 36 * g2, '#3a1f2a', dim);
+  txt(c, 'VERTEBRATE NEURONS', 540, 960, { sz: 20, col: C.cyan, al: 'center', a: dim * E.out(P(lt, s.at(1, 'vertebrates'), s.at(1, 'vertebrates') + .8)) });
+  txt(c, 'CEPHALOPOD NEURONS', 1260, 960, { sz: 20, col: C.coral, al: 'center', a: dim * E.out(P(lt, s.at(1, 'octopus'), s.at(1, 'octopus') + .8)) });
+  txt(c, 'NEURONS · INVENTED MORE THAN ONCE', 900, 180, { sz: 24, col: C.gold, al: 'center', a: dim * win(lt, s.at(1, 'more than once'), s.dur, .8, .5) });
+  if (lt > t2) { const w = ((lt - t2) % 2.2) / 2.2, a = win(lt, t2, t3 + .5, .6, .6); VT.forEach(sg => { if (Math.abs(sg.d / 7 - w) < .07) glow(c, sg.x2, sg.y2, 18, '#FFFFFF', a * .22); }); for (let k = 0; k < 8; k++) { const [x, y] = octPt(k, w, t); glow(c, x, y, 40, '#FFFFFF', a * .6); } txt(c, 'SAME PATTERN · DIFFERENT SUBSTRATE', 900, 230, { sz: 20, al: 'center', a: a * .9 }); }
+};
+// ---- ch3 play
+const GO = { cx: 640, cy: 590, n: 13, sp: 48 };
+function goSeq(g) { const r = rng(100 + g), used = new Set(), out = []; while (out.length < 56) { const i = Math.floor(r() * 13), j = Math.floor(r() * 13); const k = i * 13 + j; if (used.has(k)) continue; used.add(k); out.push([i, j]); } return out; }
+const GOS = {};
+DRAW.c3 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .35);
+  const tv = s.E[0] + .4, a = E.out(P(lt, tv, tv + 1)), half = (GO.n - 1) / 2 * GO.sp;
+  if (a <= 0) return;
+  c.save(); c.globalAlpha = a; rrect(c, GO.cx - half - 40, GO.cy - half - 40, half * 2 + 80, half * 2 + 80, 10); c.fillStyle = '#14172E'; c.fill(); c.strokeStyle = C.line; c.stroke();
+  c.strokeStyle = '#3A3F63'; c.lineWidth = 1.5; for (let i = 0; i < GO.n; i++) { const o = -half + i * GO.sp; c.beginPath(); c.moveTo(GO.cx - half, GO.cy + o); c.lineTo(GO.cx + half, GO.cy + o); c.moveTo(GO.cx + o, GO.cy - half); c.lineTo(GO.cx + o, GO.cy + half); c.stroke(); }
+  [[3, 3], [3, 9], [9, 3], [9, 9], [6, 6]].forEach(([i, j]) => dot(c, GO.cx - half + i * GO.sp, GO.cy - half + j * GO.sp, 4, '#5A5F83'));
+  c.restore();
+  const t0 = s.L[1]; if (lt < t0) return;
+  const kk = (lt - t0) / .42, k = Math.floor(kk), g = Math.floor(k / 64), j = k % 64;
+  const seq = GOS[g] || (GOS[g] = goSeq(g)), fadeA = j >= 56 ? 1 - (j - 56 + (kk - k)) / 8 : 1;
+  const nOn = Math.min(56, j + 1);
+  for (let q = 0; q < nOn; q++) { const [i, jj] = seq[q], x = GO.cx - half + i * GO.sp, y = GO.cy - half + jj * GO.sp; const pop = q === j ? E.back(clamp((kk - k) * 3)) : 1; const black = q % 2 === 0; c.save(); c.globalAlpha = a * fadeA; c.beginPath(); c.arc(x, y, 21 * pop, 0, 7); c.fillStyle = black ? '#1C1F38' : '#ECE8F4'; c.fill(); if (black) { c.strokeStyle = C.cyan + '99'; c.lineWidth = 2; c.stroke(); } c.restore(); if (q === j) ring(c, x, y, 21 + (kk - k) * 30, black ? C.cyan : C.coral, (1 - (kk - k)) * a * fadeA, 2); }
+  const games = Math.floor(Math.pow(10, 1 + Math.min(5.6, (lt - t0) / 3.2)));
+  txt(c, 'SELF-PLAY · GAME ' + games.toLocaleString('en-US'), GO.cx - half - 40, GO.cy - half - 70, { sz: 20, col: C.cyan, a });
+  const th = s.at(2, 'without'); txt(c, 'HUMAN GAMES STUDIED · 0', GO.cx - half - 40, GO.cy - half - 110, { sz: 20, col: C.coral, a: a * E.out(P(lt, th, th + .6)) });
+  const ti = s.at(3, 'innate'); txt(c, 'INNATE GIFTS', 1150, 360, { sz: 22, col: C.gold, a: E.out(P(lt, ti, ti + .6)) });
+  [['shared attention', 'Shared attention'], ['tool use', 'Tool use'], ['storytelling', 'Storytelling'], ['lazy brain', 'A lazy brain: detail just in time']].forEach(([w, l], i) => { const tw = s.at(3, w); chip(c, l, 1150, 440 + i * 96, E.out(P(lt, tw - .1, tw + .5))); });
+};
+// ---- ch4 unknowing
+const SYM = ['∀', '∃', '¬', '∧', '∨', '→', '⊢', '≡', '⊥'];
+const CA = (() => { const cols = 240, rows = 118; let row = new Uint8Array(cols); row[cols >> 1] = 1; const cnv = document.createElement('canvas'); cnv.width = cols * 8; cnv.height = rows * 8; const g = cnv.getContext('2d'); for (let y = 0; y < rows; y++) { for (let x = 0; x < cols; x++) if (row[x]) { g.fillStyle = `rgba(114,214,227,${.35 + .45 * (x % 7 === 0)})`; g.fillRect(x * 8 + 1, y * 8 + 1, 6, 6); } const nx = new Uint8Array(cols); for (let x = 0; x < cols; x++) { const l = row[(x - 1 + cols) % cols], cc = row[x], r = row[(x + 1) % cols]; nx[x] = l ^ (cc | r); } row = nx; } return { cnv, rows }; })();
+DRAW.c4 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .3);
+  const t1 = s.L[1], tU = s.at(1, 'underestimated'), t2 = s.L[2], t3 = s.L[3];
+  const aS = E.out(P(lt, t1 - .2, t1 + .6));
+  if (aS > 0 && lt < tU + 2.5) { const r = rng(4); for (let yy = 0; yy < 4; yy++) for (let xx = 0; xx < 9; xx++) { const vx = (r() - .5) * 900, vy = -200 - r() * 500, rot = (r() - .5) * 8; const sym = SYM[(xx + yy * 2) % 9]; const k = Math.max(0, lt - tU); const x = 380 + xx * 120 + vx * k, y = 400 + yy * 110 + vy * k + 900 * k * k; c.save(); c.globalAlpha = aS * (1 - clamp(k / 1.6)); c.translate(x, y); c.rotate(rot * k); txt(c, sym, 0, 0, { f: 'disp', sz: 64, col: k > 0 ? C.coral : C.text, al: 'center' }); c.restore(); } txt(c, 'EARLY AI · THE WORLD AS LOGIC', 860, 300, { sz: 22, col: C.gold, al: 'center', a: aS * (1 - clamp((lt - tU) / .6)) }); }
+  const aC = E.out(P(lt, t2 - .2, t2 + .6)) * lerp(1, .16, E.io(P(lt, t3 - .2, t3 + .8)));
+  if (aC > 0) { const rows = Math.min(CA.rows, Math.floor(Math.max(0, lt - t2) * 16)); c.save(); c.globalAlpha = aC; if (rows > 0) c.drawImage(CA.cnv, 0, 0, CA.cnv.width, rows * 8, 0, 160, W, rows * 8); c.restore(); glow(c, W / 2, 160 + rows * 8, 180, C.cyan, aC * .35 * (rows < CA.rows ? 1 : 0)); txt(c, 'RULE 30 · ONE SIMPLE RULE, NO SHORTCUT', 1840, 150, { sz: 19, col: C.cyan, al: 'right', a: aC * 1.4 }); }
+  const kr = s.at(2, 'running'); if (lt > kr - .2 && lt < t3 + .6) txt(c, 'known only by running it', 1840, 190, { f: 'disp', it: true, sz: 34, col: C.text, al: 'right', a: win(lt, kr - .2, t3 + .6, .5, .5) });
+  if (lt > t3 - .2) {
+    const Q = [['KNOWABLE KNOWNS', 'fits the data it was trained on'], ['KNOWABLE UNKNOWNS', 'generalizes to what it has not seen'], ['UNKNOWABLE KNOWNS', 'irreducible systems it cannot learn'], ['UNKNOWABLE UNKNOWNS', 'what it cannot know it is missing']];
+    const ta = s.at(3, 'knowable knowns'), tb = s.at(3, 'unknowable unknowns'), tsur = s.at(3, 'surprise');
+    Q.forEach(([h, d], i) => { const x = 860 + (i % 2 ? 20 : -620), y = 540 + (i < 2 ? -210 : 20), ti = lerp(ta, tb, i / 3), k = E.out(P(lt, ti - .1, ti + .5)); if (k <= 0) return; const last = i === 3; c.save(); c.globalAlpha = k; rrect(c, x, y, 600, 190, 10); c.fillStyle = last ? '#2A1624' : '#12152Aee'; c.fill(); c.strokeStyle = last ? C.coral : C.line; c.lineWidth = last ? 2.5 : 1.5; c.stroke(); c.restore(); txt(c, h, x + 34, y + 66, { sz: 26, col: last ? C.coral : C.text, a: k }); txt(c, d, x + 34, y + 118, { f: 'body', sz: 26, a: k }); if (last) { const ks = E.out(P(lt, tsur, tsur + .6)); glow(c, x + 300, y + 95, 360, C.coral, .25 * ks); txt(c, 'where surprise lives', x + 566, y + 160, { f: 'disp', it: true, sz: 30, col: C.coral, al: 'right', a: ks }); } });
+  }
+};
+// ---- ch5 competence
+const TLN = [{ y: 'c. 350 BCE', n: 'Aristotle', d: 'The Organon', w: 'Aristotle' }, { y: '1823', n: 'Babbage', d: 'Difference Engine', w: 'Babbage' }, { y: '1854', n: 'Boole', d: 'The Laws of Thought', w: 'Boole' }, { y: '1943', n: 'McCulloch & Pitts', d: 'first artificial neuron', w: '1943' }, { y: '1956', n: 'Dartmouth', d: '“artificial intelligence”', dt: 1.2 }, { y: '2012', n: 'Deep learning', d: 'machines with intuition', dt: 2.2 }];
+const BIO = branchTree(55, 520, 560, Math.PI, 70, 4, [.4, .8], .78).concat(branchTree(56, 560, 560, 0, 60, 3, [.4, .8], .78));
+DRAW.c5 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .35);
+  const t1 = s.L[1], t2 = s.L[2], t3 = s.L[3];
+  const aT = E.out(P(lt, t1 - .3, t1 + .5)) * lerp(1, 0, E.io(P(lt, t2 - .2, t2 + .6)));
+  if (aT > 0) { const base = E.io(P(lt, t1 - .3, s.E[1])); line(c, 160, 560, 160 + 1480 * base, 560, C.muted, aT * .6, 2);
+    TLN.forEach((e, i) => { const ti = e.w ? s.at(1, e.w) : s.at(1, '1943') + e.dt, k = E.back(P(lt, ti - .1, ti + .5)); if (k <= 0) return; const x = 230 + i * 262, up = i % 2 === 1; dot(c, x, 560, 9 * k, C.gold, aT); glow(c, x, 560, 50, C.gold, aT * .4); line(c, x, 560, x, up ? 470 : 650, C.line, aT, 1.5); const yy = up ? 330 : 700; txt(c, e.y, x, yy, { sz: 24, col: C.gold, al: 'center', a: aT * clamp(k) }); txt(c, e.n, x, yy + 48, { f: 'disp', it: true, sz: 38, col: C.text, al: 'center', a: aT * clamp(k) }); txt(c, e.d, x, yy + 90, { f: 'body', sz: 22, al: 'center', a: aT * clamp(k) }); }); }
+  const aN = win(lt, t2 - .2, t3 + .2, .8, .6);
+  if (aN > 0) {
+    drawTree(c, BIO, 4, E.io(P(lt, t2, t2 + 1.5)), C.coral, aN * .9, 5); glow(c, 540, 560, 70, C.coral, aN * .5); dot(c, 540, 560, 26, C.coral, aN); line(c, 566, 560, 700, 560, C.coral, aN, 4);
+    const ka = E.out(P(lt, s.at(2, 'Artificial') - .3, s.at(2, 'Artificial') + .5)) * aN;
+    for (let i = 0; i < 5; i++) { const y = 440 + i * 60; line(c, 1000, y, 1110, 560, C.cyan, ka * .7, 2); txt(c, 'w' + (i + 1), 1000 - 16, y, { sz: 16, col: C.cyan, al: 'right', a: ka }); }
+    ring(c, 1160, 560, 56, C.cyan, ka, 3); txt(c, 'Σ', 1160, 562, { f: 'disp', sz: 56, col: C.cyan, al: 'center', a: ka }); line(c, 1216, 560, 1340, 560, C.cyan, ka, 3); arrowHead(c, 1350, 560, 0, C.cyan, ka);
+    const tw = s.at(2, 'they work'); if (lt > tw) { const f = clamp((lt - tw) / .8); glow(c, lerp(1216, 1350, f), 560, 50, '#fff', ka * (1 - f)); glow(c, 1160, 560, 140, C.cyan, ka * .5 * (1 - f)); }
+    txt(c, 'BIOLOGICAL NEURON', 560, 760, { sz: 20, col: C.coral, al: 'center', a: aN }); txt(c, 'ARTIFICIAL NEURON · 1943', 1160, 760, { sz: 20, col: C.cyan, al: 'center', a: ka });
+    txt(c, '≈', 860, 560, { f: 'disp', sz: 72, col: C.muted, al: 'center', a: ka });
+    const tc = s.at(2, 'competence'); txt(c, typed('COMPETENCE WITHOUT COMPREHENSION', P(lt, tc, tc + 1.6)), 860, 260, { sz: 30, col: C.gold, al: 'center', a: aN });
+  }
+  const tr = s.at(3, 'roadmap') - .3;
+  if (lt > tr) { const aR = E.out(P(lt, tr, tr + .6)); txt(c, 'THE CAPABILITY MATURITY MODEL', 860, 270, { sz: 24, col: C.gold, al: 'center', a: aR });
+    for (let i = 0; i < 7; i++) { const ti = tr + .3 + i * .5, k = E.out(P(lt, ti, ti + .6)); if (k <= 0) continue; const y = 850 - i * 78 + (1 - k) * 40; c.save(); c.globalAlpha = k; rrect(c, 450, y - 34, 820, 64, 8); c.fillStyle = LVCOL[i] + (i ? '2e' : '66'); c.fill(); c.strokeStyle = LVCOL[i]; c.lineWidth = 1.5; c.stroke(); c.restore(); txt(c, 'LEVEL ' + i, 478, y - 1, { sz: 18, col: i ? LVCOL[i] : C.muted, a: k }); txt(c, LEVELS[i], 640, y, { f: 'body', sz: 30, col: C.text, a: k, w: 500 }); } }
+};
+// ---- ch6 intuitive
+const FACE = ['0000011111100000', '0001111111111000', '0011100000011100', '0111000000001110', '0110000000000110', '1100011001100011', '1100011001100011', '1100000000000011', '1100000000000011', '1100100000010011', '1100110000110011', '0110011111100110', '0111000000001110', '0011100000011100', '0001111111111000', '0000011111100000'];
+const NET = (() => { const L = [760, 930, 1100, 1270], n = [7, 9, 7, 4]; const nodes = L.map((x, i) => Array.from({ length: n[i] }, (_, j) => [x, 560 + (j - (n[i] - 1) / 2) * 78])); const r = rng(61); const pulses = Array.from({ length: 70 }, () => ({ ph: r(), sp: .5 + r() * .5, path: nodes.map(l => Math.floor(r() * l.length)), sy: Math.floor(r() * 16) })); return { nodes, pulses }; })();
+DRAW.c6 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .3); miniLadder(c, lt, 1);
+  const tv = s.E[0] + .5, a = E.out(P(lt, tv, tv + 1)); if (a <= 0) return;
+  const tsn = s.at(1, 'snap'), clar = E.expo(P(lt, tsn - 1.2, tsn + .2)), r = rng(Math.floor(t * 12));
+  for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) { const on = FACE[y][x] === '1'; const v = clamp((on ? 1 : 0) * (.25 + .75 * clar) + r() * (1 - clar) * .8); c.fillStyle = `rgba(236,232,244,${(.06 + v * .85) * a})`; c.fillRect(300 + x * 22, 385 + y * 22, 20, 20); }
+  txt(c, 'INPUT · 256 PIXELS', 476, 330, { sz: 18, al: 'center', a });
+  const N = NET.nodes;
+  c.save(); c.globalAlpha = a * .18; c.strokeStyle = C.cyan; c.lineWidth = 1; for (let l = 0; l < 3; l++) for (const p of N[l]) for (const q of N[l + 1]) { c.beginPath(); c.moveTo(p[0], p[1]); c.lineTo(q[0], q[1]); c.stroke(); } c.restore();
+  N.forEach((l, li) => l.forEach(p => { dot(c, p[0], p[1], 9, '#1B1F3A', a); ring(c, p[0], p[1], 9, C.cyan, a * .8, 2); }));
+  for (const pu of NET.pulses) { const f = ((lt * pu.sp * .7 + pu.ph) % 1) * 4; const seg = Math.floor(f), g = f - seg; let x1, y1, x2, y2; if (seg === 0) { x1 = 300 + (pu.sy % 16) * 22 + 10; y1 = 385 + ((pu.sy * 7) % 16) * 22 + 10; [x2, y2] = N[0][pu.path[0]]; } else { [x1, y1] = N[seg - 1][pu.path[seg - 1]]; [x2, y2] = N[seg][pu.path[seg]]; } glow(c, lerp(x1, x2, g), lerp(y1, y2, g), 16, C.cyan, a * .9); }
+  const ko = E.back(P(lt, tsn, tsn + .5));
+  if (ko > 0) { glow(c, 1450, 560, 160 * ko, C.gold, .35 * clamp(ko)); txt(c, 'face', 1450, 540, { f: 'disp', it: true, sz: 76, col: C.text, al: 'center', a: clamp(ko) }); txt(c, 'p = 0.98', 1450, 610, { sz: 22, col: C.gold, al: 'center', a: clamp(ko) }); }
+  if (lt < tsn) txt(c, '?', 1450, 560, { f: 'disp', sz: 76, col: C.muted, al: 'center', a: a * .6 });
+  const tr = s.at(2, 'representations');
+  ['edges', 'textures', 'parts', 'wholes'].forEach((w, i) => txt(c, w, N[i][0][0], 175 + 70, { sz: 18, col: C.cyan, al: 'center', a: E.out(P(lt, tr + i * .25, tr + i * .25 + .5)) }));
+  const tn = s.at(2, "don't"); txt(c, 'NO HAND-WRITTEN RULES · LEARNED FROM EXPERIENCE', 1015, 900, { sz: 20, col: C.gold, al: 'center', a: E.out(P(lt, tn, tn + .6)) });
+};
+// ---- ch7 generative selves
+const SELF = (() => { const r = rng(71); return { ins: Array.from({ length: 70 }, () => ({ r: Math.sqrt(r()) * .82, a: r() * 6.28, w: (r() - .5) * .8 })), out: Array.from({ length: 130 }, () => ({ a: r() * 6.28, w: (r() - .5) * .25, ph: r() * 6.28, sp: .4 + r() * .9, far: 60 + r() * 520 })) }; })();
+DRAW.c7 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .3); miniLadder(c, lt, 2);
+  const tv = s.E[0] + .5, t2 = s.at(2, 'strange') - .5, t3 = s.L[3], cx0 = 820, cy0 = 570, R = 240;
+  const aB = win(lt, tv, t2 + 1, .9, 1);
+  if (aB > 0) {
+    c.save(); c.globalAlpha = aB; c.beginPath(); for (let i = 0; i <= 120; i++) { const th = i / 120 * 6.283, rr = R + 12 * Math.sin(3 * th + t * 1.3) + 8 * Math.sin(5 * th - t * .9); const x = cx0 + Math.cos(th) * rr, y = cy0 + Math.sin(th) * rr; i ? c.lineTo(x, y) : c.moveTo(x, y); } c.closePath(); c.fillStyle = '#2A162433'; c.fill(); c.strokeStyle = C.coral; c.lineWidth = 3; c.stroke(); c.restore();
+    SELF.ins.forEach(p => dot(c, cx0 + Math.cos(p.a + t * p.w) * p.r * R, cy0 + Math.sin(p.a + t * p.w) * p.r * R, 3, C.coral, aB * .8));
+    SELF.out.forEach(p => { const rr = R + 26 + Math.abs(Math.sin(t * p.sp + p.ph)) * p.far; const an = p.a + t * p.w; dot(c, cx0 + Math.cos(an) * rr, cy0 + Math.sin(an) * rr * .9, 2.5, C.cyan, aB * .6); });
+    txt(c, 'self', cx0, cy0, { f: 'disp', it: true, sz: 64, col: C.text, al: 'center', a: aB });
+    txt(c, 'NON-SELF', cx0 + 420, cy0 - 280, { sz: 22, col: C.cyan, al: 'center', a: aB });
+    txt(c, 'BOUNDARY', cx0 - R - 30, cy0 + 170, { sz: 18, col: C.coral, al: 'right', a: aB * .8 });
+  }
+  const aL = win(lt, t2, s.dur, 1, .6) * lerp(1, .35, E.io(P(lt, t3 - .2, t3 + .8)));
+  if (aL > 0) {
+    const A = 470, pt = u => { const sn = Math.sin(u), d = 1 + sn * sn; return [cx0 + A * Math.cos(u) / d, cy0 + A * sn * Math.cos(u) / d]; };
+    const dr = E.io(P(lt, t2, t2 + 1.6));
+    c.save(); c.globalAlpha = aL; c.strokeStyle = C.violet; c.lineWidth = 3; c.beginPath(); for (let i = 0; i <= 200 * dr; i++) { const [x, y] = pt(i / 200 * 6.283); i ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore();
+    const G = pt(Math.PI), D = pt(0);
+    dot(c, G[0], G[1], 16, C.coral, aL); glow(c, G[0], G[1], 80, C.coral, aL * .5); txt(c, 'GENERATOR', G[0], G[1] + 56, { sz: 20, col: C.coral, al: 'center', a: aL });
+    dot(c, D[0], D[1], 16, C.cyan, aL); glow(c, D[0], D[1], 80, C.cyan, aL * .5); txt(c, 'CRITIC', D[0], D[1] + 56, { sz: 20, col: C.cyan, al: 'center', a: aL });
+    for (let k = 0; k < 6; k++) { const u = (lt - t2) * 1.1 + k * 6.283 / 6; const [x, y] = pt(u); glow(c, x, y, 22, '#FFFFFF', aL * dr * .9); }
+    const loops = Math.max(0, (lt - t2) * 1.1 / 6.283), clar = 1 - Math.exp(-loops * .45), r = rng(Math.floor(loops * 6));
+    const ix = cx0 - 64, iy = 215; const fadeI = 1 - E.io(P(lt, t3 - .4, t3 + .4)); if (fadeI > 0) { txt(c, 'GENERATED SAMPLE · ROUND ' + Math.floor(loops + 1), cx0, iy - 22, { sz: 16, al: 'center', a: aL * dr * fadeI });
+    for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) { const v = clamp((FACE[y][x] === '1' ? 1 : 0) * clar + r() * (1 - clar)); c.fillStyle = `rgba(255,143,126,${(.05 + v * .85) * aL * dr * fadeI})`; c.fillRect(ix + x * 8, iy + y * 8, 7, 7); } }
+  }
+  const tg = s.at(3, 'Goodhart');
+  txt(c, 'When a measure becomes a target, it ceases to be a good measure.', cx0 + 40, 160, { f: 'disp', it: true, sz: 36, col: C.text, al: 'center', a: win(lt, tg - .2, s.dur, .6, .5) });
+  const tw = s.at(3, 'ever-wider');
+  if (lt > tw - .3) { for (let i = 0; i < 5; i++) { const ti = tw + i * .35, k = E.out(P(lt, ti, ti + .8)); ring(c, cx0, cy0, 70 + i * 62 * k + i * 10, LVCOL[i + 2] || C.coral, k * .7, 2); txt(c, ['I', 'II', 'III', 'IV', 'V'][i], cx0, cy0 - 70 - i * 72, { f: 'disp', sz: 24, col: C.text, al: 'center', a: k }); } txt(c, 'STAGES OF THE SELF · AFTER ROBERT KEGAN', cx0, cy0 + 440 - 40, { sz: 18, al: 'center', a: E.out(P(lt, tw + 1, tw + 1.6)) }); }
+};
+// ---- ch8 dual processes
+const MCTS = (() => { const r = rng(81), nodes = [{ p: -1, d: 0 }]; for (let d = 1; d <= 4; d++) { const par = nodes.filter(n => n.d === d - 1); par.forEach(pn => { const k = d === 1 ? 3 : r() < .2 ? 0 : 1 + Math.floor(r() * (d < 3 ? 3 : 2.4)); for (let i = 0; i < k; i++) nodes.push({ p: nodes.indexOf(pn), d }); }); } let leaf = 0; const place = i => { const ch = nodes.map((n, j) => n.p === i ? j : -1).filter(j => j >= 0); if (!ch.length) { nodes[i].x = leaf++; return nodes[i].x; } const xs = ch.map(place); nodes[i].x = (Math.min(...xs) + Math.max(...xs)) / 2; return nodes[i].x; }; place(0); nodes.forEach(n => { n.X = 260 + n.x / Math.max(1, leaf - 1) * 900; n.Y = 560 + n.d * 90; n.o = n.d + r() * 1.2; }); const ord = nodes.map((n, i) => i).sort((a, b) => nodes[a].o - nodes[b].o); ord.forEach((i, k) => nodes[i].k = k); return nodes; })();
+DRAW.c8 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .3); miniLadder(c, lt, 3);
+  const tv = s.E[0] + .4, a = E.out(P(lt, tv, tv + 1)); if (a <= 0) return;
+  txt(c, 'FAST · INTUITION', 140, 250, { sz: 22, col: C.cyan, a });
+  c.save(); c.globalCompositeOperation = 'lighter'; const r = rng(8);
+  for (let i = 0; i < 60; i++) { const v = 1 + r() * 2, x0 = r() * 2400, y = 330 + (r() - .5) * 90; const x = ((x0 + lt * v * 650) % 1700) + 60; c.globalAlpha = a * (.2 + r() * .6); c.strokeStyle = C.cyan; c.lineWidth = 2; c.beginPath(); c.moveTo(x - v * 60, y); c.lineTo(x, y); c.stroke(); }
+  c.restore();
+  const ts = s.at(1, 'slow') - .3, t2 = s.L[2], t3 = s.L[3];
+  txt(c, 'SLOW · DELIBERATION', 140, 480, { sz: 22, col: C.violet, a: a * E.out(P(lt, ts, ts + .6)) });
+  const rate = 4.5, nShown = (lt - ts) * rate;
+  MCTS.forEach((n, i) => { if (n.k > nShown) return; const k = E.back(clamp((nShown - n.k) / 2)); if (n.p >= 0) { const q = MCTS[n.p]; line(c, q.X, q.Y, lerp(q.X, n.X, clamp(k)), lerp(q.Y, n.Y, clamp(k)), C.violet, a * .6, 2); } dot(c, n.X, n.Y, 8 * k, n.d === 0 ? C.gold : C.violet, a); });
+  if (lt > t2 - .3) MCTS.forEach(n => { const ta = ts + n.k / rate; const f = (lt - (ta - .7)) / .7; if (ta < t2 || f < 0 || f > 1) return; glow(c, n.X, lerp(330, n.Y, E.in(f)), 18, C.cyan, a * .9); });
+  const tr = s.at(2, 'reason'); txt(c, 'reason, running on intuition', 1340, 480, { f: 'disp', it: true, sz: 36, col: C.text, al: 'center', a: win(lt, tr, t3 + .2, .6, .5) });
+  if (lt > t3 - .2) {
+    const aA = E.out(P(lt, t3, t3 + .8)), cxA = 1340, top = 380, bot = 740, rr = 60;
+    const tg = s.at(3, 'guides'), tt = s.at(3, 'teaches');
+    c.save(); c.lineWidth = 4; c.setLineDash([14, 12]); c.lineDashOffset = -lt * 40;
+    c.globalAlpha = aA * E.out(P(lt, tg - .3, tg + .4)); c.strokeStyle = C.cyan; c.beginPath(); c.moveTo(cxA + rr, top); c.bezierCurveTo(cxA + rr + 90, top + 120, cxA + rr + 90, bot - 120, cxA + rr, bot); c.stroke();
+    c.globalAlpha = aA * E.out(P(lt, tt - .3, tt + .4)); c.strokeStyle = C.violet; c.lineDashOffset = lt * 40; c.beginPath(); c.moveTo(cxA - rr, bot); c.bezierCurveTo(cxA - rr - 90, bot - 120, cxA - rr - 90, top + 120, cxA - rr, top); c.stroke(); c.restore();
+    arrowHead(c, cxA + rr, bot, Math.PI * .62, C.cyan, aA * E.out(P(lt, tg, tg + .4)), 16); arrowHead(c, cxA - rr, top, -Math.PI * .38, C.violet, aA * E.out(P(lt, tt, tt + .4)), 16);
+    txt(c, 'intuition guides', cxA + rr + 70, 540, { f: 'disp', it: true, sz: 28, col: C.cyan, a: aA * E.out(P(lt, tg, tg + .5)) }); txt(c, 'the search', cxA + rr + 70, 578, { f: 'disp', it: true, sz: 28, col: C.cyan, a: aA * E.out(P(lt, tg, tg + .5)) });
+    txt(c, 'search teaches', cxA - rr - 70, 540, { f: 'disp', it: true, sz: 28, col: C.violet, al: 'right', a: aA * E.out(P(lt, tt, tt + .5)) }); txt(c, 'intuition', cxA - rr - 70, 578, { f: 'disp', it: true, sz: 28, col: C.violet, al: 'right', a: aA * E.out(P(lt, tt, tt + .5)) });
+  }
+};
+// ---- ch9 causal
+const DAG = { Season: [1130, 300], Rain: [950, 470], Sprinkler: [1310, 470], Wet: [1130, 640], Slippery: [1130, 810] };
+const DAGE = [['Season', 'Rain'], ['Season', 'Sprinkler'], ['Rain', 'Wet'], ['Sprinkler', 'Wet'], ['Wet', 'Slippery']];
+function edge(c, a, b, col, al, lw = 2.5, dash) { const [x1, y1] = a, [x2, y2] = b, an = Math.atan2(y2 - y1, x2 - x1), r = 44; line(c, x1 + Math.cos(an) * r, y1 + Math.sin(an) * r, x2 - Math.cos(an) * (r + 6), y2 - Math.sin(an) * (r + 6), col, al, lw, dash); arrowHead(c, x2 - Math.cos(an) * r, y2 - Math.sin(an) * r, an, col, al, 12); }
+DRAW.c9 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .4); miniLadder(c, lt, 4);
+  const t2 = s.L[2], t3 = s.L[3]; if (lt < t2 - .3) return;
+  const a = E.out(P(lt, t2 - .3, t2 + .6));
+  const rungs = [['SEEING', 'association', 'seeing'], ['DOING', 'intervention', 'doing'], ['IMAGINING', 'counterfactuals', 'imagining']];
+  line(c, 150, 900, 150, 330, C.muted, a * .6, 2); line(c, 730, 900, 730, 330, C.muted, a * .6, 2);
+  txt(c, "PEARL'S LADDER OF CAUSATION", 440, 290, { sz: 20, col: C.gold, al: 'center', a });
+  const tI = s.at(2, 'Intervention'), tCo = s.at(2, 'Correlation');
+  rungs.forEach(([h, d, w], i) => { const y = 820 - i * 200, k = E.out(P(lt, s.at(2, w) - .1, s.at(2, w) + .5)); const hi = i === 0 ? win(lt, tCo, tI, .3, .3) : i === 1 ? E.out(P(lt, tI, tI + .5)) : 0; line(c, 150, y, 730, y, hi > 0 ? (i === 1 ? C.coral : C.cyan) : C.text, a * (.5 + .5 * k), 3 + hi * 3); if (hi > 0) glow(c, 440, y, 200, i === 1 ? C.coral : C.cyan, hi * .25); txt(c, (i + 1) + '  ' + h, 176, y - 38, { sz: 22, col: C.text, a: k }); txt(c, d, 706, y - 38, { f: 'disp', it: true, sz: 28, al: 'right', col: C.muted, a: k }); });
+  const ad = E.out(P(lt, s.at(2, 'ladder'), s.at(2, 'ladder') + 1));
+  const cut = E.io(P(lt, tI, tI + .8));
+  DAGE.forEach(([u, v]) => { if (u === 'Season' && v === 'Sprinkler' && cut > 0) { const [x1, y1] = DAG[u], [x2, y2] = DAG[v], mx = (x1 + x2) / 2, my = (y1 + y2) / 2; line(c, x1 + 30, y1 + 30, mx - 12 * cut, my - 12 * cut + 40 * cut * cut, C.coral, ad * (1 - cut * .7), 2.5); line(c, mx + 12 * cut, my + 12 * cut + 60 * cut * cut, x2 - 30, y2 - 30, C.coral, ad * (1 - cut * .8), 2.5); txt(c, '✕', mx, my, { f: 'body', sz: 34, col: C.coral, al: 'center', a: ad * cut }); return; } edge(c, DAG[u], DAG[v], C.muted, ad * .8); });
+  for (const [k, [x, y]] of Object.entries(DAG)) { const hot = k === 'Sprinkler' ? cut : 0; dot(c, x, y, 42, '#141731', ad); ring(c, x, y, 42, hot ? C.coral : C.cyan, ad, 2.5); if (hot) glow(c, x, y, 130, C.coral, .4 * hot); txt(c, k.toLowerCase(), x, y + 1, { f: 'body', sz: 22, col: C.text, al: 'center', a: ad }); }
+  txt(c, 'do(sprinkler = on)', 1310, 548, { al: 'center', sz: 22, col: C.coral, a: ad * cut }); if (0) txt(c, '', 0, 0, { sz: 24, col: C.coral, a: ad * cut });
+  const pulse = (t0, dash) => { const f = (lt - t0) / 1.6; if (f < 0 || f > 1.3) return; const seg = [[DAG.Sprinkler, DAG.Wet], [DAG.Wet, DAG.Slippery]]; const g = clamp(f) * 2, i = Math.min(1, Math.floor(g)), q = g - i; const [p1, p2] = seg[i]; const x = lerp(p1[0], p2[0], i === 1 && g >= 2 ? 1 : q), y = lerp(p1[1], p2[1], i === 1 && g >= 2 ? 1 : q); if (dash) ring(c, x, y, 26, C.gold, 1 - clamp(f - 1) * 3, 2.5); else glow(c, x, y, 70, C.coral, .9 * (1 - clamp((f - 1) * 3))); };
+  pulse(tI + .6, false);
+  const tp = s.at(3, 'predict'), tk = s.at(3, 'takes it');
+  if (lt > t3) { pulse(tp - .2, true); pulse(tk, false); txt(c, 'imagined first', 1210, 880, { f: 'disp', it: true, sz: 30, col: C.gold, a: win(lt, tp, s.dur, .5, .5) }); txt(c, 'then done', 1210, 920, { f: 'disp', it: true, sz: 30, col: C.coral, a: win(lt, tk, s.dur, .5, .5) }); }
+};
+// ---- ch10 counterfactual
+const BR = (() => { const r = rng(91), segs = []; const g = (x, y, a, d, main) => { const L = 170 + r() * 60; const x2 = x + Math.cos(a) * L, y2 = y + Math.sin(a) * L * .9; segs.push({ x1: x, y1: y, x2, y2, main, d }); if (x2 > 1560 || d > 7) return; g(x2, y2, main ? (r() - .5) * .25 : a + (r() - .5) * .3, d + 1, main); if (r() < (main ? .95 : .5)) { g(x2, y2, a + (r() < .5 ? -1 : 1) * (.35 + r() * .35), d + 1, false); } }; g(160, 560, 0, 0, true); return segs; })();
+DRAW.c10 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .3); miniLadder(c, lt, 5);
+  const tv = s.E[0] + .5, t2 = s.L[2], t3 = s.L[3];
+  const aB = E.out(P(lt, tv, tv + .6)) * lerp(1, .14, E.io(P(lt, t2 - .3, t2 + .6)));
+  if (aB > 0) { const xp = lerp(160, 1360, E.io(P(lt, tv, t2 - .3))); BR.forEach(sg => { if (sg.x1 > xp || sg.x2 > 1400) return; const f = clamp((xp - sg.x1) / (sg.x2 - sg.x1)); line(c, sg.x1, sg.y1, lerp(sg.x1, sg.x2, f), lerp(sg.y1, sg.y2, f), sg.main ? C.gold : (sg.d % 2 ? C.violet : C.cyan), aB * (sg.main ? .95 : .4), sg.main ? 4 : 2, sg.main ? null : [6, 8]); if (sg.main && f < 1) glow(c, lerp(sg.x1, sg.x2, f), lerp(sg.y1, sg.y2, f), 60, C.gold, aB * .8); });
+    txt(c, 'RUNG 3 · IMAGINING', 160, 230, { sz: 22, col: C.gold, a: aB * E.out(P(lt, s.at(1, 'imagination'), s.at(1, 'imagination') + .6)) });
+    txt(c, 'What if…?', 860, 250, { f: 'disp', it: true, sz: 80, col: C.text, al: 'center', a: aB * E.out(P(lt, s.at(1, 'What if'), s.at(1, 'What if') + .7)) }); }
+  if (lt < t2 - .4) return;
+  const bx = 600, by = 830, bw = 116, bh = 56, tT = s.at(2, 'topples'), tR = s.at(2, 'compensates'), aT = E.out(P(lt, t2 - .4, t2 + .3)) * lerp(1, .4, E.io(P(lt, t3, t3 + .8)));
+  const tower = [0, 10, -8, 14, -6, 18];
+  tower.forEach((off, k) => { const tb = t2 + k * .28, kin = E.out(P(lt, tb, tb + .35)); if (kin <= 0) return; const dt = Math.max(0, lt - tT); const x = bx + off + (dt > 0 ? (k * 30) * Math.min(dt, .9) ** 2 * 1.3 : 0), yb = by - (k + 1) * bh - (1 - kin) * 200; const y = Math.min(by - bh + 6 * k, yb + (dt > 0 ? 560 * dt * dt * (k / 6 + .3) : 0)); const rot = dt > 0 ? Math.min(1.4, dt * dt * 3 * (1 + k * .15)) : 0; const fa = 1 - clamp((lt - tR + .4) / .6); c.save(); c.globalAlpha = aT * kin * fa; c.translate(x, y + bh / 2); c.rotate(rot); rrect(c, -bw / 2, -bh / 2, bw, bh, 5); c.fillStyle = '#2A1F3F'; c.fill(); c.strokeStyle = C.violet; c.lineWidth = 2; c.stroke(); c.restore(); });
+  const pyr = []; [4, 3, 2, 1].forEach((n, row) => { for (let i = 0; i < n; i++) pyr.push([bx + (i - (n - 1) / 2) * (bw + 6), by - (row + 1) * bh]); });
+  pyr.forEach(([x, y], k) => { const tb = tR + .15 + k * .22, kin = E.out(P(lt, tb, tb + .35)); if (kin <= 0) return; c.save(); c.globalAlpha = aT * kin; rrect(c, x - bw / 2, y - (1 - kin) * 160, bw, bh - 2, 5); c.fillStyle = '#3A1F2B'; c.fill(); c.strokeStyle = C.coral; c.lineWidth = 2; c.stroke(); c.restore(); });
+  line(c, 300, by + 2, 900, by + 2, C.muted, aT * .7, 2);
+  txt(c, 'ERROR', bx - 60, 400, { sz: 24, col: C.violet, al: 'center', a: aT * win(lt, tT - .1, s.dur, .3, .5) * (lt < tR ? 1 : .35) });
+  txt(c, '→  COMPENSATION', bx + 20, 400, { sz: 24, col: C.coral, a: aT * E.out(P(lt, tR, tR + .6)) });
+  const tw = s.at(2, 'wider base'); const kw = E.out(P(lt, tw, tw + .6)); if (kw > 0) { line(c, bx - 250, by + 36, bx + 250, by + 36, C.coral, aT * kw, 2); arrowHead(c, bx + 256, by + 36, 0, C.coral, aT * kw); arrowHead(c, bx - 256, by + 36, Math.PI, C.coral, aT * kw); txt(c, 'wider base', bx, by + 72, { f: 'disp', it: true, sz: 28, col: C.coral, al: 'center', a: aT * kw }); }
+  [['abductive', 'Abductive reasoning'], ['hybrids', 'Logic + neural networks'], ['explanation', 'Explanation that earns trust']].forEach(([w, l], i) => { const tw = s.at(3, w); chip(c, l, 960, 580 + i * 100, E.out(P(lt, tw - .1, tw + .5))); });
+};
+// ---- ch11 conversation
+const PPL = Array.from({ length: 12 }, (_, i) => { const an = -Math.PI / 2 + i / 12 * 6.283; return { x: 820 + Math.cos(an) * 440, y: 570 + Math.sin(an) * 300, col: [C.cyan, C.violet, C.coral, C.gold, '#86C4F0', '#E08FC0'][i % 6], an }; });
+DRAW.c11 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .4); miniLadder(c, lt, 6);
+  const t2 = s.L[2], t3 = s.L[3]; if (lt < t2 - .4) return;
+  const a = E.out(P(lt, t2 - .4, t2 + .8)), div = E.io(P(lt, t3 - .3, t3 + 1.5));
+  const cxx = 820, cyy = 570;
+  const facets = 12, rot = t * .15;
+  for (let i = 0; i < facets; i++) { const a1 = rot + i / facets * 6.283, a2 = rot + (i + 1) / facets * 6.283; const p = PPL[i], look = .25 + .75 * Math.max(0, Math.sin(t * 1.3 + i * 1.7)); c.save(); c.globalAlpha = a * (.2 + .5 * look); c.fillStyle = div > 0 ? p.col : C.cyan; c.beginPath(); c.moveTo(cxx, cyy - 4); c.lineTo(cxx + Math.cos(a1) * 120, cyy + Math.sin(a1) * 120 * .7); c.lineTo(cxx + Math.cos(a2) * 120, cyy + Math.sin(a2) * 120 * .7); c.closePath(); c.fill(); c.strokeStyle = '#0A0C18'; c.lineWidth = 1.5; c.stroke(); c.restore(); line(c, p.x, p.y, cxx, cyy, p.col, a * .08 * (1 + div), 1.5, [3, 7]); }
+  const slot = 1.1; const n = Math.floor((lt - t2) / slot);
+  for (let q = Math.max(0, n - 3); q <= n; q++) { const r = rng(500 + q); const i = Math.floor(r() * 12), j = (i + 2 + Math.floor(r() * 8)) % 12; const f = ((lt - t2) - q * slot) / 1.5; if (f < 0 || f > 1) continue; const A = PPL[i], B = PPL[j]; const mx = (A.x + B.x) / 2 * .6 + cxx * .4, my = (A.y + B.y) / 2 * .6 + cyy * .4; const x = (1 - f) * (1 - f) * A.x + 2 * f * (1 - f) * mx + f * f * B.x, y = (1 - f) * (1 - f) * A.y + 2 * f * (1 - f) * my + f * f * B.y; c.save(); c.globalAlpha = a * .25; c.strokeStyle = A.col; c.lineWidth = 1.5; c.beginPath(); c.moveTo(A.x, A.y); c.quadraticCurveTo(mx, my, B.x, B.y); c.stroke(); c.restore(); glow(c, x, y, 34, lerp(0, 1, div) > .5 ? A.col : '#FFFFFF', a * Math.sin(f * Math.PI)); }
+  PPL.forEach((p, i) => { const col = div > 0 ? p.col : C.cyan; glow(c, p.x, p.y, 60, col, a * .45); dot(c, p.x, p.y - 8, 13, col, a); c.save(); c.globalAlpha = a; c.fillStyle = col; c.beginPath(); c.ellipse(p.x, p.y + 20, 20, 12, 0, Math.PI, 0); c.fill(); c.restore(); });
+  txt(c, 'SHARED INTENTIONALITY', 820, 170, { sz: 22, col: C.gold, al: 'center', a: a * win(lt, s.at(2, 'shared'), s.at(2, 'frames') - .2, .5, .4) });
+  txt(c, 'MANY FRAMES OF REFERENCE', 820, 170, { sz: 22, col: C.gold, al: 'center', a: a * win(lt, s.at(2, 'frames'), t3, .5, .4) });
+  const kg = E.out(P(lt, s.at(3, 'emerges') - .3, s.at(3, 'emerges') + .8));
+  if (kg > 0) { glow(c, cxx, cyy, 320, C.violet, kg * .35); txt(c, 'general intelligence', cxx, 170, { f: 'disp', it: true, sz: 50, col: C.text, al: 'center', a: kg }); txt(c, 'EMERGES BETWEEN MINDS', cxx, 220, { sz: 18, col: C.gold, al: 'center', a: kg }); }
+};
+// ---- ch12 civilization
+const CIVT = branchTree(121, 860, 1010, -Math.PI / 2, 185, 8, [.28, .48], .75);
+DRAW.c12 = (c, lt, s) => {
+  const t = s.start + lt; motes(c, t, .35);
+  const tv = s.E[0] + .4, t2 = s.L[2], t3 = s.L[3];
+  const a1 = win(lt, tv, t2 + .2, .6, .6);
+  if (a1 > 0) {
+    const tp = s.at(1, 'paleolithic'), tm = s.at(1, 'medieval'), te = s.at(1, 'exponential');
+    txt(c, 'paleolithic brains', 200, 440, { f: 'disp', it: true, sz: 64, col: C.text, a: a1 * E.out(P(lt, tp, tp + .6)) });
+    txt(c, 'medieval institutions', 200, 540, { f: 'disp', it: true, sz: 64, col: C.text, a: a1 * E.out(P(lt, tm, tm + .6)) });
+    const ka = E.out(P(lt, tm, tm + .6)); line(c, 1000, 820, 1540, 820, C.muted, a1 * ka, 2); line(c, 1000, 820, 1000, 280, C.muted, a1 * ka, 2);
+    const kc = E.io(P(lt, te - .3, te + 1.6)); c.save(); c.globalAlpha = a1; c.strokeStyle = C.coral; c.lineWidth = 4; c.beginPath(); for (let i = 0; i <= 100 * kc; i++) { const x = i / 100, y = (Math.exp(x * 5) - 1) / (Math.exp(5) - 1); const px = 1000 + x * 540, py = 820 - y * 540; i ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); c.restore();
+    txt(c, 'TECHNOLOGY', 1540, 250, { sz: 20, col: C.coral, al: 'right', a: a1 * E.out(P(lt, te + .6, te + 1.2)) }); txt(c, 'TIME', 1540, 856, { sz: 16, al: 'right', a: a1 * ka });
+    line(c, 1000, 660, 1540, 640, C.muted, a1 * ka * .7, 2, [6, 8]); txt(c, 'US', 1550, 640, { sz: 16, a: a1 * ka });
+  }
+  if (lt < t2 - .4) return;
+  const gT = E.io(P(lt, t2 - .2, t3 + 3)); drawTree(c, CIVT, 8, gT, '#3E4470', .9, 12);
+  if (lt > t3) { const kb = P(lt, s.at(3, 'future'), s.at(3, 'core') + .5); CIVT.forEach((sg, i) => { if (sg.d !== 8 || (i * 7919 % 100) / 100 > kb) return; if (i % 2) glow(c, sg.x2, sg.y2, 14, i % 3 ? C.coral : C.gold, .4); }); const kc = E.out(P(lt, s.at(3, 'empathy'), s.at(3, 'empathy') + .8)); glow(c, 860, 900, 260, C.coral, .45 * kc); txt(c, 'empathy at its core', 860, 150, { f: 'disp', it: true, sz: 56, col: C.text, al: 'center', a: kc }); }
+  const pairs = [['nouns', 'verbs', 'nouns'], ['things', 'processes', 'things'], ['either / or', 'triads', 'either-or'], ['scarcity', 'abundance', 'scarcity']];
+  const dimP = lerp(1, .0, E.io(P(lt, t3 - .2, t3 + .6)));
+  pairs.forEach(([l, r], i) => { const tw = s.at(2, pairs[i][2]), k = E.out(P(lt, tw - .1, tw + .5)), y = 330 + i * 125; if (k <= 0) return; const aa = k * dimP; c.save(); c.globalAlpha = aa * .85; rrect(c, 380, y - 50, 960, 100, 12); c.fillStyle = '#0A0C18cc'; c.fill(); c.restore(); txt(c, l, 800, y, { f: 'disp', it: true, sz: 56, col: C.muted, al: 'right', a: aa }); const sw = E.io(P(lt, tw + .2, tw + .7)); c.save(); c.font = `italic 400 56px ${FAM.disp}`; const wl = c.measureText(l).width; c.restore(); line(c, 800 - wl - 6, y + 4, 800 - wl - 6 + (wl + 12) * sw, y + 4, C.coral, aa * .8, 3); txt(c, '→', 860, y, { f: 'body', sz: 48, col: C.gold, al: 'center', a: aa }); txt(c, r, 920, y, { f: 'disp', it: true, sz: 56, col: C.coral, a: aa * E.out(P(lt, tw + .3, tw + .8)) }); });
+};
+// ---- coda
+DRAW.coda = (c, lt, s) => {
+  const t = s.start + lt; stars(c, t, .35, .01); motes(c, t, .3);
+  const t1 = s.L[1], t2 = s.L[2]; const dim = lerp(1, .18, E.io(P(lt, t2 - .5, t2 + .5)));
+  const xl = 620, xr = 1300, rail = E.io(P(lt, .2, 1.6));
+  line(c, xl, 930, xl, 930 - 700 * rail, C.muted, .5 * dim, 2); line(c, xr, 930, xr, 930 - 700 * rail, C.muted, .5 * dim, 2);
+  ['Intuition', 'Generative', 'Dual', 'Causal', 'Counterfactual', 'Conversational'].forEach((w, i) => { const ti = s.at(0, w), k = E.out(P(lt, ti - .1, ti + .5)); const y = 860 - i * 104; if (k <= 0) return; line(c, xl, y, xl + (xr - xl) * k, y, LVCOL[i + 1], dim, 4); glow(c, (xl + xr) / 2, y, 240, LVCOL[i + 1], .22 * k * dim); txt(c, LEVELS[i + 1], (xl + xr) / 2, y - 34, { f: 'disp', it: true, sz: 38, col: C.text, al: 'center', a: k * dim }); txt(c, 'L' + (i + 1), xl - 24, y, { sz: 18, col: LVCOL[i + 1], al: 'right', a: k * dim }); });
+  if (lt > t1 - .3) { const tm = s.at(1, 'partners'), f = E.io(P(lt, t1 - .3, tm)); const hx = (xl + xr) / 2, hy = 200; const ax = lerp(250, hx - 8, f), ay = lerp(940, hy, f), bx = lerp(1670, hx + 8, f), by = lerp(940, hy, f); const aa = dim * E.out(P(lt, t1 - .3, t1 + .5)); glow(c, ax, ay, 80, C.cyan, aa * .8); dot(c, ax, ay, 10, C.cyan, aa); glow(c, bx, by, 80, C.coral, aa * .8); dot(c, bx, by, 10, C.coral, aa); txt(c, 'MACHINE', ax, ay + 44, { sz: 16, col: C.cyan, al: 'center', a: aa * (1 - f) }); txt(c, 'HUMAN', bx, by + 44, { sz: 16, col: C.coral, al: 'center', a: aa * (1 - f) }); const km = E.out(P(lt, tm, tm + 1)); if (km > 0) { glow(c, hx, hy, 260 * km, C.violet, .6 * km * dim + .15 * km); ring(c, hx, hy, 40 + km * 300, '#FFFFFF', (1 - km) * .5, 2); } }
+};
+DRAW.end = (c, lt, s) => {
+  const t = s.start + lt; stars(c, t, .7, .012);
+  const ph = ((lt - 1.2) % 1.3 + 1.3) % 1.3, pulse = lt < 1.2 ? 0 : Math.exp(-ph * 7) + (ph > .24 ? .7 * Math.exp(-(ph - .24) * 7) : 0);
+  glow(c, W / 2, 540, 520 + 140 * pulse, C.coral, .16 + .14 * pulse); glow(c, W / 2, 540, 700, C.violet, .12);
+};
+
+// ================= compositor =================
+const GRAIN = (() => { const g = document.createElement('canvas'); g.width = g.height = 256; const x = g.getContext('2d'), d = x.createImageData(256, 256); for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; } x.putImageData(d, 0, 0); return g; })();
+let scaleK = 1, lastScene = null;
+function resize() {
+  const st = $('#stage'); const w = st.clientWidth, h = st.clientHeight; const k = Math.min(w / W, h / H);
+  scaleK = k; const dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.round(Math.min(1920, w * dpr)); cv.height = Math.round(cv.width * 9 / 16);
+  cv.style.width = W * k + 'px'; cv.style.height = H * k + 'px'; cv.style.left = (w - W * k) / 2 + 'px'; cv.style.top = (h - H * k) / 2 + 'px';
+  layer.style.transform = `translate(${(w - W * k) / 2}px,${(h - H * k) / 2}px) scale(${k})`;
+  render(now());
+}
+function render(t) {
+  const s = sceneAt(t), lt = t - s.start;
+  const c = cx; c.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0);
+  c.globalAlpha = 1; c.globalCompositeOperation = 'source-over'; c.fillStyle = '#07080F'; c.fillRect(0, 0, W, H);
+  const bg = c.createRadialGradient(W * .5, H * .45, 100, W * .5, H * .5, 1100); bg.addColorStop(0, '#12152C'); bg.addColorStop(1, '#07080F'); c.fillStyle = bg; c.fillRect(0, 0, W, H);
+  const fin = s.kind === 'open' ? 1.2 : .5, fout = s.kind === 'end' ? 2.2 : .5;
+  const sa = win(lt, 0, s.dur, fin, fout);
+  c.save(); c.globalAlpha = sa; try { DRAW[s.id] && DRAW[s.id](c, lt, s); } catch (e) { console.error(s.id, e); } c.restore();
+  // transition streak
+  if (['chapter', 'premise', 'map', 'coda'].includes(s.kind) && lt < .9) { const k = lt / .9; c.save(); c.globalCompositeOperation = 'lighter'; const w = W * E.out(clamp(k * 1.6)); const g = c.createLinearGradient(W / 2 - w / 2, 0, W / 2 + w / 2, 0); g.addColorStop(0, '#FF8F7E00'); g.addColorStop(.5, '#FFE6DC'); g.addColorStop(1, '#72D6E300'); c.globalAlpha = (1 - k) * .9; c.fillStyle = g; c.fillRect(W / 2 - w / 2, H / 2 - 2, w, 4); glow(c, W / 2, H / 2, 260 * (1 - k), '#FFFFFF', (1 - k) * .5); c.restore(); }
+  // caption scrim, vignette, grain
+  if (capsOn && capCur) { const g = c.createLinearGradient(0, H - 260, 0, H); g.addColorStop(0, '#07080F00'); g.addColorStop(1, '#07080Fcc'); c.fillStyle = g; c.fillRect(0, H - 260, W, 260); }
+  const v = c.createRadialGradient(W / 2, H / 2, H * .45, W / 2, H / 2, H * 1.05); v.addColorStop(0, '#00000000'); v.addColorStop(1, '#000000b0'); c.fillStyle = v; c.fillRect(0, 0, W, H);
+  c.save(); c.globalAlpha = .05; const ox = (Math.floor(t * 24) * 97) % 256, oy = (Math.floor(t * 24) * 61) % 256; c.translate(-ox, -oy); c.fillStyle = c.createPattern(GRAIN, 'repeat'); c.fillRect(0, 0, W + 256, H + 256); c.restore();
+  // overlays
+  if (s !== lastScene) { if (lastScene) (OV[lastScene.id] || []).forEach(o => o.el.style.opacity = 0); lastScene = s; }
+  (OV[s.id] || []).forEach(o => o.up(lt));
+  updCaption(t);
+}
+
+// ================= UI =================
+const bPlay = $('#bPlay'), scrub = $('#scrub'), fill = $('#fill'), knob = $('#knob'), tip = $('#tip'), timeEl = $('#time');
+const PLAY_SVG = '<svg width="12" height="14" viewBox="0 0 14 16"><path d="M0 0l14 8-14 8z"/></svg>', PAUSE_SVG = '<svg width="12" height="14" viewBox="0 0 12 14"><path d="M0 0h4v14H0zM8 0h4v14H8z"/></svg>';
+$('#bigPlayLbl').textContent = 'Watch the introduction · ' + fmt(DUR);
+scrub.setAttribute('aria-valuemax', Math.round(DUR));
+const CHAPS = SC.filter(s => ['premise', 'map', 'chapter', 'coda', 'open'].includes(s.kind));
+const label = s => s.kind === 'chapter' ? `Ch. ${s.num} · ${s.title}` : s.id === 'open' ? 'Opening' : s.id === 'premise' ? 'The premise' : s.id === 'map' ? 'How the book is built' : 'The roadmap, together';
+$('#ticks').innerHTML = SC.filter(s => s.kind === 'chapter' || s.id === 'coda').map(s => `<div class="tick" style="left:${s.start / DUR * 100}%"></div>`).join('');
+$('#idx').innerHTML = CHAPS.map(s => `<button type="button" data-t="${s.start}" data-id="${s.id}"><span class="n">${s.kind === 'chapter' ? String(s.num).padStart(2, '0') : s.id === 'open' ? '◦' : s.id === 'coda' ? '∞' : '·'}</span><span class="t">${s.kind === 'chapter' ? esc(s.title) : label(s)}</span><span class="tm">${fmt(s.start)}</span></button>`).join('');
+$('#idx').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; seek(+b.dataset.t + .01); if (!playing) play(); $('#stage').scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest' }); });
+function ui() {
+  bPlay.innerHTML = playing ? PAUSE_SVG : PLAY_SVG; bPlay.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+}
+function uiTime(t) {
+  const f = t / DUR * 100; fill.style.width = f + '%'; knob.style.left = f + '%'; timeEl.textContent = fmt(t) + ' / ' + fmt(DUR); scrub.setAttribute('aria-valuenow', Math.round(t));
+  const s = sceneAt(t); document.querySelectorAll('#idx button').forEach(b => b.classList.toggle('on', b.dataset.id === s.id || (s.id === 'title' && b.dataset.id === 'open') || (s.id === 'end' && b.dataset.id === 'coda')));
+}
+bPlay.onclick = toggle; $('#bigPlay').onclick = play;
+$('#bBack').onclick = () => seek(now() - 10);
+$('#bCC').onclick = () => { capsOn = !capsOn; $('#bCC').setAttribute('aria-pressed', capsOn); $('#stage').classList.toggle('nocap', !capsOn); };
+$('#bMus').onclick = () => { musicOn = !musicOn; $('#bMus').setAttribute('aria-pressed', musicOn); if (musicBus) musicBus.gain.setTargetAtTime(musicOn ? 1 : 0, AC.currentTime, .1); };
+$('#bMute').onclick = () => { muted = !muted; $('#bMute').setAttribute('aria-pressed', !muted); $('#bMute').textContent = muted ? 'Muted' : 'Sound'; if (master) master.gain.setTargetAtTime(muted ? 0 : 1, AC.currentTime, .05); };
+$('#bFS').onclick = () => { const st = $('#stage'); try { if (document.fullscreenElement) document.exitFullscreen(); else (st.requestFullscreen || st.webkitRequestFullscreen).call(st).catch?.(() => {}); } catch (e) {} };
+document.addEventListener('fullscreenchange', () => setTimeout(resize, 50));
+$('#stage').addEventListener('click', e => { if (e.target.closest('#cover')) return; if (started) toggle(); });
+const tAt = e => { const r = scrub.getBoundingClientRect(); return clamp((e.clientX - r.left) / r.width) * DUR; };
+let dragging = false;
+scrub.addEventListener('pointerdown', e => { dragging = true; scrub.setPointerCapture(e.pointerId); const was = playing; scrub._was = was; if (was) pause(); pos = tAt(e); if (!started) { started = true; $('#cover').hidden = true; } render(pos); uiTime(pos); });
+scrub.addEventListener('pointermove', e => { const t = tAt(e), r = scrub.getBoundingClientRect(); tip.hidden = false; tip.style.left = ((e.clientX - r.left)) + 'px'; tip.textContent = fmt(t) + ' · ' + label(sceneAt(t).kind === 'title' ? S('open') : sceneAt(t).kind === 'end' ? S('coda') : sceneAt(t)); if (dragging) { pos = t; render(pos); uiTime(pos); } });
+scrub.addEventListener('pointerup', e => { dragging = false; if (scrub._was) play(); });
+scrub.addEventListener('pointerleave', () => tip.hidden = true);
+scrub.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { seek(now() + 5); e.preventDefault(); } if (e.key === 'ArrowLeft') { seek(now() - 5); e.preventDefault(); } });
+document.addEventListener('keydown', e => { if (e.target.closest('input,textarea') || e.target === scrub) return; if (e.code === 'Space') { e.preventDefault(); started ? toggle() : play(); } else if (e.key === 'ArrowRight') seek(now() + 5); else if (e.key === 'ArrowLeft') seek(now() - 5); else if (e.key.toLowerCase() === 'c') $('#bCC').click(); });
+function loop() {
+  const t = now();
+  if (playing) { if (t >= DUR - .02) { pause(); pos = DUR; } duck.gain.setTargetAtTime(duckTarget(t), AC.currentTime, .15); }
+  if (playing || dragging) { render(t); uiTime(t); }
+  requestAnimationFrame(loop);
+}
+new ResizeObserver(resize).observe($('#stage'));
+Promise.all(['500 20px "IBM Plex Mono"', 'italic 400 40px "Bodoni Moda"', 'italic 500 40px "Bodoni Moda"', '400 40px "Bodoni Moda"', '400 20px Figtree', '500 20px Figtree'].map(f => document.fonts.load(f).catch(() => {}))).then(() => render(now()));
+resize(); uiTime(pos); ui(); requestAnimationFrame(loop);
+
+</script>
+
+</body></html>

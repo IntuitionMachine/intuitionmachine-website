@@ -1518,21 +1518,115 @@ def exploration_card(url, kind, title, blurb, cta):
 
 _EXPLORATION_CARDS = "\n".join(exploration_card(*e) for e in EXPLORATIONS_DATA)
 
+# --------------------------------------------------------------------------
+# Explainer films, listed on the Explorations page; files live in site/explainers/
+# --------------------------------------------------------------------------
+
+from urllib.parse import quote
+
+# (group, file under site/explainers/, kind, title, blurb)
+EXPLAINERS_DATA = [
+    ("Artificial Intuition", "Artificial Intuition on Film.html", "Film · 12 min",
+     "Artificial Intuition on Film",
+     "A voyage through The Improbable Deep Learning Revolution, chapter by chapter, over "
+     "real footage of sea, sky and Earth."),
+    ("Artificial Empathy", "Artificial Empathy/index.html", "Narrated tour · 8:23",
+     "Artificial Empathy",
+     "The premise, the cycle of creation, and the six-level roadmap from intuition to "
+     "conversational empathy. Jump to any chapter."),
+    ("Artificial Empathy", "The Modular Universe.html", "Chapter one · infinite zoom",
+     "The Modular Universe",
+     "From quarks to culture, modules all the way up: modularity as evolution's memory."),
+    ("Artificial Fluency", "Artificial Fluency.html", "Book trailer · 7:54",
+     "Artificial Fluency",
+     "All twelve chapters in a narrated introduction, with captions and chapter jumps."),
+    ("Artificial Fluency", "artificial-fluency-film_3.html", "Film · 4 min",
+     "Artificial Fluency — The Film",
+     "A visual précis of the book's most insightful line from each chapter, on why meaning "
+     "isn't stored but made."),
+    ("Artificial Creativity", "In the Beginning.html", "Prologue · interactive voyage",
+     "In the Beginning",
+     "Twenty-six layers of the adjacent possible, from the first binding of particles to "
+     "machines that construct their own ways of making."),
+    ("Artificial Creativity", "Unbounded.html", "Film · interactive descent",
+     "Unbounded",
+     "Recursive self-improvement as a descent: each world inside the core of the last, until "
+     "the machinery of making begins to remake itself."),
+    ("Ideas", "Transformers Explained Using Semiotics.html", "Fourteen chapters · narrated",
+     "Transformers Explained Using Semiotics",
+     "How a transformer reads, told through Charles Sanders Peirce's theory of signs."),
+    ("Ideas", "The Scale of Thought.html", "Narrated explainer",
+     "The Scale of Thought",
+     "Human thought is limited less by what we understand than by how much we can carry "
+     "out. Automated cognition lifts that limit."),
+    ("Ideas", "The Tribes of the AI Discourse/index.html", "Film · explorable map",
+     "The Tribes of the AI Discourse",
+     "A map of the camps in the AI debate — what it is, what to do, which harm, where power "
+     "sits — with neighbours and opposites for every tribe."),
+]
+
+EXPLAINER_GROUPS = [
+    ("Artificial Intuition", "From the book <i>Artificial Intuition</i>"),
+    ("Artificial Empathy", "From the book <i>Artificial Empathy</i>"),
+    ("Artificial Fluency", "From the book <i>Artificial Fluency</i>"),
+    ("Artificial Creativity", "From <i>Artificial Creativity</i>"),
+    ("Ideas", "Ideas, explained"),
+]
+
+
+def explainer_card(path, kind, title, blurb):
+    url = "explainers/" + quote(path)
+    t = title.replace("&", "&amp;")
+    return f"""      <article class="exploration">
+        <div class="exploration__body">
+          <span class="label exploration__kind">{kind}</span>
+          <h3><a href="{url}">{t}</a></h3>
+          <p class="exploration__desc">{blurb}</p>
+          <p class="exploration__foot">
+            <a class="btn btn--ghost" href="{url}">Watch &#8594;</a>
+          </p>
+        </div>
+      </article>"""
+
+
+def _explainer_sections():
+    out = []
+    for key, heading in EXPLAINER_GROUPS:
+        cards = "\n".join(explainer_card(*e[1:]) for e in EXPLAINERS_DATA if e[0] == key)
+        out.append(f"""  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">{key}</span>
+      <h2>{heading}</h2>
+    </div>
+    <div class="explorations">
+{cards}
+    </div>
+  </section>
+""")
+    return "\n".join(out)
+
+
 EXPLORATIONS = f"""
   <section class="wrap page-head">
     <span class="label">Explorations</span>
-    <h1>Interactive explorations of the theory</h1>
-    <p class="lede">The theory is easier to feel than to read. These are hands-on companions —
-    each opens in a full page of its own — for turning the ideas over yourself rather than
-    taking them on the page's word.</p>
+    <h1>Interactive explorations and films</h1>
+    <p class="lede">The ideas are easier to feel than to read. These are hands-on companions
+    to the theory, and narrated films and explorable worlds made from our books — each opens
+    in a full page of its own. Most are best with sound on, and many let you leave the film at
+    any point to explore the scene yourself.</p>
   </section>
 
   <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">The theory</span>
+      <h2>Hands-on companions to the theory</h2>
+    </div>
     <div class="explorations">
 {_EXPLORATION_CARDS}
     </div>
   </section>
 
+""" + _explainer_sections() + """
   """ + CTA + """
 """
 
@@ -1781,7 +1875,95 @@ FIRST = """
 # ExO 3.0: the framework, and where the engineering fits
 # --------------------------------------------------------------------------
 
-EXO = """
+EXO_SOURCE = "https://openexo.com/organizational-singularity"
+
+
+def maprow(name, text):
+    return f"""      <div class="maptable__row" role="row">
+        <b role="cell">{name}</b>
+        <span role="cell">{text}</span>
+      </div>"""
+
+
+def maptable(label, head_a, head_b, rows):
+    body = "\n".join(maprow(*r) for r in rows)
+    return f"""<div class="maptable" role="table" aria-label="{label}">
+      <div class="maptable__row maptable__row--head" role="row">
+        <span role="columnheader">{head_a}</span>
+        <span role="columnheader">{head_b}</span>
+      </div>
+{body}
+    </div>"""
+
+
+_DRIVE = maptable("DRIVE: the intelligence engine", "DRIVE", "What it means", [
+    ("Decision Architecture", "What is automated, what is escalated, and what stays with people."),
+    ("Recursive Learning", "The capacity to learn faster than the environment changes — results "
+     "feed straight back into the next cycle."),
+    ("Intelligence Stack", "The operating core: six layers wrapped in a governance control plane "
+     "(below)."),
+    ("Value Moat", "Advantage from proprietary data, network effects, intelligence density, "
+     "reconfiguration speed and curatorial judgment."),
+    ("Elastic Agency", "One pool of human and AI capacity, allocated through a capability "
+     "registry, graduated authority and a map of decision boundaries."),
+])
+
+_SHAPE = maptable("SHAPE: the organisational form", "SHAPE", "What it means", [
+    ("Safe Autonomy", "Agents governed by protocol, with absolute human accountability."),
+    ("Human Architecture", "Where human judgment, ethics, relationships and taste create value "
+     "agents cannot."),
+    ("Adaptive Architecture", "Modularity plus antifragility: the organisation reconfigures "
+     "rather than breaks."),
+    ("Purpose Control", "The MTP run as an operational protocol rather than a poster."),
+    ("Ecosystem Trust", "Trust across organisational boundaries made into protocol: verifiable "
+     "identity, credentials and audit trails."),
+])
+
+_STACK = maptable("The Intelligence Stack", "Layer", "What it does", [
+    ("Purpose", "Sets objectives and constraints derived from the MTP."),
+    ("Sense", "Collects signals from customers, operations, competitors and the environment."),
+    ("Interpret", "Builds context, retrieves history and simulates scenarios."),
+    ("Decide", "Generates options and commits — within a defined permission envelope."),
+    ("Orchestrate / Act", "Executes through tools, workflows, APIs, people and other agents."),
+    ("Learn", "Evaluates outcomes, updates models and propagates what worked."),
+    ("GOVERN / ASSURE", "The control plane over every layer: trusted evaluations, searchable "
+     "logs, granular rollback and a human review queue — plus escalation and kill switches."),
+])
+
+_REWRITE = maptable("REWRITE: the transformation method", "Step", "What happens", [
+    ("1 · Backcast &amp; define", "Define the AI-native destination first, then work backward."),
+    ("2 · Assess &amp; prepare", "Score readiness, stand up a minimal Intelligence Stack, choose "
+     "an on-ramp."),
+    ("3 · Extract", "Capture tacit institutional knowledge and build the governed data layer "
+     "agents need."),
+    ("4 · Diagnose &amp; strip", "Remove organisational drag before automating anything."),
+    ("5 · Build &amp; prove", "Deploy agents in waves, run them in parallel with legacy "
+     "workflows, then retire the old path."),
+    ("6 · Rewire &amp; evolve", "Replace hierarchy with pod-based networks and make "
+     "self-disruption a permanent rhythm."),
+])
+
+_FIT = maptable("ExO 3.0 concepts and Intuition Machine's role", "ExO 3.0 concept",
+                "What we build", [
+    ("MTP as protocol", "Your constraints, priorities and policies, captured so an agent can "
+     "actually follow them — and conflicts between them found before an agent trips over them"),
+    ("Decision Architecture", "Explicit boundaries for each workflow: what the agent decides, "
+     "what it escalates, and to whom"),
+    ("Intelligence Stack", "Constrained agentic workflows, connected to the enterprise systems "
+     "and identity they depend on"),
+    ("GOVERN / ASSURE", "Evaluations against real outcomes, policy enforcement, audit trails, "
+     "rollback and approval paths — from the first deployment"),
+    ("Edge Twin", "One governed AI-native workflow, launched alongside existing operations — "
+     "<a href=\"first-workflow.html\">our entry engagement</a>"),
+    ("REWRITE · Extract", "Mapping the rules, dependencies and tacit knowledge a workflow "
+     "really runs on"),
+    ("REWRITE · Build &amp; prove", "Parallel running, side-by-side measurement and the "
+     "evidence to retire the old path"),
+    ("Recursive Learning", "Drift and degradation detected, and updates driven by evidence "
+     "rather than by the last report"),
+])
+
+EXO = f"""
   <section class="wrap page-head">
     <span class="label">ExO 3.0</span>
     <h1>From ExO 3.0 to production</h1>
@@ -1792,19 +1974,142 @@ EXO = """
   <section class="wrap section section--ruled">
     <div class="split">
       <div class="section__head" style="margin-bottom:0">
+        <span class="label">What ExO 3.0 is</span>
+        <h2>A blueprint for the organisation after the org chart</h2>
+      </div>
+      <div class="prose">
+        <p>The Exponential Organisations (ExO) model, developed by Salim Ismail and the OpenExO
+        community, describes how organisations grow far faster than their headcount. The
+        first version paired a Massive Transformative Purpose (MTP) with ten attributes —
+        SCALE and IDEAS — for organisations built on information and networks.</p>
+        <p>ExO 3.0, set out in <a href="{EXO_SOURCE}" rel="noopener"><i>The Organizational
+        Singularity</i></a>, updates the model for AI agents. Its starting point is economic:
+        firms exist because coordinating work inside them used to be cheaper than
+        coordinating it outside. AI is collapsing the cost of coordination, so execution is
+        becoming cheaper than management — and much of the org chart turns into overhead.</p>
+        <p>The AI-native organisation it describes runs through networks of people and agents
+        sharing one intelligence layer, learning continuously, and governed by protocol rather
+        than by hierarchy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="section__head">
+      <span class="label">The architecture</span>
+      <h2>MTP + DRIVE + SHAPE</h2>
+      <p class="lede prose" style="margin-top:1.2rem">Three parts: a purpose agents can read,
+      an engine that makes the organisation fast and smart, and a form that keeps it tight and
+      resilient.</p>
+    </div>
+    <div class="terms">
+      <div class="term">
+        <span class="term__glyph">MTP</span>
+        <h3>Purpose, as a protocol</h3>
+        <p>The purpose stops being a poster and becomes something machines can execute, in
+        three layers: hard constraints agents may never violate, weighted priorities for
+        resolving trade-offs, and the identity that holds people together.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">DRIVE</span>
+        <h3>The intelligence engine</h3>
+        <p>Five attributes for speed and intelligence: how decisions are allocated, how the
+        organisation learns, the stack it runs on, where its advantage comes from, and how
+        human and AI capacity is pooled.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">SHAPE</span>
+        <h3>The organisational form</h3>
+        <p>Five attributes for resilience: safe autonomy, the work only people should do,
+        modular structure, purpose as control, and trust that works across organisational
+        boundaries.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">DRIVE</span>
+        <h2>Fast and smart</h2>
+      </div>
+      {_DRIVE}
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">SHAPE</span>
+        <h2>Tight and resilient</h2>
+      </div>
+      {_SHAPE}
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">The operating core</span>
+        <h2>The Intelligence Stack, under GOVERN / ASSURE</h2>
+        <p class="lede prose" style="margin-top:1.2rem">Six layers modelled on a
+        sense-decide-act loop, with a control plane that watches every one of them. ExO 3.0
+        asks for that control plane from the very start, not after the first incident.</p>
+      </div>
+      {_STACK}
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="split">
+        <div class="section__head" style="margin-bottom:0">
+          <span class="label">Where to begin</span>
+          <h2>The Edge Twin</h2>
+        </div>
+        <div class="prose">
+          <p class="lede">Rather than transform the core first, ExO 3.0 recommends building at
+          the edge: a small, CEO-sponsored parallel unit — typically three to five people and
+          a cluster of agents — that rebuilds real workflows on the Intelligence Stack.</p>
+          <p style="color:var(--on-deep)">The twin runs alongside the existing business,
+          proves it outperforms it on real work, and then takes that work over. It is a way to
+          change a large organisation without betting the whole organisation on the change.</p>
+          <p style="color:var(--on-deep)">This is the point at which a vision has to become
+          working software inside real systems — and where our
+          <a href="first-workflow.html" style="color:var(--signal-lit)">first governed
+          workflow</a> engagement is designed to start.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">The method</span>
+        <h2>REWRITE: six steps, one workflow at a time</h2>
+        <p class="lede prose" style="margin-top:1.2rem">REWRITE rebuilds work as agent-native
+        a workflow at a time, from defining the destination to rewiring the organisation
+        around what has been proven.</p>
+      </div>
+      {_REWRITE}
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
         <span class="label">The execution gap</span>
         <h2>A clear destination, and decades of systems in the way</h2>
       </div>
       <div class="prose">
-        <p>ExO 3.0 describes organisations that run through coordinated networks of people,
-        AI agents, shared intelligence and continuous learning. It sets out an Intelligence
-        Stack, a GOVERN/ASSURE control plane from the outset, and the REWRITE method for
-        getting there — starting with a small AI-native Edge Twin that runs real work
-        alongside existing operations.</p>
-        <p>Existing enterprises have to make that journey from where they are: decades of
-        technology investment, regulation, policy and organisational dependency. Translating
-        the architecture into working systems under those conditions is engineering work.
-        That is the work we do.</p>
+        <p>ExO 3.0 is a framework for organisational design. It says what to build and in
+        what order; by design, it does not prescribe vendors or technology. It advises
+        organisations to find an AI-native builder rather than a traditional consultancy.</p>
+        <p>Existing enterprises have to make the journey from where they are: decades of
+        technology investment, regulation, policy and dependencies between teams. Turning
+        GOVERN/ASSURE, an Edge Twin or a REWRITE wave into working systems under those
+        conditions is engineering work. That is the work we do.</p>
       </div>
     </div>
   </section>
@@ -1835,40 +2140,7 @@ EXO = """
       <span class="label">Where we fit</span>
       <h2>ExO 3.0 concepts, and the engineering behind each</h2>
     </div>
-    <div class="maptable" role="table" aria-label="ExO 3.0 concepts and Intuition Machine's role">
-      <div class="maptable__row maptable__row--head" role="row">
-        <span role="columnheader">ExO 3.0 concept</span>
-        <span role="columnheader">What we build</span>
-      </div>
-      <div class="maptable__row" role="row">
-        <b role="cell">MTP as protocol</b>
-        <span role="cell">Enterprise objectives and policies, translated into operational
-        constraints an agent can follow</span>
-      </div>
-      <div class="maptable__row" role="row">
-        <b role="cell">Intelligence Stack</b>
-        <span role="cell">Constrained agentic workflows, connected to the systems they
-        depend on</span>
-      </div>
-      <div class="maptable__row" role="row">
-        <b role="cell">GOVERN / ASSURE</b>
-        <span role="cell">Evaluations, enforcement, auditability and approval mechanisms</span>
-      </div>
-      <div class="maptable__row" role="row">
-        <b role="cell">Edge Twin</b>
-        <span role="cell">One governed AI-native workflow, launched alongside existing
-        operations — <a href="first-workflow.html">our entry engagement</a></span>
-      </div>
-      <div class="maptable__row" role="row">
-        <b role="cell">REWRITE</b>
-        <span role="cell">Reusable engineering infrastructure for implementation and
-        migration</span>
-      </div>
-      <div class="maptable__row" role="row">
-        <b role="cell">Recursive learning</b>
-        <span role="cell">Degradation detected, and updates driven by evidence</span>
-      </div>
-    </div>
+    {_FIT}
   </section>
 
   <section class="band--deep">
@@ -1899,12 +2171,15 @@ EXO = """
   </section>
 
   <section class="wrap section">
-    <p class="label prose">ExO 3.0 is a framework published by OpenExO. Intuition Machine is
-    independent and is not affiliated with, certified by or endorsed by OpenExO.</p>
+    <p class="label prose">ExO 3.0 is a framework published by OpenExO; the summary above
+    paraphrases <a href="{EXO_SOURCE}" rel="noopener"><i>The Organizational Singularity</i></a>.
+    Intuition Machine is independent and is not affiliated with, certified by or endorsed by
+    OpenExO.</p>
   </section>
 
   """ + CTA + """
 """
+
 
 # --------------------------------------------------------------------------
 # Research hub: the theory underneath the engineering
@@ -1926,8 +2201,8 @@ RESEARCH_DATA = [
      "Two instruments built on the kernel — one traces grounding, one makes routing "
      "explicit — and where each supports Map, Build and Prove."),
     ("explorations.html", "Interactive", "Explorations",
-     "Hands-on companions to the theory: the Semiosis Atlas and a four-dimensional chess "
-     "variant."),
+     "Hands-on companions to the theory, and ten narrated films and explorable voyages "
+     "made from our books."),
     ("video.html", "Video", "The series",
      "A 36-part video series working through the theory from the kernel to dispatch."),
     ("film.html", "Film", "Never the same twice",
@@ -2017,8 +2292,8 @@ PAGES = [
      "workflow run in shadow alongside the existing one, with evidence for what comes next.",
      FIRST),
     ("exo.html", "From ExO 3.0 to Production — Intuition Machine",
-     "ExO 3.0 shows organisations what the AI-native future looks like. Intuition Machine "
-     "provides the engineering and assurance to build it in existing enterprises.", EXO),
+     "What ExO 3.0 is — MTP, DRIVE, SHAPE, the Intelligence Stack, the Edge Twin and REWRITE "
+     "— and the engineering and assurance it takes to build it in existing enterprises.", EXO),
     ("research.html", "Research — Intuition Machine",
      "Quaternion Process Theory of Cognition: the machine-checked theory underneath "
      "Intuition Machine's engineering.", RESEARCH),
@@ -2038,8 +2313,9 @@ PAGES = [
      "Pathologies as syntactic edits to healthy words, and the seven-layer diagnostic that "
      "locates them.", DIAGNOSIS),
     ("explorations.html", "Explorations — Intuition Machine",
-     "Interactive companions to the theory: the Semiosis Atlas of sign-making and a "
-     "four-dimensional chess variant.", EXPLORATIONS),
+     "Interactive companions to the theory — the Semiosis Atlas and a four-dimensional chess "
+     "variant — and narrated films made from Artificial Intuition, Empathy, Fluency and "
+     "Creativity.", EXPLORATIONS),
     ("video.html", "Video — Quaternion Process Theory of Cognition",
      "A 36-part video series working through Quaternion Process Theory: the kernel, "
      "the loops, the pathologies and the dispatch extensions.", VIDEO),
