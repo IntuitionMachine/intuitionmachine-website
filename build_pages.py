@@ -33,6 +33,7 @@ NAV = [
     ("first-workflow.html", "First workflow"),
     ("exo.html", "ExO 3.0"),
     ("research.html", "Research"),
+    ("explorations.html", "Explorations"),
     ("books.html", "Books"),
     ("writing.html", "Writing"),
     ("about.html", "Contact"),
@@ -1501,10 +1502,34 @@ EXPLORATIONS_DATA = [
 ]
 
 
+# Poster stills captured from each piece, in assets/img/explorations/
+POSTERS = {
+    "https://deeplearningplaybook.com/spiral-semiosis/": "semiosis-atlas",
+    "https://codeaudit.github.io/4d-chess/": "4d-chess",
+    "Artificial Intuition on Film.html": "artificial-intuition-film",
+    "Artificial Empathy/index.html": "artificial-empathy",
+    "The Modular Universe.html": "modular-universe",
+    "Artificial Fluency.html": "artificial-fluency",
+    "artificial-fluency-film_3.html": "artificial-fluency-film",
+    "In the Beginning.html": "in-the-beginning",
+    "Unbounded.html": "unbounded",
+    "Transformers Explained Using Semiotics.html": "transformers-semiotics",
+    "The Scale of Thought.html": "scale-of-thought",
+    "The Tribes of the AI Discourse/index.html": "tribes",
+}
+
+
+def exploration_media(url, key, rel=""):
+    return f"""        <a class="exploration__media" href="{url}"{rel} tabindex="-1" aria-hidden="true">
+          <img src="assets/img/explorations/{POSTERS[key]}.jpg" width="960" height="600" alt="" loading="lazy" decoding="async">
+        </a>"""
+
+
 def exploration_card(url, kind, title, blurb, cta):
     t = title.replace("&", "&amp;")
     b = blurb.replace("&", "&amp;")
     return f"""      <article class="exploration">
+{exploration_media(url, url, ' rel="noopener"')}
         <div class="exploration__body">
           <span class="label exploration__kind">{kind}</span>
           <h3><a href="{url}" rel="noopener">{t}</a></h3>
@@ -1578,6 +1603,7 @@ def explainer_card(path, kind, title, blurb):
     url = "explainers/" + quote(path)
     t = title.replace("&", "&amp;")
     return f"""      <article class="exploration">
+{exploration_media(url, path)}
         <div class="exploration__body">
           <span class="label exploration__kind">{kind}</span>
           <h3><a href="{url}">{t}</a></h3>
@@ -1589,11 +1615,19 @@ def explainer_card(path, kind, title, blurb):
       </article>"""
 
 
+def _slug(text):
+    return text.lower().replace(" ", "-")
+
+
+_JUMPS = [("theory", "The theory")] + [(_slug(k), k) for k, _ in EXPLAINER_GROUPS]
+_JUMPBAR = "\n".join(f'      <a href="#{i}">{t}</a>' for i, t in _JUMPS)
+
+
 def _explainer_sections():
     out = []
     for key, heading in EXPLAINER_GROUPS:
         cards = "\n".join(explainer_card(*e[1:]) for e in EXPLAINERS_DATA if e[0] == key)
-        out.append(f"""  <section class="wrap section section--ruled">
+        out.append(f"""  <section class="wrap section section--ruled" id="{_slug(key)}">
     <div class="section__head">
       <span class="label">{key}</span>
       <h2>{heading}</h2>
@@ -1614,9 +1648,12 @@ EXPLORATIONS = f"""
     to the theory, and narrated films and explorable worlds made from our books — each opens
     in a full page of its own. Most are best with sound on, and many let you leave the film at
     any point to explore the scene yourself.</p>
+    <nav class="jumpbar" aria-label="On this page">
+{_JUMPBAR}
+    </nav>
   </section>
 
-  <section class="wrap section section--ruled">
+  <section class="wrap section section--ruled" id="theory">
     <div class="section__head">
       <span class="label">The theory</span>
       <h2>Hands-on companions to the theory</h2>
