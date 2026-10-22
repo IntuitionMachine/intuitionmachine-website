@@ -211,7 +211,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
     </div>
     <div class="foot__base">
       <span>Intuition Machine, 1200 South Arlington Ridge Road, 508, Arlington, VA 22202, USA</span>
-      <span>(833) 8INTUIT</span>
+      <span>(833) 8INTUIT &#160;·&#160; <a href="privacy.html">Privacy &amp; cookies</a></span>
     </div>
   </div>
 </footer>
@@ -1186,7 +1186,8 @@ VIDEO = f"""
     </div>
 
     <p class="embed__note">Nothing is requested from YouTube until you press play. Loading the
-    player sets YouTube&#8217;s cookies and is subject to their privacy policy.
+    player sets YouTube&#8217;s cookies and is subject to their privacy policy
+    (<a href="privacy.html">our privacy notice</a>).
     <a href="https://www.youtube.com/playlist?list={_PL["playlist"]}" rel="noopener">Open the
     playlist on YouTube</a>.</p>
   </section>
@@ -2312,12 +2313,145 @@ RESEARCH = f"""
             <i>1:45 &#160;·&#160; press to load from YouTube</i>
           </span>
         </button>
-        <p class="embed__note">Nothing is requested from YouTube until you press play.</p>
+        <p class="embed__note">Nothing is requested from YouTube until you press play; pressing it
+        loads YouTube&#8217;s player, which may set cookies
+        (<a href="privacy.html">privacy notice</a>). Or
+        <a href="https://www.youtube.com/watch?v=cvpExVxrJOY" rel="noopener">watch it on
+        YouTube</a>.</p>
       </div>
     </div>
   </section>
 
   """ + CTA + """
+"""
+
+
+# --------------------------------------------------------------------------
+# Privacy & cookies. Keep this in step with what the site actually does:
+# no cookies, no browser storage, no analytics, no third-party requests at
+# page load; YouTube only after the visitor presses play.
+# --------------------------------------------------------------------------
+
+PRIVACY = """
+  <section class="wrap page-head">
+    <span class="label">Privacy &amp; cookies</span>
+    <h1>No cookies, no tracking</h1>
+    <p class="lede">This site sets no cookies, keeps nothing in your browser and runs no
+    analytics. Every page, font, script and film is served from intuitionmachine.com itself.
+    The one exception is a YouTube video, and that loads only when you press play.</p>
+    <p class="label" style="margin-top:1.6rem">Last updated 22 October 2026</p>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Cookies</span>
+        <h2>Why there is no cookie banner</h2>
+      </div>
+      <div class="prose">
+        <p>European rules (the ePrivacy Directive and the GDPR) require consent before a
+        website stores or reads information on your device, unless it is strictly necessary.
+        We do not do that at all: no cookies, no <code>localStorage</code> or
+        <code>sessionStorage</code>, no tracking pixels, no fingerprinting, no advertising and no
+        analytics. There is nothing to consent to, so we do not ask.</p>
+        <p>Fonts and scripts, including those used by the films and explorations on this
+        domain, are hosted here rather than fetched from Google Fonts or a public CDN, so
+        reading a page does not tell any third party that you visited.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Video</span>
+        <h2>YouTube, only when you press play</h2>
+      </div>
+      <div class="prose">
+        <p>Some pages show a video poster. Until you press it, nothing is requested from
+        YouTube. Pressing play is your choice to load YouTube&#8217;s player (from
+        youtube-nocookie.com) in that spot. From then on, YouTube, operated by Google, receives
+        your IP address and may store cookies or similar data on your device, under
+        <a href="https://policies.google.com/privacy" rel="noopener">Google&#8217;s privacy
+        policy</a>. If you would rather not, every video also has a plain link to watch it on
+        YouTube directly, or you can simply not press play. Reloading the page removes the
+        player; you can clear anything YouTube stored in your browser settings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Hosting</span>
+        <h2>Server logs</h2>
+      </div>
+      <div class="prose">
+        <p>The site is hosted on GitHub Pages. To deliver pages and protect the service, GitHub
+        and its network provider process technical data about each request, including your IP
+        address, and may keep it in logs for a limited period. We do not receive or use these
+        logs. See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+        rel="noopener">GitHub privacy statement</a>. The legal basis is our legitimate interest
+        in running a secure website (GDPR Art. 6(1)(f)).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Contact</span>
+        <h2>When you email us</h2>
+      </div>
+      <div class="prose">
+        <p>There are no forms on this site. If you write to
+        <a href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a>, we use your
+        name, address and what you tell us only to reply and, if you ask, to discuss working
+        together (GDPR Art. 6(1)(b) and (f)). We do not add you to a mailing list or share
+        your message with anyone outside the people working on your enquiry, and we delete
+        correspondence when it is no longer needed for that purpose.</p>
+        <p>Our email runs on Google&#8217;s Gmail service, so Google stores and processes
+        messages on our behalf, including on servers outside the EU, under
+        <a href="https://policies.google.com/privacy" rel="noopener">Google&#8217;s privacy
+        policy</a> and its data processing terms. We are based in the United States, so the
+        messages you send us are handled there.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Elsewhere</span>
+        <h2>Links to other sites</h2>
+      </div>
+      <div class="prose">
+        <p>Some links lead to other sites: the Semiosis Atlas and 4D Chess explorations, our
+        writing on Medium, our books on Gumroad, YouTube, LinkedIn and OpenExO. Those sites
+        have their own privacy and cookie practices, which apply once you follow the link.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Your rights</span>
+        <h2>Who we are, and what you can ask</h2>
+      </div>
+      <div class="prose">
+        <p>The controller for this site is Intuition Machine, 1200 South Arlington Ridge Road,
+        508, Arlington, VA 22202, USA,
+        <a href="mailto:info@intuitionmachine.com">info@intuitionmachine.com</a>.</p>
+        <p>If you are in the EU, the EEA or the UK, you can ask us for access to, correction
+        or deletion of personal data we hold about you, ask us to restrict or stop processing
+        it, or ask for a copy to take elsewhere. Write to the address above. You also have the
+        right to complain to your local data protection authority.</p>
+        <p>If what this site does changes, for instance if we ever add analytics, we will ask
+        for your consent first where the law requires it and update this page.</p>
+      </div>
+    </div>
+  </section>
 """
 
 PAGES = [
@@ -2366,6 +2500,9 @@ PAGES = [
      "Carlos Perez, Software Architect and Co-Founder of Intuition Machine.", TEAM),
     ("about.html", "Contact — Intuition Machine",
      "Contact Intuition Machine.", ABOUT),
+    ("privacy.html", "Privacy and Cookies — Intuition Machine",
+     "Intuition Machine's website sets no cookies, stores nothing in your browser and runs "
+     "no analytics. YouTube loads only when you press play.", PRIVACY),
 ]
 
 # Old Squarespace and previous-design URLs, pointed at their new homes.
