@@ -26,7 +26,18 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
-      # site/ is committed, so there is nothing to build here.
+      # site/ is committed, so there is nothing to build here. But a film exported
+      # straight into site/explainers/ can still call Google Fonts or a CDN, which
+      # the privacy notice says never happens: copy those files into the site, then
+      # refuse to publish if any third-party request is left.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Self-host third-party fonts and scripts
+        run: python3 selfhost_assets.py
+      - name: Check for third-party requests
+        run: python3 selfhost_assets.py --check
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

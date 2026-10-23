@@ -90,6 +90,7 @@ site/
   assets/img/           mark, portrait, product screenshots
   .nojekyll
 build_pages.py          regenerates the inner pages from one shared shell
+selfhost_assets.py      copies Google Fonts / CDN files into site/ (no third-party requests)
 build.py                regenerates archive/ from a wget mirror
 ```
 
@@ -105,6 +106,20 @@ python3 build_pages.py
 ```
 
 The generated HTML is committed, so this is only needed when you change those pages.
+
+### Adding or re-exporting a film
+
+Drop films into `site/explainers/` as exported. They usually call Google Fonts and a
+CDN, which `privacy.html` promises the site never does, so before committing run:
+
+```sh
+python3 selfhost_assets.py           # copy fonts/scripts into site/assets/, rewrite links
+python3 selfhost_assets.py --check   # list anything third-party still left; exit 1 if so
+```
+
+`build_pages.py` runs the first step for you, and the deploy workflow runs both, so a
+film pushed as-is is still cleaned before it goes live, and the deploy stops rather
+than publish a page that calls out.
 
 ## Refreshing the archive
 

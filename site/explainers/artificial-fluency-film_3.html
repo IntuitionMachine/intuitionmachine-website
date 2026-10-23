@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Artificial Fluency — The Film</title>
-<link href="fonts/fonts-f1e8f0653a.css" rel="stylesheet">
+<link href="../assets/fonts/hosted/fonts-f1e8f0653a.css" rel="stylesheet">
 <style>
 :root{
   --bg:#04050b; --ink:#eef1ff; --dim:rgba(238,241,255,.62); --faint:rgba(238,241,255,.18);
@@ -100,10 +100,12 @@ canvas#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block}
 }
 </style>
 <script type="importmap">
-{"imports":{
-  "three":"../assets/js/vendor/three-0.160.0/build/three.module.js",
-  "three/addons/":"../assets/js/vendor/three-0.160.0/examples/jsm/"
-}}
+{
+ "imports": {
+  "three": "../assets/js/vendor/cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "../assets/js/vendor/cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+ }
+}
 </script>
 </head>
 <body>

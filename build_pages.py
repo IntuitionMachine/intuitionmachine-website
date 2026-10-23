@@ -2542,6 +2542,11 @@ def main():
             f.write(redirect_page(target))
         print(f"  wrote {OUT}/{slug} -> {target}")
 
+    # Films dropped into site/explainers/ arrive calling Google Fonts and CDNs;
+    # privacy.html promises they don't, so copy those files into the site.
+    import selfhost_assets
+    selfhost_assets.main([])
+
 
 if __name__ == "__main__":
     main()
