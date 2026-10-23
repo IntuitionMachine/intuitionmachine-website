@@ -29,6 +29,7 @@ def playlist_data():
 
 NAV = [
     ("index.html", "Home"),
+    ("machines.html", "Machines"),
     ("how-we-work.html", "How we work"),
     ("first-workflow.html", "First workflow"),
     ("exo.html", "ExO 3.0"),
@@ -40,51 +41,6 @@ NAV = [
 ]
 
 MARK = ""   # the cube is now supplied artwork, not an inline symbol
-
-CM_ICON = """<svg class="product__icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-          <path d="M8 8 L22 22 L8 22 M8 36 L22 22 L36 8 M22 22 L36 22 M22 22 L36 36" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="8" cy="8" r="2.8" fill="currentColor" stroke="none"/>
-          <circle cx="8" cy="22" r="2.8" fill="currentColor" stroke="none"/>
-          <circle cx="8" cy="36" r="2.8" fill="currentColor" stroke="none"/>
-          <circle cx="36" cy="8" r="2.8" fill="currentColor" stroke="none"/>
-          <circle cx="36" cy="22" r="2.8" fill="currentColor" stroke="none"/>
-          <circle cx="36" cy="36" r="2.8" fill="currentColor" stroke="none"/>
-          <circle cx="22" cy="22" r="4.4" fill="currentColor" stroke="none"/>
-        </svg>"""
-
-IM_ICON = """<svg class="product__icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-          <path d="M22 6 L22 16 M22 28 L22 38 M6 22 L16 22 M28 22 L38 22" stroke-linecap="round"/>
-          <circle cx="22" cy="22" r="6.2"/>
-          <path d="M11 11 L16.5 16.5 M33 11 L27.5 16.5" stroke-linecap="round" opacity=".55"/>
-        </svg>"""
-
-PRODUCTS = f"""<div class="products">
-      <article class="product">
-        {CM_ICON}
-        <span class="product__abbr">CM</span>
-        <h3>Connection Machine</h3>
-        <p class="product__role">Witness graph and word tracing</p>
-        <ul class="caps">
-          <li>Builds the fold-witness graph: which claims descend to evidence, and how far</li>
-          <li>Traces which of the twelve loops a system actually runs, and which fail to close</li>
-          <li>Detects letter deletions — the audit that compares reports to other reports</li>
-          <li>Flags orphaned conventions: standing rules with no living editor</li>
-        </ul>
-      </article>
-
-      <article class="product">
-        {IM_ICON}
-        <span class="product__abbr">IM</span>
-        <h3>Intuition Machine</h3>
-        <p class="product__role">Typed dispatch</p>
-        <ul class="caps">
-          <li>The selector made operational: routes arriving content to the handling loop</li>
-          <li>Types every route by level and column — no unindexed selection</li>
-          <li>Holds routing rules to the ceiling: quality-reading routes stay uncompiled</li>
-          <li>Keeps a live-judgment path and an alerting bypass permanently open</li>
-        </ul>
-      </article>
-    </div>"""
 
 CTA = """<section class="band--deep">
     <div class="wrap section cta">
@@ -185,6 +141,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
       <div>
         <h4>Work with us</h4>
         <ul>
+          <li><a href="machines.html">The machines</a></li>
           <li><a href="how-we-work.html">How we work</a></li>
           <li><a href="first-workflow.html">Your first workflow</a></li>
           <li><a href="exo.html">ExO 3.0</a></li>
@@ -201,7 +158,6 @@ def shell(title, description, body, body_class="", slug="index.html"):
           <li><a href="kernel.html">The Kernel</a></li>
           <li><a href="loops.html">The Loops</a></li>
           <li><a href="diagnosis.html">Diagnosis</a></li>
-          <li><a href="software.html">Instruments</a></li>
           <li><a href="explorations.html">Explorations</a></li>
           <li><a href="video.html">Video</a></li>
           <li><a href="books.html">Books</a></li>
@@ -882,59 +838,566 @@ depth = ω  (⦿G, ⦿R)  → semantic at best</pre>
 
 
 # --------------------------------------------------------------------------
-# Software
+# The Machines — the product family for the self-learning enterprise
 # --------------------------------------------------------------------------
 
-SOFTWARE = f"""
+# (id, name, capability, question, layer, tagline, body paragraphs (HTML),
+#  principal capabilities, produces, creates value by, closing line)
+MACHINES_DATA = [
+    ("sense", "Sense Machine", "Enterprise perception and discovery",
+     "What exists, and what is happening?", "understanding",
+     "Make the invisible enterprise visible.",
+     ["Sense Machine discovers how an enterprise actually operates. It examines existing "
+      "systems without first requiring the organisation to produce a comprehensive ontology "
+      "or formal architectural model.",
+      "Using connectors, crawlers, static analysis, process mining and AI-assisted "
+      "interpretation, it reconstructs the relationships among applications, data, business "
+      "processes, organisational responsibilities and operating rules — both the structures "
+      "that are documented and the implicit relationships that emerge from operational "
+      "evidence."],
+     ["Enterprise crawling and system inventory",
+      "Software and data architecture reverse engineering",
+      "Process and workflow discovery",
+      "Relationship and dependency extraction",
+      "Identification of implicit rules and practices",
+      "Detection of undocumented assumptions and contradictions",
+      "Targeted elicitation of tacit knowledge from domain experts"],
+     "Evidence-backed observations, candidate semantic assertions, dependency maps and "
+     "explicit knowledge gaps.",
+     "Reducing the cost of understanding complex, poorly documented enterprise environments.",
+     "Sense Machine is the primary way enterprise intelligence is bootstrapped from messy "
+     "organisational reality."),
+    ("connection", "Connection Machine", "Evidence grounding and traceability",
+     "How are claims connected to evidence?", "understanding",
+     "Connect organisational claims to reality.",
+     ["Connection Machine establishes the evidence underneath enterprise knowledge. It "
+      "maintains witness graphs that connect claims, observations, interpretations and "
+      "decisions to what supports them.",
+      "It shows not merely that two things are related, but why that relationship is believed "
+      "and where the supporting evidence comes from. That matters most when AI-generated "
+      "interpretations circulate through several systems and begin to look independently "
+      "corroborated."],
+     ["Evidence and provenance tracing",
+      "Witness graph construction",
+      "Claim-to-source grounding",
+      "Dependency and derivation tracking",
+      "Detection of unsupported claims",
+      "Identification of circular or duplicated evidence",
+      "Traceability across organisational decisions"],
+     "Witness graphs, provenance chains, grounding assessments and evidence-dependency "
+     "structures.",
+     "Making enterprise intelligence traceable, auditable and resistant to unsupported or "
+     "self-reinforcing conclusions.",
+     "Connection Machine provides the grounding that trustworthy shared knowledge requires."),
+    ("context", "Context Machine", "Organisational memory and understanding",
+     "What do we know, and what matters here?", "understanding",
+     "Give every decision the context it deserves.",
+     ["Context Machine maintains an evolving representation of what an enterprise knows, "
+      "believes, requires and intends, preserving organisational meaning across systems, "
+      "teams and time.",
+      "Unlike a conventional knowledge repository, it represents uncertainty, conflicting "
+      "interpretations, authority, applicability and change explicitly. It keeps three kinds "
+      "of knowledge distinct rather than forcing agreement between perspectives:",
+      '<dl class="kinds"><div><dt>Descriptive</dt><dd>What exists or happens.</dd></div>'
+      '<div><dt>Normative</dt><dd>What is required or permitted.</dd></div>'
+      '<div><dt>Intentional</dt><dd>What the organisation is trying to accomplish.</dd></div></dl>',
+      "It also assembles task-specific views, giving each agent the knowledge relevant to its "
+      "work without exposing it to the full complexity of the enterprise."],
+     ["Persistent enterprise semantic memory",
+      "Entity and relationship management",
+      "Representation of assertions, conflicts and unknowns",
+      "Context-sensitive interpretation",
+      "Organisational authority and policy context",
+      "Temporal knowledge and semantic versioning",
+      "Permission-aware contextual retrieval",
+      "Task-specific context assembly"],
+     "Enterprise semantic models, contextual knowledge views, scoped assertions and "
+     "decision-relevant context.",
+     "Making organisational understanding reusable across applications, teams and autonomous "
+     "agents.",
+     "Context Machine preserves what the enterprise learns."),
+    ("judgment", "Judgment Machine", "Evaluation and decision governance",
+     "What conclusions are justified?", "intelligence",
+     "Determine what deserves to be trusted.",
+     ["Judgment Machine establishes whether interpretations, conclusions and proposed actions "
+      "are sufficiently justified. It distinguishes evidence from inference, confidence from "
+      "correctness, and observed behaviour from legitimate authority.",
+      "Different situations need different kinds of validation. Some assertions can be checked "
+      "deterministically; others need specialised classifiers, formal policies, empirical "
+      "evaluations or an authorised human. Judgment Machine coordinates them."],
+     ["Evidence sufficiency evaluation",
+      "Semantic consistency checking",
+      "Policy and authority validation",
+      "Conflict and contradiction analysis",
+      "Task-specific eval generation",
+      "Risk-sensitive decision thresholds",
+      "Uncertainty assessment and abstention",
+      "Human approval and escalation",
+      "Specialised typed judgments"],
+     "Validated assertions, judgment results, evaluation evidence, authorisation requirements "
+     "and decision constraints.",
+     "Making enterprise AI decisions verifiable, accountable and governable.",
+     "Judgment Machine makes sure that accumulating information does not automatically become "
+     "accumulating authority."),
+    ("intuition", "Intuition Machine", "Typed cognitive dispatch",
+     "How should this situation be handled?", "intelligence",
+     "Know what kind of intelligence is needed.",
+     ["Intuition Machine decides how each situation should be handled. Not every enterprise "
+      "event needs the same cognitive process: routine transactions can run on deterministic "
+      "rules, familiar exceptions need narrow judgments, unfamiliar situations call for "
+      "investigation, and consequential decisions need human deliberation.",
+      "It dispatches work to the right mechanism, treating different kinds of cognition as "
+      "distinct operational capabilities rather than routing everything through one "
+      "general-purpose model."],
+     ["Situation classification and typed dispatch",
+      "Selection of appropriate cognitive workflows",
+      "Deterministic versus judgment-based routing",
+      "Escalation and exception handling",
+      "Selection among available processing capabilities",
+      "Prevention of inappropriate routine processing",
+      "Routing traceability and diagnostics"],
+     "Typed dispatch decisions, selected cognitive workflows and escalation instructions.",
+     "Improving the efficiency and reliability of enterprise intelligence through the right "
+     "cognitive specialisation.",
+     "Intuition Machine makes sure the enterprise applies the right kind of intelligence to "
+     "each situation."),
+    ("agency", "Agency Machine", "Governed autonomous execution",
+     "What are we authorised to do?", "intelligence",
+     "Turn justified understanding into authorised action.",
+     ["Agency Machine lets AI agents perform enterprise work within explicit organisational "
+      "constraints. Rather than leaving each agent to interpret policy for itself, it compiles "
+      "the applicable requirements, permissions and decision contracts into constrained "
+      "execution environments — a semantic compiler and an enterprise meta-harness.",
+      "It separates the ability to perform an action from the authority to perform it."],
+     ["Semantic compilation of requirements and policies",
+      "Generation of specialised agent harnesses",
+      "Scoped tool permissions and credentials",
+      "Model and judgment-service integration",
+      "Workflow orchestration and durable execution",
+      "Human approval gates",
+      "Runtime precondition verification",
+      "Exception handling, recovery and rollback",
+      "Execution tracing and auditing"],
+     "Compiled decision contracts, constrained agents, governed workflows and action records.",
+     "Enabling reliable enterprise automation without giving up organisational control.",
+     "Agency Machine turns knowledge into safely delegated operational capability."),
+    ("learning", "Learning Machine", "Semantic adaptation and improvement",
+     "What should we learn or change?", "intelligence",
+     "Make experience improve the enterprise.",
+     ["Learning Machine closes the loop between organisational knowledge, actions and "
+      "outcomes. It watches for changes in processes, systems, policies, decisions and "
+      "results, and identifies when assumptions should be reconsidered, when new knowledge "
+      "should be acquired, and when deployed workflows must be revalidated.",
+      "It does not simply accumulate information. It manages the controlled evolution of "
+      "organisational understanding."],
+     ["Semantic drift detection",
+      "Operational feedback analysis",
+      "Detection of obsolete or conflicting knowledge",
+      "Initiation of semantic learning transactions",
+      "Dependency-aware impact analysis",
+      "Validation of proposed semantic revisions",
+      "Regression evaluation of affected agents",
+      "Knowledge refinement and retirement",
+      "Measurement of semantic reuse and economic benefit"],
+     "Semantic revisions, learning transactions, change-impact reports, updated validations "
+     "and improvement recommendations.",
+     "Keeping enterprise intelligence from going stale while turning operational experience "
+     "into reusable capability.",
+     "Learning Machine makes the enterprise&#8217;s intelligence compound rather than decay."),
+    ("coreography", "Coreography Machine", "Collective intelligence and coordinated action",
+     "How do we act coherently together?", "collective",
+     "Enable people and AI agents to act as one coherent organisation.",
+     ["Coreography Machine coordinates complex work across human teams, software systems and "
+      "AI agents. It goes beyond conventional orchestration, where a central controller "
+      "directs every participant.",
+      "Instead it relies on <strong>shared context, commitments, protocols and events that let "
+      "distributed participants coordinate without a single controlling intelligence</strong>. "
+      "People and agents work in shared project and organisational contexts — observing "
+      "progress, making commitments, negotiating dependencies and responding to change — "
+      "while each keeps their own responsibilities and delegated authority. It brings "
+      "together agentic technical programme management and multiplayer AI."],
+     ["Multiplayer human–agent workspaces",
+      "Autonomous technical programme management",
+      "Cross-functional dependency discovery",
+      "Commitment and decision tracking",
+      "Distributed, event-driven workflow coordination",
+      "Detection of conflicting plans and responsibilities",
+      "Human–agent negotiation and escalation",
+      "Shared operational state and progress monitoring",
+      "Continuous capture of coordination knowledge"],
+     "Coordinated activities, shared commitments, resolved dependencies, decision histories "
+     "and reusable organisational knowledge.",
+     "Reducing organisational friction, coordination overhead, delivery delays and fragmented "
+     "decision-making.",
+     "Coreography Machine is where the whole architecture meets the organisation: it lets the "
+     "enterprise act collectively while getting steadily better at understanding and "
+     "coordinating itself."),
+]
+
+MACHINE_LAYERS = [
+    ("understanding", "Enterprise understanding",
+     "Construct and maintain reliable organisational knowledge"),
+    ("intelligence", "Enterprise intelligence and automation",
+     "Turn knowledge into justified decisions, execution and improvement"),
+    ("collective", "Collective enterprise applications",
+     "Deliver coordinated outcomes across people and agents"),
+]
+
+_MACHINE_NUM = {m[0]: f"{i + 1:02d}" for i, m in enumerate(MACHINES_DATA)}
+
+
+def _machine_cell(m):
+    mid, name, cap, question = m[:4]
+    return f"""          <a class="arch__cell" href="#{mid}">
+            <span class="arch__num">{_MACHINE_NUM[mid]}</span>
+            <b>{name}</b>
+            <span class="arch__cap">{cap}</span>
+            <i>{question}</i>
+          </a>"""
+
+
+def machine_architecture():
+    rows = []
+    for key, title, purpose in MACHINE_LAYERS:
+        cells = "\n".join(_machine_cell(m) for m in MACHINES_DATA if m[4] == key)
+        rows.append(f"""      <div class="arch__layer arch__layer--{key}">
+        <div class="arch__head">
+          <span class="label">{title}</span>
+          <p>{purpose}</p>
+        </div>
+        <div class="arch__cells">
+{cells}
+        </div>
+      </div>""")
+    return ('    <div class="arch" role="group" aria-label="The product family in three layers, on Common Ground">\n'
+            + "\n".join(rows) + """
+      <a class="arch__ground" href="#common-ground">
+        <b>Common Ground</b>
+        <span>The shared foundation under all eight: meaning, evidence, authority, versions
+        and learning, represented once</span>
+      </a>
+    </div>""")
+
+
+def machine_section(m):
+    mid, name, cap, question, layer, tagline, body, caps, produces, value, closing = m
+    paras = "\n".join(p if p.startswith("<") else f"        <p>{p}</p>" for p in body)
+    items = "\n".join(f"          <li>{c}</li>" for c in caps)
+    return f"""  <section class="wrap section section--ruled machine" id="{mid}">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">{_MACHINE_NUM[mid]} &#160;·&#160; {cap}</span>
+        <h2>{name}</h2>
+        <p class="machine__tagline">{tagline}</p>
+        <p class="machine__question">{question}</p>
+      </div>
+      <div class="prose">
+{paras}
+        <h3 class="machine__sub">Principal capabilities</h3>
+        <ul class="caps caps--two">
+{items}
+        </ul>
+        <dl class="machine__yield">
+          <div><dt>Produces</dt><dd>{produces}</dd></div>
+          <div><dt>Creates value by</dt><dd>{value}</dd></div>
+        </dl>
+        <p class="machine__close">{closing}</p>
+      </div>
+    </div>
+  </section>"""
+
+
+_MACHINE_JUMPS = "\n".join(
+    f'      <a href="#{m[0]}">{m[1]}</a>' for m in MACHINES_DATA) + \
+    '\n      <a href="#common-ground">Common Ground</a>\n      <a href="#start">Where to start</a>'
+
+_SLT_ROLES = [
+    ("sense", "can open one through discovery"),
+    ("connection", "supplies the evidence"),
+    ("context", "maintains the knowledge involved"),
+    ("judgment", "evaluates proposed resolutions"),
+    ("intuition", "routes unfamiliar situations to the right process"),
+    ("agency", "applies validated decisions through controlled action"),
+    ("learning", "manages the resulting change in meaning"),
+    ("coreography", "creates new occasions for learning through coordinated work"),
+]
+_NAME = {m[0]: m[1] for m in MACHINES_DATA}
+
+MACHINES = f"""
   <section class="wrap page-head">
-    <span class="label">Instruments</span>
-    <h1>Two instruments, one kernel</h1>
-    <p class="lede">One reads the words a system already runs and checks how far its claims
-    sit from ground. The other stands at the front desk and decides which word runs next.
-    Together they are the research foundation under our Map, Build and Prove work.</p>
+    <span class="label">The machines</span>
+    <h1>Machines for the self-learning enterprise</h1>
+    <p class="lede">A family of specialised intelligence systems that help an enterprise
+    understand itself, coordinate its work, and improve continuously through experience.</p>
+    <p class="verbs" aria-label="Discover, connect, understand, judge, act, learn">
+      <span>Discover</span><span>Connect</span><span>Understand</span><span>Judge</span><span>Act</span><span>Learn</span>
+    </p>
+    <nav class="jumpbar" aria-label="On this page">
+{_MACHINE_JUMPS}
+    </nav>
   </section>
 
   <section class="wrap section section--ruled">
-    {PRODUCTS}
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">The approach</span>
+        <h2>Learn the enterprise by doing useful work in it</h2>
+      </div>
+      <div class="prose">
+        <p>Traditional enterprise software assumes an organisation can describe its
+        structures, processes, policies and requirements explicitly before automation
+        begins.</p>
+        <p>Real enterprises are different. Their knowledge is scattered across systems,
+        documents, people and institutional habit. Processes go undocumented, rules sometimes
+        conflict, and the organisation keeps changing underneath both.</p>
+        <p><strong>So instead of asking an enterprise to model itself before it can use AI,
+        our machines discover, validate and formalise organisational knowledge progressively,
+        through useful work.</strong> As that knowledge accumulates, the enterprise becomes
+        steadily more able to understand its own operations and automate them reliably.</p>
+      </div>
+    </div>
+    <div class="twofold">
+      <div><span class="label">Every operation yields</span><b>A business outcome</b>
+        <p>The work the enterprise needed done, done now.</p></div>
+      <div><span class="label">and</span><b>Reusable organisational intelligence</b>
+        <p>Validated knowledge the next operation starts from.</p></div>
+    </div>
   </section>
 
-  <section class="wrap section section--ruled">
+  <section class="wrap section section--ruled" id="family">
     <div class="section__head">
-      <span class="label">Where they fit</span>
-      <h2>The instruments behind Map, Build and Prove</h2>
-      <p class="lede prose" style="margin-top:1.2rem">The engagements on
-      <a href="how-we-work.html">How we work</a> are described in enterprise terms. These are
-      two of the instruments underneath them — the parts grounded directly in the kernel —
-      with the wider platform built on top.</p>
+      <span class="label">The product family</span>
+      <h2>Eight machines, one foundation</h2>
+      <p class="lede prose" style="margin-top:1.2rem">Each machine specialises in one aspect
+      of enterprise intelligence and answers one fundamental question. Together they form a
+      system that can progressively understand, operate and improve an organisation.</p>
     </div>
-    <div class="maptable" role="table" aria-label="Where each instrument supports Map, Build and Prove">
+{machine_architecture()}
+  </section>
+
+""" + "\n\n".join(machine_section(m) for m in MACHINES_DATA) + f"""
+
+  <section class="band--deep" id="common-ground">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">Common Ground</span>
+        <h2>One foundation. Many forms of intelligence.</h2>
+        <p class="lede prose" style="margin-top:1.2rem">Common Ground is the architecture all
+        eight machines share. It is not another agent, application or enterprise database. It
+        is the common system through which knowledge, evidence, authority, uncertainty,
+        decisions and learning are represented consistently — so no machine has to
+        reconstruct or reinterpret organisational meaning on its own.</p>
+      </div>
+      <div class="ground">
+        <div><b>Shared semantic representation</b><p>Entities, assertions, relationships,
+        contexts, policies, decisions, commitments, outcomes and explicit unknowns.</p></div>
+        <div><b>Evidence and provenance</b><p>How observations, claims, interpretations and
+        decisions connect to where they came from.</p></div>
+        <div><b>Authority and validity</b><p>When knowledge can be trusted, who may authorise a
+        change, and where an interpretation applies.</p></div>
+        <div><b>Semantic versioning</b><p>The history of organisational meaning: definitions,
+        obligations, ownership and dependencies as they change.</p></div>
+        <div><b>Learning transaction protocol</b><p>One standard way to investigate
+        uncertainty, resolve contradictions, validate new understanding and publish it.</p></div>
+        <div><b>Common integration contract</b><p>The interfaces through which the machines
+        discover, interpret, validate, consume and revise knowledge.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="split">
+        <div class="section__head" style="margin-bottom:0">
+          <span class="label">Not universal agreement</span>
+          <h2>Shared context, not one interpretation</h2>
+        </div>
+        <div class="prose">
+          <p>Departments may legitimately use different definitions, priorities and operating
+          rules. Common Ground represents those differences consistently, records the context
+          each belongs to, and identifies when reconciliation is actually needed.</p>
+          <p>Its purpose is not to manufacture consensus. It is to make agreement,
+          disagreement, uncertainty and authority explicit — and actionable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">Semantic learning transactions</span>
+        <h2>How the enterprise learns, one question at a time</h2>
+        <p class="lede prose" style="margin-top:1.2rem">The essential operation on Common
+        Ground. A transaction opens whenever work reveals an uncertainty, a contradiction, a
+        missing dependency or an obsolete assumption.</p>
+      </div>
+      <div class="split">
+        <ol class="slt">
+          <li>Define the unresolved semantic question.</li>
+          <li>Collect the relevant evidence.</li>
+          <li>Develop and compare interpretations.</li>
+          <li>Identify the organisational authority that applies.</li>
+          <li>Validate, reject, or preserve the uncertainty.</li>
+          <li>Record the resulting semantic change.</li>
+          <li>Determine which activities and agents depend on it.</li>
+        </ol>
+        <ul class="caps slt__roles">
+""" + "\n".join(f'          <li><span><a href="#{k}">{_NAME[k]}</a> {v}.</span></li>' for k, v in _SLT_ROLES) + f"""
+        </ul>
+      </div>
+      <p class="slt__coda">Common Ground is what makes these capabilities one intelligence
+      system rather than eight products.</p>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled" id="cycle">
+    <div class="section__head">
+      <span class="label">The learning cycle</span>
+      <h2>An interconnected system, not a pipeline</h2>
+    </div>
+    <div class="terms terms--five">
+      <div class="term">
+        <span class="term__glyph">Discover</span>
+        <p><a href="#sense">Sense</a> investigates how the organisation really works;
+        <a href="#connection">Connection</a> grounds what it finds in evidence.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Understand</span>
+        <p><a href="#context">Context</a> integrates knowledge, keeps competing
+        interpretations, and builds the view each task needs.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Decide</span>
+        <p><a href="#judgment">Judgment</a> tests whether conclusions are justified;
+        <a href="#intuition">Intuition</a> picks the right process for each situation.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Act together</span>
+        <p><a href="#agency">Agency</a> executes within constraints;
+        <a href="#coreography">Coreography</a> coordinates people and agents.</p>
+      </div>
+      <div class="term">
+        <span class="term__glyph">Learn</span>
+        <p><a href="#learning">Learning</a> turns new evidence, corrections and outcomes into
+        validated knowledge on Common Ground.</p>
+      </div>
+    </div>
+    <p class="loopline">More useful work <span>&#8594;</span> more validated understanding
+    <span>&#8594;</span> better decisions <span>&#8594;</span> more capable automation
+    <span>&#8594;</span> more useful work</p>
+    <p class="prose" style="margin-top:1.2rem;color:var(--ink-2)">The cycle only pays if
+    evidence quality, semantic integrity, legitimate authority and economic efficiency hold
+    all the way round.</p>
+  </section>
+
+  <section class="wrap section section--ruled" id="start">
+    <div class="section__head">
+      <span class="label">Where to start</span>
+      <h2>You do not need all eight to get value</h2>
+      <p class="lede prose" style="margin-top:1.2rem">Each machine is a distinct capability.
+      Start where the problem is; as deployments widen, Common Ground becomes more valuable,
+      because knowledge validated once is reused by every new workflow.</p>
+    </div>
+    <div class="maptable" role="table" aria-label="Starting points">
       <div class="maptable__row maptable__row--head" role="row">
-        <span role="columnheader">Stage</span>
-        <span role="columnheader">What the instruments contribute</span>
+        <span role="columnheader">If you are</span>
+        <span role="columnheader">Begin with</span>
       </div>
       <div class="maptable__row" role="row">
-        <b role="cell"><a href="how-we-work.html">Map</a></b>
-        <span role="cell"><b>Connection Machine</b> traces which of an organisation's claims
-        and standing rules connect to evidence, and which rules no longer have a living
-        owner — the conflicts and orphans an agent would otherwise inherit.</span>
+        <b role="cell">Modernising legacy software</b>
+        <span role="cell"><a href="#sense">Sense Machine</a> and
+        <a href="#connection">Connection Machine</a>: find out what the estate really does,
+        and what each claim about it rests on.</span>
       </div>
       <div class="maptable__row" role="row">
-        <b role="cell"><a href="how-we-work.html">Build</a></b>
-        <span role="cell"><b>Intuition Machine</b> makes routing explicit: every piece of
-        arriving work is sent to a typed handler, rules are marked compiled or live, and a
-        human judgment path is held permanently open.</span>
+        <b role="cell">Deploying governed AI agents</b>
+        <span role="cell"><a href="#context">Context Machine</a>,
+        <a href="#judgment">Judgment Machine</a> and <a href="#agency">Agency Machine</a>:
+        the right context, justified decisions, and action within authority.</span>
       </div>
       <div class="maptable__row" role="row">
-        <b role="cell"><a href="how-we-work.html">Prove</a></b>
-        <span role="cell">Both. <b>Connection Machine</b> checks that evaluations measure
-        against what actually happened rather than against the last report;
-        <b>Intuition Machine</b> catches the misroute — work handled competently by the wrong
-        handler, which every per-unit review passes.</span>
+        <b role="cell">Struggling with cross-functional delivery</b>
+        <span role="cell"><a href="#coreography">Coreography Machine</a>: shared
+        commitments and dependencies across teams and agents.</span>
+      </div>
+    </div>
+    <div class="split" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">What we are building first</span>
+        <h2>An evidence-grounded technical programme manager</h2>
+      </div>
+      <div class="prose">
+        <p>Our first integrated application combines <b>Sense</b>, <b>Connection</b>,
+        <b>Context</b> and <b>Coreography</b>: a programme manager that discovers dependencies,
+        exposes conflicting requirements, coordinates their resolution, and preserves what the
+        organisation learns along the way. <b>Judgment</b> supplies the validation controls
+        and <b>Intuition</b> the routing; <b>Agency</b> and <b>Learning</b> then widen its
+        autonomy and adaptation.</p>
+        <p>The principle is the same one behind our
+        <a href="first-workflow.html">first governed workflow</a> offer: prove the economic
+        benefit of accumulating reliable organisational knowledge in one place before
+        attempting an enterprise-wide transformation.</p>
       </div>
     </div>
   </section>
 
   <section class="wrap section section--ruled">
+    <div class="split">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="label">Why it matters</span>
+        <h2>Agents are not what enterprises lack</h2>
+      </div>
+      <div class="prose">
+        <p>Enterprise AI has concentrated on better models, giving agents tools, and
+        increasingly elaborate workflows. These help, but they are not enough.</p>
+        <p>What is missing is a continuously maintained, machine-usable representation of how
+        the organisation actually operates — its obligations, authority, goals and accumulated
+        experience. Without it, agents rediscover context again and again, reproduce
+        contradictory assumptions, decide under outdated policies, and struggle to coordinate
+        across organisational boundaries.</p>
+        <p>The machines provide the specialised capabilities. Common Ground keeps their
+        shared understanding. Coreography Machine makes that intelligence useful across the
+        organisation, and Learning Machine makes sure experience produces improvement rather
+        than more semantic debt.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--deep">
+    <div class="wrap section">
+      <div class="section__head">
+        <span class="label">The promise</span>
+        <h2>From fragmented knowledge to shared intelligence</h2>
+      </div>
+      <ul class="promise">
+        <li><a href="#sense">Sense Machine</a> discovers reality.</li>
+        <li><a href="#connection">Connection Machine</a> grounds understanding.</li>
+        <li><a href="#context">Context Machine</a> preserves meaning.</li>
+        <li><a href="#judgment">Judgment Machine</a> establishes validity.</li>
+        <li><a href="#intuition">Intuition Machine</a> chooses the right cognitive process.</li>
+        <li><a href="#agency">Agency Machine</a> enables authorised action.</li>
+        <li><a href="#learning">Learning Machine</a> turns experience into improvement.</li>
+        <li><a href="#coreography">Coreography Machine</a> enables collective intelligence.</li>
+        <li class="promise__ground"><a href="#common-ground">Common Ground</a> connects them
+        into one coherent system.</li>
+      </ul>
+      <p class="lede" style="margin-top:clamp(2rem,4vw,2.8rem);max-width:60ch">From isolated
+      agents to coordinated action. From automation to continuous organisational learning.</p>
+    </div>
+  </section>
+
+  <section class="wrap section section--ruled" style="padding-bottom:0">
+    <div class="section__head">
+      <span class="label">The research underneath</span>
+      <h2>Two machines, grounded in the kernel</h2>
+      <p class="lede prose" style="margin-top:1.2rem">Connection Machine and Intuition Machine
+      come directly out of <a href="research.html">our research</a> on how organisations
+      learn. Here is the formal idea behind each.</p>
+    </div>
+  </section>
+
+  <section class="wrap section">
     <div class="split">
       <div class="section__head" style="margin-bottom:0">
         <span class="label">Connection Machine</span>
@@ -945,10 +1408,10 @@ SOFTWARE = f"""
         connects it to encounter-level records: the claim links to an interpretation, which
         links to a log, which links to something that actually happened. No such chain means
         no witness, and no witness means capture-vulnerable.</p>
-        <p>CM instruments that chain. It ingests the trace store, indexes the four strata of
-        witness depth, and reports — per claim — whether a descent path to evidence exists and
-        how many hops long it is. Because the test is mechanical, anyone can run it on any
-        assertion.</p>
+        <p>Connection Machine instruments that chain. It ingests the trace store, indexes the
+        four strata of witness depth, and reports — per claim — whether a descent path to
+        evidence exists and how many hops long it is. Because the test is mechanical, anyone
+        can run it on any assertion.</p>
 
     <figure class="fig">
       <!--FIG_WITNESS-->
@@ -956,7 +1419,7 @@ SOFTWARE = f"""
     </figure>
 
         <p>What it cannot do is eliminate the remainder. Convention is never fully groundable,
-        so a narratable margin is permanent. CM's job is to make the groundable portion
+        so a narratable margin is permanent. The job is to make the groundable portion
         commonly computable, and to say plainly which claims fall outside it.</p>
       </div>
     </div>
@@ -973,9 +1436,10 @@ SOFTWARE = f"""
         audit trigger, or early market intelligence. Every loop is healthy; the diagnostic
         layers examine each one, find nothing, and return nothing — because the failure was
         that the item reached the wrong loop.</p>
-        <p>IM makes the selector explicit. Every route is typed by level and column. Rules are
-        marked as compiled or live, and the mix is matched to stage — compiled selection is
-        appropriate standardisation at commodity stage and lethal at genesis.</p>
+        <p>Intuition Machine makes the selector explicit. Every route is typed by level and
+        column. Rules are marked as compiled or live, and the mix is matched to stage —
+        compiled selection is appropriate standardisation at commodity stage and lethal at
+        genesis.</p>
 
     <figure class="fig">
       <!--FIG_SELECTOR-->
@@ -986,24 +1450,9 @@ SOFTWARE = f"""
         quality-sensing. And every compiled rule set is itself a standing convention, so it
         carries a witness and an owner — because orphaned routing rules are the dead hand at
         the front desk.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="band--deep">
-    <div class="wrap section">
-      <div class="section__head">
-        <span class="label">Status</span>
-        <h2>What is claimed, and what is not</h2>
-      </div>
-      <div class="prose" style="max-width:70ch">
-        <p>The kernel these instruments implement is verified: seven axioms, nine load-bearing
-        theorems, and 43 of 43 checks passing in the canonical model. The constructs the
-        dispatch layer rests on are newer and carry weaker labels — the selector is FRAMEWORK
-        with its formalisation deferred to an open problem, and the ceiling conjecture is
-        SEMI-FORMAL pending a model family not yet built.</p>
-        <p>Those labels are printed here for the same reason they are printed in the
-        specification. A tool that reports on grounding should be honest about its own.</p>
+        <p style="color:var(--ink-2)">The kernel is verified — seven axioms, nine load-bearing
+        theorems, 43 of 43 checks passing. The selector construct is newer and labelled
+        FRAMEWORK, with its formalisation still an open problem.</p>
       </div>
     </div>
   </section>
@@ -2235,9 +2684,9 @@ RESEARCH_DATA = [
     ("diagnosis.html", "Failure modes", "Diagnosis",
      "Pathologies as minimal edits to healthy processes, and the seven-layer diagnostic "
      "that locates them."),
-    ("software.html", "Instruments", "Connection Machine &amp; Intuition Machine",
-     "Two instruments built on the kernel — one traces grounding, one makes routing "
-     "explicit — and where each supports Map, Build and Prove."),
+    ("machines.html#connection", "The machines", "Connection Machine &amp; Intuition Machine",
+     "Two of our eight machines come straight out of the kernel — one traces grounding, one "
+     "makes routing explicit."),
     ("explorations.html", "Interactive", "Explorations",
      "Hands-on companions to the theory, and ten narrated films and explorable voyages "
      "made from our books."),
@@ -2477,9 +2926,10 @@ PAGES = [
     ("loops.html", "The Loops — Quaternion Process Theory of Cognition",
      "Twelve recurring processes, each written as a word: a string of moves on the matrix "
      "that closes back on its start cell.", LOOPS),
-    ("software.html", "Software — Connection Machine and Intuition Machine",
-     "Connection Machine builds the fold-witness graph. Intuition Machine makes the "
-     "selector explicit: typed dispatch with a live-judgment path held open.", SOFTWARE),
+    ("machines.html", "The Machines — Intuition Machine",
+     "Machines for the self-learning enterprise: eight specialised intelligence systems — "
+     "Sense, Connection, Context, Judgment, Intuition, Agency, Learning and Coreography — "
+     "on one Common Ground.", MACHINES),
     ("diagnosis.html", "Diagnosis — Quaternion Process Theory of Cognition",
      "Pathologies as syntactic edits to healthy words, and the seven-layer diagnostic that "
      "locates them.", DIAGNOSIS),
@@ -2507,9 +2957,10 @@ PAGES = [
 
 # Old Squarespace and previous-design URLs, pointed at their new homes.
 REDIRECTS = {
-    "solutions.html": "software.html",
+    "solutions.html": "machines.html",
+    "software.html": "machines.html",
     "research-machine.html": "diagnosis.html",
-    "products.html": "software.html",
+    "products.html": "machines.html",
     "design-patterns-access.html": "index.html",
 }
 
