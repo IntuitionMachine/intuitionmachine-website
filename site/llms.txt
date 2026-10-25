@@ -1,0 +1,38 @@
+# Intuition Machine
+
+> Intuition Machine turns AI agents and experimental workflows into reliable, governed systems that work within your enterprise architecture, follow your organisation's rules, and deliver measurable value.
+
+Intuition Machine is an enterprise AI engineering and assurance company founded in 2015 and based in Arlington, Virginia. Its approach is Map, Build, Prove: understand the enterprise, deploy AI within it, and prove that it works. Its products are the machines for the self-learning enterprise; its research is Quaternion Process Theory of Cognition. Contact: info@intuitionmachine.com.
+
+The full text of every page is at https://intuitionmachine.com/llms-full.txt.
+
+## Work with us
+
+- [The Machines](https://intuitionmachine.com/machines.html): Machines for the self-learning enterprise: eight specialised intelligence systems — Sense, Connection, Context, Judgment, Intuition, Agency, Learning and Coreography — on one Common Ground.
+- [How We Work](https://intuitionmachine.com/how-we-work.html): Map, Build, Prove: how Intuition Machine turns AI experiments into governed, enterprise-ready workflows that follow your organisation's rules.
+- [Your First Governed AI-Native Workflow](https://intuitionmachine.com/first-workflow.html): One business process, real enterprise systems, measurable results: a bounded AI workflow run in shadow alongside the existing one, with evidence for what comes next.
+- [From ExO 3.0 to Production](https://intuitionmachine.com/exo.html): What ExO 3.0 is — MTP, DRIVE, SHAPE, the Intelligence Stack, the Edge Twin and REWRITE — and the engineering and assurance it takes to build it in existing enterprises.
+
+## Research
+
+- [Research](https://intuitionmachine.com/research.html): Quaternion Process Theory of Cognition: the machine-checked theory underneath Intuition Machine's engineering.
+- [AI-Native Organisations](https://intuitionmachine.com/ai-native.html): AI-native organisations have a specifiable shape: six layers from an invariant core to a licensed saboteur, each with a formal counterpart in QPT.
+- [The Kernel — Quaternion Process Theory of Cognition](https://intuitionmachine.com/kernel.html): The QML kernel: three spine levels, four attentional columns, and one generative operator from which the rest of the theory is built.
+- [The Loops — Quaternion Process Theory of Cognition](https://intuitionmachine.com/loops.html): Twelve recurring processes, each written as a word: a string of moves on the matrix that closes back on its start cell.
+- [Diagnosis — Quaternion Process Theory of Cognition](https://intuitionmachine.com/diagnosis.html): Pathologies as syntactic edits to healthy words, and the seven-layer diagnostic that locates them.
+- [Video — Quaternion Process Theory of Cognition](https://intuitionmachine.com/video.html): A 36-part video series working through Quaternion Process Theory: the kernel, the loops, the pathologies and the dispatch extensions.
+
+## Publications
+
+- [Books](https://intuitionmachine.com/books.html): Books, pattern languages and field guides on deep learning, generative AI and agentic systems, published through Gumroad. Several are pay-what-you-want.
+- [Writing](https://intuitionmachine.com/writing.html): Recent essays from Intuition Machine on Medium: patterns, methodology and strategy in deep learning, generative AI and agentic systems.
+- [Explorations](https://intuitionmachine.com/explorations.html): Interactive companions to the theory — the Semiosis Atlas and a four-dimensional chess variant — and narrated films made from Artificial Intuition, Empathy, Fluency and Creativity.
+
+## Company
+
+- [Team](https://intuitionmachine.com/team.html): Carlos Perez, Software Architect and Co-Founder of Intuition Machine, an enterprise AI engineering and assurance company founded in 2015.
+- [Contact](https://intuitionmachine.com/about.html): Contact Intuition Machine about governed AI-native workflows, the machines for the self-learning enterprise, or our research: info@intuitionmachine.com.
+
+## Optional
+
+- [Privacy and Cookies](https://intuitionmachine.com/privacy.html): Intuition Machine's website sets no cookies, stores nothing in your browser and runs no analytics. YouTube loads only when you press play.

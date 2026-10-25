@@ -1,0 +1,2173 @@
+# Intuition Machine — full text
+
+> Intuition Machine turns AI agents and experimental workflows into reliable, governed systems that work within your enterprise architecture, follow your organisation's rules, and deliver measurable value.
+
+Source: https://intuitionmachine.com/ · Index: https://intuitionmachine.com/llms.txt
+
+
+---
+
+URL: https://intuitionmachine.com/
+
+Arlington, Virginia
+Founded 2015
+
+Enterprise AI Engineering & Assurance
+
+# Making the AI-native enterprise real
+
+From AI experiments to trusted enterprise operations. We turn AI agents and experimental workflows into reliable, governed systems that work within your existing architecture, follow your organisation's rules, and deliver measurable value.
+
+[Start with one workflow](https://intuitionmachine.com/first-workflow.html) [How we work](https://intuitionmachine.com/how-we-work.html)
+
+Fig. 01 — One tile, rules nothing can charm its way past, and a structure that never repeats Geometry: the Chair44 aperiodic monotile
+
+The gap
+
+## AI pilots are easy. Trusted operations are not.
+
+An agent that impresses in a sandbox meets a different world in production: decades of technology investment, regulation, policy, approval chains and dependencies between teams that nobody ever wrote down.
+
+That boundary is where most AI initiatives stall — not because the models are weak, but because nothing connects them to the way the enterprise actually works.
+
+We engineer that connection. The promise is simple: move from AI pilots to scalable business operations without giving up control.
+
+The difference
+
+## Your enterprise has rules. Your AI should know them.
+
+Compliance is the smallest part of it. The rules of an organisation are its architecture, its roles, its operating procedures, its economic priorities and the ways its departments coordinate. We build AI that works inside all of them. The message is simple; the engineering underneath it is not.
+
+How we work
+
+## Understand the enterprise. Deploy AI within it. Prove that it works.
+
+Map
+
+### Understand what it takes to deploy AI
+
+Discover the rules, dependencies, approved technologies and constraints that apply, and the workflows that are good candidates for automation.
+
+Build
+
+### Turn experiments into enterprise-ready workflows
+
+Purpose-made agent environments that integrate with your applications, identity systems, approvals and deployment standards.
+
+Prove
+
+### Show it delivers, and stays in bounds
+
+Evaluate outcomes, enforce policy, manage autonomy and detect drift — the evidence you need before deploying more widely.
+
+[How we work](https://intuitionmachine.com/how-we-work.html)
+
+The machines
+
+## Machines for the self-learning enterprise
+
+Instead of asking an enterprise to model itself before it can use AI, our machines discover, validate and formalise organisational knowledge through useful work — so every operation yields a business outcome and intelligence the next one can reuse.
+
+Enterprise understanding
+
+Construct and maintain reliable organisational knowledge
+
+[ 01 Sense Machine Enterprise perception and discovery What exists, and what is happening? ](https://intuitionmachine.com/machines.html#sense) [ 02 Connection Machine Evidence grounding and traceability How are claims connected to evidence? ](https://intuitionmachine.com/machines.html#connection) [ 03 Context Machine Organisational memory and understanding What do we know, and what matters here? ](https://intuitionmachine.com/machines.html#context)
+
+Enterprise intelligence and automation
+
+Turn knowledge into justified decisions, execution and improvement
+
+[ 04 Judgment Machine Evaluation and decision governance What conclusions are justified? ](https://intuitionmachine.com/machines.html#judgment) [ 05 Intuition Machine Typed cognitive dispatch How should this situation be handled? ](https://intuitionmachine.com/machines.html#intuition) [ 06 Agency Machine Governed autonomous execution What are we authorised to do? ](https://intuitionmachine.com/machines.html#agency) [ 07 Learning Machine Semantic adaptation and improvement What should we learn or change? ](https://intuitionmachine.com/machines.html#learning)
+
+Collective enterprise applications
+
+Deliver coordinated outcomes across people and agents
+
+[ 08 Coreography Machine Collective intelligence and coordinated action How do we act coherently together? ](https://intuitionmachine.com/machines.html#coreography)   [ Common Ground The shared foundation under all eight: meaning, evidence, authority, versions and learning, represented once ](https://intuitionmachine.com/machines.html#common-ground)
+
+[Meet the machines](https://intuitionmachine.com/machines.html)
+
+Why assurance has to be engineered
+
+## The failures that matter most pass review
+
+An AI workflow rarely fails loudly. It keeps running, keeps reporting on schedule, and quietly stops being connected to anything. These are the failures we design against.
+
+Unchecked output
+
+### Model output stored as fact
+
+An agent writes what the model said straight into the record. The check was skipped, and a hallucination is now an artefact other systems rely on.
+
+Evaluation drift
+
+### Measured against the last report
+
+The evaluation that once compared results with what actually happened now compares them with the previous dashboard. Still on schedule; no longer measuring anything.
+
+Stale context
+
+### Coordinating on last quarter
+
+The agent runs perfectly on inputs that were current when it was built. The loop still turns — on stale input dressed as current input.
+
+Misrouting
+
+### Competent, and wrong
+
+Every handler performs correctly and the work reached the wrong one. Each piece passes its own review; the outcome is still wrong.
+
+Orphaned rules
+
+### A policy nobody owns any more
+
+The agent faithfully enforces a rule written for a system decommissioned years ago. Its paper trail is impeccable. What is missing is a present-day owner empowered to change it.
+
+Where to start
+
+## Your first governed AI-native workflow
+
+One business process. Real enterprise systems. Measurable results.
+
+We take one workflow you choose and rebuild it with AI agents inside your existing standards, access controls and business constraints. It runs in shadow alongside the current process, so you compare results on real work before anything changes.
+
+- A working, bounded AI workflow, initially in parallel or shadow mode
+
+- Integration with approved systems and permissions
+
+- Explicit evaluation and escalation criteria
+
+- A comparison on speed, cost, accuracy and exception rate
+
+- A documented path toward greater autonomy and reuse
+
+[The engagement](https://intuitionmachine.com/first-workflow.html)
+
+ExO 3.0
+
+## ExO 3.0 shows what the AI-native future looks like. We help you build it.
+
+ExO 3.0 describes organisations run through coordinated networks of people and AI agents. Existing enterprises have to get there from where they are — with every system, regulation and dependency they already have.
+
+We are the engineering and assurance behind that transition: an Edge Twin that runs real work, GOVERN/ASSURE built in from the start, and infrastructure that makes the next workflow cheaper than the last.
+
+[From ExO 3.0 to production](https://intuitionmachine.com/exo.html)
+
+The research underneath
+
+## Built on a theory small enough to check by machine
+
+The failures above are not a checklist we invented. They come from Quaternion Process Theory of Cognition, a formal account of how organisations learn and how they quietly stop — with explicit assumptions, a machine-checked model, and its open problems published alongside its results.
+
+7Axioms
+
+1Derived operator
+
+9Load-bearing theorems
+
+12Matrix cells
+
+12Recurring loops
+
+43/43Checks verified
+
+[Explore the research](https://intuitionmachine.com/research.html)
+
+Questions
+
+## What people ask us
+
+**What does Intuition Machine do?**
+
+Intuition Machine is an enterprise AI engineering and assurance company, founded in 2015 and based in Arlington, Virginia. We turn AI agents and experimental workflows into reliable, governed systems that work within your existing architecture, follow your organisation's rules, and deliver measurable value.
+
+**How do you move an AI pilot into production?**
+
+In three steps: [Map, Build, Prove](https://intuitionmachine.com/how-we-work.html). Map the rules, dependencies, approved technologies and constraints that apply. Build purpose-made agent environments that integrate with your applications, identity systems, approvals and deployment standards. Prove the outcomes: evaluate results, enforce policy, manage autonomy and detect drift before deploying more widely.
+
+**What is a governed AI-native workflow, and where should we start?**
+
+Start with one business process. We rebuild a workflow you choose with AI agents inside your existing standards, access controls and business constraints, and run it in shadow alongside the current process. You get a bounded working workflow, integration with approved systems, explicit evaluation and escalation criteria, a comparison on speed, cost, accuracy and exception rate, and a documented path toward greater autonomy. [Your first workflow](https://intuitionmachine.com/first-workflow.html).
+
+**What are the machines for the self-learning enterprise?**
+
+Eight specialised intelligence systems on one shared foundation, Common Ground: Sense (enterprise perception and discovery), Connection (evidence grounding and traceability), Context (organisational memory), Judgment (evaluation and decision governance), Intuition (typed cognitive dispatch), Agency (governed autonomous execution), Learning (semantic adaptation) and Coreography (coordinated action across people and agents). Instead of asking an enterprise to model itself before it can use AI, they discover, validate and formalise organisational knowledge through useful work. [Meet the machines](https://intuitionmachine.com/machines.html).
+
+**How does Intuition Machine relate to ExO 3.0?**
+
+ExO 3.0 describes organisations run through coordinated networks of people and AI agents. We are the engineering and assurance behind getting an existing enterprise there: an Edge Twin that runs real work, GOVERN and ASSURE built in from the start, and infrastructure that makes each next workflow cheaper than the last. [From ExO 3.0 to production](https://intuitionmachine.com/exo.html).
+
+**Why do AI workflows fail in production?**
+
+Rarely loudly. They keep running and quietly stop being connected to anything: model output stored as fact, evaluations that drift into comparing against the last report, agents running on stale context, work routed to the wrong competent handler, and policies nobody owns any more. We design against these failures.
+
+**What research is the work based on?**
+
+[Quaternion Process Theory of Cognition](https://intuitionmachine.com/research.html), a formal account of how organisations learn and how they quietly stop, with explicit assumptions, a machine-checked model, and its open problems published alongside its results.
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/machines.html
+
+The machines
+
+# Machines for the self-learning enterprise
+
+A family of specialised intelligence systems that help an enterprise understand itself, coordinate its work, and improve continuously through experience.
+
+DiscoverConnectUnderstandJudgeActLearn
+
+The approach
+
+## Learn the enterprise by doing useful work in it
+
+Traditional enterprise software assumes an organisation can describe its structures, processes, policies and requirements explicitly before automation begins.
+
+Real enterprises are different. Their knowledge is scattered across systems, documents, people and institutional habit. Processes go undocumented, rules sometimes conflict, and the organisation keeps changing underneath both.
+
+So instead of asking an enterprise to model itself before it can use AI, our machines discover, validate and formalise organisational knowledge progressively, through useful work. As that knowledge accumulates, the enterprise becomes steadily more able to understand its own operations and automate them reliably.
+
+Every operation yieldsA business outcome
+
+The work the enterprise needed done, done now.
+
+andReusable organisational intelligence
+
+Validated knowledge the next operation starts from.
+
+The product family
+
+## Eight machines, one foundation
+
+Each machine specialises in one aspect of enterprise intelligence and answers one fundamental question. Together they form a system that can progressively understand, operate and improve an organisation.
+
+Enterprise understanding
+
+Construct and maintain reliable organisational knowledge
+
+01 Sense Machine Enterprise perception and discovery What exists, and what is happening?   02 Connection Machine Evidence grounding and traceability How are claims connected to evidence?   03 Context Machine Organisational memory and understanding What do we know, and what matters here?
+
+Enterprise intelligence and automation
+
+Turn knowledge into justified decisions, execution and improvement
+
+04 Judgment Machine Evaluation and decision governance What conclusions are justified?   05 Intuition Machine Typed cognitive dispatch How should this situation be handled?   06 Agency Machine Governed autonomous execution What are we authorised to do?   07 Learning Machine Semantic adaptation and improvement What should we learn or change?
+
+Collective enterprise applications
+
+Deliver coordinated outcomes across people and agents
+
+08 Coreography Machine Collective intelligence and coordinated action How do we act coherently together?     Common Ground The shared foundation under all eight: meaning, evidence, authority, versions and learning, represented once
+
+01 · Enterprise perception and discovery
+
+## Sense Machine
+
+Make the invisible enterprise visible.
+
+What exists, and what is happening?
+
+Sense Machine discovers how an enterprise actually operates. It examines existing systems without first requiring the organisation to produce a comprehensive ontology or formal architectural model.
+
+Using connectors, crawlers, static analysis, process mining and AI-assisted interpretation, it reconstructs the relationships among applications, data, business processes, organisational responsibilities and operating rules — both the structures that are documented and the implicit relationships that emerge from operational evidence.
+
+### Principal capabilities
+
+- Enterprise crawling and system inventory
+
+- Software and data architecture reverse engineering
+
+- Process and workflow discovery
+
+- Relationship and dependency extraction
+
+- Identification of implicit rules and practices
+
+- Detection of undocumented assumptions and contradictions
+
+- Targeted elicitation of tacit knowledge from domain experts
+
+**Produces**
+
+Evidence-backed observations, candidate semantic assertions, dependency maps and explicit knowledge gaps.
+
+**Creates value by**
+
+Reducing the cost of understanding complex, poorly documented enterprise environments.
+
+Sense Machine is the primary way enterprise intelligence is bootstrapped from messy organisational reality.
+
+02 · Evidence grounding and traceability
+
+## Connection Machine
+
+Connect organisational claims to reality.
+
+How are claims connected to evidence?
+
+Connection Machine establishes the evidence underneath enterprise knowledge. It maintains witness graphs that connect claims, observations, interpretations and decisions to what supports them.
+
+It shows not merely that two things are related, but why that relationship is believed and where the supporting evidence comes from. That matters most when AI-generated interpretations circulate through several systems and begin to look independently corroborated.
+
+### Principal capabilities
+
+- Evidence and provenance tracing
+
+- Witness graph construction
+
+- Claim-to-source grounding
+
+- Dependency and derivation tracking
+
+- Detection of unsupported claims
+
+- Identification of circular or duplicated evidence
+
+- Traceability across organisational decisions
+
+**Produces**
+
+Witness graphs, provenance chains, grounding assessments and evidence-dependency structures.
+
+**Creates value by**
+
+Making enterprise intelligence traceable, auditable and resistant to unsupported or self-reinforcing conclusions.
+
+Connection Machine provides the grounding that trustworthy shared knowledge requires.
+
+03 · Organisational memory and understanding
+
+## Context Machine
+
+Give every decision the context it deserves.
+
+What do we know, and what matters here?
+
+Context Machine maintains an evolving representation of what an enterprise knows, believes, requires and intends, preserving organisational meaning across systems, teams and time.
+
+Unlike a conventional knowledge repository, it represents uncertainty, conflicting interpretations, authority, applicability and change explicitly. It keeps three kinds of knowledge distinct rather than forcing agreement between perspectives:
+
+**Descriptive**
+
+What exists or happens.
+
+**Normative**
+
+What is required or permitted.
+
+**Intentional**
+
+What the organisation is trying to accomplish.
+
+It also assembles task-specific views, giving each agent the knowledge relevant to its work without exposing it to the full complexity of the enterprise.
+
+### Principal capabilities
+
+- Persistent enterprise semantic memory
+
+- Entity and relationship management
+
+- Representation of assertions, conflicts and unknowns
+
+- Context-sensitive interpretation
+
+- Organisational authority and policy context
+
+- Temporal knowledge and semantic versioning
+
+- Permission-aware contextual retrieval
+
+- Task-specific context assembly
+
+**Produces**
+
+Enterprise semantic models, contextual knowledge views, scoped assertions and decision-relevant context.
+
+**Creates value by**
+
+Making organisational understanding reusable across applications, teams and autonomous agents.
+
+Context Machine preserves what the enterprise learns.
+
+04 · Evaluation and decision governance
+
+## Judgment Machine
+
+Determine what deserves to be trusted.
+
+What conclusions are justified?
+
+Judgment Machine establishes whether interpretations, conclusions and proposed actions are sufficiently justified. It distinguishes evidence from inference, confidence from correctness, and observed behaviour from legitimate authority.
+
+Different situations need different kinds of validation. Some assertions can be checked deterministically; others need specialised classifiers, formal policies, empirical evaluations or an authorised human. Judgment Machine coordinates them.
+
+### Principal capabilities
+
+- Evidence sufficiency evaluation
+
+- Semantic consistency checking
+
+- Policy and authority validation
+
+- Conflict and contradiction analysis
+
+- Task-specific eval generation
+
+- Risk-sensitive decision thresholds
+
+- Uncertainty assessment and abstention
+
+- Human approval and escalation
+
+- Specialised typed judgments
+
+**Produces**
+
+Validated assertions, judgment results, evaluation evidence, authorisation requirements and decision constraints.
+
+**Creates value by**
+
+Making enterprise AI decisions verifiable, accountable and governable.
+
+Judgment Machine makes sure that accumulating information does not automatically become accumulating authority.
+
+05 · Typed cognitive dispatch
+
+## Intuition Machine
+
+Know what kind of intelligence is needed.
+
+How should this situation be handled?
+
+Intuition Machine decides how each situation should be handled. Not every enterprise event needs the same cognitive process: routine transactions can run on deterministic rules, familiar exceptions need narrow judgments, unfamiliar situations call for investigation, and consequential decisions need human deliberation.
+
+It dispatches work to the right mechanism, treating different kinds of cognition as distinct operational capabilities rather than routing everything through one general-purpose model.
+
+### Principal capabilities
+
+- Situation classification and typed dispatch
+
+- Selection of appropriate cognitive workflows
+
+- Deterministic versus judgment-based routing
+
+- Escalation and exception handling
+
+- Selection among available processing capabilities
+
+- Prevention of inappropriate routine processing
+
+- Routing traceability and diagnostics
+
+**Produces**
+
+Typed dispatch decisions, selected cognitive workflows and escalation instructions.
+
+**Creates value by**
+
+Improving the efficiency and reliability of enterprise intelligence through the right cognitive specialisation.
+
+Intuition Machine makes sure the enterprise applies the right kind of intelligence to each situation.
+
+06 · Governed autonomous execution
+
+## Agency Machine
+
+Turn justified understanding into authorised action.
+
+What are we authorised to do?
+
+Agency Machine lets AI agents perform enterprise work within explicit organisational constraints. Rather than leaving each agent to interpret policy for itself, it compiles the applicable requirements, permissions and decision contracts into constrained execution environments — a semantic compiler and an enterprise meta-harness.
+
+It separates the ability to perform an action from the authority to perform it.
+
+### Principal capabilities
+
+- Semantic compilation of requirements and policies
+
+- Generation of specialised agent harnesses
+
+- Scoped tool permissions and credentials
+
+- Model and judgment-service integration
+
+- Workflow orchestration and durable execution
+
+- Human approval gates
+
+- Runtime precondition verification
+
+- Exception handling, recovery and rollback
+
+- Execution tracing and auditing
+
+**Produces**
+
+Compiled decision contracts, constrained agents, governed workflows and action records.
+
+**Creates value by**
+
+Enabling reliable enterprise automation without giving up organisational control.
+
+Agency Machine turns knowledge into safely delegated operational capability.
+
+07 · Semantic adaptation and improvement
+
+## Learning Machine
+
+Make experience improve the enterprise.
+
+What should we learn or change?
+
+Learning Machine closes the loop between organisational knowledge, actions and outcomes. It watches for changes in processes, systems, policies, decisions and results, and identifies when assumptions should be reconsidered, when new knowledge should be acquired, and when deployed workflows must be revalidated.
+
+It does not simply accumulate information. It manages the controlled evolution of organisational understanding.
+
+### Principal capabilities
+
+- Semantic drift detection
+
+- Operational feedback analysis
+
+- Detection of obsolete or conflicting knowledge
+
+- Initiation of semantic learning transactions
+
+- Dependency-aware impact analysis
+
+- Validation of proposed semantic revisions
+
+- Regression evaluation of affected agents
+
+- Knowledge refinement and retirement
+
+- Measurement of semantic reuse and economic benefit
+
+**Produces**
+
+Semantic revisions, learning transactions, change-impact reports, updated validations and improvement recommendations.
+
+**Creates value by**
+
+Keeping enterprise intelligence from going stale while turning operational experience into reusable capability.
+
+Learning Machine makes the enterprise’s intelligence compound rather than decay.
+
+08 · Collective intelligence and coordinated action
+
+## Coreography Machine
+
+Enable people and AI agents to act as one coherent organisation.
+
+How do we act coherently together?
+
+Coreography Machine coordinates complex work across human teams, software systems and AI agents. It goes beyond conventional orchestration, where a central controller directs every participant.
+
+Instead it relies on shared context, commitments, protocols and events that let distributed participants coordinate without a single controlling intelligence. People and agents work in shared project and organisational contexts — observing progress, making commitments, negotiating dependencies and responding to change — while each keeps their own responsibilities and delegated authority. It brings together agentic technical programme management and multiplayer AI.
+
+### Principal capabilities
+
+- Multiplayer human–agent workspaces
+
+- Autonomous technical programme management
+
+- Cross-functional dependency discovery
+
+- Commitment and decision tracking
+
+- Distributed, event-driven workflow coordination
+
+- Detection of conflicting plans and responsibilities
+
+- Human–agent negotiation and escalation
+
+- Shared operational state and progress monitoring
+
+- Continuous capture of coordination knowledge
+
+**Produces**
+
+Coordinated activities, shared commitments, resolved dependencies, decision histories and reusable organisational knowledge.
+
+**Creates value by**
+
+Reducing organisational friction, coordination overhead, delivery delays and fragmented decision-making.
+
+Coreography Machine is where the whole architecture meets the organisation: it lets the enterprise act collectively while getting steadily better at understanding and coordinating itself.
+
+Common Ground
+
+## One foundation. Many forms of intelligence.
+
+Common Ground is the architecture all eight machines share. It is not another agent, application or enterprise database. It is the common system through which knowledge, evidence, authority, uncertainty, decisions and learning are represented consistently — so no machine has to reconstruct or reinterpret organisational meaning on its own.
+
+Shared semantic representation
+
+Entities, assertions, relationships, contexts, policies, decisions, commitments, outcomes and explicit unknowns.
+
+Evidence and provenance
+
+How observations, claims, interpretations and decisions connect to where they came from.
+
+Authority and validity
+
+When knowledge can be trusted, who may authorise a change, and where an interpretation applies.
+
+Semantic versioning
+
+The history of organisational meaning: definitions, obligations, ownership and dependencies as they change.
+
+Learning transaction protocol
+
+One standard way to investigate uncertainty, resolve contradictions, validate new understanding and publish it.
+
+Common integration contract
+
+The interfaces through which the machines discover, interpret, validate, consume and revise knowledge.
+
+Not universal agreement
+
+## Shared context, not one interpretation
+
+Departments may legitimately use different definitions, priorities and operating rules. Common Ground represents those differences consistently, records the context each belongs to, and identifies when reconciliation is actually needed.
+
+Its purpose is not to manufacture consensus. It is to make agreement, disagreement, uncertainty and authority explicit — and actionable.
+
+Semantic learning transactions
+
+## How the enterprise learns, one question at a time
+
+The essential operation on Common Ground. A transaction opens whenever work reveals an uncertainty, a contradiction, a missing dependency or an obsolete assumption.
+
+- Define the unresolved semantic question.
+
+- Collect the relevant evidence.
+
+- Develop and compare interpretations.
+
+- Identify the organisational authority that applies.
+
+- Validate, reject, or preserve the uncertainty.
+
+- Record the resulting semantic change.
+
+- Determine which activities and agents depend on it.
+
+- Sense Machine can open one through discovery.
+
+- Connection Machine supplies the evidence.
+
+- Context Machine maintains the knowledge involved.
+
+- Judgment Machine evaluates proposed resolutions.
+
+- Intuition Machine routes unfamiliar situations to the right process.
+
+- Agency Machine applies validated decisions through controlled action.
+
+- Learning Machine manages the resulting change in meaning.
+
+- Coreography Machine creates new occasions for learning through coordinated work.
+
+Common Ground is what makes these capabilities one intelligence system rather than eight products.
+
+The learning cycle
+
+## An interconnected system, not a pipeline
+
+Discover
+
+Sense investigates how the organisation really works; Connection grounds what it finds in evidence.
+
+Understand
+
+Context integrates knowledge, keeps competing interpretations, and builds the view each task needs.
+
+Decide
+
+Judgment tests whether conclusions are justified; Intuition picks the right process for each situation.
+
+Act together
+
+Agency executes within constraints; Coreography coordinates people and agents.
+
+Learn
+
+Learning turns new evidence, corrections and outcomes into validated knowledge on Common Ground.
+
+More useful work → more validated understanding → better decisions → more capable automation → more useful work
+
+The cycle only pays if evidence quality, semantic integrity, legitimate authority and economic efficiency hold all the way round.
+
+Where to start
+
+## You do not need all eight to get value
+
+Each machine is a distinct capability. Start where the problem is; as deployments widen, Common Ground becomes more valuable, because knowledge validated once is reused by every new workflow.
+
+If you are Begin with
+
+Modernising legacy software Sense Machine and Connection Machine: find out what the estate really does, and what each claim about it rests on.
+
+Deploying governed AI agents Context Machine, Judgment Machine and Agency Machine: the right context, justified decisions, and action within authority.
+
+Struggling with cross-functional delivery Coreography Machine: shared commitments and dependencies across teams and agents.
+
+What we are building first
+
+## An evidence-grounded technical programme manager
+
+Our first integrated application combines Sense, Connection, Context and Coreography: a programme manager that discovers dependencies, exposes conflicting requirements, coordinates their resolution, and preserves what the organisation learns along the way. Judgment supplies the validation controls and Intuition the routing; Agency and Learning then widen its autonomy and adaptation.
+
+The principle is the same one behind our [first governed workflow](https://intuitionmachine.com/first-workflow.html) offer: prove the economic benefit of accumulating reliable organisational knowledge in one place before attempting an enterprise-wide transformation.
+
+Why it matters
+
+## Agents are not what enterprises lack
+
+Enterprise AI has concentrated on better models, giving agents tools, and increasingly elaborate workflows. These help, but they are not enough.
+
+What is missing is a continuously maintained, machine-usable representation of how the organisation actually operates — its obligations, authority, goals and accumulated experience. Without it, agents rediscover context again and again, reproduce contradictory assumptions, decide under outdated policies, and struggle to coordinate across organisational boundaries.
+
+The machines provide the specialised capabilities. Common Ground keeps their shared understanding. Coreography Machine makes that intelligence useful across the organisation, and Learning Machine makes sure experience produces improvement rather than more semantic debt.
+
+The promise
+
+## From fragmented knowledge to shared intelligence
+
+- Sense Machine discovers reality.
+
+- Connection Machine grounds understanding.
+
+- Context Machine preserves meaning.
+
+- Judgment Machine establishes validity.
+
+- Intuition Machine chooses the right cognitive process.
+
+- Agency Machine enables authorised action.
+
+- Learning Machine turns experience into improvement.
+
+- Coreography Machine enables collective intelligence.
+
+- Common Ground connects them into one coherent system.
+
+From isolated agents to coordinated action. From automation to continuous organisational learning.
+
+The research underneath
+
+## Two machines, grounded in the kernel
+
+Connection Machine and Intuition Machine come directly out of [our research](https://intuitionmachine.com/research.html) on how organisations learn. Here is the formal idea behind each.
+
+Connection Machine
+
+## What a witness graph is for
+
+A convention-level claim is grounded exactly when a descent chain with provenance connects it to encounter-level records: the claim links to an interpretation, which links to a log, which links to something that actually happened. No such chain means no witness, and no witness means capture-vulnerable.
+
+Connection Machine instruments that chain. It ingests the trace store, indexes the four strata of witness depth, and reports — per claim — whether a descent path to evidence exists and how many hops long it is. Because the test is mechanical, anyone can run it on any assertion.
+
+Fig. 07 — A claim with a descent chain, and one without
+
+What it cannot do is eliminate the remainder. Convention is never fully groundable, so a narratable margin is permanent. The job is to make the groundable portion commonly computable, and to say plainly which claims fall outside it.
+
+Intuition Machine
+
+## Why dispatch needs a guard
+
+A strange complaint arrives on Monday morning. It might be an operations matter, an audit trigger, or early market intelligence. Every loop is healthy; the diagnostic layers examine each one, find nothing, and return nothing — because the failure was that the item reached the wrong loop.
+
+Intuition Machine makes the selector explicit. Every route is typed by level and column. Rules are marked as compiled or live, and the mix is matched to stage — compiled selection is appropriate standardisation at commodity stage and lethal at genesis.
+
+Fig. 08 — Misroute and route starvation at the front desk
+
+Two guards are structural rather than configurable. Routes that must read quality-level content cannot be fully compiled, so no rulebook becomes the sole gate on quality-sensing. And every compiled rule set is itself a standing convention, so it carries a witness and an owner — because orphaned routing rules are the dead hand at the front desk.
+
+The kernel is verified — seven axioms, nine load-bearing theorems, 43 of 43 checks passing. The selector construct is newer and labelled FRAMEWORK, with its formalisation still an open problem.
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/how-we-work.html
+
+How we work
+
+# Understand the enterprise. Deploy AI within it. Prove that it works.
+
+Most AI pilots succeed in isolation and stall at the boundary of the real organisation. We work from the other end: start with the rules, systems and dependencies the AI has to live inside, and build outward from there.
+
+Map
+
+## Understand what it takes to deploy AI
+
+Before anything is automated, we find out what the work actually depends on: which systems it touches, which policies govern it, who holds which decision, and where the written process and the real one have drifted apart.
+
+- Enterprise rules, approved technologies and the constraints that apply to them
+
+- Dependencies between systems, teams and decisions
+
+- Conflicts between rules, surfaced before an agent trips over them
+
+- Workflows that are good candidates for automation, and ones that are not
+
+Underneath: an enterprise context graph, semantic analysis and capability mapping
+
+Build
+
+## Turn AI experiments into enterprise-ready workflows
+
+We build narrow, purpose-made execution environments for AI agents: each one knows the systems it may use, the identity it acts under, the approvals it needs and the standards it has to deploy against.
+
+- Integration with the enterprise applications the workflow already runs on
+
+- Identity, permissions and approvals enforced, not merely documented
+
+- Work routed to the right handler, with a human path held open
+
+- Deployment against your existing architecture and standards
+
+Underneath: generated agent environments, agent orchestration and typed routing
+
+Prove
+
+## Show it delivers value and stays within its boundaries
+
+An AI workflow earns more autonomy by producing evidence, not by passing a demo. We measure it against what actually happened, enforce its policies continuously, and flag the moment its behaviour starts to drift.
+
+- Outcome evaluations against the workflow it replaces
+
+- Policy enforcement, audit trails and escalation
+
+- Autonomy that expands only as the evidence supports it
+
+- Drift detection, so degradation is caught rather than reported around
+
+Underneath: judgment governance, bounded judgments, continuous evaluation and capability promotion criteria
+
+What "rules" means
+
+## Your enterprise has rules. Your AI should know them.
+
+Compliance is the smallest part of it. The rules of an organisation are its architecture, its roles, its operating procedures, its economic priorities and the ways its departments coordinate. An agent that ignores any of them is a liability, however capable it is.
+
+The long game
+
+## From experiment, to dependable operation, to reusable capability
+
+Capabilities evolve. What starts as an experiment becomes a dependable part of operations, and eventually a utility other workflows build on. We manage that whole progression, so each workflow you prove makes the next one cheaper.
+
+Experiment
+
+### Find out what works
+
+Cheap trials with honest results, run in shadow alongside the existing process.
+
+Operation
+
+### Make it dependable
+
+Governed, evaluated and integrated, with autonomy matched to the evidence.
+
+Utility
+
+### Make it reusable
+
+The proven capability becomes infrastructure the next workflow starts from.
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/first-workflow.html
+
+Where to start
+
+# Your first governed AI-native workflow
+
+One business process. Real enterprise systems. Measurable results.
+
+The engagement
+
+## Rebuild one workflow with AI agents, inside your enterprise
+
+We take a workflow you select and rebuild it with AI agents, working within your existing technology standards, access controls and business constraints.
+
+It runs alongside the current process first, in parallel or in shadow mode, so the two can be compared on real work before anything is switched over. You expand its autonomy when the evidence says you should, not before.
+
+What you receive
+
+## A working system, and the evidence to decide what comes next
+
+- A working, bounded AI workflow, initially running in parallel or shadow mode
+
+- Integration with approved enterprise systems and permissions
+
+- Explicit evaluation and escalation criteria
+
+- A comparison against the existing workflow on speed, cost, accuracy and exception rate
+
+- A documented path toward greater autonomy and reuse
+
+Pilot scope and production authorisation depend on the workflow's risk and its integration requirements.
+
+How it runs
+
+## Map, build and prove, scoped to one workflow
+
+Map
+
+### Choose and understand the workflow
+
+The systems it touches, the rules that govern it, the decisions people hold, and the baseline it will be measured against.
+
+Build
+
+### Rebuild it with agents
+
+A bounded agent workflow, integrated with approved systems and permissions, with escalation paths to people defined up front.
+
+Prove
+
+### Run it in shadow and compare
+
+Side-by-side results on real work, and a documented decision on what to expand, what to change, and what to leave with people.
+
+An illustrative scope
+
+## Agentic project coordination
+
+A good first workflow is high-volume, rule-bound and easy to measure. Project coordination is all three.
+
+Agents collect status, identify dependencies, manage handoffs and run routine follow-ups across the systems a programme already uses. People keep the decisions that are theirs: priorities, trade-offs and escalations.
+
+It is not another chatbot. It is the step from individual AI assistance to an AI-native team workflow — and it removes the kind of coordination overhead that AI-native organisations are built to eliminate.
+
+An example of the shape of an engagement, not a packaged product
+
+## Tell us about one workflow.
+
+We help you build your first AI-native workflow, connect it safely to your existing enterprise, and prove the business results before autonomy expands.
+
+info@intuitionmachine.com [How we work](https://intuitionmachine.com/how-we-work.html)
+
+
+---
+
+URL: https://intuitionmachine.com/exo.html
+
+ExO 3.0
+
+# From ExO 3.0 to production
+
+ExO 3.0 shows organisations what the AI-native future looks like. Intuition Machine helps them build it.
+
+What ExO 3.0 is
+
+## A blueprint for the organisation after the org chart
+
+The Exponential Organisations (ExO) model, developed by Salim Ismail and the OpenExO community, describes how organisations grow far faster than their headcount. The first version paired a Massive Transformative Purpose (MTP) with ten attributes — SCALE and IDEAS — for organisations built on information and networks.
+
+ExO 3.0, set out in [The Organizational Singularity](https://openexo.com/organizational-singularity), updates the model for AI agents. Its starting point is economic: firms exist because coordinating work inside them used to be cheaper than coordinating it outside. AI is collapsing the cost of coordination, so execution is becoming cheaper than management — and much of the org chart turns into overhead.
+
+The AI-native organisation it describes runs through networks of people and agents sharing one intelligence layer, learning continuously, and governed by protocol rather than by hierarchy.
+
+The architecture
+
+## MTP + DRIVE + SHAPE
+
+Three parts: a purpose agents can read, an engine that makes the organisation fast and smart, and a form that keeps it tight and resilient.
+
+MTP
+
+### Purpose, as a protocol
+
+The purpose stops being a poster and becomes something machines can execute, in three layers: hard constraints agents may never violate, weighted priorities for resolving trade-offs, and the identity that holds people together.
+
+DRIVE
+
+### The intelligence engine
+
+Five attributes for speed and intelligence: how decisions are allocated, how the organisation learns, the stack it runs on, where its advantage comes from, and how human and AI capacity is pooled.
+
+SHAPE
+
+### The organisational form
+
+Five attributes for resilience: safe autonomy, the work only people should do, modular structure, purpose as control, and trust that works across organisational boundaries.
+
+DRIVE
+
+## Fast and smart
+
+DRIVE What it means
+
+Decision Architecture What is automated, what is escalated, and what stays with people.
+
+Recursive Learning The capacity to learn faster than the environment changes — results feed straight back into the next cycle.
+
+Intelligence Stack The operating core: six layers wrapped in a governance control plane (below).
+
+Value Moat Advantage from proprietary data, network effects, intelligence density, reconfiguration speed and curatorial judgment.
+
+Elastic Agency One pool of human and AI capacity, allocated through a capability registry, graduated authority and a map of decision boundaries.
+
+SHAPE
+
+## Tight and resilient
+
+SHAPE What it means
+
+Safe Autonomy Agents governed by protocol, with absolute human accountability.
+
+Human Architecture Where human judgment, ethics, relationships and taste create value agents cannot.
+
+Adaptive Architecture Modularity plus antifragility: the organisation reconfigures rather than breaks.
+
+Purpose Control The MTP run as an operational protocol rather than a poster.
+
+Ecosystem Trust Trust across organisational boundaries made into protocol: verifiable identity, credentials and audit trails.
+
+The operating core
+
+## The Intelligence Stack, under GOVERN / ASSURE
+
+Six layers modelled on a sense-decide-act loop, with a control plane that watches every one of them. ExO 3.0 asks for that control plane from the very start, not after the first incident.
+
+Layer What it does
+
+Purpose Sets objectives and constraints derived from the MTP.
+
+Sense Collects signals from customers, operations, competitors and the environment.
+
+Interpret Builds context, retrieves history and simulates scenarios.
+
+Decide Generates options and commits — within a defined permission envelope.
+
+Orchestrate / Act Executes through tools, workflows, APIs, people and other agents.
+
+Learn Evaluates outcomes, updates models and propagates what worked.
+
+GOVERN / ASSURE The control plane over every layer: trusted evaluations, searchable logs, granular rollback and a human review queue — plus escalation and kill switches.
+
+Where to begin
+
+## The Edge Twin
+
+Rather than transform the core first, ExO 3.0 recommends building at the edge: a small, CEO-sponsored parallel unit — typically three to five people and a cluster of agents — that rebuilds real workflows on the Intelligence Stack.
+
+The twin runs alongside the existing business, proves it outperforms it on real work, and then takes that work over. It is a way to change a large organisation without betting the whole organisation on the change.
+
+This is the point at which a vision has to become working software inside real systems — and where our [first governed workflow](https://intuitionmachine.com/first-workflow.html) engagement is designed to start.
+
+The method
+
+## REWRITE: six steps, one workflow at a time
+
+REWRITE rebuilds work as agent-native a workflow at a time, from defining the destination to rewiring the organisation around what has been proven.
+
+Step What happens
+
+1 · Backcast & define Define the AI-native destination first, then work backward.
+
+2 · Assess & prepare Score readiness, stand up a minimal Intelligence Stack, choose an on-ramp.
+
+3 · Extract Capture tacit institutional knowledge and build the governed data layer agents need.
+
+4 · Diagnose & strip Remove organisational drag before automating anything.
+
+5 · Build & prove Deploy agents in waves, run them in parallel with legacy workflows, then retire the old path.
+
+6 · Rewire & evolve Replace hierarchy with pod-based networks and make self-disruption a permanent rhythm.
+
+The execution gap
+
+## A clear destination, and decades of systems in the way
+
+ExO 3.0 is a framework for organisational design. It says what to build and in what order; by design, it does not prescribe vendors or technology. It advises organisations to find an AI-native builder rather than a traditional consultancy.
+
+Existing enterprises have to make the journey from where they are: decades of technology investment, regulation, policy and dependencies between teams. Turning GOVERN/ASSURE, an Edge Twin or a REWRITE wave into working systems under those conditions is engineering work. That is the work we do.
+
+Vision
+
+### The vision and transformation method
+
+What the AI-native enterprise should become.
+
+Engineering
+
+### Enterprise AI engineering & assurance
+
+How AI-native workflows are integrated, governed, evaluated and deployed in real enterprises.
+
+Outcome
+
+### AI-native operations with measurable results
+
+Working workflows, controlled autonomy and reusable infrastructure.
+
+Where we fit
+
+## ExO 3.0 concepts, and the engineering behind each
+
+ExO 3.0 concept What we build
+
+MTP as protocol Your constraints, priorities and policies, captured so an agent can actually follow them — and conflicts between them found before an agent trips over them
+
+Decision Architecture Explicit boundaries for each workflow: what the agent decides, what it escalates, and to whom
+
+Intelligence Stack Constrained agentic workflows, connected to the enterprise systems and identity they depend on
+
+GOVERN / ASSURE Evaluations against real outcomes, policy enforcement, audit trails, rollback and approval paths — from the first deployment
+
+Edge Twin One governed AI-native workflow, launched alongside existing operations — [our entry engagement](https://intuitionmachine.com/first-workflow.html)
+
+REWRITE · Extract Mapping the rules, dependencies and tacit knowledge a workflow really runs on
+
+REWRITE · Build & prove Parallel running, side-by-side measurement and the evidence to retire the old path
+
+Recursive Learning Drift and degradation detected, and updates driven by evidence rather than by the last report
+
+For ExO practitioners
+
+## You shape the transformation. We engineer it.
+
+Strategy engagements create the demand; the hard part comes when a roadmap meets existing applications, regulation and policy. We are glad to work alongside practitioners on that part — through referral, implementation or co-development.
+
+- Technical and architectural readiness analysis, alongside organisational assessment
+
+- Governed AI-native workflows, built to the roadmap
+
+- Repeatable software infrastructure, alongside change coaching
+
+- Technical assurance and workflow economics, alongside transformation metrics
+
+Talk to us
+
+ExO 3.0 is a framework published by OpenExO; the summary above paraphrases [The Organizational Singularity](https://openexo.com/organizational-singularity). Intuition Machine is independent and is not affiliated with, certified by or endorsed by OpenExO.
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/research.html
+
+Research
+
+# The theory underneath the engineering
+
+Our engineering rests on Quaternion Process Theory of Cognition: a formal account of how organisations learn, and of the ways they quietly stop. It is small enough to check by machine, and it publishes what it has not yet proved.
+
+Why this is not consulting
+
+## The account is small enough to check by machine
+
+7Axioms
+
+1Derived operator
+
+9Load-bearing theorems
+
+12Matrix cells
+
+12Recurring loops
+
+43/43Checks verified
+
+Architecture
+
+### [AI-Native Organisations](https://intuitionmachine.com/ai-native.html)
+
+Six layers, from an invariant core to a licensed saboteur, each with a formal counterpart in the theory.
+
+Formal core
+
+### [The Kernel](https://intuitionmachine.com/kernel.html)
+
+Three levels, four columns and one operator — with an interactive matrix you can run words on.
+
+Processes
+
+### [The Loops](https://intuitionmachine.com/loops.html)
+
+Twelve recurring processes, each written as a word that closes back on its start.
+
+Failure modes
+
+### [Diagnosis](https://intuitionmachine.com/diagnosis.html)
+
+Pathologies as minimal edits to healthy processes, and the seven-layer diagnostic that locates them.
+
+The machines
+
+### [Connection Machine & Intuition Machine](https://intuitionmachine.com/machines.html#connection)
+
+Two of our eight machines come straight out of the kernel — one traces grounding, one makes routing explicit.
+
+Interactive
+
+### [Explorations](https://intuitionmachine.com/explorations.html)
+
+Hands-on companions to the theory, and ten narrated films and explorable voyages made from our books.
+
+Video
+
+### [The series](https://intuitionmachine.com/video.html)
+
+A 36-part video series working through the theory from the kernel to dispatch.
+
+Film
+
+### [Never the same twice](https://intuitionmachine.com/film.html)
+
+A 97-second film built from the Chair44 aperiodic monotile.
+
+Explainer
+
+## 3D aperiodic tiles
+
+How a single tile can fill space without ever repeating — supertiles of supertiles, each piece inside a unique infinite hierarchy.
+
+Nothing is requested from YouTube until you press play; pressing it loads YouTube’s player, which may set cookies ([privacy notice](https://intuitionmachine.com/privacy.html)). Or [watch it on YouTube](https://www.youtube.com/watch?v=cvpExVxrJOY).
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/ai-native.html
+
+Research
+
+# AI-native organisations have a shape, and the shape is specifiable
+
+The labs that compound are not running a plan-execute pipeline with a model bolted on. They are built as learning loops themselves. That architecture can be written down — and once written down, it can be checked.
+
+The premise
+
+## You cannot host a learning system inside a pipeline
+
+A pipeline organisation asks what you will discover before you discover it. It funds plans, reviews against plans, and treats a changed plan as a failure of planning. Everything it measures is convention checked against other convention.
+
+A learning organisation cannot make that promise and should not be asked to. Its unit of work is a cheap trial with an honest result, and its unit of memory is the machinery that made the trial cheap. The way you organise has to match the way you actually do the work.
+
+Both organisations pass their own audits. That is the whole problem, and it is why the difference has to be stated formally rather than felt.
+
+The architecture
+
+## Six layers, each with a formal counterpart
+
+Read top to bottom: the upper layers constrain the lower ones. Read bottom to top: the lower layers must be able to attack the upper ones. An organisation with only the first reading ossifies.
+
+Fig. 01 — The layers, and the constructs that specify them
+
+01 · ⦿P · identity coherence
+
+### An invariant core
+
+One premise that is not relitigated weekly, and which licenses the only genuinely top-down act: deciding what not to do. It is what lets a shared direction hold without constant realignment. In the theory this is the identity loop, and its protection is structural — the standard a system measures against cannot be moved by the measuring.
+
+02 · ⦿K + ⦿M* · knowledge and audit
+
+### One System, pointed at arbitrary problems
+
+Not a product: an internal machine that can generate data for a new question, run the trial, read the signal and kill it, in days. Its value is reuse — the same machinery aimed at a different problem next month. Every project owes it a payment back, so the organisation's weights improve with each problem it survives.
+
+03 · ⦿O ⦿C · autonomy distribution
+
+### Units under contract, not under plan
+
+Fix the rhythm and the interfaces; leave the content free. Nobody is asked to plan what they will discover, only to run cheap trials and report true results. The theory's condition here is exact: the interface between management and operations must carry current encounter, never an imposed convention standing in for it.
+
+04 · ⦿G · grounding
+
+### No wall between research and product
+
+The same System that attacks a capability tests whether a product finds its market; the same people jam and ship. Products are experiments that escaped. A handoff wall is a broken descent chain — the side that ships stops touching what the side that learns touched.
+
+05 · ⊕ ⊳ · composition
+
+### Coherence as the unit of ambition
+
+Parallel tracks periodically resolve into one statement rather than shipping as disconnected singles. Leadership's concrete artefact between releases is sequencing. Done means the thing holds together, not that a number moved.
+
+06 · ⦿R + V9a · the licensed saboteur
+
+### A standing channel against the design itself
+
+A System that repeats itself successfully is optimising yesterday. So any unit must be able to attack the top-level design cheaply, and the most successful process must be scheduled for demolition. This is the layer almost nobody builds, and the theory says exactly why its absence is invisible: no audit above it can see that it is missing.
+
+The load-bearing part
+
+## A System that flatters you is worse than no System
+
+The whole architecture rests on evaluations nobody can charm their way past. Lose that and every layer above keeps running, on signal that has quietly stopped being connected to anything.
+
+Fig. 02 — The difference is one fold
+
+How it stops
+
+## Four failures, each of which passes review
+
+### The System starts flattering
+
+Evaluation drifts from measuring against what happened to measuring against the last report. Reports keep arriving on schedule. Nothing announces the change.
+
+### The saboteur is never paged
+
+The insubordination channel still exists on the org chart and nothing routes to it. The capacity is intact and unreachable — which no review of the capacity itself will ever detect.
+
+### The constitution outlives its editor
+
+The founding premise has an impeccable paper trail and no living owner empowered to revise it. It keeps executing while the world drifts. Constitutions are the hardest thing to amend and the easiest thing to orphan.
+
+### The work is proceduralised past its ceiling
+
+Under commercial pressure the factory logic creeps back and standardises work that descends to felt quality. The theory caps how far any process can be standardised by how deep it goes; push past that and the work dies while the process reports health.
+
+Where this is fragile
+
+## Three places the architecture strains, and what the theory does about each
+
+An architecture that cannot say where it is weak is not an architecture, it is a sales deck. These are the three real stress points. None is dissolved. Each is converted from a matter of judgement into something with a name, a test, and a way of being wrong.
+
+Stress 01 · the core is a bet
+
+### The greatest coordination asset is the hardest thing to amend
+
+The invariant core works because it is not relitigated. That is also what makes it dangerous: if the premise bends, the asset becomes the liability, and by construction nobody is arguing about it.
+
+What the theory adds. A standing convention is orphaned when it is perfectly grounded in the evidence that once justified it and has no living owner empowered to revise it. Its paper trail is impeccable — that is precisely why no audit catches it. The answer is not a weaker constitution but a named editor with a live path, and the test is blunt: propose a revision and see whether any route exists by which it could be adopted or rejected. If there is none, the core is already an artefact.
+
+Stress 02 · layers 02 and 06 pull apart
+
+### The System wants to standardise; the anti-machine wants to demolish
+
+These are in permanent tension, and organisations usually resolve it by whoever argues hardest or whoever the quarter favours.
+
+What the theory adds. The disagreement is typed, not political. How far any process can be standardised is capped by how deep into felt experience its work descends. Management never goes below encounter, and proceduralises nearly to identity. Grounding and reflexive quality descend to felt quality, and quality-level content cannot be transmitted on demand — so they can promise the same meaning, never the same steps. The tension resolves by depth rather than seniority. It is also separable in data, which is to say it is a claim that can turn out false.
+
+Stress 03 · the factory returns
+
+### Under commercial pressure the deterministic logic creeps back
+
+It comes back through the product side, and it comes back quietly — as sensible discipline, from people acting in good faith.
+
+What the theory adds. It has a signature. The interface that used to carry current encounter starts carrying an imposed convention instead: last quarter's plan dressed as this quarter's input. One tag on one input changes; the loop still runs and the reports still arrive. And the ceiling conjecture says which work dies first — whatever descends deepest, which is exactly the work the organisation was built to protect.
+
+Run it yourself
+
+## Four questions, answerable this week, without us
+
+A diagnostic that only works when we run it is not a diagnostic. Each of these has a definite answer, and each maps to a condition the theory states formally.
+
+01
+
+### The editor test
+
+Pick a standing rule everyone follows. Propose a revision. If no path exists by which that proposal could be evaluated and adopted or rejected, the rule has no editor — and it will keep executing after the world it fitted is gone.
+
+02
+
+### The witness test
+
+Take a claim from your last board deck and ask for the chain down to something that actually happened: claim, interpretation, log, event. Count the hops. Claims with no chain are not lies — they are simply uncheckable, and therefore capturable.
+
+03
+
+### The routing test
+
+When did anything last reach the process that senses the quality of your own formal structures, and who sent it there? A capacity nobody routes to is disabled without ever being touched, and no review of that capacity will show it.
+
+04
+
+### The ceiling test
+
+List the processes that descend to felt judgement. Now check which of them are held to a same-steps-every-time standard. Every match is work being standardised past its ceiling, and it will degrade while its metrics improve.
+
+What would make this wrong
+
+## The claims carry their own kill conditions
+
+Editor liveness ships with the condition that would falsify it: if healthy conventions with no living owner turn out to be common in the wild, it is not a viability condition and demotes to a heuristic. The ceiling conjecture is labelled semi-formal because the model family that would verify it has not been built. The selector is labelled framework, with its formalisation deferred to a numbered open problem.
+
+One loop in the published inventory does not close as printed. It is flagged in the specification, and it is flagged on [this site](https://intuitionmachine.com/loops.html) — our own implementation of the rules reproduces the anomaly rather than papering over it.
+
+This is the part that should make the rest credible. An account that never says what would refute it is not offering you a way to check its work.
+
+In practice
+
+## From architecture to working systems
+
+This architecture is the reason we engineer AI workflows the way we do. Every agent we deploy is evaluated against what actually happened, not against the last report; every rule it enforces has an owner; and every workflow keeps a channel through which it can be challenged.
+
+In an engagement that becomes [Map, Build, Prove](https://intuitionmachine.com/how-we-work.html) — and it usually starts with [one governed workflow](https://intuitionmachine.com/first-workflow.html). Where an organisation already runs, the [seven-layer diagnostic](https://intuitionmachine.com/diagnosis.html) establishes which of its loops actually close and which of its standing rules no longer have an owner.
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/kernel.html
+
+The Kernel
+
+# Three levels, four columns, one operator
+
+QML — the Quaternion Modeling Language — is a short list of ingredients, seven axioms, one derived operator, and one small model in which every formal claim has been machine-checked.
+
+The matrix, executed
+
+## Run a word and watch where it goes
+
+Every loop in the theory is a word: a string of moves on the twelve cells. Pick one and step through it, or type your own and see whether the walk closes on its start cell.
+
+Run your own word  from  3.ce3.ii3.ie3.ci 2.ce2.ii2.ie2.ci 1.ce1.ii1.ie1.ci  word
+
+Letters over U unfold, D fold, I instance↔system, G content↔vehicle. Anything else is ignored. The interpreter reports whether the walk closes on its start cell.
+
+Fig. 01 — Words executed under the kernel’s move rules ν mediation · κ causation · ω quality
+
+The three categories
+
+## What experience sorts into
+
+The theory begins with Peirce's claim that all experience sorts into exactly three basic kinds.
+
+ω
+
+### Firstness — quality
+
+Something in itself, without reference to anything else. A felt character, a possibility, a mood. The redness of red before any comparison.
+
+κ
+
+### Secondness — causation
+
+Brute encounter between two things. Resistance, effort, surprise. The door that will not open.
+
+ν
+
+### Thirdness — mediation
+
+A third thing that brings a first and a second into relation. A law, a habit, a convention, a meaning.
+
+Fig. 02 — The spine, and the two moves that travel it
+
+Prescission
+
+## The order is about what you can ignore
+
+The three come in an order, and it is not about time or importance. Call X prescissively prior to Y when X can be attended to while neglecting Y, but not the other way around.
+
+You can contemplate the pure feel of a colour without thinking about any collision or law. You cannot contemplate a collision without it having some felt character. 1st ≺ 2nd: quality without reaction is conceivable; every reaction has a felt character. 2nd ≺ 3rd: brute encounter without interpretation is conceivable; every law applies to something actual. Therefore: 1st ≺ 2nd ≺ 3rd
+
+This ordering — abstractive dependency — is the single most load-bearing idea in the theory, and it returns at the very end in the tradeoff theory.
+
+The four quadrants
+
+## One sentence, four things you can attend to
+
+Independently of the three levels there is a second, four-way division, arriving from thinking about signs and media rather than experience. Any sign can be examined along two distinctions: is it this particular sign-event or the whole system? And are we asking what it means, or what it is made of? ii = Instance·Content ie = Instance·Vehicle ci = System·Content ce = System·Vehicle
+
+A spoken sentence makes it concrete. The meaning of this one utterance is ii. The sound waves of this one utterance are ie. The shared language's semantics is ci. Its grammar and phonology, considered as a machine, is ce.
+
+McLuhan's Laws of Media independently discovered this four-faced structure. Its independence from the three-level division is not an accident of intellectual history — it is a formal fact: the four-way division cannot be derived from the operator that generates the levels.
+
+Fig. 03 — The four attentional columns
+
+The generative operator
+
+## Everything is built from this
+
+𝔏 = ⟨ L, ⊑, π, {Φ_q}, {Φ̄_q}, ⊕, ⊖, ι, γ ⟩ qml_q(x, y) := Φ_q(x) ⊖ Φ̄_q(y)
+
+Take the first input and unfold it one step toward mediation; take the second and fold it one step toward quality; then ask what the unfolded thing contains beyond the folded thing. That remainder is the output.
+
+The subscript q records a basic commitment: no cognitive operation executes without an attentional mode. There is no view from nowhere — every act of abstraction or grounding is somebody's act, performed in some register.
+
+Adjunction, not inversion
+
+## The loss is built in from the beginning
+
+Unfolding and folding are not inverses. Folding what you unfolded does not return you to where you started — abstracting an experience and then trying to recover the experience from the abstraction loses something, and the axiom builds that loss in rather than apologising for it later.
+
+Instead of inversion, the two maps are related by an adjunction: a looser but exact relationship defined by a single "fits under" equivalence. One consequence, proved rather than assumed, is that convention can never be fully grounded — rebuild a convention from its grounding and you get less than the convention claimed.
+
+That permanent remainder is why no amount of process eliminates spin-room, and why the honest goal is making the groundable portion commonly checkable.
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/loops.html
+
+The Loops
+
+# Every recurring process is literally a word
+
+A string of moves on the matrix that starts at a cell and walks back to it. Ten of the twelve are intra-matrix words, machine-verified as closed walks.
+
+Notation
+
+## Four letters, one for each thing you can do
+
+U = Φ unfold, +1 level D = Φ̄ fold, −1 level I = ι instance ↔ system G = γ content ↔ vehicle Words: strings over {U, D, I, G}, read left to right from a start cell.
+
+Because processes are strings, structural facts about them are visible in the letters before any interpretation is added — and two processes can be compared by diffing their words.
+
+The inventory
+
+## Twelve loops  LOOP FUNCTION INTENDED CV START WORD ────────────────────────────────────────────────────────────────────── ⦿O skilled action task completion 2.ie DGUUDG ⦿C coordination coordination state 2.ie DIGUUDIG ⦿M management operational conformity 3.ce DIIU ⦿M* audit truth correspondence 3.ce DI▼UI ⦿I intelligence model accuracy 1.ie IUUIIIGIIG ⦿P policy / identity identity coherence 3.ci DDUUII ⦿K knowledge creation knowledge validity 3.ii GIGI ⦿G grounding empirical grounding 3.ce DIDGUGUI ⦿L legitimation normative legitimacy 3.ci GDGU ⦿R reflexive quality formal quality 3.ce DDUUIGIG ⦿H harness (mediation) mediation effectiveness — coupling layer — ⦿T transparency perceptual integrity — coupling layer —
+
+The specification flags one anomaly rather than silently fixing it: the intelligence row does not close under the stated move rules. The likely reading is that intelligence is an entering walk which then settles onto a closed convention-level cycle — but the claim as printed is "ten machine-verified closed walks", so the row is marked for re-checking against the verifier.
+
+What the words reveal
+
+## Structure visible before interpretation
+
+Fig. 05 — Grounding descends; knowledge rotates
+
+⦿G — the V-word
+
+### Grounding descends, then returns
+
+Descents, a turn at felt quality, then ascents. Its phase trajectory is its syntax. To ground a claim you go down to what the thing is actually like, and you come back up carrying receipts.
+
+⦿K — the Klein word
+
+### Knowledge rotates without descending
+
+GIGI: flip, flip, flip, flip. A complete tour of the four quadrants conducted entirely at the convention level, containing zero up or down moves.
+
+The complement
+
+### Each is made of the other's missing letters
+
+The knowledge word uses only flips; grounding's core is climbs and descents. So the old claim that knowledge-making and grounding need each other is not consultant's advice — it is forced by letter inventories.
+
+⦿M
+
+### Management never touches quality
+
+Its word moves only between the causation and convention levels. The inability to feel is a typing fact, not a character flaw — and it is the structural reason the reflexive quality loop has to exist separately rather than as a management agenda item.
+
+⦿R
+
+### The no-outsourcing rule
+
+The reflexive loop opens with a double descent within the formal column, and that level change is reachable only by folding. Sensing the quality of your own formal structures is a descent you must perform yourself.
+
+Recovery
+
+### Always two letters away
+
+From any cell in a formal column, a double descent reaches the quality level. Whatever else is true of quality-bypass pathologies, the route back is structurally short.
+
+The ceiling conjecture · new in 5.3
+
+## How far anything can ever be proceduralised
+
+Which processes can become a standard operating procedure — same steps, every time, by anyone — and which will forever require judgment? Organisations answer this today by proceduralising everything and discovering the hard way what dies. depth(⦿X) = lowest spine level its word visits contract ∈ { path ≻ outcome ≻ semantic ≻ statistical } depth = κ (⦿M) → path-approachable depth = ω (⦿G, ⦿R) → semantic at best
+
+Management's word never descends below causation — and management is precisely what organisations proceduralise most successfully. Grounding descends to quality, and quality-level content cannot be transmitted on demand, so grounding can promise the same meaning but never the same steps.
+
+Fig. 06 — Depth caps the strictest promise a process can keep
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/diagnosis.html
+
+Diagnosis
+
+# Nothing breaks. Something is quietly rewritten.
+
+Every pathology in the theory is a small syntactic edit to a healthy word. The rewritten version still type-checks, still runs, and still reports on schedule.
+
+The taxonomy
+
+## Pathologies as word edits  EDIT TYPE PATHOLOGY ────────────────────────────────────────────────────────────────────── Letter deletion degraded audit — Δ(ν,ν), the fold removed ⦿G bypass — the V-word flattened, never reaches ω Provenance substitution stale input dressed as current; state ossification; context starvation; a preference presented as a wall Operator substitution false dual; phantom pool Index freezing one attentional column unavailable — its words untypeable, its cells unperformed verbs Word truncation the loop fails to close Type coercion model output stored as fact without the audit gate Route substitution misroute — content matching loop X delivered to Y Route deletion route starvation — a healthy loop never engaged Binding decay orphaned convention — grounded, but no living editor Edit at the spine IMPOSSIBLE — quality cannot be rewritten, only refused
+
+Fig. 09 — The audit, and the same audit with one letter deleted
+
+The last row carries the hopeful theorem. Because spine edits are impossible and the reflexive loop's critical move is just a double descent, every quality-bypass is a routing pathology around an intact capacity. The pathologies that look most entrenched are structurally the cheapest to reverse.
+
+The protective corollary
+
+## A rulebook can disable a capacity without touching it
+
+Theorem T9 protects the quality-sensing capacity: nothing the diagnostics recommend can move the standard the diagnostics measure against. But a routing rule set that simply never sends anything to the reflexive loop disables the protected capacity without editing it — the way a hospital could neutralise its untouchable trauma team by never paging them.
+
+So no fully compiled rule set may be the sole gate on engaging quality-sensing. The invocation must retain either a live-judgment path or an alerting bypass — Beer's algedonic channels, which the theory already carried, turn out to be the existing recognition that routine routing must be bypassable.
+
+The method
+
+## Seven layers, in order
+
+Each layer is a typing question about the system's words, and each presupposes the previous layer's judgment. There is no point asking whether a loop's controlled variable is aligned if the loop does not close.  1 Structural does the word exist and close? does a selector exist; is every arrival routable? 2 Attentional is every letter index-typed? 3 Content-phase do positions match levels; provenance tags healthy? is routing type-correct for the content's level? 4 Evolutionary are interface levels matched to stage? 5 Harness are both phase conversions and the audit gate intact? 6 CV is the system's controlled variable aligned with the collective's? including the selector's own 7 Transparency do all convention-level traces have cross-boundary witnesses? does every standing rule have a living editor?
+
+What it measures
+
+## Who holds the fold-witnesses
+
+The capture indicators of the diagnostic practice — context-authorship concentration, decision-beneficiary correlation, reviewer diversity, taxonomy concentration, runbook visibility — are all measurements of one underlying thing: who holds the fold-witnesses, and how far claims sit from their folds.
+
+To those, version 5.3 adds one forward-looking measurement of the same thing: who holds the edit rights over each standing convention, and whether those editors are currently functional.
+
+Sixteen viability conditions state what must be true of a system's words, interfaces and perceptions for it to remain viable. They are also the source of the walls that carve any resource tradeoff's feasible region — the theory reinterprets the conditions it already had rather than adding new ones for the purpose.
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/video.html
+
+Video
+
+# Quaternion Process Theory of Cognition, on video
+
+36 episodes working through the theory — the kernel, the loops, the pathologies, and the dispatch extensions. Play them here, in order or not.
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+Nothing is requested from YouTube until you press play. Loading the player sets YouTube’s cookies and is subject to their privacy policy ([our privacy notice](https://intuitionmachine.com/privacy.html)). [Open the playlist on YouTube](https://www.youtube.com/playlist?list=PLoOMKjCBaDuX8vYGfcSUgw_84xj3wo62-).
+
+Where to start
+
+## If you want the argument before the machinery
+
+The written pages here cover the same ground in less time. [The Kernel](https://intuitionmachine.com/kernel.html) gives the three levels and four columns the whole theory is built from; [The Loops](https://intuitionmachine.com/loops.html) shows why each recurring process is a word; and [Diagnosis](https://intuitionmachine.com/diagnosis.html) carries the result most worth arguing with — that the worst failures are one-letter edits which still compile.
+
+The series goes further than the site does, and in the author’s own words.
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/books.html
+
+Books
+
+# Books and field guides on AI
+
+Books, pattern languages and field guides on deep learning, generative AI and agentic systems — published through Gumroad. Several are pay-what-you-want, so you can read first and decide what it was worth.
+
+Book
+
+### [Artificial Intuition](https://intuitionmachine.gumroad.com/l/intuition)
+
+The improbable deep learning revolution — how machines arrived at intuition, grasping patterns they were never explicitly taught to derive.
+
+Name your price [Get it →](https://intuitionmachine.gumroad.com/l/intuition)
+
+Book
+
+### [Artificial Empathy](https://intuitionmachine.gumroad.com/l/empathy)
+
+A roadmap for human-aligned artificial general intelligence, where empathy — not raw optimisation — is the coordinate most designs leave out.
+
+Name your price [Get it →](https://intuitionmachine.gumroad.com/l/empathy)
+
+Book
+
+### [Artificial Fluency](https://intuitionmachine.gumroad.com/l/fluency)
+
+Large language models read through the lens of language as a living process rather than a fixed code to be executed.
+
+Name your price [Get it →](https://intuitionmachine.gumroad.com/l/fluency)
+
+Pattern Language
+
+### [A Pattern Language for Generative AI](https://intuitionmachine.gumroad.com/l/gpt4)
+
+A self-generating GPT-4 blueprint: a pattern language for designing and building with generative models.
+
+$17.50 [Get it →](https://intuitionmachine.gumroad.com/l/gpt4)
+
+Pattern Language
+
+### [A Pattern Language for Large Reasoning AI](https://intuitionmachine.gumroad.com/l/o1)
+
+Long-horizon thinking with ChatGPT o1-pro — patterns for getting sustained reasoning out of large reasoning models.
+
+$17.50 [Get it →](https://intuitionmachine.gumroad.com/l/o1)
+
+Pattern Language
+
+### [A Pattern Language for Agentic AI](https://intuitionmachine.gumroad.com/l/agentic)
+
+Patterns for developing autonomous, intentional agents that act with purpose rather than react a prompt at a time.
+
+$19.99 [Get it →](https://intuitionmachine.gumroad.com/l/agentic)
+
+Pattern Language
+
+### [A Pattern Language for Agentic AI Skill Design](https://intuitionmachine.gumroad.com/l/aiskills)
+
+Patterns for structuring, composing and governing the skills that instruct large language models — mined from open-source and industry practice.
+
+$33 [Get it →](https://intuitionmachine.gumroad.com/l/aiskills)
+
+Pattern Language
+
+### [A Pattern Language for LLM-Optimized Formal Notation](https://intuitionmachine.gumroad.com/l/notation)
+
+Align formal notations and domain-specific languages to the way models actually reason, instead of fighting their biases.
+
+$20 [Get it →](https://intuitionmachine.gumroad.com/l/notation)
+
+Book
+
+### [Quaternion Process Theory of Cognition](https://intuitionmachine.gumroad.com/l/processoriented)
+
+The core theory in book form: process-oriented thinking on a twelve-cell space — the foundation the rest of this site is built on.
+
+$5 [Get it →](https://intuitionmachine.gumroad.com/l/processoriented)
+
+Book
+
+### [The Incompleteness of Being](https://intuitionmachine.gumroad.com/l/incompleteness)
+
+A QPT approach to consciousness: mind as an inherently underspecified process to be navigated, not a problem to be finally solved.
+
+$5 [Get it →](https://intuitionmachine.gumroad.com/l/incompleteness)
+
+Book
+
+### [The Deep Learning AI Playbook](https://intuitionmachine.gumroad.com/l/WRbUs)
+
+Strategy, methodology and patterns for putting deep learning to work — the field guide behind the pattern-language lineage.
+
+$9.99+ [Get it →](https://intuitionmachine.gumroad.com/l/WRbUs)
+
+Book
+
+### [The Artificial Intelligence Arbitrage Playbook](https://intuitionmachine.gumroad.com/l/arbitrage)
+
+A generative pattern language for finding and capturing value where reality shifts faster than prices, rules and business models can adjust.
+
+$100 [Get it →](https://intuitionmachine.gumroad.com/l/arbitrage)
+
+Book
+
+### [The Friction Calculus](https://intuitionmachine.gumroad.com/l/friction)
+
+What enterprise leaders get wrong about AI: generating content is cheap, verifying it is not — and that asymmetry is the whole game.
+
+$9.95 [Get it →](https://intuitionmachine.gumroad.com/l/friction)
+
+Book
+
+### [The Survival Guide for The AI Singularity](https://intuitionmachine.gumroad.com/l/survival)
+
+A field guide to the coming phase transition — how to read, and stay ahead of, an accelerating AI singularity.
+
+$10 [Get it →](https://intuitionmachine.gumroad.com/l/survival)
+
+[Browse the full store on Gumroad →](https://intuitionmachine.gumroad.com)
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/writing.html
+
+Writing
+
+# Essays on intelligence, real and artificial
+
+An ongoing series on patterns, methodology and strategy in AI — the thinking that the theory and the books are drawn from. The latest 10 posts are below; the full archive lives on Medium.
+
+entropy8 Aug 2026
+
+### [Fable 5 Reads the Odyssey and Recognizes Itself](https://medium.com/intuitionmachine/fable-5-reads-the-odyssey-and-recognizes-itself-f91907521f00)
+
+How Fable manages entropy in long-running reasoning, told through the longest-running reasoning process we know
+
+ai7 Aug 2026
+
+### [What Horses Know About AI Agentic Harness Design](https://medium.com/intuitionmachine/what-horses-know-about-ai-agents-12a7592a1c13)
+
+What horses teach us about AI agent harnesses
+
+ai26 Jul 2026
+
+### [A Decade of Essays and the Evolution of My Thinking on Thinking](https://medium.com/intuitionmachine/a-decade-of-essays-and-the-evolution-of-my-thinking-of-thinking-b10ebe23e4f8)
+
+Source essays: “Design Patterns for Deep Learning” (Dec 2016) · “The Turing Error: On Computation, Energy and Matter” (Jan 2017) · “Artificial Intuition” (Mar 2017) · “Deep Lear…
+
+ai23 Jul 2026
+
+### [The Fork in the Ladder — Where AI Progress Goes from Here](https://medium.com/intuitionmachine/the-fork-in-the-ladder-where-ai-progress-goes-from-here-d7bf12639aa1)
+
+Predictions about artificial intelligence usually fail in one of two ways. Either they are timelines — confident dates for capabilities nobody can define — or they are vibes, ex…
+
+ai19 Jul 2026
+
+### [From Loop Engineering to Graph Engineering?](https://medium.com/intuitionmachine/from-loop-engineering-to-graph-engineering-d3ebeb08511c)
+
+What the shift in AI agent architecture is really about
+
+psychology16 Jul 2026
+
+### [The Scholar Who Never Left the Library](https://medium.com/intuitionmachine/the-scholar-who-never-left-the-library-133a459cc020)
+
+On growing up, being onboarded, and why machines get self-direction before self-awareness
+
+ai10 Jul 2026
+
+### [The Eight Theories of the Machine](https://medium.com/intuitionmachine/the-eight-theories-of-the-machine-78068e551cc6)
+
+Every AI lab claims to be building the same thing. Look closer, and you find eight different arguments about what intelligence is for.
+
+ai11 Jun 2026
+
+### [Why the LLM Capability Ladder Climbs the Way It Does, and Where It Ends](https://medium.com/intuitionmachine/why-the-llm-capability-ladder-climbs-the-way-it-does-and-where-it-ends-9fc791e12521)
+
+There is a familiar worry that artificial intelligence is advancing faster than we can understand it. That is true, but it is not quite the right shape. The interesting fact is…
+
+ai-agent11 Jun 2026
+
+### [The Long Handover: How Language Models Grew from Tools into Agents](https://medium.com/intuitionmachine/the-long-handover-how-language-models-grew-from-tools-into-agents-e8018267aad6)
+
+We usually tell the story of AI progress as a story of raw power. Each model is bigger than the last, trained on more text, faster, more capable. That’s true as far as it goes,…
+
+catholic29 May 2026
+
+### [The Catholic Church as an Interpretive Grammar for Living Systems](https://medium.com/intuitionmachine/the-catholic-church-as-an-interpretive-grammar-for-living-systems-19ad6a90cb9f)
+
+Introduction: Christianity Begins as an Information Problem
+
+[Read the full archive on Medium →](https://medium.com/intuitionmachine)
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/explorations.html
+
+Explorations
+
+# Interactive explorations and films
+
+The ideas are easier to feel than to read. These are hands-on companions to the theory, and narrated films and explorable worlds made from our books — each opens in a full page of its own. Most are best with sound on, and many let you leave the film at any point to explore the scene yourself.
+
+The theory
+
+## Hands-on companions to the theory
+
+Interactive atlas
+
+### [Semiosis Atlas](https://deeplearningplaybook.com/spiral-semiosis/)
+
+Sign-making, mapped. Two synchronised views — a classification field of 66 sign classes and a temporal process spiral — trace how attention, competing interpretants, contextual constraint and provisional understanding build into meaning and action. Play a scenario, or read it as the transformer analogy for how a language model settles on sense.
+
+[Open the atlas →](https://deeplearningplaybook.com/spiral-semiosis/)
+
+Playable game
+
+### [4D Chess](https://codeaudit.github.io/4d-chess/)
+
+Chess lifted into four dimensions: pieces move across four linked 4×4×2×2 boards under movement rules extended along the extra axes. Guided lessons, checkmate studies and game replay come with it, against the computer or a second player — a hands-on way to feel how structure multiplies once you add dimensions.
+
+[Play it →](https://codeaudit.github.io/4d-chess/)
+
+Artificial Intuition
+
+## From the book Artificial Intuition
+
+Film · 12 min
+
+### [Artificial Intuition on Film](https://intuitionmachine.com/explainers/Artificial%20Intuition%20on%20Film.html)
+
+A voyage through The Improbable Deep Learning Revolution, chapter by chapter, over real footage of sea, sky and Earth.
+
+[Watch →](https://intuitionmachine.com/explainers/Artificial%20Intuition%20on%20Film.html)
+
+Artificial Empathy
+
+## From the book Artificial Empathy
+
+Narrated tour · 8:23
+
+### [Artificial Empathy](https://intuitionmachine.com/explainers/Artificial%20Empathy/index.html)
+
+The premise, the cycle of creation, and the six-level roadmap from intuition to conversational empathy. Jump to any chapter.
+
+[Watch →](https://intuitionmachine.com/explainers/Artificial%20Empathy/index.html)
+
+Chapter one · infinite zoom
+
+### [The Modular Universe](https://intuitionmachine.com/explainers/The%20Modular%20Universe.html)
+
+From quarks to culture, modules all the way up: modularity as evolution's memory.
+
+[Watch →](https://intuitionmachine.com/explainers/The%20Modular%20Universe.html)
+
+Artificial Fluency
+
+## From the book Artificial Fluency
+
+Book trailer · 7:54
+
+### [Artificial Fluency](https://intuitionmachine.com/explainers/Artificial%20Fluency.html)
+
+All twelve chapters in a narrated introduction, with captions and chapter jumps.
+
+[Watch →](https://intuitionmachine.com/explainers/Artificial%20Fluency.html)
+
+Film · 4 min
+
+### [Artificial Fluency — The Film](https://intuitionmachine.com/explainers/artificial-fluency-film_3.html)
+
+A visual précis of the book's most insightful line from each chapter, on why meaning isn't stored but made.
+
+[Watch →](https://intuitionmachine.com/explainers/artificial-fluency-film_3.html)
+
+Artificial Creativity
+
+## From Artificial Creativity
+
+Prologue · interactive voyage
+
+### [In the Beginning](https://intuitionmachine.com/explainers/In%20the%20Beginning.html)
+
+Twenty-six layers of the adjacent possible, from the first binding of particles to machines that construct their own ways of making.
+
+[Watch →](https://intuitionmachine.com/explainers/In%20the%20Beginning.html)
+
+Film · interactive descent
+
+### [Unbounded](https://intuitionmachine.com/explainers/Unbounded.html)
+
+Recursive self-improvement as a descent: each world inside the core of the last, until the machinery of making begins to remake itself.
+
+[Watch →](https://intuitionmachine.com/explainers/Unbounded.html)
+
+Ideas
+
+## Ideas, explained
+
+Fourteen chapters · narrated
+
+### [Transformers Explained Using Semiotics](https://intuitionmachine.com/explainers/Transformers%20Explained%20Using%20Semiotics.html)
+
+How a transformer reads, told through Charles Sanders Peirce's theory of signs.
+
+[Watch →](https://intuitionmachine.com/explainers/Transformers%20Explained%20Using%20Semiotics.html)
+
+Narrated explainer
+
+### [The Scale of Thought](https://intuitionmachine.com/explainers/The%20Scale%20of%20Thought.html)
+
+Human thought is limited less by what we understand than by how much we can carry out. Automated cognition lifts that limit.
+
+[Watch →](https://intuitionmachine.com/explainers/The%20Scale%20of%20Thought.html)
+
+Film · explorable map
+
+### [The Tribes of the AI Discourse](https://intuitionmachine.com/explainers/The%20Tribes%20of%20the%20AI%20Discourse/index.html)
+
+A map of the camps in the AI debate — what it is, what to do, which harm, where power sits — with neighbours and opposites for every tribe.
+
+[Watch →](https://intuitionmachine.com/explainers/The%20Tribes%20of%20the%20AI%20Discourse/index.html)
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/team.html
+
+Wetware
+
+# Who builds it
+
+### Carlos Perez
+
+Software Architect · MS Comp. Sci., UMass · Co-Founder [LinkedIn profile →](https://www.linkedin.com/in/ceperez)
+
+Writing
+
+## Patterns, in public
+
+Intuition Machine publishes an ongoing series on patterns, methodology and strategy, alongside the specification itself.
+
+[Read the essays](https://intuitionmachine.com/writing.html)
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com
+
+
+---
+
+URL: https://intuitionmachine.com/about.html
+
+Contact
+
+# Get in touch
+
+Tell us about one workflow you would like to run AI-native — and the rules it has to follow.
+
+Email
+
+info@intuitionmachine.com
+
+Telephone
+
+[(833) 8INTUIT](https://intuitionmachine.com/tel:+18338346884)
+
+Post
+
+Intuition Machine
+1200 South Arlington Ridge Road, 508
+Arlington, VA 22202
+USA
+
+## Start with one workflow.
+
+We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.
+
+[Your first workflow](https://intuitionmachine.com/first-workflow.html) info@intuitionmachine.com

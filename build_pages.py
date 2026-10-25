@@ -12,6 +12,7 @@ Run:  python3 build_pages.py
 import json
 import os
 
+import ai_search
 import figures
 
 OUT = "site"
@@ -105,6 +106,7 @@ def shell(title, description, body, body_class="", slug="index.html"):
 <meta name="twitter:image" content="{SITE}/assets/img/og.png">
 
 <link rel="stylesheet" href="assets/css/site.css">
+{ai_search.jsonld(slug, title, description)}
 </head>
 <body{cls}>
 
@@ -2947,9 +2949,11 @@ PAGES = [
      "Recent essays from Intuition Machine on Medium: patterns, methodology and strategy "
      "in deep learning, generative AI and agentic systems.", WRITING),
     ("team.html", "Team — Intuition Machine",
-     "Carlos Perez, Software Architect and Co-Founder of Intuition Machine.", TEAM),
+     "Carlos Perez, Software Architect and Co-Founder of Intuition Machine, an enterprise "
+     "AI engineering and assurance company founded in 2015.", TEAM),
     ("about.html", "Contact — Intuition Machine",
-     "Contact Intuition Machine.", ABOUT),
+     "Contact Intuition Machine about governed AI-native workflows, the machines for the "
+     "self-learning enterprise, or our research: info@intuitionmachine.com.", ABOUT),
     ("privacy.html", "Privacy and Cookies — Intuition Machine",
      "Intuition Machine's website sets no cookies, stores nothing in your browser and runs "
      "no analytics. YouTube loads only when you press play.", PRIVACY),
@@ -2971,7 +2975,8 @@ def redirect_page(target):
 <head>
 <meta charset="utf-8">
 <meta http-equiv="refresh" content="0; url={target}">
-<link rel="canonical" href="{target}">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="{SITE}/{target}">
 <title>Redirecting…</title>
 </head>
 <body>
@@ -2997,6 +3002,9 @@ def main():
     # privacy.html promises they don't, so copy those files into the site.
     import selfhost_assets
     selfhost_assets.main([])
+
+    # Homepage FAQ and structured data, llms.txt and the sitemap.
+    ai_search.main()
 
 
 if __name__ == "__main__":

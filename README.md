@@ -91,6 +91,7 @@ site/
   .nojekyll
 build_pages.py          regenerates the inner pages from one shared shell
 selfhost_assets.py      copies Google Fonts / CDN files into site/ (no third-party requests)
+ai_search.py            JSON-LD, homepage FAQ, llms.txt / llms-full.txt, sitemap.xml (run by build_pages.py)
 build.py                regenerates archive/ from a wget mirror
 ```
 
