@@ -2107,6 +2107,14 @@ A map of the camps in the AI debate — what it is, what to do, which harm, wher
 
 [Watch →](https://intuitionmachine.com/explainers/The%20Tribes%20of%20the%20AI%20Discourse/index.html)
 
+Film · ten chapters · 8 min
+
+### [Chain Theory](https://intuitionmachine.com/explainers/Chain%20Theory.html)
+
+Rebuilding fundamental physics from quantum information: one axiom of maximally entangled pairs, and from it a candidate value for the fine-structure constant.
+
+[Watch →](https://intuitionmachine.com/explainers/Chain%20Theory.html)
+
 ## Start with one workflow.
 
 We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.

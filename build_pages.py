@@ -1968,6 +1968,7 @@ POSTERS = {
     "Transformers Explained Using Semiotics.html": "transformers-semiotics",
     "The Scale of Thought.html": "scale-of-thought",
     "The Tribes of the AI Discourse/index.html": "tribes",
+    "Chain Theory.html": "chain-theory",
 }
 
 
@@ -2040,6 +2041,10 @@ EXPLAINERS_DATA = [
      "The Tribes of the AI Discourse",
      "A map of the camps in the AI debate — what it is, what to do, which harm, where power "
      "sits — with neighbours and opposites for every tribe."),
+    ("Ideas", "Chain Theory.html", "Film · ten chapters · 8 min",
+     "Chain Theory",
+     "Rebuilding fundamental physics from quantum information: one axiom of maximally "
+     "entangled pairs, and from it a candidate value for the fine-structure constant."),
 ]
 
 EXPLAINER_GROUPS = [
