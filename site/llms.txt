@@ -8,7 +8,7 @@ The full text of every page is at https://intuitionmachine.com/llms-full.txt.
 
 ## Work with us
 
-- [The Machines](https://intuitionmachine.com/machines.html): Machines for the self-learning enterprise: eight specialised intelligence systems — Sense, Connection, Context, Judgment, Intuition, Agency, Learning and Coreography — on one Common Ground.
+- [The Machines](https://intuitionmachine.com/machines.html): Machines for the self-learning enterprise: eight specialised intelligence systems — Sense, Connection, Context, Judgment, Intuition, Agency, Learning and Choreography — on one Common Ground.
 - [How We Work](https://intuitionmachine.com/how-we-work.html): Map, Build, Prove: how Intuition Machine turns AI experiments into governed, enterprise-ready workflows that follow your organisation's rules.
 - [Your First Governed AI-Native Workflow](https://intuitionmachine.com/first-workflow.html): One business process, real enterprise systems, measurable results: a bounded AI workflow run in shadow alongside the existing one, with evidence for what comes next.
 - [From ExO 3.0 to Production](https://intuitionmachine.com/exo.html): What ExO 3.0 is — MTP, DRIVE, SHAPE, the Intelligence Stack, the Edge Twin and REWRITE — and the engineering and assurance it takes to build it in existing enterprises.

@@ -1006,10 +1006,10 @@ MACHINES_DATA = [
      "Keeping enterprise intelligence from going stale while turning operational experience "
      "into reusable capability.",
      "Learning Machine makes the enterprise&#8217;s intelligence compound rather than decay."),
-    ("coreography", "Coreography Machine", "Collective intelligence and coordinated action",
+    ("choreography", "Choreography Machine", "Collective intelligence and coordinated action",
      "How do we act coherently together?", "collective",
      "Enable people and AI agents to act as one coherent organisation.",
-     ["Coreography Machine coordinates complex work across human teams, software systems and "
+     ["Choreography Machine coordinates complex work across human teams, software systems and "
       "AI agents. It goes beyond conventional orchestration, where a central controller "
       "directs every participant.",
       "Instead it relies on <strong>shared context, commitments, protocols and events that let "
@@ -1031,7 +1031,7 @@ MACHINES_DATA = [
      "and reusable organisational knowledge.",
      "Reducing organisational friction, coordination overhead, delivery delays and fragmented "
      "decision-making.",
-     "Coreography Machine is where the whole architecture meets the organisation: it lets the "
+     "Choreography Machine is where the whole architecture meets the organisation: it lets the "
      "enterprise act collectively while getting steadily better at understanding and "
      "coordinating itself."),
 ]
@@ -1121,7 +1121,7 @@ _SLT_ROLES = [
     ("intuition", "routes unfamiliar situations to the right process"),
     ("agency", "applies validated decisions through controlled action"),
     ("learning", "manages the resulting change in meaning"),
-    ("coreography", "creates new occasions for learning through coordinated work"),
+    ("choreography", "creates new occasions for learning through coordinated work"),
 ]
 _NAME = {m[0]: m[1] for m in MACHINES_DATA}
 
@@ -1277,7 +1277,7 @@ MACHINES = f"""
       <div class="term">
         <span class="term__glyph">Act together</span>
         <p><a href="#agency">Agency</a> executes within constraints;
-        <a href="#coreography">Coreography</a> coordinates people and agents.</p>
+        <a href="#choreography">Choreography</a> coordinates people and agents.</p>
       </div>
       <div class="term">
         <span class="term__glyph">Learn</span>
@@ -1320,7 +1320,7 @@ MACHINES = f"""
       </div>
       <div class="maptable__row" role="row">
         <b role="cell">Struggling with cross-functional delivery</b>
-        <span role="cell"><a href="#coreography">Coreography Machine</a>: shared
+        <span role="cell"><a href="#choreography">Choreography Machine</a>: shared
         commitments and dependencies across teams and agents.</span>
       </div>
     </div>
@@ -1331,7 +1331,7 @@ MACHINES = f"""
       </div>
       <div class="prose">
         <p>Our first integrated application combines <b>Sense</b>, <b>Connection</b>,
-        <b>Context</b> and <b>Coreography</b>: a programme manager that discovers dependencies,
+        <b>Context</b> and <b>Choreography</b>: a programme manager that discovers dependencies,
         exposes conflicting requirements, coordinates their resolution, and preserves what the
         organisation learns along the way. <b>Judgment</b> supplies the validation controls
         and <b>Intuition</b> the routing; <b>Agency</b> and <b>Learning</b> then widen its
@@ -1359,7 +1359,7 @@ MACHINES = f"""
         contradictory assumptions, decide under outdated policies, and struggle to coordinate
         across organisational boundaries.</p>
         <p>The machines provide the specialised capabilities. Common Ground keeps their
-        shared understanding. Coreography Machine makes that intelligence useful across the
+        shared understanding. Choreography Machine makes that intelligence useful across the
         organisation, and Learning Machine makes sure experience produces improvement rather
         than more semantic debt.</p>
       </div>
@@ -1380,7 +1380,7 @@ MACHINES = f"""
         <li><a href="#intuition">Intuition Machine</a> chooses the right cognitive process.</li>
         <li><a href="#agency">Agency Machine</a> enables authorised action.</li>
         <li><a href="#learning">Learning Machine</a> turns experience into improvement.</li>
-        <li><a href="#coreography">Coreography Machine</a> enables collective intelligence.</li>
+        <li><a href="#choreography">Choreography Machine</a> enables collective intelligence.</li>
         <li class="promise__ground"><a href="#common-ground">Common Ground</a> connects them
         into one coherent system.</li>
       </ul>
@@ -2930,7 +2930,7 @@ PAGES = [
      "that closes back on its start cell.", LOOPS),
     ("machines.html", "The Machines — Intuition Machine",
      "Machines for the self-learning enterprise: eight specialised intelligence systems — "
-     "Sense, Connection, Context, Judgment, Intuition, Agency, Learning and Coreography — "
+     "Sense, Connection, Context, Judgment, Intuition, Agency, Learning and Choreography — "
      "on one Common Ground.", MACHINES),
     ("diagnosis.html", "Diagnosis — Quaternion Process Theory of Cognition",
      "Pathologies as syntactic edits to healthy words, and the seven-layer diagnostic that "

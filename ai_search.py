@@ -87,7 +87,7 @@ FAQ = [
      "(enterprise perception and discovery), Connection (evidence grounding and "
      "traceability), Context (organisational memory), Judgment (evaluation and decision "
      "governance), Intuition (typed cognitive dispatch), Agency (governed autonomous "
-     "execution), Learning (semantic adaptation) and Coreography (coordinated action across "
+     "execution), Learning (semantic adaptation) and Choreography (coordinated action across "
      "people and agents). Instead of asking an enterprise to model itself before it can use "
      "AI, they discover, validate and formalise organisational knowledge through useful work. "
      "<a href=\"machines.html\">Meet the machines</a>."),

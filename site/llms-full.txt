@@ -84,7 +84,7 @@ Collective enterprise applications
 
 Deliver coordinated outcomes across people and agents
 
-[ 08 Coreography Machine Collective intelligence and coordinated action How do we act coherently together? ](https://intuitionmachine.com/machines.html#coreography)   [ Common Ground The shared foundation under all eight: meaning, evidence, authority, versions and learning, represented once ](https://intuitionmachine.com/machines.html#common-ground)
+[ 08 Choreography Machine Collective intelligence and coordinated action How do we act coherently together? ](https://intuitionmachine.com/machines.html#choreography)   [ Common Ground The shared foundation under all eight: meaning, evidence, authority, versions and learning, represented once ](https://intuitionmachine.com/machines.html#common-ground)
 
 [Meet the machines](https://intuitionmachine.com/machines.html)
 
@@ -192,7 +192,7 @@ Start with one business process. We rebuild a workflow you choose with AI agents
 
 **What are the machines for the self-learning enterprise?**
 
-Eight specialised intelligence systems on one shared foundation, Common Ground: Sense (enterprise perception and discovery), Connection (evidence grounding and traceability), Context (organisational memory), Judgment (evaluation and decision governance), Intuition (typed cognitive dispatch), Agency (governed autonomous execution), Learning (semantic adaptation) and Coreography (coordinated action across people and agents). Instead of asking an enterprise to model itself before it can use AI, they discover, validate and formalise organisational knowledge through useful work. [Meet the machines](https://intuitionmachine.com/machines.html).
+Eight specialised intelligence systems on one shared foundation, Common Ground: Sense (enterprise perception and discovery), Connection (evidence grounding and traceability), Context (organisational memory), Judgment (evaluation and decision governance), Intuition (typed cognitive dispatch), Agency (governed autonomous execution), Learning (semantic adaptation) and Choreography (coordinated action across people and agents). Instead of asking an enterprise to model itself before it can use AI, they discover, validate and formalise organisational knowledge through useful work. [Meet the machines](https://intuitionmachine.com/machines.html).
 
 **How does Intuition Machine relate to ExO 3.0?**
 
@@ -265,7 +265,7 @@ Collective enterprise applications
 
 Deliver coordinated outcomes across people and agents
 
-08 Coreography Machine Collective intelligence and coordinated action How do we act coherently together?     Common Ground The shared foundation under all eight: meaning, evidence, authority, versions and learning, represented once
+08 Choreography Machine Collective intelligence and coordinated action How do we act coherently together?     Common Ground The shared foundation under all eight: meaning, evidence, authority, versions and learning, represented once
 
 01 · Enterprise perception and discovery
 
@@ -563,13 +563,13 @@ Learning Machine makes the enterprise’s intelligence compound rather than deca
 
 08 · Collective intelligence and coordinated action
 
-## Coreography Machine
+## Choreography Machine
 
 Enable people and AI agents to act as one coherent organisation.
 
 How do we act coherently together?
 
-Coreography Machine coordinates complex work across human teams, software systems and AI agents. It goes beyond conventional orchestration, where a central controller directs every participant.
+Choreography Machine coordinates complex work across human teams, software systems and AI agents. It goes beyond conventional orchestration, where a central controller directs every participant.
 
 Instead it relies on shared context, commitments, protocols and events that let distributed participants coordinate without a single controlling intelligence. People and agents work in shared project and organisational contexts — observing progress, making commitments, negotiating dependencies and responding to change — while each keeps their own responsibilities and delegated authority. It brings together agentic technical programme management and multiplayer AI.
 
@@ -601,7 +601,7 @@ Coordinated activities, shared commitments, resolved dependencies, decision hist
 
 Reducing organisational friction, coordination overhead, delivery delays and fragmented decision-making.
 
-Coreography Machine is where the whole architecture meets the organisation: it lets the enterprise act collectively while getting steadily better at understanding and coordinating itself.
+Choreography Machine is where the whole architecture meets the organisation: it lets the enterprise act collectively while getting steadily better at understanding and coordinating itself.
 
 Common Ground
 
@@ -675,7 +675,7 @@ The essential operation on Common Ground. A transaction opens whenever work reve
 
 - Learning Machine manages the resulting change in meaning.
 
-- Coreography Machine creates new occasions for learning through coordinated work.
+- Choreography Machine creates new occasions for learning through coordinated work.
 
 Common Ground is what makes these capabilities one intelligence system rather than eight products.
 
@@ -697,7 +697,7 @@ Judgment tests whether conclusions are justified; Intuition picks the right proc
 
 Act together
 
-Agency executes within constraints; Coreography coordinates people and agents.
+Agency executes within constraints; Choreography coordinates people and agents.
 
 Learn
 
@@ -719,13 +719,13 @@ Modernising legacy software Sense Machine and Connection Machine: find out what 
 
 Deploying governed AI agents Context Machine, Judgment Machine and Agency Machine: the right context, justified decisions, and action within authority.
 
-Struggling with cross-functional delivery Coreography Machine: shared commitments and dependencies across teams and agents.
+Struggling with cross-functional delivery Choreography Machine: shared commitments and dependencies across teams and agents.
 
 What we are building first
 
 ## An evidence-grounded technical programme manager
 
-Our first integrated application combines Sense, Connection, Context and Coreography: a programme manager that discovers dependencies, exposes conflicting requirements, coordinates their resolution, and preserves what the organisation learns along the way. Judgment supplies the validation controls and Intuition the routing; Agency and Learning then widen its autonomy and adaptation.
+Our first integrated application combines Sense, Connection, Context and Choreography: a programme manager that discovers dependencies, exposes conflicting requirements, coordinates their resolution, and preserves what the organisation learns along the way. Judgment supplies the validation controls and Intuition the routing; Agency and Learning then widen its autonomy and adaptation.
 
 The principle is the same one behind our [first governed workflow](https://intuitionmachine.com/first-workflow.html) offer: prove the economic benefit of accumulating reliable organisational knowledge in one place before attempting an enterprise-wide transformation.
 
@@ -737,7 +737,7 @@ Enterprise AI has concentrated on better models, giving agents tools, and increa
 
 What is missing is a continuously maintained, machine-usable representation of how the organisation actually operates — its obligations, authority, goals and accumulated experience. Without it, agents rediscover context again and again, reproduce contradictory assumptions, decide under outdated policies, and struggle to coordinate across organisational boundaries.
 
-The machines provide the specialised capabilities. Common Ground keeps their shared understanding. Coreography Machine makes that intelligence useful across the organisation, and Learning Machine makes sure experience produces improvement rather than more semantic debt.
+The machines provide the specialised capabilities. Common Ground keeps their shared understanding. Choreography Machine makes that intelligence useful across the organisation, and Learning Machine makes sure experience produces improvement rather than more semantic debt.
 
 The promise
 
@@ -757,7 +757,7 @@ The promise
 
 - Learning Machine turns experience into improvement.
 
-- Coreography Machine enables collective intelligence.
+- Choreography Machine enables collective intelligence.
 
 - Common Ground connects them into one coherent system.
 
