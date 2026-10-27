@@ -1969,6 +1969,7 @@ POSTERS = {
     "The Scale of Thought.html": "scale-of-thought",
     "The Tribes of the AI Discourse/index.html": "tribes",
     "Chain Theory.html": "chain-theory",
+    "The Architecture of Imperfection.html": "architecture-of-imperfection",
 }
 
 
@@ -2045,6 +2046,11 @@ EXPLAINERS_DATA = [
      "Chain Theory",
      "Rebuilding fundamental physics from quantum information: one axiom of maximally "
      "entangled pairs, and from it a candidate value for the fine-structure constant."),
+    ("Ideas", "The Architecture of Imperfection.html", "Film · twelve chapters · 16 min",
+     "The Architecture of Imperfection",
+     "A reply to Chain Theory: where its derivation of α cracks, and a theory that matter, "
+     "light and spacetime are the counterweights of a universe trying to cancel its own "
+     "mathematical error."),
 ]
 
 EXPLAINER_GROUPS = [
