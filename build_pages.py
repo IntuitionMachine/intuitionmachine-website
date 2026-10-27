@@ -1970,6 +1970,7 @@ POSTERS = {
     "The Tribes of the AI Discourse/index.html": "tribes",
     "Chain Theory.html": "chain-theory",
     "The Architecture of Imperfection.html": "architecture-of-imperfection",
+    "The Cosmic Refusal.html": "cosmic-refusal",
 }
 
 
@@ -2051,6 +2052,10 @@ EXPLAINERS_DATA = [
      "A reply to Chain Theory: where its derivation of α cracks, and a theory that matter, "
      "light and spacetime are the counterweights of a universe trying to cancel its own "
      "mathematical error."),
+    ("Ideas", "The Cosmic Refusal.html", "Film · 8:45",
+     "The Cosmic Refusal",
+     "Why no two electrons can share a state: the Pauli Exclusion Principle, not as a "
+     "postulate but as something the geometry of the quantum network refuses."),
 ]
 
 EXPLAINER_GROUPS = [
