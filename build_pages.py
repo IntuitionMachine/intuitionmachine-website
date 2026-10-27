@@ -2046,7 +2046,7 @@ EXPLAINERS_DATA = [
      "Chain Theory",
      "Rebuilding fundamental physics from quantum information: one axiom of maximally "
      "entangled pairs, and from it a candidate value for the fine-structure constant."),
-    ("Ideas", "The Architecture of Imperfection.html", "Film · twelve chapters · 16 min",
+    ("Ideas", "The Architecture of Imperfection.html", "Film · thirteen chapters · 19 min",
      "The Architecture of Imperfection",
      "A reply to Chain Theory: where its derivation of α cracks, and a theory that matter, "
      "light and spacetime are the counterweights of a universe trying to cancel its own "
