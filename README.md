@@ -122,6 +122,13 @@ python3 selfhost_assets.py --check   # list anything third-party still left; exi
 film pushed as-is is still cleaned before it goes live, and the deploy stops rather
 than publish a page that calls out.
 
+To list a film on Explorations, add it to `EXPLAINERS_DATA` and `POSTERS` in
+`build_pages.py` and save a 960×600 poster still in `site/assets/img/explorations/`.
+`build_pages.py` then also writes the film's link-preview tags (Open Graph and X card),
+using a 1.91:1 crop of the poster in `site/assets/img/explorations/social/`. Exports
+don't carry these tags, so run `build_pages.py` after every re-export, not only the
+self-hosting step, or shared links to that film lose their preview.
+
 ## Refreshing the archive
 
 ```sh

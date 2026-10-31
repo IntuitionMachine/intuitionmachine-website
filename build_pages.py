@@ -9,8 +9,10 @@ the repository root.
 
 Run:  python3 build_pages.py
 """
+import html
 import json
 import os
+import re
 
 import ai_search
 import figures
@@ -2985,6 +2987,67 @@ REDIRECTS = {
 }
 
 
+# --------------------------------------------------------------------------
+# Link previews for the films. They are exported standalone, so they miss the
+# Open Graph / X card tags shell() gives every other page; without them a link
+# shared on X or LinkedIn shows no image. Re-added on every build, so a
+# re-exported film gets them back.
+# --------------------------------------------------------------------------
+
+SOCIAL_DIR = "assets/img/explorations/social"
+_CARD = re.compile(r"\n?<!-- card:start.*?<!-- card:end -->", re.S)
+
+
+def social_image(poster):
+    """The poster cropped to the 1.91:1 shape X and LinkedIn show for large cards."""
+    rel = f"{SOCIAL_DIR}/{poster}.jpg"
+    dest = os.path.join(OUT, rel)
+    if not os.path.exists(dest):
+        from PIL import Image
+        im = Image.open(os.path.join(OUT, f"assets/img/explorations/{poster}.jpg"))
+        w, h = im.size
+        ch = round(w / 1.91)
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
+        im.crop((0, (h - ch) // 2, w, (h - ch) // 2 + ch)).save(dest, quality=85)
+    return rel
+
+
+def tag_explainers():
+    for _, path, _, title, blurb in EXPLAINERS_DATA:
+        file = os.path.join(OUT, "explainers", path)
+        src = open(file, encoding="utf-8").read()
+        bare = _CARD.sub("", src)
+        img = social_image(POSTERS[path])
+        t = html.escape(f"{title} — Intuition Machine")
+        d = html.escape(blurb)
+        url = f"{SITE}/explainers/{quote(path)}"
+        meta = "" if re.search(r'<meta\s+name="description"', bare) else \
+            f'<meta name="description" content="{d}">\n'
+        card = f"""
+<!-- card:start (link preview, added by build_pages.py) -->
+{meta}<meta property="og:type" content="video.other">
+<meta property="og:site_name" content="Intuition Machine">
+<meta property="og:title" content="{t}">
+<meta property="og:description" content="{d}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{SITE}/{img}">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="503">
+<meta property="og:image:alt" content="{html.escape(title)}: a still from the film">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{t}">
+<meta name="twitter:description" content="{d}">
+<meta name="twitter:image" content="{SITE}/{img}">
+<!-- card:end -->"""
+        out = bare
+        i = out.index("</head>")
+        out = out[:i].rstrip("\n") + card + "\n" + out[i:]
+        if out != src:
+            with open(file, "w", encoding="utf-8") as f:
+                f.write(out)
+            print(f"  link preview tags in {OUT}/explainers/{path}")
+
+
 def redirect_page(target):
     return f"""<!doctype html>
 <html lang="en">
@@ -3018,6 +3081,7 @@ def main():
     # privacy.html promises they don't, so copy those files into the site.
     import selfhost_assets
     selfhost_assets.main([])
+    tag_explainers()
 
     # Homepage FAQ and structured data, llms.txt and the sitemap.
     ai_search.main()
