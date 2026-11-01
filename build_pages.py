@@ -2059,11 +2059,11 @@ EXPLAINERS_DATA = [
      "The Cosmic Refusal",
      "Why no two electrons can share a state: the Pauli Exclusion Principle, not as a "
      "postulate but as something the geometry of the quantum network refuses."),
-    ("Ideas", "The Living Universe/index.html", "Film · 11 min",
+    ("Ideas", "The Living Universe/index.html", "Film · 14 min",
      "The Living Universe",
      "What makes a cell alive — a sheltered code, a cut between description and dynamics, "
-     "a reader that builds itself — proposed as the architecture of the cosmos: a universe "
-     "that reads itself into being."),
+     "a reader that builds itself — proposed as the architecture of the cosmos, then set "
+     "against measurement: twenty-eight numbers, the hits and the misses."),
 ]
 
 EXPLAINER_GROUPS = [
@@ -3008,9 +3008,11 @@ def social_image(poster):
     """The poster cropped to the 1.91:1 shape X and LinkedIn show for large cards."""
     rel = f"{SOCIAL_DIR}/{poster}.jpg"
     dest = os.path.join(OUT, rel)
-    if not os.path.exists(dest):
+    src = os.path.join(OUT, f"assets/img/explorations/{poster}.jpg")
+    # Remade when the poster is replaced, so the preview never shows an old still.
+    if not os.path.exists(dest) or os.path.getmtime(src) > os.path.getmtime(dest):
         from PIL import Image
-        im = Image.open(os.path.join(OUT, f"assets/img/explorations/{poster}.jpg"))
+        im = Image.open(src)
         w, h = im.size
         ch = round(w / 1.91)
         os.makedirs(os.path.dirname(dest), exist_ok=True)

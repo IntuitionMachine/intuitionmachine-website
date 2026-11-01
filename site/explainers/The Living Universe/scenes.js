@@ -1186,3 +1186,319 @@ SCENES.finale = {
     }
   },
 };
+
+/* ===================== Measured against nature ===================== */
+SCENE_SFX.scorecard = [[1, 1.0, 'shimmer', { vel: 0.2 }], [2, 9.0, 'tick', { f: 1320, vel: 0.18 }], [3, 1.0, 'tick', { f: 1320, vel: 0.18 }],
+  [4, 1.0, 'tick', { f: 1320, vel: 0.15 }], [4, 2.0, 'tick', { f: 1480, vel: 0.15 }], [4, 3.0, 'tick', { f: 1660, vel: 0.15 }], [5, 0.8, 'bell', { f: 587.3, vel: 0.16 }]];
+SCENE_SFX.hierarchy = [[1, 0.5, 'glitch', { vel: 0.16 }], [2, 0.6, 'whoosh', { dur: 3, vel: 0.14 }], [2, 3.4, 'shimmer', { vel: 0.25 }], [3, 0.5, 'bell', { f: 523.3, vel: 0.12 }], [4, 0.5, 'bell', { f: 784, vel: 0.14 }]];
+SCENE_SFX.observed = [[1, 1.2, 'whoosh', { dur: 2.2, vel: 0.12 }], [1, 3.2, 'shimmer', { vel: 0.2 }], [2, 0.6, 'tick', { f: 990, vel: 0.15 }], [3, 0.8, 'bell', { f: 659.3, vel: 0.12 }],
+  [4, 2.5, 'glitch', { vel: 0.18 }], [4, 4.5, 'glitch', { vel: 0.15 }], [5, 0.6, 'boom', { vel: 0.22 }]];
+
+// a measurement axis with a band, a measured centre, and theory points
+function measureAxis(ctx, x0, x1, y, a, o) {
+  seg(ctx, x0, y, x1, y, COL.white, 0.5 * a, 1.4);
+  (o.ticks || []).forEach(([v, s]) => { const x = o.X(v); seg(ctx, x, y - 6, x, y + 6, COL.white, 0.45 * a, 1); txt(ctx, s, x, y + 26, { f: FONT.mono, size: 15, c: COL.white, a: 0.55 * a }); });
+  if (o.band) { const [lo, hi] = o.band; ctx.fillStyle = rgba(COL.teal, 0.22 * a); ctx.fillRect(o.X(lo), y - 34, o.X(hi) - o.X(lo), 68); ctx.strokeStyle = rgba(COL.teal, 0.5 * a); ctx.lineWidth = 1; ctx.strokeRect(o.X(lo), y - 34, o.X(hi) - o.X(lo), 68); }
+  if (o.meas != null) { seg(ctx, o.X(o.meas), y - 44, o.X(o.meas), y + 44, COL.teal, a, 2); txt(ctx, o.measLabel || 'measured', o.X(o.meas), y + 62, { f: FONT.body, it: true, w: 300, size: 18, c: COL.teal, a }); }
+  (o.pts || []).forEach(([v, c, s, up], i) => {
+    const k = o.k ? o.k(i) : 1; if (k <= 0) return;
+    const x = o.X(v), yy = y - (up ? 70 : -96) * 1;
+    dot(ctx, x, y, 7, c, a * k);
+    seg(ctx, x, y + (up ? -10 : 10), x, yy + (up ? 14 : -14), c, 0.5 * a * k, 1);
+    txt(ctx, s, x, yy, { f: FONT.body, it: true, w: 300, size: 18, c, a: a * k });
+  });
+}
+
+SCENES.scorecard = {
+  ROWS: [
+    ['fine-structure  α⁻¹', '137.0359991790', '137.035999177(21)', '+0.10 σ', 2],
+    ['proton / electron', '1836.164', '1836.15267', '+6.2 ppm', 3],
+    ['Koide  K', '0.666667', '0.666661(7)', '+0.8 σ', 4],
+    ['muon / electron', '206.764', '206.76828', '−20 ppm', 4],
+    ['tau / electron', '3474.26', '3477.23(23)', '−0.085 %', 4],
+    ['generations', '3', '2.984(8)', 'exact', 5],
+  ],
+  init() { this.ring = Array.from({ length: 28 }, (_, i) => ({ c: [COL.gold, COL.cyan, COL.magenta, COL.violet, COL.teal, COL.amber][[0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5][i]], d: hash2(i, 3, 3) })); },
+  cam(S) { return { x: 0, y: -40, z: 1 }; },
+  draw(ctx, S) {
+    const T = S.T, LX = -480, LY = -60;
+    // left: 28 numbers, then each test in turn
+    const ringA = S.k(0, 2) * (1 - S.k(2, 1.2));
+    if (ringA > 0.01) {
+      const R = 240, grow = S.k(1, 4, 0.5);
+      ring(ctx, LX, LY, R, COL.gold, 0.25 * ringA, 1);
+      this.ring.forEach((p, i) => {
+        const k = clamp(grow * 28 - i * 0.9);
+        const t = -Math.PI / 2 + i * TAU / 28 + T * 0.05, r = R + 10 * Math.sin(T + i);
+        dot(ctx, LX + Math.cos(t) * r, LY + Math.sin(t) * r, 5, p.c, ringA * (0.3 + 0.7 * k));
+        if (k > 0) seg(ctx, LX + Math.cos(t) * r * 0.86, LY + Math.sin(t) * r * 0.86, LX + Math.cos(t) * r * 0.97, LY + Math.sin(t) * r * 0.97, p.c, 0.4 * ringA * k, 1.2);
+      });
+      const n = Math.round(grow * 28);
+      txt(ctx, String(n), LX, LY - 10, { f: FONT.body, size: 130, w: 300, c: COL.white, a: ringA * S.k(1, 1), glow: COL.amber, blur: 26 });
+      txt(ctx, 'pure numbers', LX, LY + 74, { f: FONT.body, it: true, w: 300, size: 24, c: COL.gold, a: ringA * S.k(1, 1, 1) });
+      txt(ctx, 'zero adjustable parameters', LX, LY + 108, { f: FONT.mono, size: 17, c: COL.white, a: 0.7 * ringA * S.k(1, 1, 2.5) });
+      txt(ctx, 'evidence', LX, LY - 10, { size: 64, w: 300, it: true, c: COL.gold, a: ringA * (1 - S.k(1, 0.8)) * S.k(0, 2, 1) });
+    }
+    // alpha: the last three digits
+    const aA = S.k(2, 1.2) * (1 - S.k(3, 1));
+    if (aA > 0.01) {
+      txt(ctx, '137.035999', LX, LY - 190, { f: FONT.body, size: 48, w: 300, c: COL.white, a: aA });
+      txt(ctx, '…the last three digits, in units of 10⁻⁹', LX, LY - 145, { f: FONT.body, it: true, w: 300, size: 18, c: COL.gold, a: 0.8 * aA });
+      const X = v => LX - 330 + (v - 140) * 11;
+      const ptk = i => S.k(2, 1, 6 + i * 3);
+      measureAxis(ctx, LX - 330, LX + 330, LY + 20, aA, { X, ticks: [[150, '150'], [170, '170'], [190, '190']], band: [156, 198], meas: 177, measLabel: 'measured 177 ± 21', pts: [[179, COL.gold, 'living universe · 179', true], [190, COL.grey, 'flat link · 190', true]].map((p, i) => i ? [p[0], p[1], p[2], false] : p), k: ptk });
+    }
+    // proton / electron in ppm
+    const pA = S.k(3, 1.2) * (1 - S.k(4, 1));
+    if (pA > 0.01) {
+      txt(ctx, 'proton / electron mass', LX, LY - 190, { size: 30, w: 600, ls: 5, c: COL.white, a: pA });
+      txt(ctx, 'parts per million from the measured 1836.15267', LX, LY - 150, { f: FONT.body, it: true, w: 300, size: 18, c: COL.gold, a: 0.8 * pA });
+      const X = v => LX - 300 + (v + 5) * 20;
+      measureAxis(ctx, LX - 300, LX + 300, LY + 20, pA, { X, ticks: [[0, '0'], [10, '+10'], [20, '+20']], band: [-0.3, 0.3], meas: 0, measLabel: 'measured', pts: [[6.2, COL.gold, 'closed loop · +6.2', true], [18.4, COL.grey, 'flat · +18.4', true]], k: i => S.k(3, 1, 2 + i * 2) });
+    }
+    // Koide circle
+    const kA = S.k(4, 1.2) * (1 - S.k(5, 1));
+    if (kA > 0.01) {
+      const R = 190, m = [0.511, 105.66, 1776.9].map(Math.sqrt), mean = (m[0] + m[1] + m[2]) / 3;
+      ring(ctx, LX, LY, R, COL.cyan, 0.7 * kA, 1.6);
+      ring(ctx, LX, LY, R * Math.SQRT1_2, COL.white, 0.2 * kA, 1);
+      seg(ctx, LX - R - 30, LY, LX + R + 30, LY, COL.white, 0.2 * kA, 1);
+      ['e', 'μ', 'τ'].forEach((n, i) => {
+        const t = 0.2222 + i * TAU / 3 - T * 0.1, r = R;
+        const px = LX + Math.cos(t) * r, py = LY + Math.sin(t) * r;
+        seg(ctx, LX, LY, px, py, COL.cyan, 0.6 * kA, 1.4); dot(ctx, px, py, 8, COL.cyan, kA);
+        txt(ctx, n, px + Math.cos(t) * 30, py + Math.sin(t) * 30, { size: 30, it: true, c: COL.white, a: kA });
+      });
+      txt(ctx, 'K = 2/3', LX, LY + R + 60, { f: FONT.mono, size: 24, c: COL.gold, a: kA });
+      txt(ctx, 'measured 0.666661 ± 0.000007', LX, LY + R + 94, { f: FONT.mono, size: 16, c: COL.teal, a: 0.85 * kA });
+    }
+    // Z lineshape: two, three or four light neutrinos
+    const zA = S.k(5, 1.2);
+    if (zA > 0.01) {
+      const ox = LX - 300, oy = LY + 150, w = 600, h = 300;
+      seg(ctx, ox, oy, ox + w, oy, COL.white, 0.5 * zA, 1.2); seg(ctx, ox, oy, ox, oy - h - 20, COL.white, 0.5 * zA, 1.2);
+      txt(ctx, 'collision energy near the Z', ox + w, oy + 28, { f: FONT.mono, size: 14, c: COL.white, a: 0.6 * zA, align: 'right' });
+      [[2, COL.grey], [3, COL.gold], [4, COL.grey]].forEach(([n, c]) => {
+        const peak = h * 1.25 / (1 + 0.2 * n), g = 50 + n * 4;
+        ctx.beginPath(); for (let i = 0; i <= 120; i++) { const x = i / 120, d = (x - 0.5) * 600; const v = peak * g * g / (d * d + g * g); i ? ctx.lineTo(ox + x * w, oy - v) : ctx.moveTo(ox + x * w, oy - v); }
+        stroke(ctx, c, zA * (n === 3 ? 1 : 0.5), n === 3 ? 2.4 : 1.4);
+        txt(ctx, `N = ${n}`, ox + w * 0.5 + 6, oy - peak - 14, { f: FONT.mono, size: 15, c, a: zA, align: 'left' });
+      });
+      for (let i = 0; i < 13; i++) { const x = 0.2 + i * 0.05, d = (x - 0.5) * 600, g = 62, v = h * 1.25 / 1.6 * g * g / (d * d + g * g) + Math.sin(i * 7) * 3; dot(ctx, ox + x * w, oy - v, 3.5, COL.white, zA * S.k(5, 1, 1 + i * 0.12)); }
+      txt(ctx, 'three generations · measured N_ν = 2.984 ± 0.008', LX, oy + 64, { f: FONT.body, it: true, w: 300, size: 19, c: COL.gold, a: zA });
+    }
+    // right: the ledger
+    const hk = S.k(1, 1.5, 3);
+    const CX = [70, 520, 760, 930];
+    if (hk > 0) {
+      txt(ctx, 'THE SCORECARD', CX[0], -400, { size: 26, w: 600, ls: 8, c: COL.gold, a: hk, align: 'left' });
+      txt(ctx, 'CODATA 2022 · Particle Data Group', CX[3], -400, { f: FONT.body, it: true, w: 300, size: 17, c: COL.white, a: 0.7 * hk, align: 'right' });
+      ['', 'THEORY', 'MEASURED', 'OFF BY'].forEach((h, i) => { if (h) txt(ctx, h, CX[i], -340, { f: FONT.mono, size: 14, c: COL.white, a: 0.55 * hk, align: 'right' }); });
+      seg(ctx, CX[0], -318, CX[3], -318, COL.white, 0.25 * hk, 1);
+    }
+    this.ROWS.forEach(([n, th, me, off, li], r) => {
+      const sub = r >= 2 && r <= 4 ? (r - 2) * 1.0 : 0;
+      const k = S.k(li, 0.8, 1 + sub);
+      if (k <= 0) return;
+      const y = -280 + r * 64;
+      const hl = S.at(li) > 0 && S.at(li) < 12 ? 1 : 0;
+      if (hl) { ctx.fillStyle = rgba(COL.gold, 0.06 * k); ctx.fillRect(CX[0] - 14, y - 26, CX[3] - CX[0] + 28, 52); }
+      txt(ctx, n, CX[0], y, { f: FONT.body, w: 300, size: 22, c: COL.white, a: k, align: 'left' });
+      txt(ctx, th, CX[1], y, { f: FONT.mono, size: 19, c: COL.gold, a: k, align: 'right' });
+      txt(ctx, me, CX[2], y, { f: FONT.mono, size: 19, c: COL.teal, a: k, align: 'right' });
+      txt(ctx, off, CX[3], y, { f: FONT.mono, size: 19, c: COL.white, a: k, align: 'right' });
+      seg(ctx, CX[0], y + 32, CX[3], y + 32, COL.white, 0.08 * k, 1);
+    });
+  },
+};
+
+/* ===================== Righting the hierarchy ===================== */
+SCENES.hierarchy = {
+  Q: [['u', 1, 0.478, 0.46], ['d', 1, 1, 1], ['s', 27.2, 21.59, 20], ['c', 0.76, 300.7, 272], ['b', 914, 952.3, 895], ['t', 44, 40693, 36987]],
+  B: [['W', 1, 1, 1], ['Z', 1, 1.1338, 1.1346], ['H', 0.5714, 1.5633, 1.5584]],
+  cam(S) { return { x: 0, y: -30, z: 1 }; },
+  draw(ctx, S) {
+    const T = S.T, m = eio(S.k(2, 3, 0.4)), bm = eio(S.k(2, 3, 1.6));
+    const base = 250, Y = v => base - (Math.log10(v) + 0.7) * 88;
+    // quark ladder
+    const qa = S.k(0, 1.4);
+    txt(ctx, 'QUARK MASSES', -480, -440, { size: 26, w: 600, ls: 8, c: m > 0.5 ? COL.gold : COL.grey, a: qa });
+    txt(ctx, 'relative to the down quark · log scale', -480, -404, { f: FONT.body, it: true, w: 300, size: 18, c: COL.white, a: 0.7 * qa });
+    for (let d = 0; d <= 5; d++) { const y = Y(Math.pow(10, d)); seg(ctx, -840, y, -120, y, COL.white, 0.08 * qa, 1); txt(ctx, d ? `10${'⁰¹²³⁴⁵'[d]}` : '1', -856, y, { f: FONT.mono, size: 14, c: COL.white, a: 0.45 * qa, align: 'right' }); }
+    this.Q.forEach(([n, fl, cl, ex], i) => {
+      const k = S.k(0, 0.8, 0.5 + i * 0.25); if (k <= 0) return;
+      const x = -780 + i * 120, v = Math.exp(lerp(Math.log(fl), Math.log(cl), m)), top = Y(v);
+      const c = mix(COL.grey, COL.gold, m);
+      const g = ctx.createLinearGradient(0, top, 0, base); g.addColorStop(0, rgba(c, 0.9 * k)); g.addColorStop(1, rgba(c, 0.12 * k));
+      ctx.fillStyle = g; ctx.fillRect(x - 30, top, 60, (base - top) * eout(k));
+      glow(ctx, x, top, 50, c, 0.4 * k);
+      txt(ctx, n, x, base + 34, { size: 36, it: true, c: COL.white, a: k });
+      const pk = S.k(2, 1, 3.4);
+      if (pk > 0) { seg(ctx, x - 42, Y(ex), x + 42, Y(ex), COL.teal, pk, 2.4); }
+    });
+    // what was wrong
+    const wk = S.k(1, 0.8) * (1 - m);
+    if (wk > 0.01) {
+      [[2, 3, 'charm < strange', 1.0], [4, 5, 'top < bottom', 3.5], [0, 1, 'up = down', 0]].forEach(([a, b, s, off]) => {
+        const kk = S.k(1, 0.6, off) * (1 - m); if (kk <= 0) return;
+        const xa = -780 + a * 120, xb = -780 + b * 120, y = Math.min(Y(this.Q[a][1]), Y(this.Q[b][1])) - 60;
+        ctx.save(); ctx.setLineDash([4, 5]); seg(ctx, xa, y + 20, xb, y + 20, COL.red, kk, 1.5); ctx.restore();
+        txt(ctx, s, (xa + xb) / 2, y - 4, { f: FONT.mono, size: 16, c: COL.red, a: kk });
+      });
+      txt(ctx, 'FLAT LINK-COUNTING', -480, -360, { f: FONT.mono, size: 16, c: COL.red, a: wk });
+    }
+    const rk = S.k(2, 1.2, 4.5);
+    txt(ctx, 'teal: measured (PDG)   ·   ratios within ~1.5 σ', -480, -360, { f: FONT.mono, size: 15, c: COL.teal, a: rk });
+    // boson bars
+    const BX = 220, BH = 290, Yb = v => base - v * BH * 0.62;
+    txt(ctx, 'BOSON MASSES', 480, -200 + 0, { size: 26, w: 600, ls: 8, c: bm > 0.5 ? COL.gold : COL.grey, a: qa * S.k(0, 1, 1.5) });
+    txt(ctx, 'relative to the W', 480, -166, { f: FONT.body, it: true, w: 300, size: 18, c: COL.white, a: 0.7 * qa * S.k(0, 1, 1.5) });
+    this.B.forEach(([n, fl, cl, ex], i) => {
+      const k = S.k(0, 0.8, 2 + i * 0.3) || S.k(1, 0.8); if (k <= 0) return;
+      const x = BX + i * 120, v = lerp(fl, cl, bm), top = Yb(v), c = mix(COL.grey, i === 2 ? COL.magenta : COL.violet, bm);
+      const g = ctx.createLinearGradient(0, top, 0, base); g.addColorStop(0, rgba(c, 0.9 * k)); g.addColorStop(1, rgba(c, 0.12 * k));
+      ctx.fillStyle = g; ctx.fillRect(x - 32, top, 64, (base - top) * eout(k)); glow(ctx, x, top, 50, c, 0.4 * k);
+      txt(ctx, n, x, base + 34, { size: 34, c: COL.white, a: k });
+      if (S.k(2, 1, 4.6) > 0) seg(ctx, x - 44, Yb(ex), x + 44, Yb(ex), COL.teal, S.k(2, 1, 4.6), 2.4);
+      if (i === 2) { const hk = S.k(1, 0.6, 5.5) * (1 - bm); txt(ctx, 'Higgs < W', x, top - 30, { f: FONT.mono, size: 16, c: COL.red, a: hk }); }
+    });
+    // photon and gluon: exactly zero
+    const zk = S.k(4, 1.2);
+    ['γ', 'g'].forEach((n, i) => {
+      const x = BX + (3 + i) * 120;
+      seg(ctx, x - 30, base, x + 30, base, COL.white, zk, 3); glow(ctx, x, base, 50, COL.white, 0.6 * zk);
+      txt(ctx, n, x, base + 34, { size: 34, it: true, c: COL.white, a: zk });
+      txt(ctx, '0', x, base - 30, { f: FONT.mono, size: 20, c: COL.gold, a: zk });
+    });
+    txt(ctx, '1 + e^(iπ) = 0  on the unbroken vacuum', BX + 420, base + 80, { f: FONT.mono, size: 16, c: COL.gold, a: S.k(4, 1, 1.5) });
+    // electroweak readouts and the weak-angle triangle
+    const ek = S.k(3, 1);
+    const rows = [['sin²θ_W', '0.22217', '0.2232', '−0.45 %'], ['m_W / m_Z', '0.88195', '0.88136', '+0.067 %'], ['m_H / m_W', '1.5633', '1.5584', '+0.31 %']];
+    rows.forEach(([n, a, b, d], i) => {
+      const k = S.k(3, 0.6, 1.5 + i * 2.6); if (k <= 0) return;
+      const y = -430 + i * 48;
+      txt(ctx, n, 120, y, { f: FONT.mono, size: 20, c: COL.white, a: k, align: 'left' });
+      txt(ctx, a, 400, y, { f: FONT.mono, size: 20, c: COL.gold, a: k, align: 'right' });
+      txt(ctx, b, 530, y, { f: FONT.mono, size: 20, c: COL.teal, a: k, align: 'right' });
+      txt(ctx, d, 670, y, { f: FONT.mono, size: 20, c: COL.white, a: k, align: 'right' });
+    });
+    if (ek > 0) {
+      const tx = 720, ty = -300, L = 170, th = Math.acos(0.88195);
+      ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(tx + L, ty); ctx.lineTo(tx + L, ty - L * Math.tan(th)); ctx.closePath(); stroke(ctx, COL.violet, ek, 2);
+      ring(ctx, tx, ty, 46, COL.gold, ek, 1.6, -th, 0);
+      txt(ctx, 'θ_W', tx + 62, ty - 14, { f: FONT.mono, size: 16, c: COL.gold, a: ek, align: 'left' });
+      txt(ctx, 'm_W', tx + L / 2, ty + 20, { f: FONT.mono, size: 15, c: COL.white, a: 0.7 * ek });
+      txt(ctx, 'm_Z', tx + L / 2 - 26, ty - L * Math.tan(th) / 2 - 18, { f: FONT.mono, size: 15, c: COL.white, a: 0.7 * ek });
+    }
+  },
+};
+
+/* ===================== From decays to the dark ===================== */
+SCENES.observed = {
+  PULL: [
+    ['fine-structure α⁻¹', 1.46e-9], ['proton / electron', 6.2e-4], ['Koide K', 9e-4], ['muon / electron', 2.0e-3], ['W / Z mass', 0.067],
+    ['tau / muon', 0.083], ['tau / electron', 0.085], ['Γτ / Γμ decay widths', 0.15], ['Higgs / W', 0.31], ['Higgs / Z', 0.38], ['weak angle sin²θ_W', 0.45],
+    ['top / charm', 0.49], ['bottom / strange', 1.4], ['dark-sector share', 1.9], ['charm / strange', 2.4], ['Cabibbo |Vus|', 2.7, 1], ['top / bottom', 3.4, 1],
+    ['Jarlskog J', 3.6], ['up / down', 4.0], ['|Vub|', 7.0, 1], ['strange / down', 7.9], ['|Vcb|', 9.3, 1],
+  ],
+  cam(S) { return { x: 0, y: -30, z: 1 }; },
+  draw(ctx, S) {
+    const T = S.T;
+    const fadeAll = 1 - S.k(4, 1.2);
+    // Jarlskog on a log axis
+    const jA = S.k(1, 1.2) * fadeAll;
+    if (jA > 0.01) {
+      const X = v => -760 + (Math.log10(v) + 6) * 250, y = -300;
+      txt(ctx, 'JARLSKOG INVARIANT', -760, -440, { size: 24, w: 600, ls: 7, c: COL.gold, a: jA, align: 'left' });
+      txt(ctx, 'how quark mixing tells matter from antimatter', -760, -406, { f: FONT.body, it: true, w: 300, size: 18, c: COL.white, a: 0.75 * jA, align: 'left' });
+      measureAxis(ctx, -760, 740, y, jA, { X, ticks: [[1e-6, '10⁻⁶'], [1e-5, '10⁻⁵'], [1e-4, '10⁻⁴'], [1e-3, '10⁻³'], [1e-2, '10⁻²'], [1e-1, '10⁻¹']], band: [2.93e-5, 3.23e-5], meas: 3.08e-5, measLabel: '', pts: [[2.97e-5, COL.gold, 'living universe · 2.97 × 10⁻⁵', true], [0.0962, COL.grey, 'flat · 0.0962', true]], k: i => S.k(1, 1, 2 + i * 1.2) });
+      const ak = S.k(1, 1.6, 4);
+      if (ak > 0) {
+        const xa = X(0.0962), xb = X(3.2e-5);
+        ctx.beginPath(); ctx.moveTo(xa, y + 50); ctx.quadraticCurveTo((xa + xb) / 2, y + 150, lerp(xa, xb + 20, ak), y + 50); stroke(ctx, COL.gold, 0.8 * ak, 1.8);
+        if (ak > 0.95) arrowHead(ctx, xb + 20, y + 50, -Math.PI * 0.65, 12, COL.gold, ak);
+        txt(ctx, '≈ 3,100 × closer', (xa + xb) / 2, y + 130, { f: FONT.body, it: true, size: 24, c: COL.gold, a: ak });
+      }
+    }
+    // tau / muon decay widths
+    const gA = S.k(2, 1.2) * fadeAll;
+    if (gA > 0.01) {
+      const y = -50;
+      txt(ctx, 'Γτ / Γμ', -560, y, { f: FONT.body, size: 46, it: true, c: COL.white, a: gA });
+      txt(ctx, 'leptonic decay widths', -560, y + 44, { f: FONT.body, it: true, w: 300, size: 18, c: COL.gold, a: 0.8 * gA });
+      txt(ctx, '1.340 × 10⁶', -40, y - 8, { f: FONT.body, size: 50, w: 300, c: COL.gold, a: gA, glow: COL.amber, blur: 16 });
+      txt(ctx, 'predicted', -40, y + 34, { f: FONT.mono, size: 15, c: COL.gold, a: 0.8 * gA });
+      txt(ctx, '1.342 × 10⁶', 380, y - 8, { f: FONT.body, size: 50, w: 300, c: COL.teal, a: S.k(2, 1, 1.5) * fadeAll });
+      txt(ctx, 'measured', 380, y + 34, { f: FONT.mono, size: 15, c: COL.teal, a: 0.8 * S.k(2, 1, 1.5) * fadeAll });
+      txt(ctx, '−0.15 %', 650, y - 8, { f: FONT.mono, size: 22, c: COL.white, a: S.k(2, 1, 3) * fadeAll, align: 'left' });
+    }
+    // shells, matter over antimatter, dark share
+    const bA = S.k(3, 1.2) * fadeAll, y = 165;
+    if (bA > 0.01) {
+      const sk = S.k(3, 1, 0), SX = -560;
+      [2, 8, 18, 32].forEach((n, i) => {
+        const r = 34 + i * 34, k = S.k(3, 0.8, 0.4 + i * 0.7);
+        ring(ctx, SX, y, r, COL.cyan, 0.4 * bA * k, 1.2);
+        for (let e = 0; e < n; e++) { const t = e / n * TAU + T * (0.4 - i * 0.07); dot(ctx, SX + Math.cos(t) * r, y + Math.sin(t) * r, 2.6, COL.white, bA * k); }
+        txt(ctx, String(n), SX + r + 6, y - 8 - i * 4, { f: FONT.mono, size: 14, c: COL.cyan, a: bA * k, align: 'left' });
+      });
+      dot(ctx, SX, y, 9, COL.red, bA * sk);
+      txt(ctx, 'atomic shells 2 · 8 · 18 · 32', SX, y + 162, { f: FONT.body, it: true, w: 300, size: 19, c: COL.cyan, a: bA * sk });
+      const mk = S.k(3, 1, 4.5), tilt = 0.18 * eout(S.k(3, 2, 5)), MX = 0;
+      if (mk > 0) {
+        polyPath(ctx, MX, y + 50, 30, 3); stroke(ctx, COL.gold, bA * mk, 2);
+        const lx = MX - Math.cos(tilt) * 150, ly = y - Math.sin(-tilt) * 150, rx = MX + Math.cos(tilt) * 150, ry = y - Math.sin(tilt) * 150;
+        seg(ctx, lx, ly, rx, ry, COL.gold, bA * mk, 3);
+        for (let i = 0; i < 6; i++) disc(ctx, lx - 30 + (i % 3) * 24, ly + 24 + Math.floor(i / 3) * 20, 10, COL.gold, bA * mk * 0.85);
+        disc(ctx, rx, ry + 26, 9, COL.violet, bA * mk * 0.7);
+        txt(ctx, 'matter', lx, ly + 84, { f: FONT.body, it: true, size: 20, c: COL.gold, a: bA * mk });
+        txt(ctx, 'antimatter', rx, ry + 70, { f: FONT.body, it: true, size: 20, c: COL.violet, a: bA * mk });
+        txt(ctx, 'the right sign: 784 lowering edges vs 8 raising', MX, y + 162, { f: FONT.body, it: true, w: 300, size: 19, c: COL.gold, a: bA * mk });
+      }
+      const dk = S.k(3, 1, 8.5), DX = 560;
+      if (dk > 0) {
+        const R = 120, frac = 0.6979 * eout(S.k(3, 2.5, 8.5));
+        ring(ctx, DX, y, R, COL.white, 0.12 * bA * dk, 18);
+        ring(ctx, DX, y, R, COL.violet, bA * dk, 18, -Math.PI / 2, -Math.PI / 2 + TAU * frac);
+        const ob = -Math.PI / 2 + TAU * 0.685;
+        seg(ctx, DX + Math.cos(ob) * (R - 22), y + Math.sin(ob) * (R - 22), DX + Math.cos(ob) * (R + 22), y + Math.sin(ob) * (R + 22), COL.teal, bA * dk, 3);
+        txt(ctx, (frac * 100).toFixed(1) + '%', DX, y - 6, { f: FONT.body, size: 38, w: 300, c: COL.white, a: bA * dk });
+        txt(ctx, 'observed 68.5%', DX, y + 30, { f: FONT.mono, size: 14, c: COL.teal, a: bA * dk });
+        txt(ctx, 'dark share of the cosmos', DX, y + 162, { f: FONT.body, it: true, w: 300, size: 19, c: COL.violet, a: bA * dk });
+      }
+    }
+    // the honest picture: every number, by its distance from measurement
+    const pA = S.k(4, 1.4);
+    if (pA > 0.01) {
+      const X = p => -700 + (Math.log10(p) + 9.5) * 118, top = -380, rh = 25, L = this.PULL;
+      txt(ctx, 'EVERY NUMBER, BY ITS DISTANCE FROM MEASUREMENT', -40, -450, { size: 24, w: 600, ls: 6, c: COL.gold, a: pA });
+      const ay = top + L.length * rh + 6;
+      seg(ctx, -720, ay, 520, ay, COL.white, 0.5 * pA, 1.2);
+      [[-9, '10⁻⁹ %'], [-6, '10⁻⁶ %'], [-3, '0.001 %'], [-1, '0.1 %'], [0, '1 %'], [1, '10 %']].forEach(([e, s]) => { const x = X(Math.pow(10, e)); seg(ctx, x, top - 10, x, ay, COL.white, 0.08 * pA, 1); txt(ctx, s, x, ay + 22, { f: FONT.mono, size: 14, c: COL.white, a: 0.55 * pA }); });
+            L.forEach(([n, p, miss], i) => {
+        const k = S.k(4, 0.5, 0.6 + i * 0.12) * pA; if (k <= 0) return;
+        const yy = top + i * rh, x = X(p), c = miss ? COL.red : COL.gold;
+        ctx.save(); ctx.setLineDash([2, 5]); seg(ctx, x + 8, yy, 600, yy, c, 0.25 * k, 1); ctx.restore();
+        dot(ctx, x, yy, 5, c, k);
+        txt(ctx, n, 612, yy, { f: FONT.body, w: 300, size: 17, c: miss ? COL.red : COL.white, a: k, align: 'left' });
+        const sup = n => String(n).split('').map(ch => '⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)] || (ch === '-' ? '⁻' : ch)).join('');
+        const ex = Math.floor(Math.log10(p)), lab = p < 0.01 ? `${(p / Math.pow(10, ex)).toFixed(1)}×10${sup(ex)} %` : p + ' %';
+        txt(ctx, lab, 900, yy, { f: FONT.mono, size: 14, c, a: 0.75 * k, align: 'right' });
+      });
+      txt(ctx, 'red: outside the measured band', 520, ay + 50, { f: FONT.mono, size: 14, c: COL.red, a: S.k(4, 1, 2.5), align: 'right' });
+      txt(ctx, 'quark masses carry wide experimental bands', -720, ay + 50, { f: FONT.body, it: true, w: 300, size: 16, c: COL.white, a: 0.6 * S.k(4, 1, 2.5), align: 'left' });
+      txt(ctx, 'exact: three generations · shells 2, 8, 18, 32 · massless photon and gluon · matter over antimatter', -100, ay + 86, { f: FONT.body, it: true, w: 300, size: 17, c: COL.gold, a: S.k(4, 1, 3.5) });
+      const ok = S.k(4, 1, 11);
+      if (ok > 0) {
+        ctx.save(); ctx.setLineDash([6, 6]); ctx.strokeStyle = rgba(COL.white, 0.5 * ok); ctx.lineWidth = 1.2; ctx.strokeRect(-890, top - 30, 150, 150); ctx.restore();
+        txt(ctx, 'STILL OPEN', -815, top - 2, { size: 17, w: 600, ls: 4, c: COL.white, a: ok });
+        txt(ctx, 'neutrino masses', -815, top + 42, { f: FONT.body, it: true, w: 300, size: 16, c: COL.white, a: 0.8 * ok });
+        txt(ctx, 'and mixing', -815, top + 62, { f: FONT.body, it: true, w: 300, size: 16, c: COL.white, a: 0.8 * ok });
+        txt(ctx, 'gravity’s field', -815, top + 92, { f: FONT.body, it: true, w: 300, size: 16, c: COL.white, a: 0.8 * ok });
+        txt(ctx, 'equation', -815, top + 112, { f: FONT.body, it: true, w: 300, size: 16, c: COL.white, a: 0.8 * ok });
+      }
+      const fk = S.k(5, 1.5);
+      txt(ctx, 'as reported by the framework · awaiting independent checks', -40, -412, { f: FONT.body, it: true, w: 300, size: 19, c: COL.white, a: 0.85 * fk });
+    }
+  },
+};

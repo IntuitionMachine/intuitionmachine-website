@@ -9,8 +9,8 @@ const RENDER = params.has('render');
 
 /* ---------------- world layout ---------------- */
 const ST = {};                 // id -> station {x,y,a,size,s}
-const spiral = ['hurricane', 'principles', 'axiom', 'homeostasis', 'horizon', 'wash', 'ribosome', 'closure', 'metabolism', 'predictions', 'finale'];
-const HUE = { hurricane: COL.blue, principles: COL.gold, axiom: COL.cyan, alphabet: COL.magenta, homeostasis: COL.amber, horizon: COL.violet, wash: COL.white, hub: COL.gold, ribosome: COL.teal, closure: COL.gold, metabolism: COL.blue, predictions: COL.gold, finale: COL.teal };
+const spiral = ['hurricane', 'principles', 'axiom', 'homeostasis', 'horizon', 'wash', 'ribosome', 'closure', 'metabolism', 'scorecard', 'hierarchy', 'observed', 'predictions', 'finale'];
+const HUE = { hurricane: COL.blue, principles: COL.gold, axiom: COL.cyan, alphabet: COL.magenta, homeostasis: COL.amber, horizon: COL.violet, wash: COL.white, hub: COL.gold, ribosome: COL.teal, closure: COL.gold, metabolism: COL.blue, scorecard: COL.teal, hierarchy: COL.violet, observed: COL.amber, predictions: COL.gold, finale: COL.teal };
 ST.title = { x: 0, y: 0, a: 0, size: 9000 };
 spiral.forEach((id, i) => {
   const th = 0.55 + i * 0.78, r = 4300 + i * 640;
@@ -97,7 +97,7 @@ function flight(c0, c1, u, roll = 0) {
   p.a = angLerp(c0.a, c1.a, eio(u)) + roll * Math.sin(Math.PI * u);
   return p;
 }
-const OVERVIEW = () => { const w = 36000 * Math.max(1, (16 / 9) / (W / H)); return { x: 600 + w * 0.24, y: 900, w, a: 0.1 }; };
+const OVERVIEW = () => { const w = 41000 * Math.max(1, (16 / 9) / (W / H)); return { x: 600 + w * 0.24, y: 900, w, a: 0.1 }; };
 function scriptedCam(t, T) {
   if (t < TL.title) {
     const far = { x: -90000, y: 52000, w: 520000, a: -0.6 };
@@ -160,7 +160,7 @@ const GAL = { pts: [[], [], [], []], neb: [] };
   const r = mulberry(7), cols = 4;
   const gauss = () => (r() + r() + r() - 1.5) / 1.5;
   for (let arm = 0; arm < 2; arm++) for (let i = 0; i < 4200; i++) {
-    const u = -5 + r() * 21, th = 0.55 + u * 0.78 + arm * Math.PI, rad = Math.max(300, 4300 + u * 640);
+    const u = -5 + r() * 24, th = 0.55 + u * 0.78 + arm * Math.PI, rad = Math.max(300, 4300 + u * 640);
     const spread = rad * 0.13 * (0.4 + r());
     const x = Math.cos(th) * rad + gauss() * spread, y = Math.sin(th) * rad + gauss() * spread;
     const b = r(); const bucket = b < 0.08 ? 3 : b < 0.6 ? 0 : b < 0.85 ? 1 : 2;
@@ -171,7 +171,7 @@ const GAL = { pts: [[], [], [], []], neb: [] };
     GAL.pts[r() < 0.7 ? 2 : 0].push(Math.cos(a) * rr, Math.sin(a) * rr * 0.85, 0.6 + r());
   }
   for (let i = 0; i < 140; i++) {
-    const arm = i % 2, u = -3 + r() * 19, th = 0.55 + u * 0.78 + arm * Math.PI + (r() - 0.5) * 0.25, rad = Math.max(500, 4300 + u * 640);
+    const arm = i % 2, u = -3 + r() * 22, th = 0.55 + u * 0.78 + arm * Math.PI + (r() - 0.5) * 0.25, rad = Math.max(500, 4300 + u * 640);
     GAL.neb.push({ x: Math.cos(th) * rad, y: Math.sin(th) * rad, r: 500 + r() * 1700, c: [COL.magenta, COL.blue, COL.violet, COL.amber][Math.floor(r() * 4)], a: 0.05 + r() * 0.08 });
   }
 })();
@@ -363,7 +363,7 @@ function seek(t) {
 window.FILM = { seek, play, pause, get t() { return filmT; } };
 
 /* ---------------- overlays ---------------- */
-const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII'];
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI'];
 let shownScene = -2, shownLine = null;
 function updateOverlays(t) {
   // chapter card
