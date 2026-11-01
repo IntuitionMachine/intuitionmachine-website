@@ -7,7 +7,8 @@ into site/explainers/ tend to arrive with Google Fonts links and CDN scripts;
 this copies those files into the site and points the pages at the copies.
 
     python3 selfhost_assets.py           # fix pages in place
-    python3 selfhost_assets.py --check   # report only; exit 1 if anything is left
+    python3 selfhost_assets.py --check   # report only; exit 1 if anything is left,
+                                         # or if a film lacks its link-preview tags
 
 build_pages.py runs the fix after every build, and the deploy workflow runs the
 fix and then the check before publishing.
@@ -180,6 +181,15 @@ def leaks():
     return found
 
 
+def unlisted_films():
+    """Films without the link-preview tags build_pages.py adds to every listed film:
+    new ones not yet added to Explorations, or re-exports pushed without a rebuild."""
+    films = os.path.join(SITE, "explainers")
+    return [os.path.relpath(p, ROOT) for p in pages()
+            if p.startswith(films + os.sep) and
+            "<!-- card:start" not in open(p, encoding="utf-8", errors="replace").read()]
+
+
 def main(argv):
     if "--check" not in argv:
         for page in pages():
@@ -187,7 +197,10 @@ def main(argv):
     left = leaks()
     for page, url in left:
         print(f"  third-party request: {page}: {url}")
-    if "--check" in argv and left:
+    missing = unlisted_films() if "--check" in argv else []
+    for page in missing:
+        print(f"  no link-preview tags: {page} (list it in build_pages.py and rebuild)")
+    if "--check" in argv and (left or missing):
         sys.exit(1)
 
 

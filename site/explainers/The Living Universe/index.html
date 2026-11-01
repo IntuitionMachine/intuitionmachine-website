@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Living Universe</title>
+<style>
+/* A single cinematic world: deep-space black, warm starlight gold, cool explicate cyan.
+   Layout: one full-bleed infinite canvas; text overlays sit on it like film titles. */
+:root {
+  --void: #020309;
+  --ink: #fff4e2;
+  --gold: #ffc878;
+  --amber: #ff9a3c;
+  --cyan: #78d7ff;
+  --mute: #8f9bb4;
+  --display: "Cormorant Garamond", "Noto Serif Greek", Georgia, serif;
+  --body: Spectral, "Noto Serif Greek", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+@font-face { font-family: "Cormorant Garamond"; font-weight: 300; font-style: normal; src: url(fonts/cormorant-garamond-latin-300-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; font-weight: 300; font-style: italic; src: url(fonts/cormorant-garamond-latin-300-italic.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; font-weight: 400 500; font-style: normal; src: url(fonts/cormorant-garamond-latin-500-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; font-weight: 600 700; font-style: normal; src: url(fonts/cormorant-garamond-latin-600-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; font-weight: 400 600; font-style: italic; src: url(fonts/cormorant-garamond-latin-300-italic.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: Spectral; font-weight: 300; font-style: normal; src: url(fonts/spectral-latin-300-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: Spectral; font-weight: 300 400; font-style: italic; src: url(fonts/spectral-latin-300-italic.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: Spectral; font-weight: 400 600; font-style: normal; src: url(fonts/spectral-latin-400-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; src: url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 500 700; src: url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Noto Serif Greek"; font-style: normal; src: url(fonts/noto-serif-greek-400-normal.woff2) format("woff2"); unicode-range: U+0370-03FF, U+1F00-1FFF; }
+@font-face { font-family: "Noto Serif Greek"; font-style: italic; src: url(fonts/noto-serif-greek-400-italic.woff2) format("woff2"); unicode-range: U+0370-03FF, U+1F00-1FFF; }
+
+html, body { height: 100%; margin: 0; background: var(--void); color: var(--ink); overflow: hidden; }
+body { font-family: var(--body); -webkit-font-smoothing: antialiased; }
+canvas#film { position: fixed; inset: 0; display: block; touch-action: none; cursor: grab; }
+body.exploring canvas#film:active { cursor: grabbing; }
+
+/* chapter card */
+#chapter { position: fixed; left: clamp(20px, 4.5vw, 72px); top: clamp(18px, 5vh, 56px); opacity: 0; pointer-events: none; --rule: 0; }
+#chNum { font: 600 clamp(14px, 1.3vw, 19px)/1 var(--display); letter-spacing: .5em; color: var(--gold); }
+#chTitle { font: 500 clamp(24px, 2.6vw, 42px)/1.1 var(--display); letter-spacing: .14em; text-transform: uppercase; margin-top: .45em; text-wrap: balance; text-shadow: 0 0 24px rgba(255,150,60,.35); }
+#chapter::after { content: ""; display: block; height: 1px; margin-top: .9em; width: calc(var(--rule) * min(30vw, 380px)); background: linear-gradient(90deg, var(--gold), transparent); }
+
+/* captions */
+#caption { position: fixed; left: 50%; bottom: clamp(56px, 9vh, 104px); transform: translate(-50%, 6px); width: min(78vw, 980px);
+  text-align: center; font: italic 300 clamp(17px, 1.75vw, 28px)/1.42 var(--body); color: var(--ink); text-wrap: balance;
+  text-shadow: 0 1px 2px #000, 0 0 18px rgba(0,0,0,.95); opacity: 0; transition: opacity .45s ease, transform .6s ease; pointer-events: none; }
+#caption.on { opacity: .96; transform: translate(-50%, 0); }
+
+/* credits */
+#credits::before { content: ""; position: absolute; inset: -30% -40% -30% -30%; z-index: -1; background: radial-gradient(closest-side, rgba(2,3,9,.78), transparent); }
+#credits { position: fixed; right: clamp(20px, 6vw, 96px); top: 50%; transform: translateY(-50%); width: min(440px, 80vw); opacity: 0; pointer-events: none; text-align: right; }
+#credits h2 { font: 300 clamp(30px, 3.4vw, 54px)/1 var(--display); letter-spacing: .2em; margin: 0 0 .2em; text-shadow: 0 0 30px rgba(255,150,60,.5); }
+#credits .sub { font: italic 300 clamp(15px, 1.25vw, 19px)/1.4 var(--body); color: var(--gold); margin-bottom: 2.2em; }
+#credits dl { margin: 0; display: grid; gap: 1.05em; }
+#credits dt { font: 600 11px/1 var(--display); letter-spacing: .38em; color: var(--gold); text-transform: uppercase; }
+#credits dd { margin: .35em 0 0; font: 300 clamp(14px, 1.1vw, 17px)/1.45 var(--body); color: var(--ink); }
+
+/* transport */
+#ui { position: fixed; left: 0; right: 0; bottom: 0; padding: 14px clamp(16px, 3vw, 40px) 16px; display: flex; align-items: center; gap: 14px;
+  background: linear-gradient(transparent, rgba(2,3,9,.85)); opacity: 0; transition: opacity .5s; }
+body.ui #ui, body:not(.playing) #ui { opacity: 1; }
+body.render #ui, body.render #intro, body.render #hint { display: none; }
+#ui button { all: unset; cursor: pointer; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); }
+#ui button:hover { background: rgba(255,200,120,.12); }
+#ui button:focus-visible, #intro button:focus-visible, #returnBtn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+#playBtn svg .pause { display: none; } #playBtn[data-state="pause"] svg .pause { display: block; } #playBtn[data-state="pause"] svg .play { display: none; }
+#ccBtn { font: 600 12px/1 var(--mono); letter-spacing: .05em; }
+#ccBtn[aria-pressed="false"] { opacity: .45; }
+#bar { flex: 1; height: 22px; position: relative; cursor: pointer; touch-action: none; }
+#bar::before { content: ""; position: absolute; left: 0; right: 0; top: 10px; height: 2px; background: rgba(255,244,226,.18); }
+#fill { position: absolute; left: 0; top: 10px; height: 2px; background: linear-gradient(90deg, var(--amber), var(--gold)); box-shadow: 0 0 10px rgba(255,170,80,.7); }
+#bar .tick { all: unset; position: absolute; top: 4px; width: 9px; height: 14px; margin-left: -4px; cursor: pointer; }
+#bar .tick::after { content: ""; position: absolute; left: 4px; top: 3px; width: 1px; height: 8px; background: rgba(255,200,120,.6); }
+#bar .tick:hover::after { background: var(--gold); height: 10px; top: 2px; }
+#time { font: 400 12px/1 var(--mono); color: var(--mute); font-variant-numeric: tabular-nums; min-width: 92px; text-align: right; }
+#vol { display: flex; align-items: center; gap: 6px; font: 400 11px/1 var(--mono); color: var(--mute); }
+#vol input { width: 76px; accent-color: var(--gold); }
+@media (max-width: 640px) { #vol { display: none; } #time { min-width: 0; } }
+
+/* explore hint */
+#hint { position: fixed; top: clamp(16px, 4vh, 40px); left: 50%; transform: translateX(-50%); display: none; align-items: center; gap: 14px;
+  font: italic 300 15px/1.3 var(--body); color: var(--ink); background: rgba(2,3,9,.72); border: 1px solid rgba(255,200,120,.35); padding: 8px 10px 8px 18px; border-radius: 999px; backdrop-filter: blur(6px); }
+body.exploring #hint { display: flex; }
+#returnBtn { all: unset; cursor: pointer; font: 600 12px/1 var(--display); letter-spacing: .25em; text-transform: uppercase; color: #120a02; background: var(--gold); padding: 8px 14px; border-radius: 999px; }
+
+/* intro */
+#intro { position: fixed; inset: 0; display: grid; place-items: end center; padding-bottom: clamp(40px, 12vh, 120px);
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(2,3,9,.5) 80%); transition: opacity 1.2s ease; }
+#intro.gone { opacity: 0; pointer-events: none; }
+#intro .box { display: grid; justify-items: center; gap: 14px; text-align: center; padding: 0 20px; }
+#intro button { all: unset; cursor: pointer; font: 600 15px/1 var(--display); letter-spacing: .32em; text-transform: uppercase; color: var(--ink);
+  padding: 16px 30px 15px 34px; border: 1px solid rgba(255,200,120,.6); border-radius: 999px; background: rgba(2,3,9,.55); backdrop-filter: blur(4px);
+  box-shadow: 0 0 40px rgba(255,150,60,.25), inset 0 0 20px rgba(255,150,60,.08); transition: box-shadow .4s, background .4s; }
+#intro button:hover:not(:disabled) { background: rgba(255,170,80,.16); box-shadow: 0 0 60px rgba(255,150,60,.45); }
+#intro button:disabled { cursor: progress; opacity: .7; }
+#intro .meta { font: italic 300 14px/1.5 var(--body); color: var(--mute); max-width: 520px; }
+#loadTrack { width: 220px; height: 1px; background: rgba(255,244,226,.15); }
+#loadProg { height: 1px; width: 0; background: var(--gold); transition: width .3s; box-shadow: 0 0 8px var(--gold); }
+@media (prefers-reduced-motion: reduce) { #caption { transition: none; } }
+</style>
+<!-- card:start (link preview, added by build_pages.py) -->
+<meta name="description" content="What makes a cell alive — a sheltered code, a cut between description and dynamics, a reader that builds itself — proposed as the architecture of the cosmos: a universe that reads itself into being.">
+<meta property="og:type" content="video.other">
+<meta property="og:site_name" content="Intuition Machine">
+<meta property="og:title" content="The Living Universe — Intuition Machine">
+<meta property="og:description" content="What makes a cell alive — a sheltered code, a cut between description and dynamics, a reader that builds itself — proposed as the architecture of the cosmos: a universe that reads itself into being.">
+<meta property="og:url" content="https://intuitionmachine.com/explainers/The%20Living%20Universe/index.html">
+<meta property="og:image" content="https://intuitionmachine.com/assets/img/explorations/social/living-universe.jpg">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="503">
+<meta property="og:image:alt" content="The Living Universe: a still from the film">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Living Universe — Intuition Machine">
+<meta name="twitter:description" content="What makes a cell alive — a sheltered code, a cut between description and dynamics, a reader that builds itself — proposed as the architecture of the cosmos: a universe that reads itself into being.">
+<meta name="twitter:image" content="https://intuitionmachine.com/assets/img/explorations/social/living-universe.jpg">
+<!-- card:end -->
+</head>
+<body class="ui">
+<canvas id="film" aria-label="Animated film: The Living Universe"></canvas>
+
+<div id="chapter" aria-live="polite"><div id="chNum">I</div><div id="chTitle"></div></div>
+<div id="caption" role="status"></div>
+
+<section id="credits" aria-label="Credits">
+  <h2>THE LIVING UNIVERSE</h2>
+  <div class="sub">how the cosmos reads itself into being</div>
+  <dl>
+    <div><dt>Theory</dt><dd>Carlos E. Perez</dd></div>
+    <div><dt>Foundations</dt><dd>Howard Pattee’s epistemic cut and semantic closure · Jesper Hoffmeyer’s code-duality · the Chain Theory Compendium (A. D. Wissner-Gross)</dd></div>
+    <div><dt>Narration</dt><dd>Kokoro-82M text-to-speech, voice “am_michael”</dd></div>
+    <div><dt>Music</dt><dd>An original score performed live in JavaScript with the FluidR3 General MIDI soundfont</dd></div>
+    <div><dt>Sound effects</dt><dd>Synthesized in code with the Web Audio API · released CC0</dd></div>
+  </dl>
+</section>
+
+<div id="hint">Exploring the map · drag to pan, scroll or pinch to zoom <button id="returnBtn">Resume film</button></div>
+
+<div id="ui">
+  <button id="playBtn" data-state="play" aria-label="Play"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path class="play" d="M5 3l10 6-10 6z" fill="currentColor"/><g class="pause" fill="currentColor"><rect x="4" y="3" width="3.5" height="12"/><rect x="10.5" y="3" width="3.5" height="12"/></g></svg></button>
+  <div id="bar" role="slider" aria-label="Seek" tabindex="0"><div id="fill"></div></div>
+  <span id="time">0:00 / 0:00</span>
+  <label id="vol" for="musicVol">music <input id="musicVol" type="range" min="0" max="1.6" step="0.05" value="1"></label>
+  <button id="ccBtn" aria-pressed="true" aria-label="Captions">CC</button>
+  <button id="fsBtn" aria-label="Full screen"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/></svg></button>
+</div>
+
+<div id="intro">
+  <div class="box">
+    <button id="beginBtn" disabled><span>Tuning the cosmos…</span></button>
+    <div id="loadTrack"><div id="loadProg"></div></div>
+    <div class="meta" id="loadNote">An eleven-minute film with narration and music. Headphones recommended. Pause at any moment to explore the map yourself.</div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="lib.js"></script>
+<script src="scenes.js"></script>
+<script src="audio.js"></script>
+<script src="engine.js"></script>
+</body>
+</html>

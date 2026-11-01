@@ -1973,6 +1973,7 @@ POSTERS = {
     "Chain Theory.html": "chain-theory",
     "The Architecture of Imperfection.html": "architecture-of-imperfection",
     "The Cosmic Refusal.html": "cosmic-refusal",
+    "The Living Universe/index.html": "living-universe",
 }
 
 
@@ -2058,6 +2059,11 @@ EXPLAINERS_DATA = [
      "The Cosmic Refusal",
      "Why no two electrons can share a state: the Pauli Exclusion Principle, not as a "
      "postulate but as something the geometry of the quantum network refuses."),
+    ("Ideas", "The Living Universe/index.html", "Film · 11 min",
+     "The Living Universe",
+     "What makes a cell alive — a sheltered code, a cut between description and dynamics, "
+     "a reader that builds itself — proposed as the architecture of the cosmos: a universe "
+     "that reads itself into being."),
 ]
 
 EXPLAINER_GROUPS = [
