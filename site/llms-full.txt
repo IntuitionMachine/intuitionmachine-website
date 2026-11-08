@@ -2139,6 +2139,14 @@ What makes a cell alive — a sheltered code, a cut between description and dyna
 
 [Watch →](https://intuitionmachine.com/explainers/The%20Living%20Universe/index.html)
 
+Film · six acts · 16 min
+
+### [Who Holds the Loop?](https://intuitionmachine.com/explainers/Who%20Holds%20the%20Loop/index.html)
+
+Past the ladder of prompt, context, harness and loop engineering: coordinating people and AI from the single turn to a fleet that runs itself, mapped with Wardley maps, and what it means for enterprise architecture when the world checks the work.
+
+[Watch →](https://intuitionmachine.com/explainers/Who%20Holds%20the%20Loop/index.html)
+
 ## Start with one workflow.
 
 We map your constraints, build a governed AI workflow alongside your existing operations, and prove the results before autonomy expands.

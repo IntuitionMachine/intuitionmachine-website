@@ -1974,6 +1974,7 @@ POSTERS = {
     "The Architecture of Imperfection.html": "architecture-of-imperfection",
     "The Cosmic Refusal.html": "cosmic-refusal",
     "The Living Universe/index.html": "living-universe",
+    "Who Holds the Loop/index.html": "who-holds-the-loop",
 }
 
 
@@ -2064,6 +2065,11 @@ EXPLAINERS_DATA = [
      "What makes a cell alive — a sheltered code, a cut between description and dynamics, "
      "a reader that builds itself — proposed as the architecture of the cosmos, then set "
      "against measurement: twenty-eight numbers, the hits and the misses."),
+    ("Ideas", "Who Holds the Loop/index.html", "Film · six acts · 16 min",
+     "Who Holds the Loop?",
+     "Past the ladder of prompt, context, harness and loop engineering: coordinating people "
+     "and AI from the single turn to a fleet that runs itself, mapped with Wardley maps, and "
+     "what it means for enterprise architecture when the world checks the work."),
 ]
 
 EXPLAINER_GROUPS = [
